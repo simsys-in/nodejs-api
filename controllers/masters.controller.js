@@ -342,15 +342,23 @@ exports.getProduct_Category = function (req, res) {
     var ID = req.query.id;
     if (issetNotEmpty(ID)) {
         Product_Category.find(Number(ID), function (err, data) {
-            Product_Category.getAll((err, data) => {
 
-                if (err) {
-                    console.log(err)
-                    res.sendError(err)
-                } else {
-                    res.sendSuccess("", data)
-                }
-            })
+            if (err) {
+                console.log(err)
+                res.sendError(err)
+            } else {
+                res.sendSuccess("", data)
+            }
+        })
+    } else {
+        Product_Category.getAll((err, data) => {
+
+            if (err) {
+                console.log(err)
+                res.sendError(err)
+            } else {
+                res.sendSuccess("", data)
+            }
         })
     }
 }

@@ -31,7 +31,7 @@ LedgerModel.prototype = {
         });
     },
     getAll : function(callback){
-        pool.query(`select @acount:=@acount+1 as sno, ledger.id, ledger.ledger, ledger.address, ledger.gstno, ledger.mobile, ledger_group.ledger_group, ledger_category.ledger_category from (SELECT @acount:= 0) AS acount, ledger left join ledger_group on ledger_group.id = ledger.ledger_group_id left join ledger_category on ledger_category.id = ledger.ledger_category_id order by ledger.id desc`, function(err, result){
+        pool.query(`select @acount:=@acount+1 as sno, ledger.id, ledger.ledger, ledger.status, ledger.address, ledger.gstno, ledger.mobile, ledger_group.ledger_group, ledger_category.ledger_category from (SELECT @acount:= 0) AS acount, ledger left join ledger_group on ledger_group.id = ledger.ledger_group_id left join ledger_category on ledger_category.id = ledger.ledger_category_id order by ledger.id desc`, function(err, result){
             if(err)
             {
                 callback(err)
