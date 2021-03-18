@@ -41,9 +41,9 @@ app.use(cors({
 app.use(cookieParser());
 
                 
-process.env['DB_NAME'] = "root";
-process.env['DB_USER'] = "";
-process.env['DB_PASS'] = "";
+process.env['DB_NAME'] = "fitness_cloud_db";
+process.env['DB_USER'] = "fitness_cloud_db";
+process.env['DB_PASS'] = "FitnessCloud@123";
 
 const mysql = require('mysql2');
 
