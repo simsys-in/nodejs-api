@@ -52,6 +52,11 @@ router.put('/unit', Controller.saveUnit);
 router.get('/unit', Controller.getUnit);
 router.delete('/unit', Controller.deleteUnit);
 
+//product
+
+router.put('/product', Controller.saveProduct);
+router.get('/product', Controller.getProduct);
+router.delete('/product', Controller.deleteProduct);
 
 
 
