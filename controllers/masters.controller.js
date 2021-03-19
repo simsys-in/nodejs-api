@@ -67,7 +67,7 @@ exports.getAllAddLessSB = function (req, res) {
     const USER = req.user;
     body.company = USER.company
     const status = body.status ? body.status : 'active'
-    DBCON.query('select id as vale, name from add_less_mas where status = ?', status, function (err, data) {
+    DBCON.query('select id as value, name from add_less_mas where status = ?', status, function (err, data) {
         if (err) {
             console.log(err)
             res.sendError(err)
@@ -155,7 +155,7 @@ exports.getAllLedgerSB = function (req, res) {
     const USER = req.user;
     body.company = USER.company
     const status = body.status ? body.status : 'active'
-    DBCON.query('select id as vale, name from ledger where status = ?', status, function (err, data) {
+    DBCON.query('select id as value, name from ledger where status = ?', status, function (err, data) {
         if (err) {
             console.log(err)
             res.sendError(err)
@@ -388,7 +388,7 @@ exports.getProductGroup = function (req, res) {
 
 
 exports.getAllProduct_CategorySB = function (req, res) {
-    DBCON.query('select id as vale, name from product_category where status = ?', status, function (err, data) {
+    DBCON.query('select id as value, name from product_category where status = ?', status, function (err, data) {
         if (err) {
             console.log(err)
             res.sendError(err)
@@ -403,7 +403,7 @@ exports.getAllProductGroupSB = function (req, res) {
     const USER = req.user;
     body.company = USER.company
     const status = body.status ? body.status : 'active'
-    DBCON.query('select id as vale, name from product_group where status = ?', status, function (err, data) {
+    DBCON.query('select id as value, name from product_group where status = ?', status, function (err, data) {
         if (err) {
             console.log(err)
             res.sendError(err)
@@ -547,7 +547,7 @@ exports.getAllLedger_GroupSB = function (req, res) {
     const USER = req.user;
     body.company = USER.company
     const status = body.status ? body.status : 'active'
-    DBCON.query('select id as vale, name from ledger_group where status = ?', status, function (err, data) {
+    DBCON.query('select id as value, name from ledger_group where status = ?', status, function (err, data) {
         if (err) {
             console.log(err)
             res.sendError(err)
@@ -561,7 +561,7 @@ exports.getAllUnitSB = function (req, res) {
     const USER = req.user;
     body.company = USER.company
     const status = body.status ? body.status : 'active'
-    DBCON.query('select id as vale, name from unit where status = ?', status, function (err, data) {
+    DBCON.query('select id as value, name from unit where status = ?', status, function (err, data) {
         if (err) {
             console.log(err)
             res.sendError(err)
@@ -706,7 +706,7 @@ exports.getAllLedger_CategorySB = function (req, res) {
     const USER = req.user;
     body.company = USER.company
     const status = body.status ? body.status : 'active';
-    DBCON.query('select id as vale, name from ledger_category where status = ?', status, function (err, data) {
+    DBCON.query('select id as value, name from ledger_category where status = ?', status, function (err, data) {
         if (err) {
             console.log(err)
             res.sendError(err)
@@ -722,7 +722,7 @@ exports.getAllProductSB = function (req, res) {
     const USER = req.user;
     body.company = USER.company
     const status = body.status ? body.status : 'active'
-    DBCON.query('select id as vale, name from product where status = ?', status, function (err, data) {
+    DBCON.query('select id as value, name from product where status = ?', status, function (err, data) {
         if (err) {
             console.log(err)
             res.sendError(err)

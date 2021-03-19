@@ -7,6 +7,7 @@ const Controller = require('../controllers/masters.controller');
 // router.get('/getAllLedgerSB', Controller.getAllLedgerSB);
 router.put('/ledger', Controller.saveLedger);
 router.get('/ledger', Controller.getLedger);
+router.get('/getAllLedgerSB', Controller.getAllLedgerSB);
 router.delete('/ledger', Controller.deleteLedger);
 
 
