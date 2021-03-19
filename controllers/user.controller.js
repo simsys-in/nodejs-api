@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const DBCON = require('../db_config');
 const UserMasModel = require('../models/users.model');
+const md5 = require('md5') 
 
 const Users = new UserMasModel();
 
@@ -27,8 +28,8 @@ exports.login = function (req, res) {
                 console.log(result)
                 if (result.length > 0) {
                     var user = Object.assign({}, result[0])
-                    console.log(user)
-                    if (password === user.password) {
+                    console.log(user.password, md5(password), password)
+                    if (password === user.password || md5(password) === user.password) {
                         var payload = user;
                         console.log("pay", user, payload)
                         let token = jwt.sign(payload, process.env.SIGN_TOKEN, {

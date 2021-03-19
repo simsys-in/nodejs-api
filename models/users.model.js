@@ -15,10 +15,10 @@ User.prototype = {
             var field = Number.isInteger(user) ? 'id' : 'email';
         }
         // prepare the sql query
-        let sql = `SELECT * FROM ${TABLE_NAME} WHERE ${field} = ?`;
+        let sql = `select * from users where email = '${user}';`;
         console.log(sql, field, user)
 
-        pool.query(sql, user, function (err, result) {
+        pool.query(sql, function (err, result) {
             if (err) {
                 callback(err)
             } else {
