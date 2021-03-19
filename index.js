@@ -13,16 +13,13 @@ app.use(bodyParser.urlencoded({
     extended: true,
     parameterLimit: 5000000
 }))
-const {fork} = require('child_process')
 const expressSession = require('express-session')
 var morgan = require('morgan');
-var CronJob = require('cron').CronJob;
 app.set('trust proxy', 1)
 //ENV
 require('dotenv').config({
     path: __dirname + '/.env'
 });
-var client = require('twilio')(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_TOKEN);
 
 app.use(express.json());
 app.use(expressSession({
@@ -41,11 +38,9 @@ app.use(cors({
 app.use(cookieParser());
 
                 
-process.env['DB_NAME'] = "fitness_cloud_db";
-process.env['DB_USER'] = "fitness_cloud_db";
-process.env['DB_PASS'] = "FitnessCloud@123";
-
-const mysql = require('mysql2');
+process.env['DB_NAME'] = process.env.DB_NAME;
+process.env['DB_USER'] = process.env.DB_USER;
+process.env['DB_PASS'] = process.env.DB_PASS;
 
 var DBCON = require('./db_config');
 DBCON.query("select 1 as c", function(err, result){
@@ -113,20 +108,6 @@ const reports_viewer = require('./routes/reports_viewer.routes');
 
 app.use('/reports_viewer', reports_viewer);
 
-
-var checkPaymentPendingJob = new CronJob('50 06 11 * * *', function () {
-    // console.log('You will see this message was runned on Midnight of ' + getStandardDate(new Date()));
-    var api_name = process.env.API_NAME
-    console.log(api_name + ' API Working')
-    
-    const forked = fork(process.cwd() + '/child-processes/payment_notifications.process.js');
-    forked.send({})
-
-    forked.on('message', (msg) => {
-        console.log(`Payment Notification Job Started $ ${ new Date()} `);
-    });
-}, null, true, 'Asia/Kolkata');
-checkPaymentPendingJob.start();
 
 var server = app.listen(process.env.PORT || "4000", function () {
     //    var host = process.env.host

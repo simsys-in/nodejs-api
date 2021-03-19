@@ -113,7 +113,10 @@ const authenticateJWT = (req, res, next) => {
             database: process.env.DB_NAME,
           }, (err) => {
             if (err) throw err;
-            console.log(process.env.DB_NAME + " DB Connected")
+            if(process.env.DB_NAME)
+            {
+              console.log(process.env.DB_NAME + " DB Connected")
+            }
           });
           next();
           // })
