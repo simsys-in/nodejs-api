@@ -235,20 +235,20 @@ exports.deleteLedger = function (req, res) {
 // }
 
 
-// exports.getAllProduct_CategorySB = function (req, res) {
-//     const body = req.body;
-//     const USER = req.user;
-//     body.company = USER.company
-//     const status = body.status ? body.status : 'active'
-//     DBCON.query('select id as value, name from product_category_mas where status = ?', status, function (err, data) {
-//         if (err) {
-//             console.log(err)
-//             res.sendError(err)
-//         } else {
-//             res.sendInfo("", data)
-//         }
-//     })
-// }
+exports.getAllProduct_CategorySB = function (req, res) {
+    const body = req.body;
+    const USER = req.user;
+    body.company = USER.company
+    const status = body.status ? body.status : 'active'
+    DBCON.query('select id as value, product_category as name from product_category',  function (err, data) {
+        if (err) {
+            console.log(err)
+            res.sendError(err)
+        } else {
+            res.sendInfo("", data)
+        }
+    })
+}
 
 // exports.getProduct_Category = function (req, res) {
 //     // const id = req.query.id;
@@ -387,23 +387,13 @@ exports.getProductGroup = function (req, res) {
 }
 
 
-exports.getAllProduct_CategorySB = function (req, res) {
-    DBCON.query('select id as value, name from product_category where status = ?', status, function (err, data) {
-        if (err) {
-            console.log(err)
-            res.sendError(err)
-        } else {
-            res.sendInfo("", data)
-        }
-    })
-}
 
 exports.getAllProductGroupSB = function (req, res) {
     const body = req.body;
     const USER = req.user;
     body.company = USER.company
     const status = body.status ? body.status : 'active'
-    DBCON.query('select id as value, name from product_group where status = ?', status, function (err, data) {
+    DBCON.query('select id as value, product_group as name from product_group ',  function (err, data) {
         if (err) {
             console.log(err)
             res.sendError(err)
@@ -547,7 +537,7 @@ exports.getAllLedger_GroupSB = function (req, res) {
     const USER = req.user;
     body.company = USER.company
     const status = body.status ? body.status : 'active'
-    DBCON.query('select id as value, name from ledger_group where status = ?', status, function (err, data) {
+    DBCON.query('select id as value, name from ledger_group ', function (err, data) {
         if (err) {
             console.log(err)
             res.sendError(err)
@@ -561,7 +551,7 @@ exports.getAllUnitSB = function (req, res) {
     const USER = req.user;
     body.company = USER.company
     const status = body.status ? body.status : 'active'
-    DBCON.query('select id as value, name from unit where status = ?', status, function (err, data) {
+    DBCON.query('select id as value, unit as name from unit ', function (err, data) {
         if (err) {
             console.log(err)
             res.sendError(err)
@@ -706,7 +696,7 @@ exports.getAllLedger_CategorySB = function (req, res) {
     const USER = req.user;
     body.company = USER.company
     const status = body.status ? body.status : 'active';
-    DBCON.query('select id as value, name from ledger_category where status = ?', status, function (err, data) {
+    DBCON.query('select id as value, name from ledger_category ', function (err, data) {
         if (err) {
             console.log(err)
             res.sendError(err)
@@ -717,12 +707,15 @@ exports.getAllLedger_CategorySB = function (req, res) {
 }
 
 
+
+
+
 exports.getAllProductSB = function (req, res) {
     const body = req.body;
     const USER = req.user;
     body.company = USER.company
     const status = body.status ? body.status : 'active'
-    DBCON.query('select id as value, name from product where status = ?', status, function (err, data) {
+    DBCON.query('select id as value, name from product ',function (err, data) {
         if (err) {
             console.log(err)
             res.sendError(err)
