@@ -21,18 +21,18 @@ router.delete('/ledger', Controller.deleteLedger);
 
 
 
-
+//product_category
 
 router.put('/product_category', Controller.saveProduct_Category);
 router.get('/product_category', Controller.getProduct_Category);
 router.delete('/product_category', Controller.deleteProduct_Category);
 
+//ledger_group
 router.put('/ledger_group', Controller.saveLedger_Group);
 router.get('/ledger_group', Controller.getLedger_Group);
 router.delete('/ledger_group', Controller.deleteLedger_Group);
 
-
-
+//ledger_category
 router.put('/ledger_category', Controller.saveLedger_Category);
 router.get('/ledger_category', Controller.getLedger_Category);
 router.delete('/ledger_category', Controller.deleteLedger_Category);
@@ -62,6 +62,16 @@ router.delete('/product', Controller.deleteProduct);
 router.get('/getProductGroupSB', Controller.getAllProductGroupSB);
 
 
+//process
+router.put('/process', Controller.saveProcess);
+router.get('/process', Controller.getProcess);
+router.delete('/process', Controller.deleteProcess);
+
+
+//size
+router.put('/size', Controller.saveSize);
+router.get('/size', Controller.getSize);
+router.delete('/size', Controller.deleteSize);
 
 
 
