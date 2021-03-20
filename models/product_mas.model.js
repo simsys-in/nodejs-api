@@ -68,8 +68,6 @@ ProductModel.prototype = {
                 }
             })
         } else {
-            // console.log(body.name, "Entered")
-            // body.created_at = new Date();
             DBCON.query(`select count(id) as c from ${TABLE_NAME} where product = ?`, [body.product], (err, count) => {
                 if (err) {
                     callback(err)
@@ -78,11 +76,66 @@ ProductModel.prototype = {
                     if (count[0].c > 0) {
                         callback("Product  Name Already Found!")
                     } else {
-                        DBCON.query(`insert into ${TABLE_NAME} set ?`, body, (err, result) => {
+                        var product_details = {
+                            product_group_id : body.product_group_id,
+                            product_category_id : body.product_category_id,
+                            product : body.product,
+                            unit_id : body.unit_id,
+                            qrcode : body.qrcode,
+                            narration : body.narration,
+                            purchase_rate : 0,
+                            sales_rate : 0,
+                            qty : 0,
+                            purchase_rate_last : 0,
+                            min_stock_qty : 0,
+                            hsnsac : body.hsnsac,
+                            gst : body.gst,
+                            sgst : body.sgst,
+                            cgst : body.cgst,
+                            sts : 0,
+                            unit2_id : body.unit2_id,
+                            unit2_convert : 0,
+                            clo_qty : 0,
+                            status_id : body.status,
+                            purchase_rate_incltax : body.purchase_rate_incltex,
+                            sales_rate_incltax : body.sales_rate_incltex,
+                            purchase_amount : body.purchase_amount,
+                            sales_amount : body.sales_amount,
+                            alias : body.alias,
+                        }
+
+                        DBCON.query(`insert into ${TABLE_NAME} set ?`, product_details, (err, result) => {
                             if (err) {
                                 callback(err)
                             } else {
-                                callback(false, result, "Product  Saved Successfully!")
+                                console.log(result);
+                                body.sales_price.map((item, index) => {
+                                    var product_rate = {
+                                        product_id : result.insertId,
+                                        sales_rate : item.mrp,
+                                        price_group_id : item.price_group,
+                                        purchase_rate : item.sales_rate,
+                                    }
+                                    DBCON.query(`insert into product_rate set ?`, product_rate);
+                                    if(index === body.sales_price.length - 1)
+                                    {
+                                        body.stock_details.map((stock, key) => {
+                                            var stock_details = {
+                                                product_id : result.insertId,
+                                                godown_id : stock.godown,
+                                                qty : stock.qty
+                                            }
+                                            
+                                            DBCON.query(`insert into product_stock set ?`, stock_details);
+
+                                            if(key === body.stock_details.length - 1)
+                                            {
+                                                callback(false, result, "Product  Saved Successfully!");
+                                            }
+                                        })
+                                    }
+                                })
+
                             }
                         })
                     }
