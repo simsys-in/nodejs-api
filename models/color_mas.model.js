@@ -4,17 +4,17 @@ const {
     issetNotEmpty
 } = require('../helpers/common');
 
-function Product_CategoryModel() {};
+function ColorModel() {};
 
-const TABLE_NAME = 'product_category';
+const TABLE_NAME = 'color';
 
-Product_CategoryModel.prototype = {
+ColorModel.prototype = {
     find: function (match = null, callback) {
         if (match) {
             var field = Number.isInteger(match) ? 'id' : 'name';
         }
 
-        let sql = `SELECT * FROM ${TABLE_NAME} WHERE id = ?`;
+        let sql = `SELECT * FROM ${TABLE_NAME} WHERE ${field} = ?`;
         console.log(sql);
 
         pool.query(sql, match, function (err, result) {
@@ -32,6 +32,7 @@ Product_CategoryModel.prototype = {
     },
     getAll : function(callback){
         pool.query(`select * from ${TABLE_NAME}`, function(err, result){
+
             if(err)
             {
                 callback(err)
@@ -48,19 +49,19 @@ Product_CategoryModel.prototype = {
         // console.log(body.id, "Entered")
         // body.updated_at = new Date();
         if (issetNotEmpty(body.id)) {
-            DBCON.query(`select count(id) as c from ${TABLE_NAME} where id != ? and product_category = ?`, [body.id, body.product_category], (err, count) => {
+            DBCON.query(`select count(id) as c from ${TABLE_NAME} where id != ? and color = ?`, [body.id, body.color], (err, count) => {
                 if (err) {
                     callback(err)
                 } else {
                     if (count[0].c > 0) {
-                        callback("Product Category Already Found!")
+                        callback("Color Already Found!")
                     } else {
                         // body.created_at = new Date();
                         DBCON.query(`update ${TABLE_NAME} set ? where id = ?`, [body, body.id], (err, result) => {
                             if (err) {
                                 callback(err)
                             } else {
-                                callback(false, result, "Product Category Updated Successfully")
+                                callback(false, result, "Color Updated Successfully")
                             }
                         })
                     }
@@ -69,19 +70,19 @@ Product_CategoryModel.prototype = {
         } else {
             // console.log(body.name, "Entered")
             // body.created_at = new Date();
-            DBCON.query(`select count(id) as c from ${TABLE_NAME} where product_category = ?`, [body.product_category], (err, count) => {
+            DBCON.query(`select count(id) as c from ${TABLE_NAME} where color = ?`, [body.color], (err, count) => {
                 if (err) {
                     callback(err)
                 } else {
                     // console.log("DB Query Success")
                     if (count[0].c > 0) {
-                        callback("Product Category Name Already Found!")
+                        callback("Color Name Already Found!")
                     } else {
                         DBCON.query(`insert into ${TABLE_NAME} set ?`, body, (err, result) => {
                             if (err) {
                                 callback(err)
                             } else {
-                                callback(false, result, "Product Category Saved Successfully!")
+                                callback(false, result, "Color Saved Successfully!")
                             }
                         })
                     }
@@ -102,4 +103,4 @@ Product_CategoryModel.prototype = {
     }
 }
 
-module.exports = Product_CategoryModel;
+module.exports = ColorModel;

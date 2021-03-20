@@ -65,4 +65,27 @@ router.get('/getProductGroupSB', Controller.getAllProductGroupSB);
 
 
 
+
+
+
+
+
+
+
+
+
+//color
+
+router.put('/color', Controller.saveColor);
+router.get('/color', Controller.getColor);
+router.delete('/color', Controller.deleteColor);
+
+//color
+
+router.put('/masterGroup', Controller.saveMasterGroup);
+router.get('/masterGroup', Controller.getMasterGroup);
+router.delete('/masterGroup', Controller.deleteMasterGroup);
+
+
+
 module.exports = router;
