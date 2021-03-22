@@ -73,6 +73,13 @@ router.put('/size', Controller.saveSize);
 router.get('/size', Controller.getSize);
 router.delete('/size', Controller.deleteSize);
 
+//master
+router.put('/master', Controller.saveMaster);
+router.get('/master', Controller.getMaster);
+router.delete('/master', Controller.deleteMaster);
+router.get('/getMasterGroupSB', Controller.getAllMasterGroupSB);
+
+
 
 
 

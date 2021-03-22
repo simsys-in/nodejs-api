@@ -42,6 +42,10 @@ const SizeModel = require('../models/size_mas.model');
 const Size = new SizeModel();
 
 
+const MasterModel = require('../models/master_mas.model');
+const Master = new MasterModel();
+
+
 exports.saveAddLess = function (req, res) {
     const body = req.body;
     body.id = req.query.id;
@@ -403,6 +407,22 @@ exports.getAllProductGroupSB = function (req, res) {
     body.company = USER.company
     const status = body.status ? body.status : 'active'
     DBCON.query('select id as value, product_group as name from product_group ',  function (err, data) {
+        if (err) {
+            console.log(err)
+            res.sendError(err)
+        } else {
+            res.sendInfo("", data)
+        }
+    })
+}
+
+
+exports.getAllMasterGroupSB = function (req, res) {
+    const body = req.body;
+    const USER = req.user;
+    body.company = USER.company
+    const status = body.status ? body.status : 'active'
+    DBCON.query('select id as value, master_group_id as name from master_group ',  function (err, data) {
         if (err) {
             console.log(err)
             res.sendError(err)
@@ -1199,6 +1219,77 @@ exports.deleteSize = function (req, res) {
         })
     } else {
         res.sendWarning("Size Not Found! ")
+    }
+
+}
+
+
+exports.saveMaster = function (req, res) {
+    const body = req.body;
+    body.id = req.query.id;
+    Master.checkAndSaveOrUpdate(body, (err, result, msg) => {
+        if (err) {
+            console.log(err);
+            res.sendError(err);
+        } else {
+            res.sendSuccess(msg, result)
+        }
+    })
+}
+
+exports.getMaster = function (req, res) {
+    var ID = req.query.id;
+    if (issetNotEmpty(ID)) {
+        Master.find(Number(ID), function (err, data) {
+            if (err) {
+                console.log(err);
+                res.sendError(err)
+            } else {
+                res.sendInfo("", data);
+            }
+        })
+    } else {
+        Master.getAll((err, data) => {
+            if (err) {
+                console.log(err)
+                res.sendError(err)
+            } else {
+                res.sendSuccess("", data)
+            }
+        })
+    }
+}
+
+exports.getAllMasterSB = function (req, res) {
+    const body = req.body;
+    const USER = req.user;
+    body.company = USER.company
+    const status = body.status ? body.status : 'active';
+    DBCON.query('select id as value, name from master ', function (err, data) {
+        if (err) {
+            console.log(err)
+            res.sendError(err)
+        } else {
+            res.sendInfo("", data)
+        }
+    })
+}
+
+exports.deleteMaster = function (req, res) {
+    const id = req.query.id;
+    console.log("ID : " + id);
+
+    if (issetNotEmpty(id)) {
+        Master.delete(Number(id), function (err, data) {
+            if (err) {
+                console.log(err);
+                res.sendError(err)
+            } else {
+                res.sendInfo("Master Deleted Successfully!");
+            }
+        })
+    } else {
+        res.sendWarning("Master Not Found! ")
     }
 
 }
