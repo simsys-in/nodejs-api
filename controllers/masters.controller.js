@@ -12,7 +12,10 @@ const UnitModel = require('../models/unit_mas.model');
 const Unit = new UnitModel();
 const ProductModel = require('../models/product_mas.model');
 const Product = new ProductModel();
-
+const ColorModel = require('../models/color_mas.model');
+const Color = new ColorModel();
+const MasterGroupModel = require('../models/master_group_mas.model');
+const MasterGroup = new MasterGroupModel();
 
 
 
@@ -807,6 +810,161 @@ exports.deleteProduct = function (req, res) {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//Color
+
+
+exports.saveColor = function (req, res) {
+    const body = req.body;
+    body.id = req.query.id;
+    Color.checkAndSaveOrUpdate(body, (err, result, msg) => {
+        if (err) {
+            console.log(err);
+            res.sendError(err);
+        } else {
+            res.sendSuccess(msg, result)
+        }
+    })
+}
 exports.saveProcess = function (req, res) {
     const body = req.body;
     body.id = req.query.id;
@@ -820,6 +978,29 @@ exports.saveProcess = function (req, res) {
     })
 }
 
+
+exports.getColor = function (req, res) {
+    var ID = req.query.id;
+    if (issetNotEmpty(ID)) {
+        Color.find(Number(ID), function (err, data) {
+            if (err) {
+                console.log(err);
+                res.sendError(err)
+            } else {
+                res.sendInfo("", data);
+            }
+        })
+    } else {
+        Color.getAll((err, data) => {
+            if (err) {
+                console.log(err)
+                res.sendError(err)
+            } else {
+                res.sendSuccess("", data)
+            }
+        })
+    }
+}
 exports.getProcess = function (req, res) {
     var ID = req.query.id;
     if (issetNotEmpty(ID)) {
@@ -832,6 +1013,7 @@ exports.getProcess = function (req, res) {
             }
         })
     } else {
+        
         Process.getAll((err, data) => {
             if (err) {
                 console.log(err)
@@ -843,6 +1025,27 @@ exports.getProcess = function (req, res) {
     }
 }
 
+
+
+
+
+exports.deleteColor = function (req, res) {
+    const id = req.query.id;
+    console.log("ID : " + id);
+
+    if (issetNotEmpty(id)) {
+        Color.delete(Number(id), function (err, data) {
+            if (err) {
+                console.log(err);
+                res.sendError(err)
+            } else {  
+                  res.sendInfo("Color Deleted Successfully!");
+        }
+    })
+} else {
+    res.sendWarning("Color Not Found! ")
+}
+}
 exports.getAllProcessSB = function (req, res) {
     const body = req.body;
     const USER = req.user;
@@ -863,11 +1066,13 @@ exports.deleteProcess = function (req, res) {
     console.log("ID : " + id);
 
     if (issetNotEmpty(id)) {
+        
         Process.delete(Number(id), function (err, data) {
             if (err) {
                 console.log(err);
                 res.sendError(err)
             } else {
+            
                 res.sendInfo("Process Deleted Successfully!");
             }
         })
@@ -877,6 +1082,23 @@ exports.deleteProcess = function (req, res) {
 
 }
 
+
+
+//master group
+
+
+exports.saveMasterGroup = function (req, res) {
+    const body = req.body;
+    body.id = req.query.id;
+    MasterGroup.checkAndSaveOrUpdate(body, (err, result, msg) => {
+        if (err) {
+            console.log(err);
+            res.sendError(err);
+        } else {
+            res.sendSuccess(msg, result)
+        }
+    })
+}
 exports.saveSize = function (req, res) {
     const body = req.body;
     body.id = req.query.id;
@@ -888,6 +1110,30 @@ exports.saveSize = function (req, res) {
             res.sendSuccess(msg, result)
         }
     })
+}
+
+
+exports.getMasterGroup = function (req, res) {
+    var ID = req.query.id;
+    if (issetNotEmpty(ID)) {
+        MasterGroup.find(Number(ID), function (err, data) {
+            if (err) {
+                console.log(err);
+                res.sendError(err)
+            } else {
+                res.sendInfo("", data);
+            }
+        })
+    } else {
+        MasterGroup.getAll((err, data) => {
+            if (err) {
+                console.log(err)
+                res.sendError(err)
+            } else {
+                res.sendSuccess("", data)
+            }
+        })
+    }
 }
 
 exports.getSize = function (req, res) {
@@ -902,6 +1148,7 @@ exports.getSize = function (req, res) {
             }
         })
     } else {
+        
         Size.getAll((err, data) => {
             if (err) {
                 console.log(err)
@@ -912,6 +1159,32 @@ exports.getSize = function (req, res) {
         })
     }
 }
+
+
+
+
+
+exports.deleteMasterGroup = function (req, res) {
+    const id = req.query.id;
+    console.log("ID : " + id);
+
+    if (issetNotEmpty(id)) {
+        MasterGroup.delete(Number(id), function (err, data) {
+            if (err) {
+                console.log(err);
+                res.sendError(err)
+            } else {
+                 res.sendInfo("Master Group Deleted Successfully!");
+        }
+    })
+} else {
+    res.sendWarning("Master Group Not Found! ")
+}
+
+}
+
+
+
 
 exports.getAllSizeSB = function (req, res) {
     const body = req.body;
@@ -933,11 +1206,14 @@ exports.deleteSize = function (req, res) {
     console.log("ID : " + id);
 
     if (issetNotEmpty(id)) {
+       
         Size.delete(Number(id), function (err, data) {
             if (err) {
                 console.log(err);
                 res.sendError(err)
             } else {
+               
+
                 res.sendInfo("Size Deleted Successfully!");
             }
         })
