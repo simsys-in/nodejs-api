@@ -99,6 +99,12 @@ const masters = require('./routes/masters.routes');
 app.use('/masters', masters);
 
 
+const transactions = require('./routes/transactions.routes');
+
+app.use('/transactions', transactions);
+
+
+
 const reports_designer = require('./routes/reports_designer.routes');
 
 app.use('/reports_designer', reports_designer);
