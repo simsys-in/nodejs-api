@@ -31,6 +31,9 @@ const Product_Category = new Product_CategoryModel();
 const Ledger_GroupModel = require('../models/ledger_group_mas.model');
 const Ledger_Group = new Ledger_GroupModel();
 
+const Yarn_InwardModel = require('../models/yarn_inward_mas.model');
+const Yarn_Inward = new Yarn_InwardModel();
+
 const Ledger_CategoryModel = require('../models/ledger_category_mas.model');
 const Ledger_Category = new Ledger_CategoryModel();
 
@@ -422,7 +425,7 @@ exports.getAllMasterGroupSB = function (req, res) {
     const USER = req.user;
     body.company = USER.company
     const status = body.status ? body.status : 'active'
-    DBCON.query('select id as value, master_group_id as name from master_group ',  function (err, data) {
+    DBCON.query('select id as value, master_group as name from master_group ',  function (err, data) {
         if (err) {
             console.log(err)
             res.sendError(err)
@@ -581,6 +584,20 @@ exports.getAllUnitSB = function (req, res) {
     body.company = USER.company
     const status = body.status ? body.status : 'active'
     DBCON.query('select id as value, unit as name from unit ', function (err, data) {
+        if (err) {
+            console.log(err)
+            res.sendError(err)
+        } else {
+            res.sendInfo("", data)
+        }
+    })
+}
+exports.getAllOrderSB = function (req, res) {
+    const body = req.body;
+    const USER = req.user;
+    body.company = USER.company
+    const status = body.status ? body.status : 'active'
+    DBCON.query('select id as value, order_no as name from order_program ', function (err, data) {
         if (err) {
             console.log(err)
             res.sendError(err)
@@ -1051,7 +1068,7 @@ exports.getAllProcessSB = function (req, res) {
     const USER = req.user;
     body.company = USER.company
     const status = body.status ? body.status : 'active';
-    DBCON.query('select id as value, name from process ', function (err, data) {
+    DBCON.query('select id as value, process as name from process ', function (err, data) {
         if (err) {
             console.log(err)
             res.sendError(err)
@@ -1060,6 +1077,34 @@ exports.getAllProcessSB = function (req, res) {
         }
     })
 }
+exports.getAllLedgerNameSB = function (req, res) {
+    const body = req.body;
+    const USER = req.user;
+    body.company = USER.company
+    const status = body.status ? body.status : 'active';
+    DBCON.query('select id as value, ledger as name from ledger ', function (err, data) {
+        if (err) {
+            console.log(err)
+            res.sendError(err)
+        } else {
+            res.sendInfo("", data)
+        }
+    })
+}
+// exports.getAllFabricsSB = function (req, res) {
+//     const body = req.body;
+//     const USER = req.user;
+//     body.company = USER.company
+//     const status = body.status ? body.status : 'active';
+//     DBCON.query('select id as value, name from fabrics ', function (err, data) {
+//         if (err) {
+//             console.log(err)
+//             res.sendError(err)
+//         } else {
+//             res.sendInfo("", data)
+//         }
+//     })
+// }
 
 exports.deleteProcess = function (req, res) {
     const id = req.query.id;
@@ -1293,3 +1338,118 @@ exports.deleteMaster = function (req, res) {
     }
 
 }
+
+exports.saveYarn_Inward = function (req, res) {
+    const body = req.body;
+    body.id = req.query.id;
+    Yarn_Inward.checkAndSaveOrUpdate(body, (err, result, msg) => {
+        if (err) {
+            console.log(err);
+            res.sendError(err);
+        } else {
+            res.sendSuccess(msg, result)
+        }
+    })
+}
+
+exports.getYarn_Inward = function (req, res) {
+    var ID = req.query.id;
+    if (issetNotEmpty(ID)) {
+        Yarn_Inward.find(Number(ID), function (err, data) {
+            if (err) {
+                console.log(err);
+                res.sendError(err)
+            } else {
+                res.sendInfo("", data);
+            }
+        })
+    } else {
+        Yarn_Inward.getAll((err, data) => {
+            if (err) {
+                console.log(err)
+                res.sendError(err)
+            } else {
+                res.sendSuccess("", data)
+            }
+        })
+    }
+}
+
+exports.getAllYarn_InwardSB = function (req, res) {
+    const body = req.body;
+    const USER = req.user;
+    body.company = USER.company
+    const status = body.status ? body.status : 'active'
+    DBCON.query('select id as value, name from yarn_inward ', function (err, data) {
+        if (err) {
+            console.log(err)
+            res.sendError(err)
+        } else {
+            res.sendInfo("", data)
+        }
+    })
+}
+
+exports.deleteYarn_Inward = function (req, res) {
+    const id = req.query.id;
+    console.log("ID : " + id);
+
+    if (issetNotEmpty(id)) {
+        Yarn_Inward.delete(Number(id), function (err, data) {
+            if (err) {
+                console.log(err);
+                res.sendError(err)
+            } else {
+                res.sendInfo("Yarn Inward Deleted Successfully!");
+            }
+        })
+    } else {
+        res.sendWarning("Yarn Inward Not Found! ")
+    }
+
+}
+
+exports.getAllLedgerCategorySB = function (req, res) {
+    const body = req.body;
+    const USER = req.user;
+    body.company = USER.company
+    const status = body.status ? body.status : 'active'
+    DBCON.query('select id as value, ledger_category as name from ledger_category ', function (err, data) {
+        if (err) {
+            console.log(err)
+            res.sendError(err)
+        } else {
+            res.sendInfo("", data)
+        }
+    })
+}
+exports.getAllFabricsSB = function (req, res) {
+    const body = req.body;
+    const USER = req.user;
+    body.company = USER.company
+    const status = body.status ? body.status : 'active'
+    DBCON.query('select product.id as value, product.product as name from product left join product_category on product.product_category_id = product_category.id where product_category = "FABRIC" ', function (err, data) {
+        if (err) {
+            console.log(err)
+            res.sendError(err)
+        } else {
+            res.sendInfo("", data)
+        }
+    })
+}
+exports.getAllLedgerGroupSB = function (req, res) {
+    const body = req.body;
+    const USER = req.user;
+    body.company = USER.company
+    const status = body.status ? body.status : 'active'
+    DBCON.query('select id as value, ledger_group as name from ledger_group ', function (err, data) {
+        if (err) {
+            console.log(err)
+            res.sendError(err)
+        } else {
+            res.sendInfo("", data)
+        }
+    })
+}
+
+

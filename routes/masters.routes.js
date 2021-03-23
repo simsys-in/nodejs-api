@@ -32,6 +32,11 @@ router.put('/ledger_group', Controller.saveLedger_Group);
 router.get('/ledger_group', Controller.getLedger_Group);
 router.delete('/ledger_group', Controller.deleteLedger_Group);
 
+//yarninward
+router.put('/yarn_inward', Controller.saveYarn_Inward);
+router.get('/yarn_inward', Controller.getYarn_Inward);
+router.delete('/yarn_inward', Controller.deleteYarn_Inward);
+
 //ledger_category
 router.put('/ledger_category', Controller.saveLedger_Category);
 router.get('/ledger_category', Controller.getLedger_Category);
@@ -45,6 +50,8 @@ router.get('/getProductCategorySB', Controller.getAllProduct_CategorySB);
 router.put('/product_group', Controller.saveProductGroup);
 router.get('/product_group', Controller.getProductGroup);
 router.delete('/product_group', Controller.deleteProductGroup);
+
+
 
 
 //unit
@@ -78,6 +85,15 @@ router.put('/master', Controller.saveMaster);
 router.get('/master', Controller.getMaster);
 router.delete('/master', Controller.deleteMaster);
 router.get('/getMasterGroupSB', Controller.getAllMasterGroupSB);
+
+
+router.get('/getLedgerNameSB', Controller.getAllLedgerNameSB);
+router.get('/getProcessSB', Controller.getAllProcessSB);
+router.get('/getFabricsSB', Controller.getAllFabricsSB);
+router.get('/getOrderSB', Controller.getAllOrderSB);
+
+router.get('/getLedgerCategorySB', Controller.getAllLedgerCategorySB);
+router.get('/getLedgerGroupSB', Controller.getAllLedgerGroupSB);
 
 
 
