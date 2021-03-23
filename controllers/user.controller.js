@@ -1,7 +1,8 @@
 const jwt = require("jsonwebtoken");
 const DBCON = require('../db_config');
 const UserMasModel = require('../models/users.model');
-const md5 = require('md5') 
+const md5 = require('md5');
+const bcrypt = require('bcryptjs');
 
 const Users = new UserMasModel();
 
@@ -29,7 +30,9 @@ exports.login = function (req, res) {
                 if (result.length > 0) {
                     var user = Object.assign({}, result[0])
                     console.log(user.password, md5(password), password)
-                    if (password === user.password || md5(password) === user.password) {
+                    if(bcrypt.compareSync(password, user.password))
+                    {
+                    // if (password === user.password || md5(password) === user.password) {
                         var payload = user;
                         console.log("pay", user, payload)
                         let token = jwt.sign(payload, process.env.SIGN_TOKEN, {
@@ -40,6 +43,10 @@ exports.login = function (req, res) {
                         });
                         user.token = token;
                         user.userMenuList = [];
+                        res.header("Access-Control-Allow-Credentials", "true");
+                        // res.header("Access-Control-Allow-Origin", "*");
+                        // res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
+                        // res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
                         res.cookie("refreshToken", refreshToken)
                         res.cookie("token", token, {
                             httpOnly: true
