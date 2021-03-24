@@ -31,7 +31,7 @@ ProductGroupModel.prototype = {
         });
     },
     getAll : function(callback){
-        pool.query(`select * from ${TABLE_NAME}`, function(err, result){
+        pool.query(`select * from ${TABLE_NAME} order by id desc`, function(err, result){
 
             if(err)
             {
