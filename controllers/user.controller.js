@@ -1,5 +1,8 @@
 const jwt = require("jsonwebtoken");
 const DBCON = require('../db_config');
+const UserMasModel = require('../models/users.model');
+const md5 = require('md5');
+const bcrypt = require('bcryptjs');
 const {
     issetNotEmpty
 } = require('../helpers/common');
@@ -19,6 +22,7 @@ const User_Group = new User_GroupModel();
 
 const UserModel = require('../models/users_mas.model');
 const User = new UserModel();
+
 
 exports.login = function (req, res) {
     console.log(req.body)
@@ -77,8 +81,6 @@ exports.login = function (req, res) {
         })
     });
 }
-
-
 exports.saveMenu_Master = function (req, res) {
     const body = req.body;
     body.id = req.query.id;
@@ -295,7 +297,7 @@ exports.getAllUserGroupSB = function (req, res) {
     const USER = req.user;
     body.company = USER.company
     const status = body.status ? body.status : 'active'
-    DBCON.query('select id as value, user_group_id as name from users ', function (err, data) {
+    DBCON.query('select id as value, user_group as name from user_group ', function (err, data) {
         if (err) {
             console.log(err)
             res.sendError(err)

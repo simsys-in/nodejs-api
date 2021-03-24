@@ -4,11 +4,11 @@ const {
     issetNotEmpty
 } = require('../helpers/common');
 
-function Yarn_InwardModel() {};
+function Yarn_ReturnModel() {};
 
-const TABLE_NAME = 'yarn_inward';
+const TABLE_NAME = 'yarn_return';
 
-Yarn_InwardModel.prototype = {
+Yarn_ReturnModel.prototype = {
     find: function (match = null, callback) {
         if (match) {
             var field = Number.isInteger(match) ? 'id' : 'name';
@@ -31,7 +31,7 @@ Yarn_InwardModel.prototype = {
         });
     },
     getAll : function(callback){
-        pool.query(`select  ${TABLE_NAME}.id, ledger.ledger, ${TABLE_NAME}.vou_date, order_program.order_no, ${TABLE_NAME}.narration, process.process, ${TABLE_NAME}.refno from ${TABLE_NAME} left join ledger on ledger.id = yarn_inward.ledger_id  left join process on process.id = yarn_inward.process_id left join order_program on order_program.id = yarn_inward.order_id `, function(err, result){
+        pool.query(`select  ${TABLE_NAME}.id, ledger.ledger, ${TABLE_NAME}.vou_date, order_program.order_no, ${TABLE_NAME}.narration, process.process, ${TABLE_NAME}.refno from ${TABLE_NAME} left join ledger on ledger.id = yarn_return.ledger_id  left join process on process.id = yarn_return.process_id left join order_program on order_program.id = yarn_return.order_id `, function(err, result){
             if(err)
             {
                 callback(err)
@@ -48,19 +48,19 @@ Yarn_InwardModel.prototype = {
         // console.log(body.id, "Entered")
         // body.updated_at = new Date();
         if (issetNotEmpty(body.id)) {
-            DBCON.query(`select count(id) as c from ${TABLE_NAME} where id != ? and yarn_inward = ?`, [body.id, body.name], (err, count) => {
+            DBCON.query(`select count(id) as c from ${TABLE_NAME} where id != ? and yarn_return = ?`, [body.id, body.name], (err, count) => {
                 if (err) {
                     callback(err)
                 } else {
                     if (count[0].c > 0) {
-                        callback("Yarn inward Already Found!")
+                        callback("Yarn return Already Found!")
                     } else {
                         // body.created_at = new Date();
                         DBCON.query(`update ${TABLE_NAME} set ? where id = ?`, [body, body.id], (err, result) => {
                             if (err) {
                                 callback(err)
                             } else {
-                                callback(false, result, "Yarn inward Updated Successfully")
+                                callback(false, result, "Yarn return Updated Successfully")
                             }
                         })
                     }
@@ -69,15 +69,15 @@ Yarn_InwardModel.prototype = {
         } else {
             // console.log(body.name, "Entered")
             // body.created_at = new Date();
-            // DBCON.query(`select count(id) as c from ${TABLE_NAME} where yarn_inward = ?`, [body.yarn_inward], (err, count) => {
+            // DBCON.query(`select count(id) as c from ${TABLE_NAME} where yarn_return = ?`, [body.yarn_return], (err, count) => {
             //     if (err) {
             //         callback(err)
             //     } else {
             //         // console.log("DB Query Success")
             //         if (count[0].c > 0) {
-            //             callback("Yarn inward Name Already Found!")
+            //             callback("Yarn return Name Already Found!")
             //         } else {
-                        var yarn_inward_details = {
+                        var yarn_return = {
                             ledger_id : body.ledger_id,
                             vou_date : body.vou_date,
                             order_id : body.order_id,
@@ -86,16 +86,14 @@ Yarn_InwardModel.prototype = {
                             refno : body.refno
 
                         }
-                        DBCON.query(`insert into ${TABLE_NAME} set ?`, yarn_inward_details, (err, result) => {
-                            // if(key === body.yarn_inward.length - 1)
+                        DBCON.query(`insert into ${TABLE_NAME} set ?`, yarn_return, (err, result) => {
                             if (err) {
                                 callback(err)
                             } else {
                                 console.log(result)
-                                body.yarn_inward_inventory.map((item, index) => {
-                                    var yarn_inward_inventory = {
-                                        yarn_inward_id : result.insertId,
-                                        vou_id : result.vou_id,
+                                body.yarn_return_inventory.map((item, index) => {
+                                    var yarn_return_inventory = {
+                                        vou_id : result.insertId,
                                         fabric_id : item.favric_id,
                                         gsm : item.gsm,
                                        qty_kg : item.qty_kg,
@@ -103,10 +101,10 @@ Yarn_InwardModel.prototype = {
                                        qty_bag : item.qty_bag,
                                        qtybag_per : item.qtybag_per,
                                     }
-                                    DBCON.query(`insert into yarn_inward_inventory set ?`, yarn_inward_inventory);
-                                    if(index === body.yarn_inward_inventory.length - 1)
+                                    DBCON.query(`insert into yarn_return_inventory set ?`, yarn_return_inventory);
+                                    if(index === body.yarn_return_inventory.length - 1)
                                     {
-                                        callback(false, result, "Yarn inward Saved Successfully!");
+                                        callback(false, result, "Product  Saved Successfully!");
                                     }
                             })
                             }
@@ -129,4 +127,4 @@ Yarn_InwardModel.prototype = {
     }
 }
 
-module.exports = Yarn_InwardModel;
+module.exports = Yarn_ReturnModel;

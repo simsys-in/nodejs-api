@@ -31,7 +31,7 @@ UserModel.prototype = {
         });
     },
     getAll : function(callback){
-        pool.query(`select * from ${TABLE_NAME}`, function(err, result){
+        pool.query(`select ${TABLE_NAME}.id, ${TABLE_NAME}.name, ${TABLE_NAME}.email, ${TABLE_NAME}.password, ${TABLE_NAME}.user_group_id, ${TABLE_NAME}.mobile from ${TABLE_NAME} left join user_group on user_group.id = users.user_group_id`, function(err, result){
             if(err)
             {
                 callback(err)
@@ -48,14 +48,14 @@ UserModel.prototype = {
         // console.log(body.id, "Entered")
         // body.updated_at = new Date();
         if (issetNotEmpty(body.id)) {
-            // DBCON.query(`select count(id) as c from ${TABLE_NAME} where id != ? and user = ?`, [body.id, body.name], (err, count) => {
-            //     if (err) {
-            //         callback(err)
-            //     } else {
-            //         if (count[0].c > 0) {
-            //             callback("User Already Found!")
-            //         } else {
-                        // body.created_at = new Date();
+            DBCON.query(`select count(id) as c from ${TABLE_NAME} where id != ? and name = ?`, [body.id, body.name], (err, count) => {
+                if (err) {
+                    callback(err)
+                } else {
+                    if (count[0].c > 0) {
+                        callback("User Already Found!")
+                    } else {
+                        body.created_at = new Date();
                         DBCON.query(`update ${TABLE_NAME} set ? where id = ?`, [body, body.id], (err, result) => {
                             if (err) {
                                 callback(err)
@@ -63,20 +63,20 @@ UserModel.prototype = {
                                 callback(false, result, "User Updated Successfully")
                             }
                         })
-            //         }
-            //     }
-            // })
+                    }
+                }
+            })
         } else {
-            // console.log(body.name, "Entered")
-            // body.created_at = new Date();
-            // DBCON.query(`select count(id) as c from ${TABLE_NAME} where user = ?`, [body.name], (err, count) => {
-            //     if (err) {
-            //         callback(err)
-            //     } else {
-            //         // console.log("DB Query Success")
-            //         if (count[0].c > 0) {
-            //             callback("User Name Already Found!")
-            //         } else {
+            console.log(body.name, "Entered")
+            body.created_at = new Date();
+            DBCON.query(`select count(id) as c from ${TABLE_NAME} where name = ?`, [body.name], (err, count) => {
+                if (err) {
+                    callback(err)
+                } else {
+                    // console.log("DB Query Success")
+                    if (count[0].c > 0) {
+                        callback("User Name Already Found!")
+                    } else {
                         DBCON.query(`insert into ${TABLE_NAME} set ?`, body, (err, result) => {
                             if (err) {
                                 callback(err)
@@ -84,9 +84,9 @@ UserModel.prototype = {
                                 callback(false, result, "User Saved Successfully!")
                             }
                         })
-            //         }
-            //     }
-            // })
+                    }
+                }
+            })
         }
     },
     delete : function(id, callback){
