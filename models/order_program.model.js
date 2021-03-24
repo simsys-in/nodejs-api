@@ -17,7 +17,7 @@ OrderProgramModel.prototype = {
         let sql = `SELECT * FROM order_program WHERE id = ?`;
         console.log(sql);
         
-        
+        let sql1 = `SELECT * FROM order_process WHERE order_process.order_id = ?`;
         
          
         pool.query(sql, match, function (err, result) {
@@ -42,21 +42,24 @@ OrderProgramModel.prototype = {
                     order_process : []
                     
                 }
-                DBCON.query(`SELECT * FROM order_process WHERE order_process_id = ?`);
+                pool.query(sql1, match, function (err, result1) {
                     if(err){
                         callback(err)
                     }else{
-                        callback(fasle,result[0].order_process=result[1])
-                    }            
+                        order_program.order_process = result1;
+                        callback(false,order_program);
+                    }
+                })
+                               
                 
                 
             }
 
-            if (result.length) {
-                callback(false,result);
-            } else {
-                callback(false,null);
-            }
+            // if (result.length) {
+            //     callback(false,result);
+            // } else {
+            //     callback(false,null);
+            // }
         });
     },
     getAll : function(callback){
