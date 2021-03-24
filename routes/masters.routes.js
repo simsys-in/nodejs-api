@@ -119,6 +119,23 @@ router.put('/masterGroup', Controller.saveMasterGroup);
 router.get('/masterGroup', Controller.getMasterGroup);
 router.delete('/masterGroup', Controller.deleteMasterGroup);
 
+//yarn invoice
+
+router.put('/yarn_invoice', Controller.saveYarn_Invoice);
+router.get('/yarn_invoice', Controller.getYarn_Invoice);
+router.delete('/yarn_invoice', Controller.deleteYarn_Invoice);
+
+// yarn outward
+router.put('/yarn_outward', Controller.saveYarn_Outward);
+router.get('/yarn_outward', Controller.getYarn_Outward);
+router.delete('/yarn_outward', Controller.deleteYarn_Outward);
+
+//yarn return
+router.put('/yarn_return', Controller.saveYarn_Return);
+router.get('/yarn_return', Controller.getYarn_Return);
+router.delete('/yarn_return', Controller.deleteYarn_Return);
+router.get('/getColorSB', Controller.getAllColorSB);
+
 
 
 module.exports = router;
