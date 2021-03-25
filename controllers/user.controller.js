@@ -6,9 +6,9 @@ const bcrypt = require('bcryptjs');
 const {
     issetNotEmpty
 } = require('../helpers/common');
-const UserMasModel = require('../models/users.model');
-const md5 = require('md5');
-const bcrypt = require('bcryptjs');
+// const UserMasModel = require('../models/users.model');
+// const md5 = require('md5');
+// const bcrypt = require('bcryptjs');
 
 const Users = new UserMasModel();
 
@@ -50,26 +50,38 @@ exports.login = function (req, res) {
                     console.log(user.password, md5(password), password)
                     if(bcrypt.compareSync(password, user.password))
                     {
+                        DBCON.query(`select menu_master.menu as name, menu_master.menu_route as url, menu_master.icon, menu_master.sort_order, user_group.user_group, user_group_permission.view_permission, user_group_permission.delete_permission, user_group_permission.add_permission, user_group_permission.edit_permission from  user_group left join user_group_permission on user_group_permission.user_group_id = user_group.id left join menu_master on menu_master.id = user_group_permission.menu_id where user_group.id = ${user.user_group_id}  order by menu_master.sort_order`, (err, menuData) => {
+                            if(err)
+                            {
+                                console.log(err);
+                                res.sendError(err);
+                            }
+                            else{
+                                var menuList = menuData; 
+                                var payload = user;
+                                console.log("pay", user, payload)
+                                let token = jwt.sign(payload, process.env.SIGN_TOKEN, {
+                                    expiresIn: "4h",
+                                });
+                                let refreshToken = jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET, {
+                                    expiresIn: "1d"
+                                });
+                                user.token = token;
+                                user.menuList = menuList;
+                                user.userMenuList = [];
+                                res.header("Access-Control-Allow-Credentials", "true");
+                                // res.header("Access-Control-Allow-Origin", "*");
+                                // res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
+                                // res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+                                res.cookie("refreshToken", refreshToken)
+                                res.cookie("token", token, {
+                                    httpOnly: true
+                                }).sendSuccess("Login Success", user);
+        
+                            }
+                        })
                     // if (password === user.password || md5(password) === user.password) {
-                        var payload = user;
-                        console.log("pay", user, payload)
-                        let token = jwt.sign(payload, process.env.SIGN_TOKEN, {
-                            expiresIn: "4h",
-                        });
-                        let refreshToken = jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET, {
-                            expiresIn: "1d"
-                        });
-                        user.token = token;
-                        user.userMenuList = [];
-                        res.header("Access-Control-Allow-Credentials", "true");
-                        // res.header("Access-Control-Allow-Origin", "*");
-                        // res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
-                        // res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-                        res.cookie("refreshToken", refreshToken)
-                        res.cookie("token", token, {
-                            httpOnly: true
-                        }).sendSuccess("Login Success", user);
-
+                       
 
                     } else {
                         res.sendWarning("Password is not matching")
@@ -115,6 +127,20 @@ exports.getMenu_Master = function (req, res) {
             }
         })
     }
+}
+
+exports.getAllMenusForUserPermission = function (req, res) {
+    const user_group_id = req.query.user_group_id ? req.query.user_group_id : null;
+    DBCON.query(`select menu_master.menu, menu_master.id as menu_id, ifnull(user_group_permission.view_permission,0) as view_permission, ifnull(user_group_permission.add_permission,0) as add_permission, ifnull(user_group_permission.edit_permission,0) as edit_permission, ifnull(user_group_permission.delete_permission,0) as delete_permission, menu_master.icon, user_group_permission.type from (select * from menu_master)menu_master left join user_group_permission on user_group_permission.menu_id = menu_master.id and user_group_permission.user_group_id = ${user_group_id}`, (err, result) => {
+        if(err)
+        {
+            console.log(err);
+            res.sendError(err)
+        }
+        else{
+            res.sendInfo("", result);
+        }
+    })
 }
 
 exports.getAllMenu_MasterSB = function (req, res) {

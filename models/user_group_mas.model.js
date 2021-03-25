@@ -18,25 +18,23 @@ User_GroupModel.prototype = {
         console.log(sql);
 
         pool.query(sql, match, function (err, result) {
-            if (err){ 
+            if (err) {
                 // throw err
                 callback(err)
             }
 
             if (result.length) {
-                callback(false,result);
+                callback(false, result);
             } else {
-                callback(false,null);
+                callback(false, null);
             }
         });
     },
-    getAll : function(callback){
-        pool.query(`select * from ${TABLE_NAME}`, function(err, result){
-            if(err)
-            {
+    getAll: function (callback) {
+        pool.query(`select * from ${TABLE_NAME}`, function (err, result) {
+            if (err) {
                 callback(err)
-            }
-            else{
+            } else {
                 result.map(item => {
                     item.key = item.id;
                 })
@@ -45,57 +43,84 @@ User_GroupModel.prototype = {
         })
     },
     checkAndSaveOrUpdate: function (body, callback) {
-        // console.log(body.id, "Entered")
-        // body.updated_at = new Date();
         if (issetNotEmpty(body.id)) {
-            // DBCON.query(`select count(id) as c from ${TABLE_NAME} where id != ? and user_group = ?`, [body.id, body.name], (err, count) => {
-            //     if (err) {
-            //         callback(err)
-            //     } else {
-            //         if (count[0].c > 0) {
-            //             callback("User group Already Found!")
-            //         } else {
-                        // body.created_at = new Date();
-                        DBCON.query(`update ${TABLE_NAME} set ? where id = ?`, [body, body.id], (err, result) => {
+            
+            const USER_GROUP = {
+                user_group: body.user_group,
+                state_id: 0,
+                id : body.id
+            }
+            DBCON.query(`update ${TABLE_NAME} set ? where id= ?`, [USER_GROUP, body.id], (err, result) => {
+                if (err) {
+                    callback(err)
+                } else {
+                    const USER_GROUP_ID = result.insertId;
+                    body.menuList.map((menu, index) => {
+                        const USER_GROUP_PERMISSION = {
+                            user_group_id: USER_GROUP_ID,
+                            menu_id: menu.menu_id,
+                            view_permission: menu.view_permission,
+                            add_permission: menu.add_permission,
+                            delete_permission: menu.delete_permission,
+                            edit_permission: menu.edit_permission
+                        }
+
+                        DBCON.query(`insert into user_group_permission set ? where user_group_id = ?`, [USER_GROUP_PERMISSION, body.id], (err, data) => {
                             if (err) {
-                                callback(err)
+                                console.log(err);
+                                callback(err);
                             } else {
-                                callback(false, result, "User group Updated Successfully")
+                                if (index === body.menuList.length - 1) {
+                                    // callback()
+                                    callback(false, result, "User group Saved Successfully!")
+                                }
                             }
                         })
-            //         }
-            //     }
-            // })
+                    })
+                }
+            })
+        
         } else {
-            // console.log(body.name, "Entered")
-            // body.created_at = new Date();
-            // DBCON.query(`select count(id) as c from ${TABLE_NAME} where user_group = ?`, [body.name], (err, count) => {
-            //     if (err) {
-            //         callback(err)
-            //     } else {
-            //         // console.log("DB Query Success")
-            //         if (count[0].c > 0) {
-            //             callback("User group Name Already Found!")
-            //         } else {
-                        DBCON.query(`insert into ${TABLE_NAME} set ?`, body, (err, result) => {
+            const USER_GROUP = {
+                user_group: body.user_group,
+                state_id: 0
+            }
+            DBCON.query(`insert into ${TABLE_NAME} set ?`, USER_GROUP, (err, result) => {
+                if (err) {
+                    callback(err)
+                } else {
+                    const USER_GROUP_ID = result.insertId;
+                    body.menuList.map((menu, index) => {
+                        const USER_GROUP_PERMISSION = {
+                            user_group_id: USER_GROUP_ID,
+                            menu_id: menu.menu_id,
+                            view_permission: menu.view_permission,
+                            add_permission: menu.add_permission,
+                            delete_permission: menu.delete_permission,
+                            edit_permission: menu.edit_permission
+                        }
+
+                        DBCON.query(`insert into user_group_permission set ? `, USER_GROUP_PERMISSION, (err, data) => {
                             if (err) {
-                                callback(err)
+                                console.log(err);
+                                callback(err);
                             } else {
-                                callback(false, result, "User group Saved Successfully!")
+                                if (index === body.menuList.length - 1) {
+                                    // callback()
+                                    callback(false, result, "User group Saved Successfully!")
+                                }
                             }
                         })
-            //         }
-            //     }
-            // })
+                    })
+                }
+            })
         }
     },
-    delete : function(id, callback){
-        pool.query(`delete from ${TABLE_NAME} where id = ?`, id, (err,result) => {
-            if(err)
-            {
+    delete: function (id, callback) {
+        pool.query(`delete from ${TABLE_NAME} where id = ?`, id, (err, result) => {
+            if (err) {
                 callback(err)
-            }
-            else{
+            } else {
                 callback(false, result)
             }
         })

@@ -20,6 +20,7 @@ router.delete('/menu_master', Controller.deleteMenu_Master);
 router.put('/user_group', Controller.saveUser_Group);
 router.get('/user_group', Controller.getUser_Group);
 router.delete('/user_group', Controller.deleteUser_Group);
+router.get('/getAllMenusForUserPermission', Controller.getAllMenusForUserPermission);
 
 router.put('/user', Controller.saveUser);
 router.get('/user', Controller.getUser);
