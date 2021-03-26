@@ -819,7 +819,7 @@ exports.deleteProduct = function (req, res) {
     console.log("ID : " + id);
 
     if (issetNotEmpty(id)) {
-        Unit.delete(Number(id), function (err, data) {
+        Product.delete(Number(id), function (err, data) {
             if (err) {
                 console.log(err);
                 res.sendError(err)

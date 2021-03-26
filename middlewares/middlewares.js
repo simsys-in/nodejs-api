@@ -69,7 +69,7 @@ function common(req, res, next) {
 const authenticateJWT = (req, res, next) => {
   //check for anonymous URLs
   let publicUrl = (publicUri.indexOf(req.originalUrl) > -1 ? true : false);
-  
+
 
   if (!publicUrl) {
 
@@ -100,6 +100,9 @@ const authenticateJWT = (req, res, next) => {
                 console.log(process.env.DB_NAME + " DB Connected")
               });
 
+              // res.header("Access-Control-Allow-Origin", "*");
+              // res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
+              // res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
               next();
               // })
             }
@@ -113,11 +116,13 @@ const authenticateJWT = (req, res, next) => {
             database: process.env.DB_NAME,
           }, (err) => {
             if (err) throw err;
-            if(process.env.DB_NAME)
-            {
+            if (process.env.DB_NAME) {
               console.log(process.env.DB_NAME + " DB Connected")
             }
           });
+          // res.header("Access-Control-Allow-Origin", "*");
+          // res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
+          // res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
           next();
           // })
         }

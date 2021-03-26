@@ -31,9 +31,11 @@ app.use(expressSession({
         secure: true
     }
 }));
+// app.options('*', cors()) 
 app.use(cors({
-    credentials: true,
-    origin: process.env.FRONT_END_URL
+    origin: process.env.FRONT_END_URL,
+    optionsSuccessStatus: 200, // For legacy browser support
+    methods : "PUT, GET, POST, DELETE"
 }));
 app.use(cookieParser());
 
@@ -98,6 +100,10 @@ const masters = require('./routes/masters.routes');
 
 app.use('/masters', masters);
 
+
+const transactions = require('./routes/transactions.routes');
+
+app.use('/transactions', transactions);
 
 
 

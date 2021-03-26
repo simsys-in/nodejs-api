@@ -3,6 +3,7 @@ const DBCON = require('../db_config');
 const {
     issetNotEmpty
 } = require('../helpers/common');
+const bcrypt = require('bcryptjs');
 
 function UserModel() {};
 
@@ -44,11 +45,10 @@ UserModel.prototype = {
             }
         })
     },
-    checkAndSaveOrUpdate: function (body, callback) {
-        // console.log(body.id, "Entered")
-        // body.updated_at = new Date();
+    checkAndSaveOrUpdate: async function (body, callback) {
+        body.password = await bcrypt.hash(body.password, 12);
         if (issetNotEmpty(body.id)) {
-            DBCON.query(`select count(id) as c from ${TABLE_NAME} where id != ? and name = ?`, [body.id, body.name], (err, count) => {
+            DBCON.query(`select count(id) as c from ${TABLE_NAME} where id != ? and email = ?`, [body.id, body.email], (err, count) => {
                 if (err) {
                     callback(err)
                 } else {

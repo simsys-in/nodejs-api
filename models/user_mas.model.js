@@ -50,7 +50,7 @@ User.prototype = {
         });
     },
     getAll: function (callback) {
-        let sql = `select * from ${TABLE_NAME}`;
+        let sql = `select * from ${TABLE_NAME} order by id desc`;
         pool.query(sql, function (err, result) {
             if (err) throw err;
             callback(result)
