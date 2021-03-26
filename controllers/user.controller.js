@@ -131,7 +131,15 @@ exports.getMenu_Master = function (req, res) {
 
 exports.getAllMenusForUserPermission = function (req, res) {
     const user_group_id = req.query.user_group_id ? req.query.user_group_id : null;
-    DBCON.query(`select menu_master.menu, menu_master.id as menu_id, ifnull(user_group_permission.view_permission,0) as view_permission, ifnull(user_group_permission.add_permission,0) as add_permission, ifnull(user_group_permission.edit_permission,0) as edit_permission, ifnull(user_group_permission.delete_permission,0) as delete_permission, menu_master.icon, user_group_permission.type from (select * from menu_master)menu_master left join user_group_permission on user_group_permission.menu_id = menu_master.id and user_group_permission.user_group_id = ${user_group_id}`, (err, result) => {
+    var query = `select menu_master.menu, menu_master.id as menu_id, ifnull(user_group_permission.view_permission,0) as view_permission, ifnull(user_group_permission.add_permission,0) as add_permission, ifnull(user_group_permission.edit_permission,0) as edit_permission, ifnull(user_group_permission.delete_permission,0) as delete_permission, menu_master.icon, user_group_permission.type from (select * from menu_master)menu_master left join user_group_permission on user_group_permission.menu_id = menu_master.id `;
+
+    // if(issetNotEmpty(user_group_id))
+    // {
+        query += `  and user_group_permission.user_group_id = '${user_group_id}'`;
+    // }
+    query += ` group by menu_master.id`
+    console.log(query);
+    DBCON.query(query, (err, result) => {
         if(err)
         {
             console.log(err);
