@@ -4,6 +4,8 @@ const {
     issetNotEmpty
 } = require('../helpers/common');
 
+const moment = require('moment');
+
 function OrderProgramModel() {};
 
 const TABLE_NAME = 'order_program';
@@ -63,7 +65,7 @@ OrderProgramModel.prototype = {
         });
     },
     getAll : function(callback){
-        pool.query(`select * from ${TABLE_NAME}`, function(err, result){
+        pool.query(`select *,DATE_FORMAT(due_date, '%d-%m-%y') as due_date, DATE_FORMAT(vou_date, '%d-%m-%y') as vou_date from ${TABLE_NAME}`, function(err, result){
 
             if(err)
             {
@@ -81,24 +83,52 @@ OrderProgramModel.prototype = {
         // console.log(body.id, "Entered")
         // body.updated_at = new Date();
         if (issetNotEmpty(body.id)) {
-            // DBCON.query(`select count(id) as c from ${TABLE_NAME} where id != ? and order_program = ?`, [body.id, body.order_no], (err, count) => {
-            //     if (err) {
-            //         callback(err)
-            //     } else {
-            //         if (count[0].c > 0) {
-            //             callback("Order Program  Already Found!")
-            //         } else {
-                        // body.created_at = new Date();
-                        DBCON.query(`update ${TABLE_NAME} set ? where id = ?`, [body, body.id], (err, result) => {
-                            if (err) {
-                                callback(err)
-                            } else {
-                                callback(false, result, "Order Program  Updated Successfully")
-                            }
-                        })
-            //         }
-            //     }
-            // })
+            var order_details = {
+                order_no : body.order_no,
+                due_date: body.due_date,
+                vou_date : body.orderDate,
+                size_id : body.size_id,
+                style_id : body.style_id,
+                status_id : body.status_id,
+                fabric_id : body.fabric_id,
+                product_id : 0,
+                dia : body.dia,
+                gsm : body.gsm,
+                menu_id : 0,
+            
+            }
+
+            DBCON.query(`update ${TABLE_NAME} set ? where id = ?`, [order_details, body.id], (err, result) => {
+                if (err) {
+                    callback(err)
+                } else {
+                    console.log(result);
+                    DBCON.query(`delete from order_process where order_id = ?`, body.id, (err, deletedData) =>  {
+                        if(err)
+                        {
+                            callback(err)
+                        }
+                        else{
+                            body.order_process.map((item, index) => {
+                                var order_process = {
+                                    order_id : body.id,
+                                    process_id : item.process_id,
+                                    ledger_id : item.ledger_id,
+                                    rate : item.rate,
+                                    waste : item.waste,
+                                }
+        
+                                DBCON.query(`insert into order_process set ?`, order_process);
+                                if(index === body.order_process.length - 1)
+                                        {
+                                            callback(false, result, "Order Program  Updated Successfully!");
+                                        }
+                            })
+                        }
+                    })
+
+                }
+            })
         } else {
             // DBCON.query(`select count(id) as c from ${TABLE_NAME} where order_program = ?`, [body.order_no], (err, count) => {
             //     if (err) {
@@ -157,10 +187,19 @@ OrderProgramModel.prototype = {
                 callback(err)
             }
             else{
-                callback(false, result)
+                pool.query(`delete from order_process where order_id = ?`, id, (err,result1) => {
+                    if(err)
+                    {
+                        callback(err)
+                    }
+                    else{
+                        callback(false, result1)
+                    }
+                })
             }
         })
-    }
+    },
+   
 }
 
 module.exports = OrderProgramModel;
