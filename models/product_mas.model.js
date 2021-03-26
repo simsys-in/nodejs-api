@@ -31,7 +31,7 @@ ProductModel.prototype = {
         });
     },
     getAll : function(callback){
-        pool.query(`select * from ${TABLE_NAME}`, function(err, result){
+        pool.query(`select ${TABLE_NAME}.id, product_group.product_group, product_category.product_category, ${TABLE_NAME}.product,unit.unit,${TABLE_NAME}.qrcode,${TABLE_NAME}.narration, ${TABLE_NAME}.purchase_rate, ${TABLE_NAME}.sales_rate, ${TABLE_NAME}.qty, ${TABLE_NAME}.purchase_rate_last, ${TABLE_NAME}.min_stock_qty, ${TABLE_NAME}.	hsnsac, ${TABLE_NAME}.gst, ${TABLE_NAME}.sgst, ${TABLE_NAME}.cgst, ${TABLE_NAME}.sts, ${TABLE_NAME}.unit2_id, ${TABLE_NAME}.unit2_convert, ${TABLE_NAME}.clo_qty, ${TABLE_NAME}.status_id, ${TABLE_NAME}.	purchase_rate_incltax, ${TABLE_NAME}.sales_rate_incltax, ${TABLE_NAME}.purchase_amount, ${TABLE_NAME}.sales_amount, ${TABLE_NAME}.alias from ${TABLE_NAME} left join product_group on product_group.id = product.product_group_id left join product_category on product_category.id = product.product_category_id left join unit on unit.id = product.unit_id ` , function(err, result){
 
             if(err)
             {

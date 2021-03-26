@@ -4,11 +4,11 @@ const {
     issetNotEmpty
 } = require('../helpers/common');
 
-function Product_CategoryModel() {};
+function Menu_MasterModel() {};
 
-const TABLE_NAME = 'product_category';
+const TABLE_NAME = 'menu_master';
 
-Product_CategoryModel.prototype = {
+Menu_MasterModel.prototype = {
     find: function (match = null, callback) {
         if (match) {
             var field = Number.isInteger(match) ? 'id' : 'name';
@@ -31,7 +31,7 @@ Product_CategoryModel.prototype = {
         });
     },
     getAll : function(callback){
-        pool.query(`select * from ${TABLE_NAME} order by id desc`, function(err, result){
+        pool.query(`select * from ${TABLE_NAME}`, function(err, result){
             if(err)
             {
                 callback(err)
@@ -48,45 +48,45 @@ Product_CategoryModel.prototype = {
         // console.log(body.id, "Entered")
         // body.updated_at = new Date();
         if (issetNotEmpty(body.id)) {
-            DBCON.query(`select count(id) as c from ${TABLE_NAME} where id != ? and product_category = ?`, [body.id, body.product_category], (err, count) => {
-                if (err) {
-                    callback(err)
-                } else {
-                    if (count[0].c > 0) {
-                        callback("Product Category Already Found!")
-                    } else {
+            // DBCON.query(`select count(id) as c from ${TABLE_NAME} where id != ? and menu_master = ?`, [body.id, body.name], (err, count) => {
+            //     if (err) {
+            //         callback(err)
+            //     } else {
+            //         if (count[0].c > 0) {
+            //             callback("Menu master Already Found!")
+            //         } else {
                         // body.created_at = new Date();
                         DBCON.query(`update ${TABLE_NAME} set ? where id = ?`, [body, body.id], (err, result) => {
                             if (err) {
                                 callback(err)
                             } else {
-                                callback(false, result, "Product Category Updated Successfully")
+                                callback(false, result, "Menu master Updated Successfully")
                             }
                         })
-                    }
-                }
-            })
+            //         }
+            //     }
+            // })
         } else {
             // console.log(body.name, "Entered")
             // body.created_at = new Date();
-            DBCON.query(`select count(id) as c from ${TABLE_NAME} where product_category = ?`, [body.product_category], (err, count) => {
-                if (err) {
-                    callback(err)
-                } else {
-                    // console.log("DB Query Success")
-                    if (count[0].c > 0) {
-                        callback("Product Category Name Already Found!")
-                    } else {
+            // DBCON.query(`select count(id) as c from ${TABLE_NAME} where menu_master = ?`, [body.name], (err, count) => {
+            //     if (err) {
+            //         callback(err)
+            //     } else {
+            //         // console.log("DB Query Success")
+            //         if (count[0].c > 0) {
+            //             callback("Menu master Name Already Found!")
+            //         } else {
                         DBCON.query(`insert into ${TABLE_NAME} set ?`, body, (err, result) => {
                             if (err) {
                                 callback(err)
                             } else {
-                                callback(false, result, "Product Category Saved Successfully!")
+                                callback(false, result, "Menu master Saved Successfully!")
                             }
                         })
-                    }
-                }
-            })
+            //         }
+            //     }
+            // })
         }
     },
     delete : function(id, callback){
@@ -102,4 +102,4 @@ Product_CategoryModel.prototype = {
     }
 }
 
-module.exports = Product_CategoryModel;
+module.exports = Menu_MasterModel;

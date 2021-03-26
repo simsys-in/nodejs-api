@@ -3,12 +3,13 @@ const DBCON = require('../db_config');
 const {
     issetNotEmpty
 } = require('../helpers/common');
+const bcrypt = require('bcryptjs');
 
-function Product_CategoryModel() {};
+function UserModel() {};
 
-const TABLE_NAME = 'product_category';
+const TABLE_NAME = 'users';
 
-Product_CategoryModel.prototype = {
+UserModel.prototype = {
     find: function (match = null, callback) {
         if (match) {
             var field = Number.isInteger(match) ? 'id' : 'name';
@@ -31,7 +32,7 @@ Product_CategoryModel.prototype = {
         });
     },
     getAll : function(callback){
-        pool.query(`select * from ${TABLE_NAME} order by id desc`, function(err, result){
+        pool.query(`select ${TABLE_NAME}.id, ${TABLE_NAME}.name, ${TABLE_NAME}.email, ${TABLE_NAME}.password, ${TABLE_NAME}.user_group_id, ${TABLE_NAME}.mobile from ${TABLE_NAME} left join user_group on user_group.id = users.user_group_id`, function(err, result){
             if(err)
             {
                 callback(err)
@@ -44,44 +45,43 @@ Product_CategoryModel.prototype = {
             }
         })
     },
-    checkAndSaveOrUpdate: function (body, callback) {
-        // console.log(body.id, "Entered")
-        // body.updated_at = new Date();
+    checkAndSaveOrUpdate: async function (body, callback) {
+        body.password = await bcrypt.hash(body.password, 12);
         if (issetNotEmpty(body.id)) {
-            DBCON.query(`select count(id) as c from ${TABLE_NAME} where id != ? and product_category = ?`, [body.id, body.product_category], (err, count) => {
+            DBCON.query(`select count(id) as c from ${TABLE_NAME} where id != ? and email = ?`, [body.id, body.email], (err, count) => {
                 if (err) {
                     callback(err)
                 } else {
                     if (count[0].c > 0) {
-                        callback("Product Category Already Found!")
+                        callback("User Already Found!")
                     } else {
-                        // body.created_at = new Date();
+                        body.created_at = new Date();
                         DBCON.query(`update ${TABLE_NAME} set ? where id = ?`, [body, body.id], (err, result) => {
                             if (err) {
                                 callback(err)
                             } else {
-                                callback(false, result, "Product Category Updated Successfully")
+                                callback(false, result, "User Updated Successfully")
                             }
                         })
                     }
                 }
             })
         } else {
-            // console.log(body.name, "Entered")
-            // body.created_at = new Date();
-            DBCON.query(`select count(id) as c from ${TABLE_NAME} where product_category = ?`, [body.product_category], (err, count) => {
+            console.log(body.name, "Entered")
+            body.created_at = new Date();
+            DBCON.query(`select count(id) as c from ${TABLE_NAME} where name = ?`, [body.name], (err, count) => {
                 if (err) {
                     callback(err)
                 } else {
                     // console.log("DB Query Success")
                     if (count[0].c > 0) {
-                        callback("Product Category Name Already Found!")
+                        callback("User Name Already Found!")
                     } else {
                         DBCON.query(`insert into ${TABLE_NAME} set ?`, body, (err, result) => {
                             if (err) {
                                 callback(err)
                             } else {
-                                callback(false, result, "Product Category Saved Successfully!")
+                                callback(false, result, "User Saved Successfully!")
                             }
                         })
                     }
@@ -102,4 +102,4 @@ Product_CategoryModel.prototype = {
     }
 }
 
-module.exports = Product_CategoryModel;
+module.exports = UserModel;
