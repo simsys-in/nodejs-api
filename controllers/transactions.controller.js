@@ -232,6 +232,18 @@ exports.saveFabricInward = function (req, res) {
     })
 }
 
+exports.getNextFabricInwardVouNo = function(req, res){
+    FabricInward.getNextFabricInwardVouNo((err, result) => {
+        if(err)
+        {
+            res.sendError(err);
+        }
+        else{
+            res.sendInfo("", result)
+        }
+    })
+}
+
 
 exports.getFabricInward = function (req, res) {
     var ID = req.query.id;

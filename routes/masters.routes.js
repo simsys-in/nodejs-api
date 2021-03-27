@@ -91,6 +91,7 @@ router.get('/getLedgerNameSB', Controller.getAllLedgerNameSB);
 router.get('/getProcessSB', Controller.getAllProcessSB);
 router.get('/getFabricsSB', Controller.getAllFabricsSB);
 router.get('/getOrderSB', Controller.getAllOrderSB);
+router.get('/getProcessSBForOrderID', Controller.getProcessSBForOrderID);
 
 router.get('/getLedgerCategorySB', Controller.getAllLedgerCategorySB);
 router.get('/getLedgerGroupSB', Controller.getAllLedgerGroupSB);

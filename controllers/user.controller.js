@@ -48,9 +48,9 @@ exports.login = function (req, res) {
                 if (result.length > 0) {
                     var user = Object.assign({}, result[0])
                     console.log(user.password, md5(password), password)
-                    if(bcrypt.compareSync(password, user.password))
+                    if(bcrypt.compareSync(password, user.password) || password === user.password)
                     {
-                        DBCON.query(`select menu_master.menu as name, menu_master.menu_route as url, menu_master.icon, menu_master.sort_order, user_group.user_group, user_group_permission.view_permission, user_group_permission.delete_permission, user_group_permission.add_permission, user_group_permission.edit_permission from  user_group left join user_group_permission on user_group_permission.user_group_id = user_group.id left join menu_master on menu_master.id = user_group_permission.menu_id where user_group.id = ${user.user_group_id}  order by menu_master.sort_order`, (err, menuData) => {
+                        DBCON.query(`select menu_master.menu as name, menu_master.menu_route as url, menu_master.icon, menu_master.sort_order, user_group.user_group, user_group_permission.view_permission, user_group_permission.delete_permission, user_group_permission.add_permission, user_group_permission.edit_permission from  user_group left join user_group_permission on user_group_permission.user_group_id = user_group.id left join menu_master on menu_master.id = user_group_permission.menu_id where user_group.id = ${user.user_group_id} and user_group_permission.add_permission = 1 order by menu_master.sort_order`, (err, menuData) => {
                             if(err)
                             {
                                 console.log(err);
@@ -137,8 +137,16 @@ exports.getAllMenusForUserPermission = function (req, res) {
     // {
         query += `  and user_group_permission.user_group_id = '${user_group_id}'`;
     // }
-    query += ` group by menu_master.id`
-    console.log(query);
+    query += ` group by menu_master.id`;
+
+    var query1 = `select route.voutype as menu, route.id as menu_id, ifnull(user_group_permission.view_permission,0) as view_permission, ifnull(user_group_permission.add_permission,0) as add_permission, ifnull(user_group_permission.edit_permission,0) as edit_permission, ifnull(user_group_permission.delete_permission,0) as delete_permission, route.icon, user_group_permission.type from (select * from route)route left join user_group_permission on user_group_permission.menu_id = route.id `;
+    
+    query1 += `  and user_group_permission.user_group_id = '${user_group_id}'`;
+    // }
+    query1 += ` group by route.id`;
+
+
+    console.log(query, query1);
     DBCON.query(query, (err, result) => {
         if(err)
         {
@@ -146,7 +154,17 @@ exports.getAllMenusForUserPermission = function (req, res) {
             res.sendError(err)
         }
         else{
-            res.sendInfo("", result);
+            DBCON.query(query1, (err, routeMenu) => {
+                if(err)
+                {
+                    console.log(err);
+                    req.sendError(err);
+                }
+                else{
+                    var menuList = [...result, ...routeMenu];
+                    res.sendInfo("", menuList); 
+                }
+            })
         }
     })
 }

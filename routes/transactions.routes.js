@@ -20,6 +20,7 @@ router.put('/fabricInward', Controller.saveFabricInward);
 router.get('/fabricInward', Controller.getFabricInward);
 router.delete('/fabricInward', Controller.deleteFabricInward);
 router.get('/getOrderSB', Controller.getOrderSB);
+router.get('/getNextFabricInwardVouNo', Controller.getNextFabricInwardVouNo);
 router.get('/getColorSB', Controller.getColorSB);
 router.get('/getLedgerNameSB', Controller.getLedgerNameSB);
 router.get('/getProcessSB', Controller.getProcessSB);

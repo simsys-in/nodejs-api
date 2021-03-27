@@ -1086,6 +1086,34 @@ exports.getAllProcessSB = function (req, res) {
         }
     })
 }
+
+exports.getProcessSBForOrderID = function (req, res) {
+    const body = req.body;
+    const USER = req.user;
+    body.company = USER.company
+    const status = body.status ? body.status : 'active';
+    var order_id = req.query.order_id ? req.query.order_id : null;
+    DBCON.query('select process.id as value, process.process as name from  order_process left join process on process.id = order_process.process_id  where order_process.order_id = ? ', order_id, function (err, data) {
+        if (err) {
+            console.log(err)
+            res.sendError(err)
+        } else {
+            var result = [];
+            data.forEach((item, index) => {
+                if(item.value !== null)
+                {
+                    result.push(item);
+
+                    if(index === data.length - 1)
+                    {
+                        res.sendInfo("", result)
+                    }
+                }
+            })
+        }
+    })
+}
+
 exports.getAllLedgerNameSB = function (req, res) {
     const body = req.body;
     const USER = req.user;
