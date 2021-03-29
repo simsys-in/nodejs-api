@@ -175,6 +175,8 @@ Yarn_InwardModel.prototype = {
     //         })
     //     }
     // },
+
+    
     delete : function(id, callback){
         pool.query(`delete from ${TABLE_NAME} where id = ?`, id, (err,result) => {
             if(err)
@@ -191,6 +193,19 @@ Yarn_InwardModel.prototype = {
                         callback(false, result1)
                     }
                 })
+            }
+        })
+    },
+    getNextYarnInwardVouNo : (callback) => {
+        var query = 'select max(ifnull(vouno, 0)) + 1 as max_vou_no from yarn_inward';
+
+        DBCON.query(query, (err, result) => {
+            if(err){
+                console.log(err);
+                callback(err)
+            }
+            else{
+                callback(false,result[0]);
             }
         })
     }
