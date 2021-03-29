@@ -15,7 +15,7 @@ const FabricOutward = new FabricOutwardModel();
 const FabricInvoiceModel = require('../models/fabric_invoice.model');
 const FabricInvoice = new FabricInvoiceModel();
 
-const FabricReturnModel = require('../models/fabric_Return.model');
+const FabricReturnModel = require('../models/fabric_return.model');
 const FabricReturn = new FabricReturnModel();
 
 
