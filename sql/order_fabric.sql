@@ -1,0 +1,1 @@
+CREATE TABLE `erp1`.`order_fabric` ( `id` INT(255) NOT NULL AUTO_INCREMENT , `fabric_id` VARCHAR(255) NOT NULL , `gsm` VARCHAR(255) NOT NULL , `dia` VARCHAR(255) NOT NULL , `order_id` VARCHAR(255) NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
