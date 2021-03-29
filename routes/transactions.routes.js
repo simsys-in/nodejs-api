@@ -13,7 +13,7 @@ router.delete('/orderProgram', Controller.deleteOrderProgram);
 router.get('/getSizeSB', Controller.getSizeSB);
 router.get('/getStyleSB', Controller.getStyleSB);
 router.get('/getFabricSB', Controller.getFabricSB);
-
+router.get('/getNextOrderNo', Controller.getNextOrderNo);
 
 //fabric Inward
 router.put('/fabricInward', Controller.saveFabricInward);

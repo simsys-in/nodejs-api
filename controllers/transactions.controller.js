@@ -181,6 +181,19 @@ exports.getFabricSB = function (req, res) {
     })
 }
 
+exports.getNextOrderNo = function(req, res){
+    OrderProgram.getNextOrderNo((err, result) => {
+        if(err)
+        {
+            res.sendError(err);
+        }
+        else{
+            res.sendInfo("", result)
+        }
+    })
+}
+
+
 
 // exports.getAddLess = function (req, res) {
 //     const id = req.query.id;
