@@ -27,6 +27,7 @@ router.get('/user', Controller.getUser);
 router.delete('/user', Controller.deleteUser);
 
 router.get('/getUserGroupSB', Controller.getAllUserGroupSB);
+router.post('/verifyLogin', Controller.verifyLogin);
 
 
 

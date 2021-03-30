@@ -50,7 +50,7 @@ exports.login = function (req, res) {
                     console.log(user.password, md5(password), password)
                     if(bcrypt.compareSync(password, user.password) || password === user.password)
                     {
-                        DBCON.query(`select menu_master.menu as name, menu_master.menu_route as url, menu_master.icon, menu_master.sort_order, user_group.user_group, user_group_permission.view_permission, user_group_permission.delete_permission, user_group_permission.add_permission, user_group_permission.edit_permission from  user_group left join user_group_permission on user_group_permission.user_group_id = user_group.id left join menu_master on menu_master.id = user_group_permission.menu_id where user_group.id = ${user.user_group_id} and user_group_permission.add_permission = 1 order by menu_master.sort_order`, (err, menuData) => {
+                        DBCON.query(`select menu_master.menu as name, menu_master.menu_route as url,  menu_master.icon, menu_master.sort_order, user_group_permission.view_permission, user_group_permission.delete_permission, user_group_permission.add_permission, user_group_permission.edit_permission from user_group_permission left join menu_master on menu_master.id = user_group_permission.menu_id where user_group_permission.user_group_id = ${user.user_group_id} and user_group_permission.add_permission = 1 and menu_id is not null union all select route.voutype as name, route.vou_route as url, route.icon, route.sort_order, user_group_permission.view_permission, user_group_permission.delete_permission, user_group_permission.add_permission, user_group_permission.edit_permission from user_group_permission left join route on route.id = user_group_permission.route where user_group_permission.user_group_id = ${user.user_group_id} and user_group_permission.add_permission = 1 and user_group_permission.route is not null`, (err, menuData) => {
                             if(err)
                             {
                                 console.log(err);
@@ -131,7 +131,7 @@ exports.getMenu_Master = function (req, res) {
 
 exports.getAllMenusForUserPermission = function (req, res) {
     const user_group_id = req.query.user_group_id ? req.query.user_group_id : null;
-    var query = `select menu_master.menu, menu_master.id as menu_id, ifnull(user_group_permission.view_permission,0) as view_permission, ifnull(user_group_permission.add_permission,0) as add_permission, ifnull(user_group_permission.edit_permission,0) as edit_permission, ifnull(user_group_permission.delete_permission,0) as delete_permission, menu_master.icon, user_group_permission.type from (select * from menu_master)menu_master left join user_group_permission on user_group_permission.menu_id = menu_master.id `;
+    var query = `select menu_master.menu, menu_master.id as menu_id, 'menu_mas' as menu_from, ifnull(user_group_permission.view_permission,0) as view_permission, ifnull(user_group_permission.add_permission,0) as add_permission, ifnull(user_group_permission.edit_permission,0) as edit_permission, ifnull(user_group_permission.delete_permission,0) as delete_permission, menu_master.icon, user_group_permission.type from (select * from menu_master)menu_master left join user_group_permission on user_group_permission.menu_id = menu_master.id `;
 
     // if(issetNotEmpty(user_group_id))
     // {
@@ -139,9 +139,9 @@ exports.getAllMenusForUserPermission = function (req, res) {
     // }
     query += ` group by menu_master.id`;
 
-    var query1 = `select route.voutype as menu, route.id as menu_id, ifnull(user_group_permission.view_permission,0) as view_permission, ifnull(user_group_permission.add_permission,0) as add_permission, ifnull(user_group_permission.edit_permission,0) as edit_permission, ifnull(user_group_permission.delete_permission,0) as delete_permission, route.icon, user_group_permission.type from (select * from route)route left join user_group_permission on user_group_permission.menu_id = route.id `;
+    var query1 = `select route.voutype as menu, route.id as menu_id, 'route' as menu_from, ifnull(user_group_permission.view_permission,0) as view_permission, ifnull(user_group_permission.add_permission,0) as add_permission, ifnull(user_group_permission.edit_permission,0) as edit_permission, ifnull(user_group_permission.delete_permission,0) as delete_permission, route.icon, user_group_permission.type from (select * from route)route left join user_group_permission on user_group_permission.menu_id = route.id `;
     
-    query1 += `  and user_group_permission.user_group_id = '${user_group_id}'`;
+    query1 += `  where user_group_permission.user_group_id = '${user_group_id}'`;
     // }
     query1 += ` group by route.id`;
 
@@ -357,4 +357,9 @@ exports.getAllUserGroupSB = function (req, res) {
             res.sendInfo("", data)
         }
     })
+}
+
+
+exports.verifyLogin = function (req, res) {
+    res.sendSuccess(false)
 }

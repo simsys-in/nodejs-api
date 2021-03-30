@@ -255,7 +255,7 @@ OrderProgramModel.prototype = {
         })
     },
     getNextOrderNo : (callback) => {
-        var query = 'select max(ifnull(order_no, 0)) + 1 as max_order_no from order_program';
+        var query = `select max(ifnull(order_no, 0)) + 1 as max_order_no from ${TABLE_NAME}`;
 
         DBCON.query(query, (err, result) => {
             if(err){
@@ -264,6 +264,19 @@ OrderProgramModel.prototype = {
             }
             else{
                 callback(false,result[0]);
+            }
+        })
+    },
+    getStyleForOrderId : (order_id,callback) => {
+        DBCON.query(`select style_id from ${TABLE_NAME} where id = ${order_id}`,  (err,result) => {
+            if(err)
+            {
+                console.log(err);
+                callback(err);
+            }
+            else{
+                var style_id = result && result[0] &&result[0].style_id ? result[0].style_id : null;
+                callback(err, style_id);
             }
         })
     }

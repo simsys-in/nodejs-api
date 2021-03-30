@@ -33,10 +33,7 @@ router.put('/ledger_group', Controller.saveLedger_Group);
 router.get('/ledger_group', Controller.getLedger_Group);
 router.delete('/ledger_group', Controller.deleteLedger_Group);
 
-//yarninward
-router.put('/yarn_inward', Controller.saveYarn_Inward);
-router.get('/yarn_inward', Controller.getYarn_Inward);
-router.delete('/yarn_inward', Controller.deleteYarn_Inward);
+
 
 //ledger_category
 router.put('/ledger_category', Controller.saveLedger_Category);
@@ -88,10 +85,7 @@ router.delete('/master', Controller.deleteMaster);
 router.get('/getMasterGroupSB', Controller.getAllMasterGroupSB);
 
 
-router.get('/getLedgerNameSB', Controller.getAllLedgerNameSB);
-router.get('/getProcessSB', Controller.getAllProcessSB);
-router.get('/getFabricsSB', Controller.getAllFabricsSB);
-router.get('/getOrderSB', Controller.getAllOrderSB);
+
 router.get('/getProcessSBForOrderID', Controller.getProcessSBForOrderID);
 
 router.get('/getLedgerCategorySB', Controller.getAllLedgerCategorySB);
@@ -114,6 +108,7 @@ router.get('/getLedgerGroupSB', Controller.getAllLedgerGroupSB);
 router.put('/color', Controller.saveColor);
 router.get('/color', Controller.getColor);
 router.delete('/color', Controller.deleteColor);
+router.get('/getAllColorSB', Controller.getAllColorSB);
 
 //color
 
@@ -121,22 +116,9 @@ router.put('/masterGroup', Controller.saveMasterGroup);
 router.get('/masterGroup', Controller.getMasterGroup);
 router.delete('/masterGroup', Controller.deleteMasterGroup);
 
-//yarn invoice
 
-router.put('/yarn_invoice', Controller.saveYarn_Invoice);
-router.get('/yarn_invoice', Controller.getYarn_Invoice);
-router.delete('/yarn_invoice', Controller.deleteYarn_Invoice);
+router.get('/getAllCuttingMasterSB', Controller.getAllCuttingMasterSB);
 
-// yarn outward
-router.put('/yarn_outward', Controller.saveYarn_Outward);
-router.get('/yarn_outward', Controller.getYarn_Outward);
-router.delete('/yarn_outward', Controller.deleteYarn_Outward);
-
-//yarn return
-router.put('/yarn_return', Controller.saveYarn_Return);
-router.get('/yarn_return', Controller.getYarn_Return);
-router.delete('/yarn_return', Controller.deleteYarn_Return);
-router.get('/getColorSB', Controller.getAllColorSB);
 
 
 

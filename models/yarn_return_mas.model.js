@@ -327,6 +327,19 @@ Yarn_ReturnModel.prototype = {
                 })
             }
         })
+    },
+    getNextYarnReturnVouNo : (callback) => {
+        var query = 'select max(ifnull(vouno, 0)) + 1 as max_vou_no from yarn_return';
+
+        DBCON.query(query, (err, result) => {
+            if(err){
+                console.log(err);
+                callback(err)
+            }
+            else{
+                callback(false,result[0]);
+            }
+        })
     }
 }
     
