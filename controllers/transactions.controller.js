@@ -18,6 +18,8 @@ const FabricInvoice = new FabricInvoiceModel();
 const FabricReturnModel = require('../models/fabric_Return.model');
 const FabricReturn = new FabricReturnModel();
 
+const JobworkOutwardModel = require('../models/jobwork_outward.model');
+const JobworkOutward = new JobworkOutwardModel();
 
 
 //orderProgram
@@ -164,6 +166,22 @@ exports.getProcessSB = function (req, res) {
         }
     })
 }
+
+exports.getProductSB = function (req, res) {
+    const body = req.body;
+    const USER = req.user;
+    body.company = USER.company
+    const status = body.status ? body.status : 'active'
+    DBCON.query('select id as value,product as name from product ', function (err, data) {
+        if (err) {
+            console.log(err)
+            res.sendError(err)
+        } else {
+            res.sendInfo("", data)
+        }
+    })
+}
+
 
 
 exports.getFabricSB = function (req, res) {
@@ -730,5 +748,64 @@ exports.deleteFabricReturn = function (req, res) {
 
 }
 
+//Jobwork outward
+
+exports.saveJobworkOutward = function (req, res) {
+    const body = req.body;
+    body.id = req.query.id;
+    JobworkOutward.checkAndSaveOrUpdate(body, (err, result, msg) => {
+        if (err) {
+            console.log(err);
+            res.sendError(err);
+        } else {
+            res.sendSuccess(msg, result)
+        }
+    })
+}
+
+
+exports.getJobworkOutward = function (req, res) {
+    var ID = req.query.id;
+    if (issetNotEmpty(ID)) {
+        JobworkOutward.find(Number(ID), function (err, data) {
+            if (err) {
+                console.log(err);
+                res.sendError(err)
+            } else {
+                res.sendInfo("", data);
+            }
+        })
+    } else {
+        JobworkOutward.getAll((err, data) => {
+            if (err) {
+                console.log(err)
+                res.sendError(err)
+            } else {
+                res.sendSuccess("", data)
+            }
+        })
+    }
+}
+
+
+
+exports.deleteJobworkOutward = function (req, res) {
+    const id = req.query.id;
+    console.log("ID : " + id);
+
+    if (issetNotEmpty(id)) {
+        JobworkOutward.delete(Number(id), function (err, data) {
+            if (err) {
+                console.log(err);
+                res.sendError(err)
+            } else {
+                res.sendInfo("Jobwork Outward Deleted Successfully!");
+            }
+        })
+    } else {
+        res.sendWarning("Jobwork Outward Not Found! ")
+    }
+
+}
 
 

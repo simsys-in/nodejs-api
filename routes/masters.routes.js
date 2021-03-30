@@ -9,6 +9,7 @@ router.put('/ledger', Controller.saveLedger);
 router.get('/ledger', Controller.getLedger);
 router.get('/getAllLedgerSB', Controller.getAllLedgerSB);
 router.delete('/ledger', Controller.deleteLedger);
+router.get('/getMobileForLedgerID', Controller.getMobileForLedgerID)
 
 
 

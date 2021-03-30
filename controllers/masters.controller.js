@@ -1087,6 +1087,22 @@ exports.getAllProcessSB = function (req, res) {
     })
 }
 
+exports.getMobileForLedgerID = function(req,res){
+    const body = req.body;
+    const USER = req.user;
+    body.company = USER.company
+    const status = body.status ? body.status : 'active';
+    var ledger_id = req.query.ledger_id ? req.query.ledger_id : null;
+    DBCON.query('select mobile from ledger  where id = ? ', ledger_id, function (err, data) {
+        if(err){
+            res.sendError(err)
+        }else{
+            res.sendInfo("", data[0].mobile)
+        }
+    })
+
+}
+
 exports.getProcessSBForOrderID = function (req, res) {
     const body = req.body;
     const USER = req.user;
