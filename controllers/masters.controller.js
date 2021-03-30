@@ -1234,6 +1234,23 @@ exports.getAllSizeSB = function (req, res) {
     })
 }
 
+
+
+exports.getAllColorSB = function (req, res) {
+    const body = req.body;
+    const USER = req.user;
+    body.company = USER.company
+    // const status = body.status ? body.status : 'active';
+    DBCON.query('select id as value, color as name from color ', function (err, data) {
+        if (err) {
+            console.log(err)
+            res.sendError(err)
+        } else {
+            res.sendInfo("", data)
+        }
+    })
+}
+
 exports.deleteSize = function (req, res) {
     const id = req.query.id;
     console.log("ID : " + id);
@@ -1352,6 +1369,24 @@ exports.getAllLedgerGroupSB = function (req, res) {
     body.company = USER.company
     const status = body.status ? body.status : 'active'
     DBCON.query('select id as value, ledger_group as name from ledger_group ', function (err, data) {
+        if (err) {
+            console.log(err)
+            res.sendError(err)
+        } else {
+            res.sendInfo("", data)
+        }
+    })
+}
+
+
+
+
+exports.getAllCuttingMasterSB = function (req, res) {
+    const body = req.body;
+    const USER = req.user;
+    body.company = USER.company
+    const status = body.status ? body.status : 'active'
+    DBCON.query('select id as value, employee as name from employee ', function (err, data) {
         if (err) {
             console.log(err)
             res.sendError(err)

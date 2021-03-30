@@ -31,6 +31,10 @@ const Yarn_OutwardModel = require('../models/yarn_outward_mas.model');
 const Yarn_Outward = new Yarn_OutwardModel();
 
 
+const CuttingProgramModel = require('../models/cutting_program.model');
+const CuttingProgram = new CuttingProgramModel();
+
+
 
 //orderProgram
 exports.saveOrderProgram = function (req, res) {
@@ -1130,3 +1134,177 @@ exports.getAllColorSB = function (req, res) {
     })
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/////////////////// Hariprakash Workspace //////////////////
+/////////////////// Hariprakash Workspace //////////////////
+/////////////////// Hariprakash Workspace //////////////////
+/////////////////// Hariprakash Workspace //////////////////
+/////////////////// Hariprakash Workspace //////////////////
+/////////////////// Hariprakash Workspace //////////////////
+/////////////////// Hariprakash Workspace //////////////////
+/////////////////// Hariprakash Workspace //////////////////
+/////////////////// Hariprakash Workspace //////////////////
+/////////////////// Hariprakash Workspace //////////////////
+/////////////////// Hariprakash Workspace //////////////////
+
+
+
+
+exports.saveCuttingProgram = function (req, res) {
+    const body = req.body;
+    body.id = req.query.id;
+    CuttingProgram.checkAndSaveOrUpdate(body, (err, result, msg) => {
+        if (err) {
+            console.log(err);
+            res.sendError(err);
+        } else {
+            res.sendSuccess(msg, result)
+        }
+    })
+}
+
+exports.getCuttingProgram = function (req, res) {
+    var ID = req.query.id;
+    if (issetNotEmpty(ID)) {
+        CuttingProgram.find(Number(ID), function (err, data) {
+            if (err) {
+                console.log(err);
+                res.sendError(err)
+            } else {
+                res.sendInfo("", data);
+            }
+        })
+    } else {
+        CuttingProgram.getAll((err, data) => {
+            if (err) {
+                console.log(err)
+                res.sendError(err)
+            } else {
+                res.sendSuccess("", data)
+            }
+        })
+    }
+}
+
+exports.getAllCuttingProgramSB = function (req, res) {
+    const body = req.body;
+    const USER = req.user;
+    body.company = USER.company
+    const status = body.status ? body.status : 'active';
+    DBCON.query('select id as value, name from cutting_program ', function (err, data) {
+        if (err) {
+            console.log(err)
+            res.sendError(err)
+        } else {
+            res.sendInfo("", data)
+        }
+    })
+}
+
+exports.deleteCuttingProgram = function (req, res) {
+    const id = req.query.id;
+    console.log("ID : " + id);
+
+    if (issetNotEmpty(id)) {
+        CuttingProgram.delete(Number(id), function (err, data) {
+            if (err) {
+                console.log(err);
+                res.sendError(err)
+            } else {
+                res.sendInfo("Yarn Outward Deleted Successfully!");
+            }
+        })
+    } else {
+        res.sendWarning("Yarn Outward Not Found! ")
+    }
+
+}
+
+exports.getNextCuttingProgLotNo = (req, res) => {
+    CuttingProgram.getNextLotNo((err, nextLotNo) => {
+        if(err)
+        {
+            res.sendError(err);
+        }
+        else{
+            res.sendInfo("",nextLotNo);
+        }
+    })
+}
+
+exports.getStyleForOrderId = (req, res) => {
+    const ORDER_ID = req.query.order_id ? req.query.order_id : null;
+    if(issetNotEmpty(ORDER_ID))
+    {
+        OrderProgram.getStyleForOrderId(ORDER_ID,(err, style_id) => {
+            if(err)
+            {
+                res.sendError(err);
+            }
+            else{
+                res.sendInfo("",style_id);
+            }
+        })
+    }
+    else{
+        res.sendError("Order Not Found!")
+    }
+}
+
+exports.getSizesForOrderID = (req, res) => {
+    const ORDER_ID = req.query.order_id;
+
+    DBCON.query(`select concat(size.size1, ",", size.size2, ",",size.size3, ",",size.size4, ",",size.size5, ",",size.size6, ",",size.size7, ",",size.size8, ",",size.size9) as sizes from order_program left join size on size.id = order_program.size_id where order_program.id = ${ORDER_ID}`, (err, data) => {
+        if(err)
+        {
+            console.log(err);
+            res.sendError(err);
+        }
+        else{
+            var sizes = data.length > 0 ? data[0].sizes !== null ? data[0].sizes : "" : "";
+            console.log(sizes);
+            sizes = sizes.split(",");
+            res.sendInfo("", sizes);
+        }
+    })
+
+}
+
+
+/////////////////// Hariprakash Workspace //////////////////
+/////////////////// Hariprakash Workspace //////////////////
+/////////////////// Hariprakash Workspace //////////////////
+/////////////////// Hariprakash Workspace //////////////////
+/////////////////// Hariprakash Workspace //////////////////
+/////////////////// Hariprakash Workspace //////////////////
+/////////////////// Hariprakash Workspace //////////////////
+/////////////////// Hariprakash Workspace //////////////////
+/////////////////// Hariprakash Workspace //////////////////
+/////////////////// Hariprakash Workspace //////////////////
+/////////////////// Hariprakash Workspace //////////////////
+/////////////////// Hariprakash Workspace //////////////////

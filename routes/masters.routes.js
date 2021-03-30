@@ -107,12 +107,16 @@ router.get('/getLedgerGroupSB', Controller.getAllLedgerGroupSB);
 router.put('/color', Controller.saveColor);
 router.get('/color', Controller.getColor);
 router.delete('/color', Controller.deleteColor);
+router.get('/getAllColorSB', Controller.getAllColorSB);
 
 //color
 
 router.put('/masterGroup', Controller.saveMasterGroup);
 router.get('/masterGroup', Controller.getMasterGroup);
 router.delete('/masterGroup', Controller.deleteMasterGroup);
+
+
+router.get('/getAllCuttingMasterSB', Controller.getAllCuttingMasterSB);
 
 
 
