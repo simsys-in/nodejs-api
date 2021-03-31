@@ -137,6 +137,13 @@ router.delete('/masterGroup', Controller.deleteMasterGroup);
 
 router.get('/getAllCuttingMasterSB', Controller.getAllCuttingMasterSB);
 
+router.put('/branch', Controller.saveBranch);
+router.get('/branch', Controller.getBranch);
+router.delete('/branch', Controller.deleteBranch);
+
+router.put('/department', Controller.saveDepartment);
+router.get('/department', Controller.getDepartment);
+router.delete('/department', Controller.deleteDepartment);
 
 
 
