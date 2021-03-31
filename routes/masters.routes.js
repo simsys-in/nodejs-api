@@ -140,4 +140,15 @@ router.get('/getAllCuttingMasterSB', Controller.getAllCuttingMasterSB);
 
 
 
+
+
+
+
+
+//desigantion
+router.put('/designation', Controller.saveDesignation);
+router.get('/designation', Controller.getDesignation);
+router.delete('/designation', Controller.deleteDesignation);
+
+
 module.exports = router;

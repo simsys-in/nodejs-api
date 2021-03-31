@@ -54,6 +54,17 @@ const MasterModel = require('../models/master_mas.model');
 const Master = new MasterModel();
 
 
+
+
+
+
+
+//designation
+const DesignationModel = require('../models/designation.model');
+const Designation = new DesignationModel();
+
+
+
 exports.saveAddLess = function (req, res) {
     const body = req.body;
     body.id = req.query.id;
@@ -1677,6 +1688,220 @@ exports.getAllBankSB = function (req, res) {
         }
     })
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//designation
+exports.saveDesignation = function (req, res) {
+    const body = req.body;
+    body.id = req.query.id;
+    Designation.checkAndSaveOrUpdate(body, (err, result, msg) => {
+        if (err) {
+            console.log(err);
+            res.sendError(err);
+        } else {
+            res.sendSuccess(msg, result)
+        }
+    })
+}
+
+
+exports.getDesignation = function (req, res) {
+    var ID = req.query.id;
+    if (issetNotEmpty(ID)) {
+        Designation.find(Number(ID), function (err, data) {
+            if (err) {
+                console.log(err);
+                res.sendError(err)
+            } else {
+                res.sendInfo("", data);
+            }
+        })
+    } else {
+        Designation.getAll((err, data) => {
+            if (err) {
+                console.log(err)
+                res.sendError(err)
+            } else {
+                res.sendSuccess("", data)
+            }
+        })
+    }
+}
+
+
+
+exports.deleteDesignation = function (req, res) {
+    const id = req.query.id;
+    console.log("ID : " + id);
+
+    if (issetNotEmpty(id)) {
+        Designation.delete(Number(id), function (err, data) {
+            if (err) {
+                console.log(err);
+                res.sendError(err)
+            } else {
+                res.sendInfo("Designation Deleted Successfully!");
+            }
+        })
+    } else {
+        res.sendWarning("Designation Not Found! ")
+    }
+
+}
+
+
+
+
+
+
 
 
 
