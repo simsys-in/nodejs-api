@@ -48,6 +48,12 @@ router.put('/fabricReturn', Controller.saveFabricReturn);
 router.get('/fabricReturn', Controller.getFabricReturn);
 router.delete('/fabricReturn', Controller.deleteFabricReturn);
 
+//jobwork outward
+router.put('/jobworkOutward', Controller.saveJobworkOutward);
+router.get('/jobworkOutward', Controller.getJobworkOutward);
+router.delete('/jobworkOutward', Controller.deleteJobworkOutward);
+router.get('/getProductSB', Controller.getProductSB);
+
 //yarninward
 router.put('/yarn_inward', Controller.saveYarn_Inward);
 router.get('/yarn_inward', Controller.getYarn_Inward);
