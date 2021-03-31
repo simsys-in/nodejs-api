@@ -9,6 +9,7 @@ router.put('/ledger', Controller.saveLedger);
 router.get('/ledger', Controller.getLedger);
 router.get('/getAllLedgerSB', Controller.getAllLedgerSB);
 router.delete('/ledger', Controller.deleteLedger);
+router.get('/getMobileForLedgerID', Controller.getMobileForLedgerID)
 
 
 
@@ -124,12 +125,16 @@ router.get('/getBankSB', Controller.getAllBankSB);
 router.put('/color', Controller.saveColor);
 router.get('/color', Controller.getColor);
 router.delete('/color', Controller.deleteColor);
+router.get('/getAllColorSB', Controller.getAllColorSB);
 
 //color
 
 router.put('/masterGroup', Controller.saveMasterGroup);
 router.get('/masterGroup', Controller.getMasterGroup);
 router.delete('/masterGroup', Controller.deleteMasterGroup);
+
+
+router.get('/getAllCuttingMasterSB', Controller.getAllCuttingMasterSB);
 
 
 

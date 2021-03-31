@@ -10,10 +10,13 @@ const Controller = require('../controllers/transactions.controller');
 router.put('/orderProgram', Controller.saveOrderProgram);
 router.get('/orderProgram', Controller.getOrderProgram);
 router.delete('/orderProgram', Controller.deleteOrderProgram);
+
+
+router.get('/getStyleForOrderId', Controller.getStyleForOrderId);
 router.get('/getSizeSB', Controller.getSizeSB);
 router.get('/getStyleSB', Controller.getStyleSB);
 router.get('/getFabricSB', Controller.getFabricSB);
-
+router.get('/getNextOrderNo', Controller.getNextOrderNo);
 
 //fabric Inward
 router.put('/fabricInward', Controller.saveFabricInward);
@@ -45,6 +48,12 @@ router.put('/fabricReturn', Controller.saveFabricReturn);
 router.get('/fabricReturn', Controller.getFabricReturn);
 router.delete('/fabricReturn', Controller.deleteFabricReturn);
 
+//jobwork outward
+router.put('/jobworkOutward', Controller.saveJobworkOutward);
+router.get('/jobworkOutward', Controller.getJobworkOutward);
+router.delete('/jobworkOutward', Controller.deleteJobworkOutward);
+router.get('/getProductSB', Controller.getProductSB);
+
 //yarninward
 router.put('/yarn_inward', Controller.saveYarn_Inward);
 router.get('/yarn_inward', Controller.getYarn_Inward);
@@ -68,6 +77,13 @@ router.delete('/yarn_return', Controller.deleteYarn_Return);
 router.put('/jobwork_inward', Controller.saveJobwork_Inward);
 router.get('/jobwork_inward', Controller.getJobwork_Inward);
 router.delete('/jobwork_inward', Controller.deleteJobwork_Inward);
+//Cutting Program
+router.put('/cutting_program', Controller.saveCuttingProgram);
+router.get('/cutting_program', Controller.getCuttingProgram);
+router.delete('/cutting_program', Controller.deleteCuttingProgram);
+router.get('/getSizesForOrderID', Controller.getSizesForOrderID);
+router.get('/getNextCuttingProgLotNo', Controller.getNextCuttingProgLotNo);
+router.get('/getCuttingProgramSB', Controller.getCuttingProgramSB);
 
 router.get('/getColorSB', Controller.getAllColorSB);
 router.get('/getLedgerNameSB', Controller.getAllLedgerNameSB);
@@ -75,6 +91,33 @@ router.get('/getProcessSB', Controller.getAllProcessSB);
 router.get('/getFabricsSB', Controller.getAllFabricsSB);
 router.get('/getOrderSB', Controller.getAllOrderSB);
 
+///////////// Haripraks]ash Workspace /////////////////
+///////////// Haripraks]ash Workspace /////////////////
+///////////// Haripraks]ash Workspace /////////////////
+///////////// Haripraks]ash Workspace /////////////////
+///////////// Haripraks]ash Workspace /////////////////
+///////////// Haripraks]ash Workspace /////////////////
+///////////// Haripraks]ash Workspace /////////////////
 
+
+//Cutting Program
+router.put('/cutting_program', Controller.saveCuttingProgram);
+router.get('/cutting_program', Controller.getCuttingProgram);
+router.delete('/cutting_program', Controller.deleteCuttingProgram);
+router.get('/getSizesForOrderID', Controller.getSizesForOrderID);
+router.get('/getNextCuttingProgLotNo', Controller.getNextCuttingProgLotNo);
+router.get('/getFabricsForOrderID', Controller.getFabricsForOrderID);
+router.get('/getFabricDetailForOrder', Controller.getFabricDetailForOrder);
+
+
+///////////// Haripraks]ash Workspace /////////////////
+///////////// Haripraks]ash Workspace /////////////////
+///////////// Haripraks]ash Workspace /////////////////
+///////////// Haripraks]ash Workspace /////////////////
+///////////// Haripraks]ash Workspace /////////////////
+///////////// Haripraks]ash Workspace /////////////////
+///////////// Haripraks]ash Workspace /////////////////
+///////////// Haripraks]ash Workspace /////////////////
+///////////// Haripraks]ash Workspace /////////////////
 
 module.exports = router;

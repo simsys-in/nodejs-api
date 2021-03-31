@@ -64,7 +64,8 @@ User_GroupModel.prototype = {
                             body.menuList.map((menu, index) => {
                                 const USER_GROUP_PERMISSION = {
                                     user_group_id: USER_GROUP_ID,
-                                    menu_id: menu.menu_id,
+                                    menu_id: menu.menu_from === "menu_mas" ? menu.menu_id : null,
+                                    route: menu.menu_from === "route" ? menu.menu_id : null,
                                     view_permission: menu.view_permission,
                                     add_permission: menu.add_permission,
                                     delete_permission: menu.delete_permission,

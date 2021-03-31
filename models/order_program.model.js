@@ -21,7 +21,8 @@ OrderProgramModel.prototype = {
         
         let sql1 = `SELECT * FROM order_process WHERE order_process.order_id = ?`;
         
-         
+        let sql2 = `SELECT * FROM order_fabric WHERE order_fabric.order_id = ?`;
+
         pool.query(sql, match, function (err, result) {
             
             if (err){ 
@@ -36,12 +37,13 @@ OrderProgramModel.prototype = {
                     size_id : result[0].size_id,
                     style_id : result[0].style_id,
                     status_id : result[0].status_id,
-                    fabric_id : result[0].fabric_id,
-                    dia : result[0].dia,
+                    // fabric_id : result[0].fabric_id,
+                    // dia : result[0].dia,
                     gsm : result[0].gsm,
                     product_id : 0,
                     menu : 0,
-                    order_process : []
+                    order_process : [],
+                    order_fabrics : []
                     
                 }
                 pool.query(sql1, match, function (err, result1) {
@@ -49,7 +51,16 @@ OrderProgramModel.prototype = {
                         callback(err)
                     }else{
                         order_program.order_process = result1;
-                        callback(false,order_program);
+                        pool.query(sql2, match, function (err, result2) {
+                            if(err){
+                                callback(err)
+                            }else{
+                                order_program.order_fabrics = result2;
+                                callback(false,order_program);
+                            }
+                        })
+        
+                        
                     }
                 })
                                
@@ -65,7 +76,7 @@ OrderProgramModel.prototype = {
         });
     },
     getAll : function(callback){
-        pool.query(`select *,DATE_FORMAT(due_date, '%d-%m-%y') as due_date, DATE_FORMAT(vou_date, '%d-%m-%y') as vou_date from ${TABLE_NAME}`, function(err, result){
+        pool.query(`select *,DATE_FORMAT(due_date, '%d-%m-%Y') as due_date, DATE_FORMAT(vou_date, '%d-%m-%Y') as vou_date from ${TABLE_NAME}`, function(err, result){
 
             if(err)
             {
@@ -90,10 +101,10 @@ OrderProgramModel.prototype = {
                 size_id : body.size_id,
                 style_id : body.style_id,
                 status_id : body.status_id,
-                fabric_id : body.fabric_id,
+                // fabric_id : body.fabric_id,
                 product_id : 0,
-                dia : body.dia,
-                gsm : body.gsm,
+                // dia : body.dia,
+                gsm : 0,
                 menu_id : 0,
             
             }
@@ -109,7 +120,12 @@ OrderProgramModel.prototype = {
                             callback(err)
                         }
                         else{
-                            body.order_process.map((item, index) => {
+                            DBCON.query(`delete from order_fabric where order_id = ?`, body.id, (err, deletedData) =>  {
+                                if(err)
+                                {
+                                    callback(err)
+                                }else{
+                                     body.order_process.map((item, index) => {
                                 var order_process = {
                                     order_id : body.id,
                                     process_id : item.process_id,
@@ -119,10 +135,27 @@ OrderProgramModel.prototype = {
                                 }
         
                                 DBCON.query(`insert into order_process set ?`, order_process);
-                                if(index === body.order_process.length - 1)
-                                        {
-                                            callback(false, result, "Order Program  Updated Successfully!");
-                                        }
+                                    if(index === body.order_fabrics.length - 1)
+                                    {
+                                        body.order_fabrics.map((fabric, key) => {
+                                            var order_fabrics = {
+                                                order_id : body.id,
+                                                fabric_id : fabric.fabric_id,
+                                                dia : fabric.dia,
+                                                gsm : fabric.gsm
+                                            }
+                                            
+                                            DBCON.query(`insert into order_fabric set ?`, order_fabrics);
+
+                                            if(key === body.order_fabrics.length - 1)
+                                            {
+                                                callback(false, result, "Order Program  Saved Successfully!");
+                                            }
+                                        })
+                                    }
+                                
+                                })
+                            }
                             })
                         }
                     })
@@ -145,10 +178,10 @@ OrderProgramModel.prototype = {
                             size_id : body.size_id,
                             style_id : body.style_id,
                             status_id : body.status_id,
-                            fabric_id : body.fabric_id,
+                            // fabric_id : body.fabric_id,
                             product_id : 0,
-                            dia : body.dia,
-                            gsm : body.gsm,
+                            // dia : body.dia,
+                            gsm : 0,
                             menu_id : 0,
                         
                         }
@@ -167,10 +200,24 @@ OrderProgramModel.prototype = {
                                         waste : item.waste,
                                     }
                                     DBCON.query(`insert into order_process set ?`, order_process);
-                                    if(index === body.order_process.length - 1)
+                                    if(index === body.order_fabrics.length - 1)
+                                    {
+                                        body.order_fabrics.map((fabric, key) => {
+                                            var order_fabrics = {
+                                                order_id : result.insertId,
+                                                fabric_id : fabric.fabric_id,
+                                                dia : fabric.dia,
+                                                gsm : fabric.gsm
+                                            }
+                                            
+                                            DBCON.query(`insert into order_fabric set ?`, order_fabrics);
+
+                                            if(key === body.order_fabrics.length - 1)
                                             {
                                                 callback(false, result, "Order Program  Saved Successfully!");
                                             }
+                                        })
+                                    }
                                 })
 
                             }
@@ -193,12 +240,47 @@ OrderProgramModel.prototype = {
                         callback(err)
                     }
                     else{
-                        callback(false, result1)
+                        pool.query(`delete from order_fabric where order_id = ?`, id, (err,result2) => {
+                            if(err)
+                            {
+                                callback(err)
+                            }
+                            else{
+                                callback(false, result2)
+                            }
+                        })
                     }
                 })
             }
         })
     },
+    getNextOrderNo : (callback) => {
+        var query = `select max(ifnull(order_no, 0)) + 1 as max_order_no from ${TABLE_NAME}`;
+
+        DBCON.query(query, (err, result) => {
+            if(err){
+                console.log(err);
+                callback(err)
+            }
+            else{
+                callback(false,result[0]);
+            }
+        })
+    },
+    getStyleForOrderId : (order_id,callback) => {
+        DBCON.query(`select style_id from ${TABLE_NAME} where id = ${order_id}`,  (err,result) => {
+            if(err)
+            {
+                console.log(err);
+                callback(err);
+            }
+            else{
+                var style_id = result && result[0] &&result[0].style_id ? result[0].style_id : null;
+                callback(err, style_id);
+            }
+        })
+    }
+
    
 }
 

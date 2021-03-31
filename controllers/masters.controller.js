@@ -1057,6 +1057,22 @@ exports.deleteColor = function (req, res) {
 }
 
 
+exports.getMobileForLedgerID = function(req,res){
+    const body = req.body;
+    const USER = req.user;
+    body.company = USER.company
+    const status = body.status ? body.status : 'active';
+    var ledger_id = req.query.ledger_id ? req.query.ledger_id : null;
+    DBCON.query('select mobile from ledger  where id = ? ', ledger_id, function (err, data) {
+        if(err){
+            res.sendError(err)
+        }else{
+            res.sendInfo("", data[0].mobile)
+        }
+    })
+
+}
+
 exports.getProcessSBForOrderID = function (req, res) {
     const body = req.body;
     const USER = req.user;
@@ -1246,6 +1262,23 @@ exports.getAllSizeSB = function (req, res) {
     body.company = USER.company
     const status = body.status ? body.status : 'active';
     DBCON.query('select id as value, name from size ', function (err, data) {
+        if (err) {
+            console.log(err)
+            res.sendError(err)
+        } else {
+            res.sendInfo("", data)
+        }
+    })
+}
+
+
+
+exports.getAllColorSB = function (req, res) {
+    const body = req.body;
+    const USER = req.user;
+    body.company = USER.company
+    // const status = body.status ? body.status : 'active';
+    DBCON.query('select id as value, color as name from color ', function (err, data) {
         if (err) {
             console.log(err)
             res.sendError(err)
@@ -1571,6 +1604,20 @@ exports.getAllDepartmentSB = function (req, res) {
     body.company = USER.company
     const status = body.status ? body.status : 'active'
     DBCON.query('select id as value, department as name from department ', function (err, data) {
+        if (err) {
+            console.log(err)
+            res.sendError(err)
+        } else {
+            res.sendInfo("", data)
+        }
+    })
+}
+exports.getAllCuttingMasterSB = function (req, res) {
+    const body = req.body;
+    const USER = req.user;
+    body.company = USER.company
+    const status = body.status ? body.status : 'active'
+    DBCON.query('select id as value, employee as name from employee ', function (err, data) {
         if (err) {
             console.log(err)
             res.sendError(err)
