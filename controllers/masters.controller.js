@@ -1102,17 +1102,23 @@ exports.getProcessSBForOrderID = function (req, res) {
             res.sendError(err)
         } else {
             var result = [];
-            data.forEach((item, index) => {
-                if(item.value !== null)
-                {
-                    result.push(item);
-
-                    if(index === data.length - 1)
+            if(data.length > 0)
+            {
+                data.forEach((item, index) => {
+                    if(item.value !== null)
                     {
-                        res.sendInfo("", result)
+                        result.push(item);
+
+                        if(index === data.length - 1)
+                        {
+                            res.sendInfo("", result)
+                        }
                     }
-                }
-            })
+                })
+            }
+            else{
+                res.sendInfo("", result)
+            }
         }
     })
 }
