@@ -1385,6 +1385,39 @@ exports.getSizesForOrderID = (req, res) => {
 
 }
 
+exports.getFabricsForOrderID = (req, res) => {
+    const ORDER_ID = req.query.order_id;
+
+    DBCON.query(`select product.product as name, product.id as value from order_fabric left join product on product.id = order_fabric.fabric_id where order_id  = ${ORDER_ID}`, (err, data) => {
+        if(err)
+        {
+            console.log(err);
+            res.sendError(err);
+        }
+        else{
+            res.sendInfo("", data);
+        }
+    })
+
+}
+
+exports.getFabricDetailForOrder = (req, res) => {
+    const ORDER_ID = req.query.order_id;
+    const FABRIC_ID = req.query.fabric_id;
+
+    DBCON.query(`select order_fabric.dia, order_fabric.gsm from order_fabric left join product on product.id = order_fabric.fabric_id where order_id  = ${ORDER_ID} and fabric_id = ${FABRIC_ID}`, (err, data) => {
+        if(err)
+        {
+            console.log(err);
+            res.sendError(err);
+        }
+        else{
+            res.sendInfo("", data);
+        }
+    })
+
+}
+
 
 /////////////////// Hariprakash Workspace //////////////////
 /////////////////// Hariprakash Workspace //////////////////
