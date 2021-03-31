@@ -75,9 +75,9 @@ router.get('/yarn_return', Controller.getYarn_Return);
 router.delete('/yarn_return', Controller.deleteYarn_Return);
 
 //Cutting Program
-router.put('/cutting_program', Controller.saveCuttingProgram);
-router.get('/cutting_program', Controller.getCuttingProgram);
-router.delete('/cutting_program', Controller.deleteCuttingProgram);
+router.put('/cuttingProgram', Controller.saveCuttingProgram);
+router.get('/cuttingProgram', Controller.getCuttingProgram);
+router.delete('/cuttingProgram', Controller.deleteCuttingProgram);
 router.get('/getSizesForOrderID', Controller.getSizesForOrderID);
 router.get('/getNextCuttingProgLotNo', Controller.getNextCuttingProgLotNo);
 router.get('/getCuttingProgramSB', Controller.getCuttingProgramSB);
