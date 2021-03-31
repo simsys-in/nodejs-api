@@ -80,6 +80,7 @@ router.get('/cutting_program', Controller.getCuttingProgram);
 router.delete('/cutting_program', Controller.deleteCuttingProgram);
 router.get('/getSizesForOrderID', Controller.getSizesForOrderID);
 router.get('/getNextCuttingProgLotNo', Controller.getNextCuttingProgLotNo);
+router.get('/getCuttingProgramSB', Controller.getCuttingProgramSB);
 
 router.get('/getColorSB', Controller.getAllColorSB);
 router.get('/getLedgerNameSB', Controller.getAllLedgerNameSB);
