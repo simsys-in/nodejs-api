@@ -68,19 +68,39 @@ router.put('/yarn_return', Controller.saveYarn_Return);
 router.get('/yarn_return', Controller.getYarn_Return);
 router.delete('/yarn_return', Controller.deleteYarn_Return);
 
-//Cutting Program
-router.put('/cutting_program', Controller.saveCuttingProgram);
-router.get('/cutting_program', Controller.getCuttingProgram);
-router.delete('/cutting_program', Controller.deleteCuttingProgram);
-router.get('/getSizesForOrderID', Controller.getSizesForOrderID);
-router.get('/getNextCuttingProgLotNo', Controller.getNextCuttingProgLotNo);
-
 router.get('/getColorSB', Controller.getAllColorSB);
 router.get('/getLedgerNameSB', Controller.getAllLedgerNameSB);
 router.get('/getProcessSB', Controller.getAllProcessSB);
 router.get('/getFabricsSB', Controller.getAllFabricsSB);
 router.get('/getOrderSB', Controller.getAllOrderSB);
 
+///////////// Haripraks]ash Workspace /////////////////
+///////////// Haripraks]ash Workspace /////////////////
+///////////// Haripraks]ash Workspace /////////////////
+///////////// Haripraks]ash Workspace /////////////////
+///////////// Haripraks]ash Workspace /////////////////
+///////////// Haripraks]ash Workspace /////////////////
+///////////// Haripraks]ash Workspace /////////////////
 
+
+//Cutting Program
+router.put('/cutting_program', Controller.saveCuttingProgram);
+router.get('/cutting_program', Controller.getCuttingProgram);
+router.delete('/cutting_program', Controller.deleteCuttingProgram);
+router.get('/getSizesForOrderID', Controller.getSizesForOrderID);
+router.get('/getNextCuttingProgLotNo', Controller.getNextCuttingProgLotNo);
+router.get('/getFabricsForOrderID', Controller.getFabricsForOrderID);
+router.get('/getFabricDetailForOrder', Controller.getFabricDetailForOrder);
+
+
+///////////// Haripraks]ash Workspace /////////////////
+///////////// Haripraks]ash Workspace /////////////////
+///////////// Haripraks]ash Workspace /////////////////
+///////////// Haripraks]ash Workspace /////////////////
+///////////// Haripraks]ash Workspace /////////////////
+///////////// Haripraks]ash Workspace /////////////////
+///////////// Haripraks]ash Workspace /////////////////
+///////////// Haripraks]ash Workspace /////////////////
+///////////// Haripraks]ash Workspace /////////////////
 
 module.exports = router;
