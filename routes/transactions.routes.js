@@ -74,10 +74,13 @@ router.put('/yarn_return', Controller.saveYarn_Return);
 router.get('/yarn_return', Controller.getYarn_Return);
 router.delete('/yarn_return', Controller.deleteYarn_Return);
 
+router.put('/jobwork_inward', Controller.saveJobwork_Inward);
+router.get('/jobwork_inward', Controller.getJobwork_Inward);
+router.delete('/jobwork_inward', Controller.deleteJobwork_Inward);
 //Cutting Program
-router.put('/cutting_program', Controller.saveCuttingProgram);
-router.get('/cutting_program', Controller.getCuttingProgram);
-router.delete('/cutting_program', Controller.deleteCuttingProgram);
+router.put('/cuttingProgram', Controller.saveCuttingProgram);
+router.get('/cuttingProgram', Controller.getCuttingProgram);
+router.delete('/cuttingProgram', Controller.deleteCuttingProgram);
 router.get('/getSizesForOrderID', Controller.getSizesForOrderID);
 router.get('/getNextCuttingProgLotNo', Controller.getNextCuttingProgLotNo);
 router.get('/getCuttingProgramColorDetails', Controller.getCuttingProgramColorDetails);
