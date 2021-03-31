@@ -65,6 +65,10 @@ router.put('/yarn_return', Controller.saveYarn_Return);
 router.get('/yarn_return', Controller.getYarn_Return);
 router.delete('/yarn_return', Controller.deleteYarn_Return);
 
+router.put('/jobwork_inward', Controller.saveJobwork_Inward);
+router.get('/jobwork_inward', Controller.getJobwork_Inward);
+router.delete('/jobwork_inward', Controller.deleteJobwork_Inward);
+
 router.get('/getColorSB', Controller.getAllColorSB);
 router.get('/getLedgerNameSB', Controller.getAllLedgerNameSB);
 router.get('/getProcessSB', Controller.getAllProcessSB);

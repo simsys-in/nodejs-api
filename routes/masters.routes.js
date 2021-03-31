@@ -38,6 +38,14 @@ router.delete('/ledger_group', Controller.deleteLedger_Group);
 router.put('/ledger_category', Controller.saveLedger_Category);
 router.get('/ledger_category', Controller.getLedger_Category);
 router.delete('/ledger_category', Controller.deleteLedger_Category);
+
+router.put('/employee_category', Controller.saveEmployee_Category);
+router.get('/employee_category', Controller.getEmployee_Category);
+router.delete('/employee_category', Controller.deleteEmployee_Category);
+
+router.put('/employee', Controller.saveEmployee);
+router.get('/employee', Controller.getEmployee);
+router.delete('/employee', Controller.deleteEmployee);
 // router.get('/ledger', Controller.deleteLedger);
 router.get('/getProductCategorySB', Controller.getAllProduct_CategorySB);
 
@@ -86,9 +94,18 @@ router.get('/getMasterGroupSB', Controller.getAllMasterGroupSB);
 
 
 router.get('/getProcessSBForOrderID', Controller.getProcessSBForOrderID);
+router.get('/getMobileForLedgerID', Controller.getMobileForLedgerID);
+
 
 router.get('/getLedgerCategorySB', Controller.getAllLedgerCategorySB);
 router.get('/getLedgerGroupSB', Controller.getAllLedgerGroupSB);
+
+router.get('/getEmployeeCategorySB', Controller.getAllEmployeeCategorySB);
+router.get('/getShiftSB', Controller.getAllShiftSB);
+router.get('/getDesignationSB', Controller.getAllDesignationSB);
+router.get('/getDepartmentSB', Controller.getAllDepartmentSB);
+router.get('/getBranchSB', Controller.getAllBranchSB);
+router.get('/getBankSB', Controller.getAllBankSB);
 
 
 
