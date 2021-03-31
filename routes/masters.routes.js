@@ -65,6 +65,7 @@ router.put('/product', Controller.saveProduct);
 router.get('/product', Controller.getProduct);
 router.delete('/product', Controller.deleteProduct);
 router.get('/getProductGroupSB', Controller.getAllProductGroupSB);
+router.get('/getUnitForProductID', Controller.getUnitForProductID)
 
 
 //process

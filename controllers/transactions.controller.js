@@ -1300,12 +1300,12 @@ exports.getAllCuttingProgramSB = function (req, res) {
     })
 }
 
-exports.getCuttingProgramSB = function (req, res) {
+exports.getCuttingProgramColorDetails = function (req, res) {
     const body = req.body;
     const USER = req.user;
     body.company = USER.company
     const status = body.status ? body.status : 'active';
-    DBCON.query('select cutting_program_inventory.color_id, cutting_program_inventory.size1, cutting_program_inventory.size2,cutting_program_inventory.size3,cutting_program_inventory.size4,cutting_program_inventory.size5,cutting_program_inventory.size6,cutting_program_inventory.size7,cutting_program_inventory.size8,cutting_program_inventory.size9 from cutting_program left join cutting_program_inventory on cutting_program_inventory.vou_id = cutting_program.id where order_id =?', function (err, data) {
+    DBCON.query('select cutting_program_inventory.color_id, cutting_program_inventory.size1, cutting_program_inventory.size2,cutting_program_inventory.size3,cutting_program_inventory.size4,cutting_program_inventory.size5,cutting_program_inventory.size6,cutting_program_inventory.size7,cutting_program_inventory.size8,cutting_program_inventory.size9 from cutting_program left join cutting_program_inventory on cutting_program_inventory.vou_id = cutting_program.id where order_id =?', req.query.order_id, function (err, data) {
         if (err) {
             console.log(err)
             res.sendError(err)
