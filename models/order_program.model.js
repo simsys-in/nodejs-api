@@ -76,7 +76,7 @@ OrderProgramModel.prototype = {
         });
     },
     getAll : function(callback){
-        pool.query(`select *,DATE_FORMAT(due_date, '%d-%m-%Y') as due_date, DATE_FORMAT(vou_date, '%d-%m-%Y') as vou_date from ${TABLE_NAME}`, function(err, result){
+        pool.query(`select *,DATE_FORMAT(due_date, '%d-%m-%Y') as due_date, DATE_FORMAT(vou_date, '%d-%m-%Y') as vou_date from ${TABLE_NAME} order by id desc`, function(err, result){
 
             if(err)
             {
