@@ -36,6 +36,12 @@ const Ledger_Group = new Ledger_GroupModel();
 const Ledger_CategoryModel = require('../models/ledger_category_mas.model');
 const Ledger_Category = new Ledger_CategoryModel();
 
+const Employee_CategoryModel = require('../models/employee_category_mas.model');
+const Employee_Category = new Employee_CategoryModel();
+
+const EmployeeModel = require('../models/employee_mas.model');
+const Employee = new EmployeeModel();
+
 
 const ProcessModel = require('../models/process_mas.model');
 const Process = new ProcessModel();
@@ -1093,6 +1099,21 @@ exports.getProcessSBForOrderID = function (req, res) {
         }
     })
 }
+exports.getMobileForLedgerID = function (req, res) {
+    const body = req.body;
+    const USER = req.user;
+    body.company = USER.company
+    const status = body.status ? body.status : 'active';
+    var ledger_id = req.query.ledger_id ? req.query.ledger_id : null;
+    DBCON.query('select mobile from ledger  where id = ? ', ledger_id, function (err, data) {
+        if (err) {
+            console.log(err)
+            res.sendError(err)
+        } else {
+            res.sendInfo("", data[0].mobile)
+        }
+    })
+}
 
 
 // exports.getAllFabricsSB = function (req, res) {
@@ -1396,7 +1417,201 @@ exports.getAllLedgerGroupSB = function (req, res) {
 
 
 
+exports.saveEmployee_Category = function (req, res) {
+    const body = req.body;
+    body.id = req.query.id;
+    Employee_Category.checkAndSaveOrUpdate(body, (err, result, msg) => {
+        if (err) {
+            console.log(err);
+            res.sendError(err);
+        } else {
+            res.sendSuccess(msg, result)
+        }
+    })
+}
 
+exports.getEmployee_Category = function (req, res) {
+    var ID = req.query.id;
+    if (issetNotEmpty(ID)) {
+        Employee_Category.find(Number(ID), function (err, data) {
+            if (err) {
+                console.log(err);
+                res.sendError(err)
+            } else {
+                res.sendInfo("", data);
+            }
+        })
+    } else {
+        Employee_Category.getAll((err, data) => {
+            if (err) {
+                console.log(err)
+                res.sendError(err)
+            } else {
+                res.sendSuccess("", data)
+            }
+        })
+    }
+}
+
+exports.getAllEmployee_CategorySB = function (req, res) {
+    const body = req.body;
+    const USER = req.user;
+    body.company = USER.company
+    const status = body.status ? body.status : 'active';
+    DBCON.query('select id as value, name from employee_category ', function (err, data) {
+        if (err) {
+            console.log(err)
+            res.sendError(err)
+        } else {
+            res.sendInfo("", data)
+        }
+    })
+}
+
+exports.deleteEmployee_Category = function (req, res) {
+    const id = req.query.id;
+    console.log("ID : " + id);
+
+    if (issetNotEmpty(id)) {
+        Employee_Category.delete(Number(id), function (err, data) {
+            if (err) {
+                console.log(err);
+                res.sendError(err)
+            } else {
+                res.sendInfo("Employee category Deleted Successfully!");
+            }
+        })
+    } else {
+        res.sendWarning("Employee category Not Found! ")
+    }
+
+}
+
+exports.saveEmployee = function (req, res) {
+    const body = req.body;
+    body.id = req.query.id;
+    Employee.checkAndSaveOrUpdate(body, (err, result, msg) => {
+        if (err) {
+            console.log(err);
+            res.sendError(err);
+        } else {
+            res.sendSuccess(msg, result)
+        }
+    })
+}
+
+exports.getEmployee = function (req, res) {
+    var ID = req.query.id;
+    if (issetNotEmpty(ID)) {
+        Employee.find(Number(ID), function (err, data) {
+            if (err) {
+                console.log(err);
+                res.sendError(err)
+            } else {
+                res.sendInfo("", data);
+            }
+        })
+    } else {
+        Employee.getAll((err, data) => {
+            if (err) {
+                console.log(err)
+                res.sendError(err)
+            } else {
+                res.sendSuccess("", data)
+            }
+        })
+    }
+}
+
+exports.getAllEmployeeSB = function (req, res) {
+    const body = req.body;
+    const USER = req.user;
+    body.company = USER.company
+    const status = body.status ? body.status : 'active';
+    DBCON.query('select id as value, name from employee ', function (err, data) {
+        if (err) {
+            console.log(err)
+            res.sendError(err)
+        } else {
+            res.sendInfo("", data)
+        }
+    })
+}
+
+exports.deleteEmployee = function (req, res) {
+    const id = req.query.id;
+    console.log("ID : " + id);
+
+    if (issetNotEmpty(id)) {
+        Employee.delete(Number(id), function (err, data) {
+            if (err) {
+                console.log(err);
+                res.sendError(err)
+            } else {
+                res.sendInfo("Employee  Deleted Successfully!");
+            }
+        })
+    } else {
+        res.sendWarning("Employee Not Found! ")
+    }
+
+}
+exports.getAllEmployeeCategorySB = function (req, res) {
+    const body = req.body;
+    const USER = req.user;
+    body.company = USER.company
+    const status = body.status ? body.status : 'active'
+    DBCON.query('select id as value, employee_category as name from employee_category ', function (err, data) {
+        if (err) {
+            console.log(err)
+            res.sendError(err)
+        } else {
+            res.sendInfo("", data)
+        }
+    })
+}
+exports.getAllShiftSB = function (req, res) {
+    const body = req.body;
+    const USER = req.user;
+    body.company = USER.company
+    const status = body.status ? body.status : 'active'
+    DBCON.query('select id as value, shift as name from shift ', function (err, data) {
+        if (err) {
+            console.log(err)
+            res.sendError(err)
+        } else {
+            res.sendInfo("", data)
+        }
+    })
+}
+exports.getAllDesignationSB = function (req, res) {
+    const body = req.body;
+    const USER = req.user;
+    body.company = USER.company
+    const status = body.status ? body.status : 'active'
+    DBCON.query('select id as value, designation as name from designation ', function (err, data) {
+        if (err) {
+            console.log(err)
+            res.sendError(err)
+        } else {
+            res.sendInfo("", data)
+        }
+    })
+}
+exports.getAllDepartmentSB = function (req, res) {
+    const body = req.body;
+    const USER = req.user;
+    body.company = USER.company
+    const status = body.status ? body.status : 'active'
+    DBCON.query('select id as value, department as name from department ', function (err, data) {
+        if (err) {
+            console.log(err)
+            res.sendError(err)
+        } else {
+            res.sendInfo("", data)
+        }
+    })
+}
 exports.getAllCuttingMasterSB = function (req, res) {
     const body = req.body;
     const USER = req.user;
@@ -1411,6 +1626,38 @@ exports.getAllCuttingMasterSB = function (req, res) {
         }
     })
 }
+exports.getAllBranchSB = function (req, res) {
+    const body = req.body;
+    const USER = req.user;
+    body.company = USER.company
+    const status = body.status ? body.status : 'active'
+    DBCON.query('select id as value, branch as name from branch ', function (err, data) {
+        if (err) {
+            console.log(err)
+            res.sendError(err)
+        } else {
+            res.sendInfo("", data)
+        }
+    })
+}
+exports.getAllBankSB = function (req, res) {
+    const body = req.body;
+    const USER = req.user;
+    body.company = USER.company
+    const status = body.status ? body.status : 'active'
+    DBCON.query('select id as value, bank as name from bank ', function (err, data) {
+        if (err) {
+            console.log(err)
+            res.sendError(err)
+        } else {
+            res.sendInfo("", data)
+        }
+    })
+}
+
+
+
+
 
 
 

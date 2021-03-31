@@ -29,6 +29,9 @@ const Yarn_Invoice = new Yarn_InvoiceModel();
 const Yarn_ReturnModel = require('../models/yarn_return_mas.model');
 const Yarn_Return = new Yarn_ReturnModel();
 
+const Jobwork_InwardModel = require('../models/jobwork_inward_mas.model');
+const Jobwork_Inward = new Jobwork_InwardModel();
+
 const Yarn_OutwardModel = require('../models/yarn_outward_mas.model');
 const Yarn_Outward = new Yarn_OutwardModel();
 
@@ -1041,6 +1044,76 @@ exports.deleteYarn_Return = function (req, res) {
         })
     } else {
         res.sendWarning("Yarn Return Not Found! ")
+    }
+
+}
+
+exports.saveJobwork_Inward = function (req, res) {
+    const body = req.body;
+    body.id = req.query.id;
+    Jobwork_Inward.checkAndSaveOrUpdate(body, (err, result, msg) => {
+        if (err) {
+            console.log(err);
+            res.sendError(err);
+        } else {
+            res.sendSuccess(msg, result)
+        }
+    })
+}
+
+exports.getJobwork_Inward = function (req, res) {
+    var ID = req.query.id;
+    if (issetNotEmpty(ID)) {
+        Jobwork_Inward.find(Number(ID), function (err, data) {
+            if (err) {
+                console.log(err);
+                res.sendError(err)
+            } else {
+                res.sendInfo("", data);
+            }
+        })
+    } else {
+        Jobwork_Inward.getAll((err, data) => {
+            if (err) {
+                console.log(err)
+                res.sendError(err)
+            } else {
+                res.sendSuccess("", data)
+            }
+        })
+    }
+}
+
+exports.getAllJobwork_InwardSB = function (req, res) {
+    const body = req.body;
+    const USER = req.user;
+    body.company = USER.company
+    const status = body.status ? body.status : 'active'
+    DBCON.query('select id as value, name from jobwork_inward ', function (err, data) {
+        if (err) {
+            console.log(err)
+            res.sendError(err)
+        } else {
+            res.sendInfo("", data)
+        }
+    })
+}
+
+exports.deleteJobwork_Inward = function (req, res) {
+    const id = req.query.id;
+    console.log("ID : " + id);
+
+    if (issetNotEmpty(id)) {
+        Jobwork_Inward.delete(Number(id), function (err, data) {
+            if (err) {
+                console.log(err);
+                res.sendError(err)
+            } else {
+                res.sendInfo("Jobwork Inward Deleted Successfully!");
+            }
+        })
+    } else {
+        res.sendWarning("Jobwork Inward Not Found! ")
     }
 
 }
