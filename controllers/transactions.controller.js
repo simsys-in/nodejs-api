@@ -1504,3 +1504,18 @@ exports.getFabricDetailForOrder = (req, res) => {
 /////////////////// Hariprakash Workspace //////////////////
 /////////////////// Hariprakash Workspace //////////////////
 /////////////////// Hariprakash Workspace //////////////////
+
+exports.getJobworkOutwardColorDetails = function (req, res) {
+    const body = req.body;
+    const USER = req.user;
+    body.company = USER.company
+    const status = body.status ? body.status : 'active';
+    DBCON.query('select jobwork_outward_inventory.color_id, jobwork_outward_inventory.size1, jobwork_outward_inventory.size2,jobwork_outward_inventory.size3,jobwork_outward_inventory.size4,jobwork_outward_inventory.size5,jobwork_outward_inventory.size6,jobwork_outward_inventory.size7,jobwork_outward_inventory.size8,jobwork_outward_inventory.size9 from jobwork_outward left join jobwork_outward_inventory on jobwork_outward_inventory.vou_id = jobwork_outward.id where jobwork_outward.order_id =?', req.query.order_id, function (err, data) {
+        if (err) {
+            console.log(err)
+            res.sendError(err)
+        } else {
+            res.sendInfo("", data)
+        }
+    })
+}

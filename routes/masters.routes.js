@@ -147,4 +147,15 @@ router.delete('/department', Controller.deleteDepartment);
 
 
 
+
+
+
+
+
+
+router.put('/bank', Controller.saveBank);
+router.get('/bank', Controller.getBank);
+router.delete('/bank', Controller.deleteBank);
+
+
 module.exports = router;

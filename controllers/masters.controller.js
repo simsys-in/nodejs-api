@@ -59,6 +59,9 @@ const Branch = new BranchModel();
 const DepartmentModel = require('../models/department_mas.model');
 const Department = new DepartmentModel();
 
+const BankModel = require('../models/bank_mas.model');
+const Bank = new BankModel();
+
 
 exports.saveAddLess = function (req, res) {
     const body = req.body;
@@ -1841,3 +1844,144 @@ exports.deleteDepartment = function (req, res) {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+exports.saveBank = function (req, res) {
+    const body = req.body;
+    body.id = req.query.id;
+    Bank.checkAndSaveOrUpdate(body, (err, result, msg) => {
+        if (err) {
+            console.log(err);
+            res.sendError(err);
+        } else {
+            res.sendSuccess(msg, result)
+        }
+    })
+}
+
+exports.getBank = function (req, res) {
+    var ID = req.query.id;
+    if (issetNotEmpty(ID)) {
+        Bank.find(Number(ID), function (err, data) {
+            if (err) {
+                console.log(err);
+                res.sendError(err)
+            } else {
+                res.sendInfo("", data);
+            }
+        })
+    } else {
+        Bank.getAll((err, data) => {
+            if (err) {
+                console.log(err)
+                res.sendError(err)
+            } else {
+                res.sendSuccess("", data)
+            }
+        })
+    }
+}
+
+exports.getAllBankSB = function (req, res) {
+    const body = req.body;
+    const USER = req.user;
+    body.company = USER.company
+    const status = body.status ? body.status : 'active';
+    DBCON.query('select id as value, name from bank ', function (err, data) {
+        if (err) {
+            console.log(err)
+            res.sendError(err)
+        } else {
+            res.sendInfo("", data)
+        }
+    })
+}
+
+exports.deleteBank = function (req, res) {
+    const id = req.query.id;
+    console.log("ID : " + id);
+
+    if (issetNotEmpty(id)) {
+        Bank.delete(Number(id), function (err, data) {
+            if (err) {
+                console.log(err);
+                res.sendError(err)
+            } else {
+                res.sendInfo("Bank Deleted Successfully!");
+            }
+        })
+    } else {
+        res.sendWarning("Bank Not Found! ")
+    }
+
+}

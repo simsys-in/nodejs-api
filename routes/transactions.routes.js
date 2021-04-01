@@ -120,4 +120,7 @@ router.get('/getFabricDetailForOrder', Controller.getFabricDetailForOrder);
 ///////////// Haripraks]ash Workspace /////////////////
 ///////////// Haripraks]ash Workspace /////////////////
 
+
+router.get('/getJobworkOutwardColorDetails', Controller.getJobworkOutwardColorDetails);
+
 module.exports = router;
