@@ -115,7 +115,12 @@ Jobwork_InwardModel.prototype = {
                          callback(err)
                      }
                      else{
-                        body.jobwork_inward_inventory.map((item, index) => {
+                        for (index = 0; index < body.jobwork_inward_inventory.length; index++) {
+                            var item = body.jobwork_inward_inventory[index];
+                            // body.jobwork_inward_inventory.map((item, index) => {
+                            console.log(item)
+                            if (item.selected) {
+                        // body.jobwork_inward_inventory.map((item, index) => {
                             var jobwork_inward_inventory = {
                                 // jobwork_inward_id : result.insertId,
                                 vou_id : body.id,
@@ -136,10 +141,11 @@ Jobwork_InwardModel.prototype = {
                             {
                                 callback(false, result, "Jobwork inward Saved Successfully!");
                             }
-                    })
-                     }
-                 })   
                     
+                     }
+                    }}
+                 })   
+                     
                 }
             })
         } else {
@@ -169,6 +175,7 @@ Jobwork_InwardModel.prototype = {
                             } else {
                                 console.log(result)
                                 body.jobwork_inward_inventory.map((item, index) => {
+                                    if (item.selected) {
                                     var jobwork_inward_inventory = {
                                         // jobwork_inward_id : result.insertId,
                                         vou_id : result.insertId,
@@ -190,6 +197,7 @@ Jobwork_InwardModel.prototype = {
                                     {
                                         callback(false, result, "Jobwork inward Saved Successfully!");
                                     }
+                                }
                             })
                             }
                         })  

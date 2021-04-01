@@ -121,4 +121,7 @@ router.get('/getJobworkOutwardReport', Controller.getJobworkOutwardReport);
 ///////////// Haripraks]ash Workspace /////////////////
 ///////////// Haripraks]ash Workspace /////////////////
 
+
+router.get('/getJobworkOutwardColorDetails', Controller.getJobworkOutwardColorDetails);
+
 module.exports = router;

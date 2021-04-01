@@ -53,6 +53,15 @@ const Size = new SizeModel();
 const MasterModel = require('../models/master_mas.model');
 const Master = new MasterModel();
 
+const BranchModel = require('../models/branch_mas.model');
+const Branch = new BranchModel();
+
+const DepartmentModel = require('../models/department_mas.model');
+const Department = new DepartmentModel();
+
+const BankModel = require('../models/bank_mas.model');
+const Bank = new BankModel();
+
 
 exports.saveAddLess = function (req, res) {
     const body = req.body;
@@ -1684,3 +1693,295 @@ exports.getAllBankSB = function (req, res) {
 
 
 
+
+
+
+
+
+
+exports.saveBranch = function (req, res) {
+    const body = req.body;
+    body.id = req.query.id;
+    Branch.checkAndSaveOrUpdate(body, (err, result, msg) => {
+        if (err) {
+            console.log(err);
+            res.sendError(err);
+        } else {
+            res.sendSuccess(msg, result)
+        }
+    })
+}
+
+exports.getBranch = function (req, res) {
+    var ID = req.query.id;
+    if (issetNotEmpty(ID)) {
+        Branch.find(Number(ID), function (err, data) {
+            if (err) {
+                console.log(err);
+                res.sendError(err)
+            } else {
+                res.sendInfo("", data);
+            }
+        })
+    } else {
+        Branch.getAll((err, data) => {
+            if (err) {
+                console.log(err)
+                res.sendError(err)
+            } else {
+                res.sendSuccess("", data)
+            }
+        })
+    }
+}
+
+exports.getAllBranchSB = function (req, res) {
+    const body = req.body;
+    const USER = req.user;
+    body.company = USER.company
+    const status = body.status ? body.status : 'active';
+    DBCON.query('select id as value, name from branch ', function (err, data) {
+        if (err) {
+            console.log(err)
+            res.sendError(err)
+        } else {
+            res.sendInfo("", data)
+        }
+    })
+}
+
+exports.deleteBranch = function (req, res) {
+    const id = req.query.id;
+    console.log("ID : " + id);
+
+    if (issetNotEmpty(id)) {
+        Branch.delete(Number(id), function (err, data) {
+            if (err) {
+                console.log(err);
+                res.sendError(err)
+            } else {
+                res.sendInfo("Branch Deleted Successfully!");
+            }
+        })
+    } else {
+        res.sendWarning("Branch Not Found! ")
+    }
+
+}
+
+exports.saveDepartment = function (req, res) {
+    const body = req.body;
+    body.id = req.query.id;
+    Department.checkAndSaveOrUpdate(body, (err, result, msg) => {
+        if (err) {
+            console.log(err);
+            res.sendError(err);
+        } else {
+            res.sendSuccess(msg, result)
+        }
+    })
+}
+
+exports.getDepartment = function (req, res) {
+    var ID = req.query.id;
+    if (issetNotEmpty(ID)) {
+        Department.find(Number(ID), function (err, data) {
+            if (err) {
+                console.log(err);
+                res.sendError(err)
+            } else {
+                res.sendInfo("", data);
+            }
+        })
+    } else {
+        Department.getAll((err, data) => {
+            if (err) {
+                console.log(err)
+                res.sendError(err)
+            } else {
+                res.sendSuccess("", data)
+            }
+        })
+    }
+}
+
+exports.getAllDepartmentSB = function (req, res) {
+    const body = req.body;
+    const USER = req.user;
+    body.company = USER.company
+    const status = body.status ? body.status : 'active';
+    DBCON.query('select id as value, name from department ', function (err, data) {
+        if (err) {
+            console.log(err)
+            res.sendError(err)
+        } else {
+            res.sendInfo("", data)
+        }
+    })
+}
+
+exports.deleteDepartment = function (req, res) {
+    const id = req.query.id;
+    console.log("ID : " + id);
+
+    if (issetNotEmpty(id)) {
+        Department.delete(Number(id), function (err, data) {
+            if (err) {
+                console.log(err);
+                res.sendError(err)
+            } else {
+                res.sendInfo("Department Deleted Successfully!");
+            }
+        })
+    } else {
+        res.sendWarning("Department Not Found! ")
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+exports.saveBank = function (req, res) {
+    const body = req.body;
+    body.id = req.query.id;
+    Bank.checkAndSaveOrUpdate(body, (err, result, msg) => {
+        if (err) {
+            console.log(err);
+            res.sendError(err);
+        } else {
+            res.sendSuccess(msg, result)
+        }
+    })
+}
+
+exports.getBank = function (req, res) {
+    var ID = req.query.id;
+    if (issetNotEmpty(ID)) {
+        Bank.find(Number(ID), function (err, data) {
+            if (err) {
+                console.log(err);
+                res.sendError(err)
+            } else {
+                res.sendInfo("", data);
+            }
+        })
+    } else {
+        Bank.getAll((err, data) => {
+            if (err) {
+                console.log(err)
+                res.sendError(err)
+            } else {
+                res.sendSuccess("", data)
+            }
+        })
+    }
+}
+
+exports.getAllBankSB = function (req, res) {
+    const body = req.body;
+    const USER = req.user;
+    body.company = USER.company
+    const status = body.status ? body.status : 'active';
+    DBCON.query('select id as value, name from bank ', function (err, data) {
+        if (err) {
+            console.log(err)
+            res.sendError(err)
+        } else {
+            res.sendInfo("", data)
+        }
+    })
+}
+
+exports.deleteBank = function (req, res) {
+    const id = req.query.id;
+    console.log("ID : " + id);
+
+    if (issetNotEmpty(id)) {
+        Bank.delete(Number(id), function (err, data) {
+            if (err) {
+                console.log(err);
+                res.sendError(err)
+            } else {
+                res.sendInfo("Bank Deleted Successfully!");
+            }
+        })
+    } else {
+        res.sendWarning("Bank Not Found! ")
+    }
+
+}
