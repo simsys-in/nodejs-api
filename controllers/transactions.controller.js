@@ -39,6 +39,9 @@ const Yarn_Outward = new Yarn_OutwardModel();
 const CuttingProgramModel = require('../models/cutting_program.model');
 const CuttingProgram = new CuttingProgramModel();
 
+//jobwork invoice
+const JobworkInvoiceModel = require('../models/jobwork_invoice.model');
+const JobworkInvoice = new JobworkInvoiceModel();
 
 
 //orderProgram
@@ -1504,3 +1507,101 @@ exports.getFabricDetailForOrder = (req, res) => {
 /////////////////// Hariprakash Workspace //////////////////
 /////////////////// Hariprakash Workspace //////////////////
 /////////////////// Hariprakash Workspace //////////////////
+
+
+// jobwork invoice
+exports.saveJobworkInvoice = function (req, res) {
+    const body = req.body;
+    body.id = req.query.id;
+    JobworkInvoice.checkAndSaveOrUpdate(body, (err, result, msg) => {
+        if (err) {
+            console.log(err);
+            res.sendError(err);
+        } else {
+            res.sendSuccess(msg, result)
+        }
+    })
+}
+
+
+exports.getJobworkInvoice = function (req, res) {
+    var ID = req.query.id;
+    if (issetNotEmpty(ID)) {
+        JobworkInvoice.find(Number(ID), function (err, data) {
+            if (err) {
+                console.log(err);
+                res.sendError(err)
+            } else {
+                res.sendInfo("", data);
+            }
+        })
+    } else {
+        JobworkInvoice.getAll((err, data) => {
+            if (err) {
+                console.log(err)
+                res.sendError(err)
+            } else {
+                res.sendSuccess("", data)
+            }
+        })
+    }
+}
+
+
+exports.getSizeForOrderID = (req, res) => {
+    const ORDER_ID = req.query.order_id ? req.query.order_id : null;
+    if(issetNotEmpty(ORDER_ID))
+    {
+        JobworkInvoice.getSizeForOrderID(ORDER_ID,(err, size_id) => {
+            if(err)
+            {
+                res.sendError(err);
+            }
+            else{
+                res.sendInfo("",size_id);
+            }
+        })
+    }
+    else{
+        res.sendError("Jobwork Invoice Not Found!")
+    }
+}
+
+exports.getProductForOrderID = (req, res) => {
+    const ORDER_ID = req.query.order_id ? req.query.order_id : null;
+    if(issetNotEmpty(ORDER_ID))
+    {
+        JobworkInvoice.getProductForOrderID(ORDER_ID,(err, product_id) => {
+            if(err)
+            {
+                res.sendError(err);
+            }
+            else{
+                res.sendInfo("",product_id);
+            }
+        })
+    }
+    else{
+        res.sendError("Jobwork Invoice Not Found!")
+    }
+}
+
+
+exports.deleteJobworkInvoice = function (req, res) {
+    const id = req.query.id;
+    console.log("ID : " + id);
+
+    if (issetNotEmpty(id)) {
+        JobworkInvoice.delete(Number(id), function (err, data) {
+            if (err) {
+                console.log(err);
+                res.sendError(err)
+            } else {
+                res.sendInfo("Jobwork Invoice Deleted Successfully!");
+            }
+        })
+    } else {
+        res.sendWarning("Jobwork Invoice Not Found! ")
+    }
+
+}

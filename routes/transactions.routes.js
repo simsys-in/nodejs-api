@@ -120,4 +120,13 @@ router.get('/getFabricDetailForOrder', Controller.getFabricDetailForOrder);
 ///////////// Haripraks]ash Workspace /////////////////
 ///////////// Haripraks]ash Workspace /////////////////
 
+
+//jobwork invoice
+router.put('/jobwork_invoice', Controller.saveJobworkInvoice);
+router.get('/jobwork_invoice', Controller.getJobworkInvoice);
+router.delete('/jobwork_invoice', Controller.deleteJobworkInvoice);
+router.get('/getSizeForOrderID', Controller.getSizeForOrderID);
+router.get('/getProductForOrderID', Controller.getProductForOrderID);
+
+
 module.exports = router;
