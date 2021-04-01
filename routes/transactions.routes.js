@@ -125,8 +125,8 @@ router.get('/getFabricDetailForOrder', Controller.getFabricDetailForOrder);
 router.put('/jobwork_invoice', Controller.saveJobworkInvoice);
 router.get('/jobwork_invoice', Controller.getJobworkInvoice);
 router.delete('/jobwork_invoice', Controller.deleteJobworkInvoice);
-router.get('/getSizeForOrderID', Controller.getSizeForOrderID);
-router.get('/getProductForOrderID', Controller.getProductForOrderID);
+router.get('/getSizeSBForOrderID', Controller.getSizeSBForOrderID);
+router.get('/getProductSBForOrderID', Controller.getProductSBForOrderID);
 
 
 module.exports = router;

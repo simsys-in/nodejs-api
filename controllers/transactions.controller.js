@@ -1548,11 +1548,11 @@ exports.getJobworkInvoice = function (req, res) {
 }
 
 
-exports.getSizeForOrderID = (req, res) => {
+exports.getSizeSBForOrderID = (req, res) => {
     const ORDER_ID = req.query.order_id ? req.query.order_id : null;
     if(issetNotEmpty(ORDER_ID))
     {
-        JobworkInvoice.getSizeForOrderID(ORDER_ID,(err, size_id) => {
+        JobworkInvoice.getSizeSBForOrderID(ORDER_ID,(err, size_id) => {
             if(err)
             {
                 res.sendError(err);
@@ -1567,11 +1567,11 @@ exports.getSizeForOrderID = (req, res) => {
     }
 }
 
-exports.getProductForOrderID = (req, res) => {
+exports.getProductSBForOrderID = (req, res) => {
     const ORDER_ID = req.query.order_id ? req.query.order_id : null;
     if(issetNotEmpty(ORDER_ID))
     {
-        JobworkInvoice.getProductForOrderID(ORDER_ID,(err, product_id) => {
+        JobworkInvoice.getProductSBForOrderID(ORDER_ID,(err, product_id) => {
             if(err)
             {
                 res.sendError(err);
