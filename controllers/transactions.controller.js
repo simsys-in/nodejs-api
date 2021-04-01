@@ -1492,6 +1492,20 @@ exports.getFabricDetailForOrder = (req, res) => {
 }
 
 
+exports.getJobworkOutwardReport = (req, res) => {
+    const ID = req.query.id;
+    JobworkOutward.getJobworkOutwardReport(ID, (err, result) => {
+        if(err)
+        {
+            res.sendError(err);
+        }
+        else{
+            res.sendInfo("", result);
+        }
+    })
+}
+
+
 /////////////////// Hariprakash Workspace //////////////////
 /////////////////// Hariprakash Workspace //////////////////
 /////////////////// Hariprakash Workspace //////////////////

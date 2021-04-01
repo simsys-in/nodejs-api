@@ -108,6 +108,7 @@ router.get('/getSizesForOrderID', Controller.getSizesForOrderID);
 router.get('/getNextCuttingProgLotNo', Controller.getNextCuttingProgLotNo);
 router.get('/getFabricsForOrderID', Controller.getFabricsForOrderID);
 router.get('/getFabricDetailForOrder', Controller.getFabricDetailForOrder);
+router.get('/getJobworkOutwardReport', Controller.getJobworkOutwardReport);
 
 
 ///////////// Haripraks]ash Workspace /////////////////
