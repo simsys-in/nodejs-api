@@ -63,6 +63,17 @@ const BankModel = require('../models/bank_mas.model');
 const Bank = new BankModel();
 
 
+
+
+
+
+
+//designation
+const DesignationModel = require('../models/designation.model');
+const Designation = new DesignationModel();
+
+
+
 exports.saveAddLess = function (req, res) {
     const body = req.body;
     body.id = req.query.id;
@@ -1841,85 +1852,26 @@ exports.deleteDepartment = function (req, res) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 exports.saveBank = function (req, res) {
     const body = req.body;
     body.id = req.query.id;
     Bank.checkAndSaveOrUpdate(body, (err, result, msg) => {
+        if (err) {
+            console.log(err);
+            res.sendError(err);
+        } else {
+            res.sendSuccess(msg, result)
+        }
+    })
+}
+
+
+
+//designation
+exports.saveDesignation = function (req, res) {
+    const body = req.body;
+    body.id = req.query.id;
+    Designation.checkAndSaveOrUpdate(body, (err, result, msg) => {
         if (err) {
             console.log(err);
             res.sendError(err);
@@ -1941,7 +1893,30 @@ exports.getBank = function (req, res) {
             }
         })
     } else {
-        Bank.getAll((err, data) => {
+        Bank.getAll((err, data) => {   
+                    if (err) {
+            console.log(err)
+            res.sendError(err)
+        } else {
+            res.sendSuccess("", data)
+        }
+    })
+}
+}
+
+exports.getDesignation = function (req, res) {
+    var ID = req.query.id;
+    if (issetNotEmpty(ID)) {
+        Designation.find(Number(ID), function (err, data) {
+            if (err) {
+                console.log(err);
+                res.sendError(err)
+            } else {
+                res.sendInfo("", data);
+            }
+        })
+    } else {
+        Designation.getAll((err, data) => {
             if (err) {
                 console.log(err)
                 res.sendError(err)
@@ -1982,6 +1957,26 @@ exports.deleteBank = function (req, res) {
         })
     } else {
         res.sendWarning("Bank Not Found! ")
+    }
+
+}
+
+
+exports.deleteDesignation = function (req, res) {
+    const id = req.query.id;
+    console.log("ID : " + id);
+
+    if (issetNotEmpty(id)) {
+        Designation.delete(Number(id), function (err, data) {
+            if (err) {
+                console.log(err);
+                res.sendError(err)
+            } else {
+                res.sendInfo("Designation Deleted Successfully!");
+            }
+        })
+    } else {
+        res.sendWarning("Designation Not Found! ")
     }
 
 }

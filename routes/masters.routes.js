@@ -158,4 +158,15 @@ router.get('/bank', Controller.getBank);
 router.delete('/bank', Controller.deleteBank);
 
 
+
+
+
+
+
+//desigantion
+router.put('/designation', Controller.saveDesignation);
+router.get('/designation', Controller.getDesignation);
+router.delete('/designation', Controller.deleteDesignation);
+
+
 module.exports = router;
