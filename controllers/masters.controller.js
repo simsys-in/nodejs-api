@@ -195,8 +195,8 @@ exports.getAllLedgerSB = function (req, res) {
     const body = req.body;
     const USER = req.user;
     body.company = USER.company
-    const status = body.status ? body.status : 'active'
-    DBCON.query('select id as value, name from ledger where status = ?', status, function (err, data) {
+    // const status = body.status ? body.status : 'active'
+    DBCON.query('select id as value, ledger as name from ledger order by ledger asc', function (err, data) {
         if (err) {
             console.log(err)
             res.sendError(err)
@@ -773,7 +773,7 @@ exports.getAllProductSB = function (req, res) {
     const USER = req.user;
     body.company = USER.company
     const status = body.status ? body.status : 'active'
-    DBCON.query('select id as value, name from product ',function (err, data) {
+    DBCON.query('select id as value,product as name from product ',function (err, data) {
         if (err) {
             console.log(err)
             res.sendError(err)
@@ -1304,7 +1304,7 @@ exports.getAllSizeSB = function (req, res) {
     const USER = req.user;
     body.company = USER.company
     const status = body.status ? body.status : 'active';
-    DBCON.query('select id as value, name from size ', function (err, data) {
+    DBCON.query('select id as value, size as name from size ', function (err, data) {
         if (err) {
             console.log(err)
             res.sendError(err)
@@ -2061,7 +2061,22 @@ exports.deleteDesignation = function (req, res) {
 ////////////////////// Hariprakash Workspace/////////////////
 
 
+exports.getAccountsLedger = (req, res) => {
+    const LEDGER_GROUP_ID = req.query.ledger_group_id;
 
+    const QUERY = `select id as value, ledger as name from ledger where ledger_group_id = ${LEDGER_GROUP_ID} order by ledger asc;`;
+
+    DBCON.query(QUERY, (err, result) => {
+        if(err)
+        {
+            console.log(err);
+            res.sendError(err);
+        }
+        else{
+            res.sendInfo("", result);
+        }
+    })
+}
 
 
 

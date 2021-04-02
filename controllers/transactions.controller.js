@@ -163,8 +163,8 @@ exports.getLedgerNameSB = function (req, res) {
     const body = req.body;
     const USER = req.user;
     body.company = USER.company
-    const status = body.status ? body.status : 'active'
-    DBCON.query('select id as value,ledger as name from ledger ', function (err, data) {
+    // const status = body.status ? body.status : 'active'
+    DBCON.query('select id as value, name from ledger where ledger_group_id = 1 ', function (err, data) {
         if (err) {
             console.log(err)
             res.sendError(err)
@@ -1633,6 +1633,23 @@ exports.saveJobworkInvoice = function (req, res) {
 
 
 
+exports.getOrdersForLedgerAndProcess = (req, res) => {
+    const PROCESS = req.query.process;
+    const LEDGER = req.query.ledger;
+
+    DBCON.query(`select order_program.id as order_id, order_process.rate, order_program.product_id, order_program.size_id, jobwork_inward.inventory_qty_total as qty, (jobwork_inward.inventory_qty_total * order_process.rate) as amount from order_process left join order_program on order_program.id = order_process.order_id left join jobwork_inward on jobwork_inward.order_id = order_process.order_id  where order_process.process_id = ${PROCESS} and order_process.ledger_id = ${LEDGER} and jobwork_inward.inventory_qty_total > 0;`, (err, result) => {
+        if(err)
+        {
+            console.log(err);
+            res.sendError(err);
+        }
+        else{
+            res.sendInfo("",result);
+        }
+    });
+
+}
+
 
 
 
@@ -1680,12 +1697,16 @@ exports.getProductAndSizeSBForOrderID = (req, res) => {
     const ORDER_ID = req.query.order_id ? req.query.order_id : null;
     if(issetNotEmpty(ORDER_ID))
     {
-        DBCON.query(`select style_id, size_id  from order_program where id = ${ORDER_ID}`,(err, data) => {
+        DBCON.query(`select style_id, size_id from order_program where id = ${ORDER_ID}`,(err, data) => {
             if(err)
             {
                 res.sendError(err);
             }
             else{
+                data.map(item => {
+                    item.style_id = Number(item.style_id);
+                    item.size_id = Number(item.size_id);
+                })
                 res.sendInfo("",data);
             }
         })
