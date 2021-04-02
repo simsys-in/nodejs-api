@@ -229,8 +229,8 @@ router.get('/getJobworkOutwardColorDetails', Controller.getJobworkOutwardColorDe
 router.put('/jobwork_invoice', Controller.saveJobworkInvoice);
 router.get('/jobwork_invoice', Controller.getJobworkInvoice);
 router.delete('/jobwork_invoice', Controller.deleteJobworkInvoice);
-router.get('/getSizeSBForOrderID', Controller.getSizeSBForOrderID);
-router.get('/getProductSBForOrderID', Controller.getProductSBForOrderID);
+
+router.get('/getProductAndSizeSBForOrderID', Controller.getProductAndSizeSBForOrderID);
 
 
 module.exports = router;

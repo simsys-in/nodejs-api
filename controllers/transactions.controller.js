@@ -1675,36 +1675,18 @@ exports.getJobworkInvoice = function (req, res) {
 }
 
 
-exports.getSizeSBForOrderID = (req, res) => {
-    const ORDER_ID = req.query.order_id ? req.query.order_id : null;
-    if(issetNotEmpty(ORDER_ID))
-    {
-        JobworkInvoice.getSizeSBForOrderID(ORDER_ID,(err, size_id) => {
-            if(err)
-            {
-                res.sendError(err);
-            }
-            else{
-                res.sendInfo("",size_id);
-            }
-        })
-    }
-    else{
-        res.sendError("Jobwork Invoice Not Found!")
-    }
-}
 
-exports.getProductSBForOrderID = (req, res) => {
+exports.getProductAndSizeSBForOrderID = (req, res) => {
     const ORDER_ID = req.query.order_id ? req.query.order_id : null;
     if(issetNotEmpty(ORDER_ID))
     {
-        JobworkInvoice.getProductSBForOrderID(ORDER_ID,(err, product_id) => {
+        DBCON.query(`select style_id, size_id  from order_program where id = ${ORDER_ID}`,(err, data) => {
             if(err)
             {
                 res.sendError(err);
             }
             else{
-                res.sendInfo("",product_id);
+                res.sendInfo("",data);
             }
         })
     }
