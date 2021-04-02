@@ -288,7 +288,7 @@ JobworkOutwardModel.prototype = {
     },
     getJobworkOutwardReport: (id, callback) => {
         var jobwwork_outward_details = {};
-        const QUERY = `select jobwork_outward.id, 'Test' as dcno, jobwork_outward.vou_date, process.process, product.hsnsac, order_program.order_no, 'Vehicle No' as vehicle_no, product.product from jobwork_outward left join order_program on order_program.id = jobwork_outward.order_id left join product on product.id = order_program.style_id left join process on process.id = jobwork_outward.to_process_id where jobwork_outward.id = ${id};`;
+        const QUERY = `select jobwork_outward.id, 'Test' as dcno, jobwork_outward.vou_date, process.process, product.hsnsac, order_program.order_no, order_program.id as order_id, 'Vehicle No' as vehicle_no, product.product from jobwork_outward left join order_program on order_program.id = jobwork_outward.order_id left join product on product.id = order_program.style_id left join process on process.id = jobwork_outward.to_process_id where jobwork_outward.id = ${id};`;
 
         DBCON.query(QUERY, (err, result) => {
             if (err) {
@@ -296,40 +296,56 @@ JobworkOutwardModel.prototype = {
                 callback(err);
             } else {
                 jobwwork_outward_details = result[0];
-                const GET_COLOR_DETAILS_QUERY = `select color.color, jobwork_outward_inventory.size1,jobwork_outward_inventory.size2,jobwork_outward_inventory.size3,jobwork_outward_inventory.size4,jobwork_outward_inventory.size5,jobwork_outward_inventory.size6,jobwork_outward_inventory.size7,jobwork_outward_inventory.size8, jobwork_outward_inventory.size9, jobwork_outward_inventory.qty from jobwork_outward_inventory left join color on color.id = jobwork_outward_inventory.color_id where vou_id = ${id};`;
+                const ORDER_ID = jobwwork_outward_details.order_id;
+                const GET_COLOR_SIZE_DETAILS_QUERY = `select concat(size.size1, ",", size.size2, ",",size.size3, ",",size.size4, ",",size.size5, ",",size.size6, ",",size.size7, ",",size.size8, ",",size.size9) as sizes from order_program left join size on size.id = order_program.size_id where order_program.id = ${ORDER_ID};`;
 
-                DBCON.query(GET_COLOR_DETAILS_QUERY, (err, color_details) => {
+                DBCON.query(GET_COLOR_SIZE_DETAILS_QUERY, (err, color_size_details) => {
                     if (err) {
                         console.log(err);
-                        callback(err);
+                        callback(err)
                     } else {
-                        jobwwork_outward_details.color_details = color_details;
+                        var sizes = color_size_details.length > 0 ? color_size_details[0].sizes !== null ? color_size_details[0].sizes : "" : "";
+                        console.log(sizes);
+                        sizes = sizes.split(",");
+                        // res.sendInfo("", sizes);
+                        jobwwork_outward_details.color_size_details = sizes;
 
-                        const GET_ACCESSORIES_QUERY = `select product.product, jobwork_outward_product.qty, unit.unit  from jobwork_outward_product left join product on product.id = jobwork_outward_product.product_id left join unit on unit.id = product.unit_id where vou_id = ${id};`;
+                        const GET_COLOR_DETAILS_QUERY = `select color.color, jobwork_outward_inventory.size1,jobwork_outward_inventory.size2,jobwork_outward_inventory.size3,jobwork_outward_inventory.size4,jobwork_outward_inventory.size5,jobwork_outward_inventory.size6,jobwork_outward_inventory.size7,jobwork_outward_inventory.size8, jobwork_outward_inventory.size9, jobwork_outward_inventory.qty from jobwork_outward_inventory left join color on color.id = jobwork_outward_inventory.color_id where vou_id = ${id};`;
 
-                        DBCON.query(GET_ACCESSORIES_QUERY, (err, accessories) => {
+                        DBCON.query(GET_COLOR_DETAILS_QUERY, (err, color_details) => {
                             if (err) {
                                 console.log(err);
                                 callback(err);
                             } else {
-                                jobwwork_outward_details.accessories = accessories;
+                                jobwwork_outward_details.color_details = color_details;
 
-                                const GET_COMPANY_DETAILS = `select * from company limit 1`;
-                                const GET_LEDGER_DETAILS = `select ledger.ledger, ledger.delivery_address, ledger.mobile, ledger.phone, ledger.gstno from jobwork_outward left join ledger on jobwork_outward.ledger_id = ledger.id where jobwork_outward.id = ${id}`;
-                                DBCON.query(GET_COMPANY_DETAILS, (err, company_details) => {
+                                const GET_ACCESSORIES_QUERY = `select product.product, jobwork_outward_product.qty, unit.unit  from jobwork_outward_product left join product on product.id = jobwork_outward_product.product_id left join unit on unit.id = product.unit_id where vou_id = ${id};`;
+
+                                DBCON.query(GET_ACCESSORIES_QUERY, (err, accessories) => {
                                     if (err) {
                                         console.log(err);
                                         callback(err);
-
                                     } else {
-                                        jobwwork_outward_details.company_details = company_details[0];
-                                        DBCON.query(GET_LEDGER_DETAILS, (err, ledger_details) => {
+                                        jobwwork_outward_details.accessories = accessories;
+
+                                        const GET_COMPANY_DETAILS = `select * from company limit 1`;
+                                        const GET_LEDGER_DETAILS = `select ledger.ledger, ledger.delivery_address, ledger.mobile, ledger.phone, ledger.gstno from jobwork_outward left join ledger on jobwork_outward.ledger_id = ledger.id where jobwork_outward.id = ${id}`;
+                                        DBCON.query(GET_COMPANY_DETAILS, (err, company_details) => {
                                             if (err) {
                                                 console.log(err);
                                                 callback(err);
+
                                             } else {
-                                                jobwwork_outward_details.ledger_details = ledger_details[0];
-                                                callback(false, jobwwork_outward_details);
+                                                jobwwork_outward_details.company_details = company_details[0];
+                                                DBCON.query(GET_LEDGER_DETAILS, (err, ledger_details) => {
+                                                    if (err) {
+                                                        console.log(err);
+                                                        callback(err);
+                                                    } else {
+                                                        jobwwork_outward_details.ledger_details = ledger_details[0];
+                                                        callback(false, jobwwork_outward_details);
+                                                    }
+                                                });
                                             }
                                         });
                                     }
@@ -339,9 +355,12 @@ JobworkOutwardModel.prototype = {
                         })
                     }
                 })
+
             }
         })
     }
+    // })
+    // }
 
 }
 
