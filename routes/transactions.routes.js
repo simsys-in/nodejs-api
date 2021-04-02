@@ -109,6 +109,7 @@ router.get('/getNextCuttingProgLotNo', Controller.getNextCuttingProgLotNo);
 router.get('/getFabricsForOrderID', Controller.getFabricsForOrderID);
 router.get('/getFabricDetailForOrder', Controller.getFabricDetailForOrder);
 router.get('/getJobworkOutwardReport', Controller.getJobworkOutwardReport);
+router.get('/getOrdersForLedgerAndProcess', Controller.getOrdersForLedgerAndProcess);
 
 
 ///////////// Haripraks]ash Workspace /////////////////
@@ -229,8 +230,8 @@ router.get('/getJobworkOutwardColorDetails', Controller.getJobworkOutwardColorDe
 router.put('/jobwork_invoice', Controller.saveJobworkInvoice);
 router.get('/jobwork_invoice', Controller.getJobworkInvoice);
 router.delete('/jobwork_invoice', Controller.deleteJobworkInvoice);
-router.get('/getSizeSBForOrderID', Controller.getSizeSBForOrderID);
-router.get('/getProductSBForOrderID', Controller.getProductSBForOrderID);
+
+router.get('/getProductAndSizeSBForOrderID', Controller.getProductAndSizeSBForOrderID);
 
 
 module.exports = router;

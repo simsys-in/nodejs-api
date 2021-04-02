@@ -252,7 +252,9 @@ router.delete('/designation', Controller.deleteDesignation);
 
 
 
-
+router.get('/getAccountsLedger', Controller.getAccountsLedger);
+router.get('/getAllSizeSB', Controller.getAllSizeSB);
+router.get('/getAllProductSB', Controller.getAllProductSB);
 
 
 
