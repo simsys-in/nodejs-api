@@ -227,9 +227,9 @@ router.get('/getOrdersForLedgerAndProcess', Controller.getOrdersForLedgerAndProc
 router.get('/getJobworkOutwardColorDetails', Controller.getJobworkOutwardColorDetails);
 
 //jobwork invoice
-router.put('/jobwork_invoice', Controller.saveJobworkInvoice);
-router.get('/jobwork_invoice', Controller.getJobworkInvoice);
-router.delete('/jobwork_invoice', Controller.deleteJobworkInvoice);
+router.put('/jobworkInvoice', Controller.saveJobworkInvoice);
+router.get('/jobworkInvoice', Controller.getJobworkInvoice);
+router.delete('/jobworkInvoice', Controller.deleteJobworkInvoice);
 
 router.get('/getProductAndSizeSBForOrderID', Controller.getProductAndSizeSBForOrderID);
 
