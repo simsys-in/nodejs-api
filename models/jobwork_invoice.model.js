@@ -31,7 +31,7 @@ JobworkInvoiceModel.prototype = {
             } else {
                 var jobwork_invoice = {
                     ledger_id: result[0].ledger_id,
-                    process_id : result[0].process_id,
+                    process_id: result[0].process_id,
                     vou_date: result[0].vou_date,
                     narration: result[0].narration,
                     inventory_qty_total: result[0].inventory_qty_total,
@@ -41,7 +41,7 @@ JobworkInvoiceModel.prototype = {
                     ledger2_id: result[0].ledger2_id,
                     amount: result[0].amount,
                     menu_id: result[0].menu_id,
-                    
+
                     jobwork_invoice_inventory: [],
                     // jobwork_outward_product: []
 
@@ -50,13 +50,13 @@ JobworkInvoiceModel.prototype = {
                     if (err) {
                         callback(err)
                     } else {
-                        jobwork_outward.jobwork_invoice_inventory = result1;
+                        jobwork_invoice.jobwork_invoice_inventory = result1;
                         // pool.query(sql2, match, function (err, result2) {
                         //     if (err) {
                         //         callback(err)
                         //     } else {
                         //         jobwork_outward.jobwork_outward_product = result2;
-                                callback(false, jobwork_invoice);
+                        callback(false, jobwork_invoice);
                         //     }
                         // })
 
@@ -76,7 +76,7 @@ JobworkInvoiceModel.prototype = {
         });
     },
     getAll: function (callback) {
-        pool.query(`select jobwork_invoice.id,jobwork_invoice.inventory_qty_total, DATE_FORMAT(jobwork_invoice.vou_date, '%d-%m-%Y') as vou_date, order_program.order_no, ledger.ledger from ${TABLE_NAME} left join ledger on ledger.id=jobwork_invoice.ledger_id left join order_program on order_program.id = jobwork_invoice.order_id left join users on user.id=jobwork_invoice.user_id order by jobwork_invoice.id desc`, function (err, result) {
+        pool.query(`select jobwork_invoice.id,jobwork_invoice.inventory_qty_total, DATE_FORMAT(jobwork_invoice.vou_date, '%d-%m-%Y') as vou_date, order_program.order_no, ledger.ledger from ${TABLE_NAME} left join ledger on ledger.id=jobwork_invoice.ledger_id left join order_program on order_program.id = jobwork_invoice.order_id  order by jobwork_invoice.id desc`, function (err, result) {
 
             if (err) {
                 callback(err)
@@ -92,10 +92,10 @@ JobworkInvoiceModel.prototype = {
         // console.log(body.id, "Entered")
         body.updated_at = new Date();
         if (issetNotEmpty(body.id)) {
-           
-            var jobwork_invoice ={
+
+            var jobwork_invoice = {
                 ledger_id: body.ledger_id,
-                process_id : body.process_id,
+                process_id: body.process_id,
                 vou_date: body.vou_date,
                 narration: body.narration,
                 inventory_qty_total: body.inventory_qty_total,
@@ -105,35 +105,38 @@ JobworkInvoiceModel.prototype = {
                 ledger2_id: body.ledger2_id,
                 amount: body.amount,
                 menu_id: body.menu_id,
-                 
+
             }
             DBCON.query(`update ${TABLE_NAME} set ? where id = ?`, [jobwork_invoice, body.id], (err, result) => {
                 if (err) {
                     callback(err)
                 } else {
                     console.log(result);
-                    DBCON.query(`delete from jobwork_invoice_inventory where vou_id = ?`, body.id, (err, deletedData) =>  {
-                        if(err)
-                        {
+                    DBCON.query(`delete from jobwork_invoice_inventory where vou_id = ?`, body.id, (err, deletedData) => {
+                        if (err) {
                             callback(err)
-                        }
-                        else{
+                        } else {
                             body.jobwork_invoice_inventory.map((item, index) => {
-                                var jobwork_invoice_inventory = {
-                                    vou_id : body.id,
-                                    order_id : item.order_id,
-                                    product_id : item.product_id,
-                                    size_id : item.size_id,
-                                    qty : item.qty,
-                                    inward_id : item.inward_id,
-                                    rate : item.rate,
-                                    amount : item.amount,
+                                if (item.selected) {
+                                    var jobwork_invoice_inventory = {
+                                        vou_id: body.id,
+                                        order_id: item.order_id,
+                                        product_id: item.product_id,
+                                        size_id: item.size_id,
+                                        qty: item.qty,
+                                        inward_id: item.inward_id,
+                                        rate: item.rate,
+                                        amount: item.amount,
+                                    }
+                                    DBCON.query(`insert into jobwork_invoice_inventory set ?`, jobwork_invoice_inventory);
+                                    if (index === body.jobwork_invoice_inventory.length - 1) {
+                                        callback(false, result, "Jobwork Invoice  Saved Successfully!");
+                                    }
+                                } else {
+                                    if (index === body.jobwork_invoice_inventory.length - 1) {
+                                        callback(false, result, "Jobwork Invoice Updated Successfully!");
+                                    }
                                 }
-                                DBCON.query(`insert into jobwork_invoice_inventory set ?`, jobwork_invoice_inventory);
-                                if(index === body.jobwork_invoice_inventory.length - 1)
-                                        {
-                                            callback(false, result, "Jobwork Invoice  Saved Successfully!");
-                                        }
                             })
                         }
                     })
@@ -141,49 +144,54 @@ JobworkInvoiceModel.prototype = {
                 }
             })
         } else {
-           
-                        var jobwork_invoice ={
-                            ledger_id: body.ledger_id,
-                            process_id : body.process_id,
-                            vou_date: body.vou_date,
-                            narration: body.narration,
-                            inventory_qty_total: body.inventory_qty_total,
-                            inventory_amount_total: body.inventory_amount_total,
-                            refno: body.refno,
-                            vouno: body.vouno,
-                            ledger2_id: body.ledger2_id,
-                            amount: body.amount,
-                            menu_id: body.menu_id,
-                            
-                        }   
-                                    
-                        DBCON.query(`insert into ${TABLE_NAME} set ?`, jobwork_invoice, (err, result) => {
-                            if (err) {
-                                callback(err)
-                            } else {
-                                console.log(result);
-                                body.jobwork_invoice_inventory.map((item, index) => {
-                                    var jobwork_invoice_inventory = {
-                                        vou_id : result.insertId,
-                                        order_id : item.order_id,
-                                        product_id : item.product_id,
-                                        size_id : item.size_id,
-                                        qty : item.qty,
-                                        inward_id : item.inward_id,
-                                        rate : item.rate,
-                                        amount : item.amount,
-                                    
-    
-                                    }
-                                    DBCON.query(`insert into jowork_invoice_inventory set ?`, fabric_inward_inventory);
-                                    if(index === body.jobwork_invoice_inventory.length - 1)
-                                            {
-                                                callback(false, result, "Jobwork Invoice Updated Successfully!");
-                                            }
-                                })
+
+            var jobwork_invoice = {
+                ledger_id: body.ledger_id,
+                process_id: body.process_id,
+                vou_date: body.vou_date,
+                narration: body.narration,
+                inventory_qty_total: body.inventory_qty_total,
+                inventory_amount_total: body.inventory_amount_total,
+                refno: body.refno,
+                vouno: body.vouno,
+                ledger2_id: body.ledger2_id,
+                amount: body.amount,
+                menu_id: body.menu_id,
+
+            }
+
+            DBCON.query(`insert into ${TABLE_NAME} set ?`, jobwork_invoice, (err, result) => {
+                if (err) {
+                    callback(err)
+                } else {
+                    console.log(result);
+                    body.jobwork_invoice_inventory.map((item, index) => {
+                        if (item.selected) {
+                            var jobwork_invoice_inventory = {
+                                vou_id: result.insertId,
+                                order_id: item.order_id,
+                                product_id: item.product_id,
+                                size_id: item.size_id,
+                                qty: item.qty,
+                                inward_id: item.inward_id,
+                                rate: item.rate,
+                                amount: item.amount,
+
 
                             }
-                        })
+                            DBCON.query(`insert into jobwork_invoice_inventory set ?`, jobwork_invoice_inventory);
+                            if (index === body.jobwork_invoice_inventory.length - 1) {
+                                callback(false, result, "Jobwork Invoice Updated Successfully!");
+                            }
+                        } else {
+                            if (index === body.jobwork_invoice_inventory.length - 1) {
+                                callback(false, result, "Jobwork Invoice Updated Successfully!");
+                            }
+                        }
+                    })
+
+                }
+            })
             //         }
             //     }
             // })
@@ -205,7 +213,7 @@ JobworkInvoiceModel.prototype = {
     //             ledger2_id: body.ledger2_id,
     //             amount: body.amount,
     //             menu_id: body.menu_id,
-               
+
 
     //         }
 
@@ -222,10 +230,10 @@ JobworkInvoiceModel.prototype = {
     //                             if (err) {
     //                                 callback(err)
     //                             } else {
-                                    
+
     //                                 for (index = 0; index < body.jobwork_outward_inventory.length; index++) {
     //                                     var item = body.jobwork_outward_inventory[index];
-                                
+
     //                                     console.log(item)
     //                                     if (item.selected) {
     //                                         var jobwork_outward_inventory = {
@@ -365,7 +373,7 @@ JobworkInvoiceModel.prototype = {
                         //     if (err) {
                         //         callback(err)
                         //     } else {
-                                callback(false, result1)
+                        callback(false, result1)
                         //     }
                         // })
                     }
