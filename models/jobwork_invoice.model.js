@@ -76,7 +76,7 @@ JobworkInvoiceModel.prototype = {
         });
     },
     getAll: function (callback) {
-        pool.query(`select jobwork_invoice.id,jobwork_invoice.inventory_qty_total, DATE_FORMAT(jobwork_invoice.vou_date, '%d-%m-%Y') as vou_date, order_program.order_no, ledger.ledger from ${TABLE_NAME} left join ledger on ledger.id=jobwork_invoice.ledger_id left join order_program on order_program.id = jobwork_invoice.order_id  order by jobwork_invoice.id desc`, function (err, result) {
+        pool.query(`select jobwork_invoice.id,jobwork_invoice.inventory_qty_total, DATE_FORMAT(jobwork_invoice.vou_date, '%d-%m-%Y') as vou_date,jobwork_invoice.vouno, ledger.ledger from ${TABLE_NAME} left join ledger on ledger.id=jobwork_invoice.ledger_id  order by jobwork_invoice.id desc`, function (err, result) {
 
             if (err) {
                 callback(err)
@@ -164,9 +164,13 @@ JobworkInvoiceModel.prototype = {
                 if (err) {
                     callback(err)
                 } else {
-                    console.log(result);
-                    body.jobwork_invoice_inventory.map((item, index) => {
-                        if (item.selected) {
+                    // console.log(result);
+                    for(index=0; index < body.jobwork_invoice_inventory.length; index++)
+                    {
+                        var item = body.jobwork_invoice_inventory[index];
+                    // body.jobwork_invoice_inventory.map((item, index) => {
+                        if (item.selected && issetNotEmpty(item.order_id) && item.order_id !== 0 && issetNotEmpty(item.size_id) && item.size_id !== 0 && issetNotEmpty(item.vou_id) && item.vou_id !== 0) {
+                            console.log(item, index)
                             var jobwork_invoice_inventory = {
                                 vou_id: result.insertId,
                                 order_id: item.order_id,
@@ -188,7 +192,7 @@ JobworkInvoiceModel.prototype = {
                                 callback(false, result, "Jobwork Invoice Updated Successfully!");
                             }
                         }
-                    })
+                    }
 
                 }
             })
@@ -381,6 +385,20 @@ JobworkInvoiceModel.prototype = {
             }
         })
     },
+
+    getNextJobworkInwardVouNo : (callback) => {
+        var query = 'select max(ifnull(vouno, 0)) + 1 as max_vou_no from jobwork_invoice';
+
+        DBCON.query(query, (err, result) => {
+            if(err){
+                console.log(err);
+                callback(err)
+            }
+            else{
+                callback(false,result[0]);
+            }
+        })
+    }
 
 
 }

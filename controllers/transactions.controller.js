@@ -1598,6 +1598,55 @@ exports.saveJobworkInvoice = function (req, res) {
 ////////////////////// Kowsalya Workspace/////////////////
 
 
+exports.getNextJobworkInwardVouNo = function(req, res){
+    JobworkInvoice.getNextJobworkInwardVouNo((err, result) => {
+        if(err)
+        {
+            res.sendError(err);
+        }
+        else{
+            res.sendInfo("", result)
+        }
+    })
+}
+
+exports.getNextFabricOutwardVouNo = function(req, res){
+    JobworkInvoice.getNextFabricOutwardVouNo((err, result) => {
+        if(err)
+        {
+            res.sendError(err);
+        }
+        else{
+            res.sendInfo("", result)
+        }
+    })
+}
+
+exports.getNextFabricReturnVouNo = function(req, res){
+    JobworkInvoice.getNextFabricReturnVouNo((err, result) => {
+        if(err)
+        {
+            res.sendError(err);
+        }
+        else{
+            res.sendInfo("", result)
+        }
+    })
+}
+
+exports.getNextFabricInvoiceVouNo = function(req, res){
+    JobworkInvoice.getNextFabricInvoiceVouNo((err, result) => {
+        if(err)
+        {
+            res.sendError(err);
+        }
+        else{
+            res.sendInfo("", result)
+        }
+    })
+}
+
+
 
 
 

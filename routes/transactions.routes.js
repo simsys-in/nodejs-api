@@ -24,12 +24,16 @@ router.get('/fabricInward', Controller.getFabricInward);
 router.delete('/fabricInward', Controller.deleteFabricInward);
 router.get('/getOrderSB', Controller.getOrderSB);
 router.get('/getNextFabricInwardVouNo', Controller.getNextFabricInwardVouNo);
+router.get('/getNextFabricOutwardVouNo', Controller.getNextFabricOutwardVouNo);
+router.get('/getNextFabricReturnVouNo', Controller.getNextFabricReturnVouNo);
+router.get('/getNextFabricInvoiceVouNo', Controller.getNextFabricInvoiceVouNo);
 router.get('/getNextYarnInwardVouNo', Controller.getNextYarnInwardVouNo);
 router.get('/getNextYarnOutwardVouNo', Controller.getNextYarnOutwardVouNo);
 router.get('/getNextYarnReturnVouNo', Controller.getNextYarnReturnVouNo);
 router.get('/getColorSB', Controller.getColorSB);
 router.get('/getLedgerNameSB', Controller.getLedgerNameSB);
 router.get('/getProcessSB', Controller.getProcessSB);
+
 
 //fabric outward
 router.put('/fabricOutward', Controller.saveFabricOutward);
@@ -230,6 +234,7 @@ router.get('/getJobworkOutwardColorDetails', Controller.getJobworkOutwardColorDe
 router.put('/jobworkInvoice', Controller.saveJobworkInvoice);
 router.get('/jobworkInvoice', Controller.getJobworkInvoice);
 router.delete('/jobworkInvoice', Controller.deleteJobworkInvoice);
+router.get('/getNextJobworkInwardVouNo', Controller.getNextJobworkInwardVouNo);
 
 router.get('/getProductAndSizeSBForOrderID', Controller.getProductAndSizeSBForOrderID);
 
