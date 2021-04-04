@@ -43,6 +43,10 @@ const CuttingProgram = new CuttingProgramModel();
 const JobworkInvoiceModel = require('../models/jobwork_invoice.model');
 const JobworkInvoice = new JobworkInvoiceModel();
 
+//garments invoice
+const GarmentsInvoiceModel = require('../models/garments_invoice.model');
+const GarmentsInvoice = new GarmentsInvoiceModel();
+
 
 //orderProgram
 exports.saveOrderProgram = function (req, res) {
@@ -1646,7 +1650,91 @@ exports.getNextFabricInvoiceVouNo = function(req, res){
     })
 }
 
+//garments invoice
+exports.saveGarmentsInvoice = function (req, res) {
+    const body = req.body;
+    body.id = req.query.id;
+    GarmentsInvoice.checkAndSaveOrUpdate(body, (err, result, msg) => {
+        if (err) {
+            console.log(err);
+            res.sendError(err);
+        } else {
+            res.sendSuccess(msg, result)
+        }
+    })
+}
 
+
+exports.getGarmentsInvoice = function (req, res) {
+    var ID = req.query.id;
+    if (issetNotEmpty(ID)) {
+        GarmentsInvoice.find(Number(ID), function (err, data) {
+            if (err) {
+                console.log(err);
+                res.sendError(err)
+            } else {
+                res.sendInfo("", data);
+            }
+        })
+    } else {
+        GarmentsInvoice.getAll((err, data) => {
+            if (err) {
+                console.log(err)
+                res.sendError(err)
+            } else {
+                res.sendSuccess("", data)
+            }
+        })
+    }
+}
+
+
+
+exports.deleteGarmentsInvoice = function (req, res) {
+    const id = req.query.id;
+    console.log("ID : " + id);
+
+    if (issetNotEmpty(id)) {
+        GarmentsInvoice.delete(Number(id), function (err, data) {
+            if (err) {
+                console.log(err);
+                res.sendError(err)
+            } else {
+                res.sendInfo("Garments Invoice Deleted Successfully!");
+            }
+        })
+    } else {
+        res.sendWarning("Garments Invoice Not Found! ")
+    }
+
+}
+
+// exports.getNextGarmentsInvoiceVouNo = function(req, res){
+//     JobworkInvoice.getNextGarmentsInvoiceVouNo((err, result) => {
+//         if(err)
+//         {
+//             res.sendError(err);
+//         }
+//         else{
+//             res.sendInfo("", result)
+//         }
+//     })
+// }
+
+exports.getMarketingUserSB = function (req, res) {
+    const body = req.body;
+    const USER = req.user;
+    body.company = USER.company
+    const status = body.status ? body.status : 'active';
+    DBCON.query('select id as value, name as name from users ', function (err, data) {
+        if (err) {
+            console.log(err)
+            res.sendError(err)
+        } else {
+            res.sendInfo("", data)
+        }
+    })
+}
 
 
 

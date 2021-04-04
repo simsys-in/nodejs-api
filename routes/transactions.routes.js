@@ -173,6 +173,13 @@ router.get('/getOrdersForLedgerAndProcess', Controller.getOrdersForLedgerAndProc
 ////////////////////// Kowsalya Workspace/////////////////
 ////////////////////// Kowsalya Workspace/////////////////
 
+//garments invoice
+router.put('/garmentsInvoice', Controller.saveGarmentsInvoice);
+router.get('/garmentsInvoice', Controller.getGarmentsInvoice);
+router.delete('/garmentsInvoice', Controller.deleteGarmentsInvoice);
+// router.get('/getNextGarmentsInvoiceVouNo', Controller.getNextGarmentsInvoiceVouNo);
+router.get('/getMarketingUserSB', Controller.getMarketingUserSB);
+
 
 
 
