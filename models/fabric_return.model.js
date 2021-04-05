@@ -63,7 +63,7 @@ FabricReturnModel.prototype = {
         });
     },
     getAll : function(callback){
-        pool.query(`select fabric_return.id, DATE_FORMAT(fabric_return.vou_date, '%d-%m-%Y') as vou_date,ledger.ledger from ${TABLE_NAME} left join ledger on ledger.id=fabric_return.ledger_id`, function(err, result){
+        pool.query(`select fabric_return.id,fabric_return.vouno, DATE_FORMAT(fabric_return.vou_date, '%d-%m-%Y') as vou_date,ledger.ledger from ${TABLE_NAME} left join ledger on ledger.id=fabric_return.ledger_id`, function(err, result){
 
             if(err)
             {
@@ -190,7 +190,21 @@ FabricReturnModel.prototype = {
                 
             }
         })
+    },
+    getNextFabricReturnVouNo : (callback) => {
+        var query = 'select max(ifnull(vouno, 0)) + 1 as max_vou_no from fabric_return';
+
+        DBCON.query(query, (err, result) => {
+            if(err){
+                console.log(err);
+                callback(err)
+            }
+            else{
+                callback(false,result[0]);
+            }
+        })
     }
+
 
    
 }
