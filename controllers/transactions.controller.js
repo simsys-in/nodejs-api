@@ -1709,17 +1709,17 @@ exports.deleteGarmentsInvoice = function (req, res) {
 
 }
 
-// exports.getNextGarmentsInvoiceVouNo = function(req, res){
-//     JobworkInvoice.getNextGarmentsInvoiceVouNo((err, result) => {
-//         if(err)
-//         {
-//             res.sendError(err);
-//         }
-//         else{
-//             res.sendInfo("", result)
-//         }
-//     })
-// }
+exports.getNextGarmentsInvoiceVouNo = function(req, res){
+    GarmentsInvoice.getNextGarmentsInvoiceVouNo((err, result) => {
+        if(err)
+        {
+            res.sendError(err);
+        }
+        else{
+            res.sendInfo("", result)
+        }
+    })
+}
 
 exports.getMarketingUserSB = function (req, res) {
     const body = req.body;

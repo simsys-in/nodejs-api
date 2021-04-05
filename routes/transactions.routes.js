@@ -177,7 +177,7 @@ router.get('/getOrdersForLedgerAndProcess', Controller.getOrdersForLedgerAndProc
 router.put('/garmentsInvoice', Controller.saveGarmentsInvoice);
 router.get('/garmentsInvoice', Controller.getGarmentsInvoice);
 router.delete('/garmentsInvoice', Controller.deleteGarmentsInvoice);
-// router.get('/getNextGarmentsInvoiceVouNo', Controller.getNextGarmentsInvoiceVouNo);
+router.get('/getNextGarmentsInvoiceVouNo', Controller.getNextGarmentsInvoiceVouNo);
 router.get('/getMarketingUserSB', Controller.getMarketingUserSB);
 
 

@@ -168,11 +168,13 @@ GarmentsInvoiceModel.prototype = {
                                         size8_rate: item.size8_rate,
                                         size9_rate: item.size9_rate,
                                         narration: item.narration,
+                                        refno : item.refno,
                                         disc_percentage: item.disc_percentage,
                                         disc_value: item.disc_value,
+                                        description: item.description
                                     }
                                     DBCON.query(`insert into garments_invoice_inventory set ?`, garments_invoice_inventory);
-                                    if (index === body.jobwork_garments_inventory.length - 1) {
+                                    if (index === body.garments_invoice_inventory.length - 1) {
                                         callback(false, result, "Garments Invoice  Saved Successfully!");
                                     }
                                 } else {
@@ -224,7 +226,7 @@ GarmentsInvoiceModel.prototype = {
                     {
                         var item = body.garments_invoice_inventory[index];
                     // body.jobwork_invoice_inventory.map((item, index) => {
-                        if (item.selected && issetNotEmpty(item.order_id) && item.order_id !== 0 && issetNotEmpty(item.size_id) && item.size_id !== 0 && issetNotEmpty(item.vou_id) && item.vou_id !== 0) {
+                        if (item.selected ) {
                             console.log(item, index)
                             var garments_invoice_inventory = {
                                 vou_id: result.insertId,
@@ -253,8 +255,10 @@ GarmentsInvoiceModel.prototype = {
                                 size8_rate: item.size8_rate,
                                 size9_rate: item.size9_rate,
                                 narration: item.narration,
+                                refno: item.refno,
                                 disc_percentage: item.disc_percentage,
                                 disc_value: item.disc_value,
+                                description: item.description
                             }
                             DBCON.query(`insert into garments_invoice_inventory set ?`, garments_invoice_inventory);
                             if (index === body.garments_invoice_inventory.length - 1) {
@@ -284,7 +288,7 @@ GarmentsInvoiceModel.prototype = {
                     if (err) {
                         callback(err)
                     } else {
-                                callback(false, result2)
+                                callback(false, result1)
                             }
                     
                     
