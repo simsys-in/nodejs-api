@@ -86,7 +86,7 @@ GarmentsInvoiceModel.prototype = {
         });
     },
     getAll: function (callback) {
-        pool.query(`select garments_invoice.id,garemnts_invoice.inventory_qty_total, DATE_FORMAT(garments_invoice.vou_date, '%d-%m-%Y') as vou_date, ledger.ledger from ${TABLE_NAME} left join ledger on ledger.id=garments_invoice.ledger_id  order by jobwork_outward.id desc`, function (err, result) {
+        pool.query(`select garments_invoice.id,garments_invoice.inventory_qty_total, DATE_FORMAT(garments_invoice.vou_date, '%d-%m-%Y') as vou_date, ledger.ledger from ${TABLE_NAME} left join ledger on ledger.id=garments_invoice.ledger_id  order by garments_invoice.id desc`, function (err, result) {
 
             if (err) {
                 callback(err)
