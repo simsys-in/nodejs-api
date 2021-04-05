@@ -117,7 +117,7 @@ JobworkInvoiceModel.prototype = {
                             callback(err)
                         } else {
                             body.jobwork_invoice_inventory.map((item, index) => {
-                                if (item.selected) {
+                                if (item.selected && issetNotEmpty(item.order_id) && item.order_id !== 0 && issetNotEmpty(item.size_id) && item.size_id !== 0 && issetNotEmpty(item.product_id) && item.product_id !== 0) {
                                     var jobwork_invoice_inventory = {
                                         vou_id: body.id,
                                         order_id: item.order_id,
@@ -169,7 +169,7 @@ JobworkInvoiceModel.prototype = {
                     {
                         var item = body.jobwork_invoice_inventory[index];
                     // body.jobwork_invoice_inventory.map((item, index) => {
-                        if (item.selected && issetNotEmpty(item.order_id) && item.order_id !== 0 && issetNotEmpty(item.size_id) && item.size_id !== 0 && issetNotEmpty(item.vou_id) && item.vou_id !== 0) {
+                        if (item.selected && issetNotEmpty(item.order_id) && item.order_id !== 0 && issetNotEmpty(item.size_id) && item.size_id !== 0 && issetNotEmpty(item.product_id) && item.product_id !== 0) {
                             console.log(item, index)
                             var jobwork_invoice_inventory = {
                                 vou_id: result.insertId,
@@ -365,14 +365,14 @@ JobworkInvoiceModel.prototype = {
     //     }
     // },
     delete: function (id, callback) {
-        pool.query(`delete from ${TABLE_NAME} where id = ?`, id, (err, result) => {
+        pool.query(`delete from jobwork_invoice_inventory where vou_id = ?`, id, (err, result) => {
             if (err) {
                 callback(err)
             } else {
-                pool.query(`delete from jobwork_invoice_inventory where vou_id = ?`, id, (err, result1) => {
-                    if (err) {
-                        callback(err)
-                    } else {
+                if (err) {
+                    callback(err)
+                } else {
+                        pool.query(`delete from jobwork_invoice where id = ?`, id, (err, result1) => {
                         // pool.query(`delete from jobwork_outward_product where vou_id = ?`, id, (err, result2) => {
                         //     if (err) {
                         //         callback(err)
@@ -380,10 +380,11 @@ JobworkInvoiceModel.prototype = {
                         callback(false, result1)
                         //     }
                         // })
-                    }
+                    // }
                 })
             }
-        })
+        }
+    })
     },
 
     getNextJobworkInwardVouNo : (callback) => {

@@ -278,6 +278,9 @@ GarmentsInvoiceModel.prototype = {
             // })
         }
     },
+
+    
+
    
     delete: function (id, callback) {
         pool.query(`delete from ${TABLE_NAME} where id = ?`, id, (err, result) => {

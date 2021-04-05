@@ -81,6 +81,8 @@ router.delete('/yarn_return', Controller.deleteYarn_Return);
 router.put('/jobwork_inward', Controller.saveJobwork_Inward);
 router.get('/jobwork_inward', Controller.getJobwork_Inward);
 router.delete('/jobwork_inward', Controller.deleteJobwork_Inward);
+router.get('/getLedgerForOrderAndProcessID', Controller.getLedgerForOrderAndProcessID);
+
 //Cutting Program
 router.put('/cuttingProgram', Controller.saveCuttingProgram);
 router.get('/cuttingProgram', Controller.getCuttingProgram);
@@ -179,6 +181,13 @@ router.get('/garmentsInvoice', Controller.getGarmentsInvoice);
 router.delete('/garmentsInvoice', Controller.deleteGarmentsInvoice);
 router.get('/getNextGarmentsInvoiceVouNo', Controller.getNextGarmentsInvoiceVouNo);
 router.get('/getMarketingUserSB', Controller.getMarketingUserSB);
+
+
+//garments delivery note
+router.put('/garmentsDeliveryNote', Controller.saveGarmentsDeliveryNote);
+router.get('/garmentsDeliveryNote', Controller.getGarmentsDeliveryNote);
+router.delete('/garmentsDeliveryNote', Controller.deleteGarmentsDeliveryNote);
+router.get('/getNextGarmentsDeliveryNoteVouNo', Controller.getNextGarmentsDeliveryNoteVouNo);
 
 
 

@@ -47,6 +47,10 @@ const JobworkInvoice = new JobworkInvoiceModel();
 const GarmentsInvoiceModel = require('../models/garments_invoice.model');
 const GarmentsInvoice = new GarmentsInvoiceModel();
 
+//garments delivery note
+const GarmentsDeliveryNoteModel = require('../models/garments_delivery_note.model');
+const GarmentsDeliveryNote = new GarmentsDeliveryNoteModel();
+
 
 //orderProgram
 exports.saveOrderProgram = function (req, res) {
@@ -1736,6 +1740,94 @@ exports.getMarketingUserSB = function (req, res) {
     })
 }
 
+
+exports.getLedgerForOrderAndProcessID = function (req, res) {
+    const body = req.body;
+    const USER = req.user;
+    body.company = USER.company
+    const status = body.status ? body.status : 'active';
+    DBCON.query('select ledger_id  from order_process where order_process.order_id =? and order_process.process_id=?', [req.query.order_id,req.query.process_id],function (err, data) {
+        if (err) {
+            console.log(err)
+            res.sendError(err)
+        } else {
+            res.sendInfo("", data)
+        }
+    })
+}
+
+//garments delivery note
+
+//garments invoice
+exports.saveGarmentsDeliveryNote = function (req, res) {
+    const body = req.body;
+    body.id = req.query.id;
+    GarmentsDeliveryNote.checkAndSaveOrUpdate(body, (err, result, msg) => {
+        if (err) {
+            console.log(err);
+            res.sendError(err);
+        } else {
+            res.sendSuccess(msg, result)
+        }
+    })
+}
+
+
+exports.getGarmentsDeliveryNote = function (req, res) {
+    var ID = req.query.id;
+    if (issetNotEmpty(ID)) {
+        GarmentsDeliveryNote.find(Number(ID), function (err, data) {
+            if (err) {
+                console.log(err);
+                res.sendError(err)
+            } else {
+                res.sendInfo("", data);
+            }
+        })
+    } else {
+        GarmentsDeliveryNote.getAll((err, data) => {
+            if (err) {
+                console.log(err)
+                res.sendError(err)
+            } else {
+                res.sendSuccess("", data)
+            }
+        })
+    }
+}
+
+
+
+exports.deleteGarmentsDeliveryNote = function (req, res) {
+    const id = req.query.id;
+    console.log("ID : " + id);
+
+    if (issetNotEmpty(id)) {
+        GarmentsDeliveryNote.delete(Number(id), function (err, data) {
+            if (err) {
+                console.log(err);
+                res.sendError(err)
+            } else {
+                res.sendInfo("Garments Delivery Note Deleted Successfully!");
+            }
+        })
+    } else {
+        res.sendWarning("Garments Delivery Note Not Found! ")
+    }
+
+}
+
+exports.getNextGarmentsDeliveryNoteVouNo = function(req, res){
+    GarmentsDeliveryNote.getNextGarmentsDeliveryNoteVouNo((err, result) => {
+        if(err)
+        {
+            res.sendError(err);
+        }
+        else{
+            res.sendInfo("", result)
+        }
+    })
+}
 
 
 
