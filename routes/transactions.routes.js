@@ -15,7 +15,7 @@ router.delete('/orderProgram', Controller.deleteOrderProgram);
 router.get('/getStyleForOrderId', Controller.getStyleForOrderId);
 router.get('/getSizeSB', Controller.getSizeSB);
 router.get('/getStyleSB', Controller.getStyleSB);
-router.get('/getFabricSB', Controller.getFabricSB);
+// router.get('/getFabricSB', Controller.getFabricSB);
 router.get('/getNextOrderNo', Controller.getNextOrderNo);
 
 //fabric Inward
@@ -30,9 +30,9 @@ router.get('/getNextFabricInvoiceVouNo', Controller.getNextFabricInvoiceVouNo);
 router.get('/getNextYarnInwardVouNo', Controller.getNextYarnInwardVouNo);
 router.get('/getNextYarnOutwardVouNo', Controller.getNextYarnOutwardVouNo);
 router.get('/getNextYarnReturnVouNo', Controller.getNextYarnReturnVouNo);
-router.get('/getColorSB', Controller.getColorSB);
-router.get('/getLedgerNameSB', Controller.getLedgerNameSB);
-router.get('/getProcessSB', Controller.getProcessSB);
+// router.get('/getColorSB', Controller.getColorSB);
+// router.get('/getLedgerNameSB', Controller.getLedgerNameSB);
+// router.get('/getProcessSB', Controller.getProcessSB);
 
 
 //fabric outward
@@ -89,10 +89,10 @@ router.get('/getSizesForOrderID', Controller.getSizesForOrderID);
 router.get('/getNextCuttingProgLotNo', Controller.getNextCuttingProgLotNo);
 router.get('/getCuttingProgramColorDetails', Controller.getCuttingProgramColorDetails);
 
-router.get('/getColorSB', Controller.getAllColorSB);
-router.get('/getLedgerNameSB', Controller.getAllLedgerNameSB);
-router.get('/getProcessSB', Controller.getAllProcessSB);
-router.get('/getFabricsSB', Controller.getAllFabricsSB);
+// router.get('/getColorSB', Controller.getAllColorSB);
+// router.get('/getLedgerNameSB', Controller.getAllLedgerNameSB);
+// router.get('/getProcessSB', Controller.getAllProcessSB);
+// router.get('/getFabricsSB', Controller.getAllFabricsSB);
 router.get('/getOrderSB', Controller.getAllOrderSB);
 
 ///////////// Haripraks]ash Workspace /////////////////
