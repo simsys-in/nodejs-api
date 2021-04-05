@@ -26,6 +26,7 @@
     "fs": "0.0.1-security",
     "jsonwebtoken": "^8.5.1",
     "localStorage": "^1.0.4",
+    "lodash": "^4.17.21",
     "md5": "^2.3.0",
     "moment": "^2.29.1",
     "mongoose": "^5.10.3",
