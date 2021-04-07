@@ -51,6 +51,11 @@ const GarmentsInvoice = new GarmentsInvoiceModel();
 const GarmentsDeliveryNoteModel = require('../models/garments_delivery_note.model');
 const GarmentsDeliveryNote = new GarmentsDeliveryNoteModel();
 
+//garments receipt note
+const GarmentsReceiptNoteModel = require('../models/garments_receipt_note.model');
+const GarmentsReceiptNote = new GarmentsReceiptNoteModel();
+
+
 
 //orderProgram
 exports.saveOrderProgram = function (req, res) {
@@ -223,7 +228,7 @@ exports.getProductSB = function (req, res) {
 //         if (err) {
 //             console.log(err)
 //             res.sendError(err)
-//         } else {
+//         } else 
 //             res.sendInfo("", data)
 //         }
 //     })
@@ -1758,7 +1763,7 @@ exports.getLedgerForOrderAndProcessID = function (req, res) {
 
 //garments delivery note
 
-//garments invoice
+
 exports.saveGarmentsDeliveryNote = function (req, res) {
     const body = req.body;
     body.id = req.query.id;
@@ -1828,6 +1833,80 @@ exports.getNextGarmentsDeliveryNoteVouNo = function(req, res){
         }
     })
 }
+
+//garments receipt note
+
+
+exports.saveGarmentsReceiptNote = function (req, res) {
+    const body = req.body;
+    body.id = req.query.id;
+    GarmentsReceiptNote.checkAndSaveOrUpdate(body, (err, result, msg) => {
+        if (err) {
+            console.log(err);
+            res.sendError(err);
+        } else {
+            res.sendSuccess(msg, result)
+        }
+    })
+}
+
+
+exports.getGarmentsReceiptNote = function (req, res) {
+    var ID = req.query.id;
+    if (issetNotEmpty(ID)) {
+        GarmentsReceiptNote.find(Number(ID), function (err, data) {
+            if (err) {
+                console.log(err);
+                res.sendError(err)
+            } else {
+                res.sendInfo("", data);
+            }
+        })
+    } else {
+        GarmentsReceiptNote.getAll((err, data) => {
+            if (err) {
+                console.log(err)
+                res.sendError(err)
+            } else {
+                res.sendSuccess("", data)
+            }
+        })
+    }
+}
+
+
+
+exports.deleteGarmentsReceiptNote = function (req, res) {
+    const id = req.query.id;
+    console.log("ID : " + id);
+
+    if (issetNotEmpty(id)) {
+        GarmentsReceiptNote.delete(Number(id), function (err, data) {
+            if (err) {
+                console.log(err);
+                res.sendError(err)
+            } else {
+                res.sendInfo("Garments Receipt Note Deleted Successfully!");
+            }
+        })
+    } else {
+        res.sendWarning("Garments Receipt Note Not Found! ")
+    }
+
+}
+
+exports.getNextGarmentsReceiptNoteVouNo = function(req, res){
+    GarmentsReceiptNote.getNextGarmentsReceiptNoteVouNo((err, result) => {
+        if(err)
+        {
+            res.sendError(err);
+        }
+        else{
+            res.sendInfo("", result)
+        }
+    })
+}
+
 
 
 
