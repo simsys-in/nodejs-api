@@ -201,7 +201,7 @@ FabricOutwardModel.prototype = {
             }
         })
     },
-    getNextFabricInwardVouNo : (callback) => {
+    getNextFabricOutwardVouNo : (callback) => {
         var query = 'select max(ifnull(vouno, 0)) + 1 as max_vou_no from fabric_outward';
 
         DBCON.query(query, (err, result) => {

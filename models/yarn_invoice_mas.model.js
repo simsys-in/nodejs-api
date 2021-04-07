@@ -169,6 +169,7 @@ Yarn_InvoiceModel.prototype = {
                     menu_id : 0,
                     inventory_amount_total : result[0].inventory_amount_total,
                     order_id : result[0].order_id,
+                    vouno : result[0].vouno,
                     yarn_invoice_inventory : []
                 }
                 pool.query(sql1,match, function (err, result1) {
@@ -225,6 +226,7 @@ Yarn_InvoiceModel.prototype = {
                 menu_id : 0,
                 inventory_amount_total:body.inventory_amount_total,
                 order_id : body.order_id,
+                vouno : body.vouno,
             }
             DBCON.query(`update ${TABLE_NAME} set ? where id = ?`, [yarn_invoice,body.id] ,(err, result) => {
                 // if(key === body.yarn_invoice.length - 1)
@@ -286,6 +288,7 @@ Yarn_InvoiceModel.prototype = {
                             menu_id : 0,
                             inventory_amount_total : body.inventory_amount_total,
                             order_id : body.order_id,
+                            vouno : body.vouno,
                         }
                         DBCON.query(`insert into ${TABLE_NAME} set ?`, yarn_invoice, (err, result) => {
                             // if(key === body.yarn_invoice.length - 1)
@@ -337,6 +340,19 @@ Yarn_InvoiceModel.prototype = {
                         callback(false, result1)
                     }
                 })
+            }
+        })
+    },
+    getNextYarnInvoiceVouNo : (callback) => {
+        var query = 'select max(ifnull(vouno, 0)) + 1 as max_vou_no from yarn_invoice';
+
+        DBCON.query(query, (err, result) => {
+            if(err){
+                console.log(err);
+                callback(err)
+            }
+            else{
+                callback(false,result[0]);
             }
         })
     }

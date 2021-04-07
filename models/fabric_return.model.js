@@ -32,6 +32,7 @@ FabricReturnModel.prototype = {
                 var fabric_return ={
                     ledger_id : result[0].ledger_id,
                     vou_date: result[0].vou_date,
+                    vouno: result[0].vouno,
                     order_id : result[0].order_id,
                     narration : result[0].narration,
                     inventory_roll_total : result[0].inventory_roll_total,
@@ -85,6 +86,7 @@ FabricReturnModel.prototype = {
             var fabric_return ={
                 ledger_id : body.ledger_id,
                 vou_date: body.vou_date,
+                vouno: body.vouno,
                 order_id : body.order_id,
                 narration : body.narration,
                 inventory_roll_total : body.inventory_roll_total,
@@ -131,6 +133,7 @@ FabricReturnModel.prototype = {
                             var fabric_return ={
                                 ledger_id : body.ledger_id,
                                 vou_date: body.vou_date,
+                                vouno: body.vouno,
                                 order_id : body.order_id,
                                 narration : body.narration,
                                 inventory_roll_total : body.inventory_roll_total,

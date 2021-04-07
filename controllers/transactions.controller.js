@@ -1572,6 +1572,33 @@ exports.saveJobworkInvoice = function (req, res) {
 ////////////////////// Boopathi Workspace/////////////////
 ////////////////////// Boopathi Workspace/////////////////
 
+exports.getNextYarnInvoiceVouNo = function(req, res){
+    Yarn_Invoice.getNextYarnInvoiceVouNo((err, result) => {
+        if(err)
+        {
+            res.sendError(err);
+        }
+        else{
+            res.sendInfo("", result)
+        }
+    })
+}
+
+exports.getNextJobworkInwardVouNo = function(req, res){
+    Jobwork_Inward.getNextJobworkInwardVouNo((err, result) => {
+        if(err)
+        {
+            res.sendError(err);
+        }
+        else{
+            res.sendInfo("", result)
+        }
+    })
+}
+
+
+
+
 
 
 
@@ -1619,7 +1646,7 @@ exports.getNextJobworkInwardVouNo = function(req, res){
 }
 
 exports.getNextFabricOutwardVouNo = function(req, res){
-    JobworkInvoice.getNextFabricOutwardVouNo((err, result) => {
+    FabricOutward.getNextFabricOutwardVouNo((err, result) => {
         if(err)
         {
             res.sendError(err);
@@ -1631,7 +1658,7 @@ exports.getNextFabricOutwardVouNo = function(req, res){
 }
 
 exports.getNextFabricReturnVouNo = function(req, res){
-    JobworkInvoice.getNextFabricReturnVouNo((err, result) => {
+    FabricReturn.getNextFabricReturnVouNo((err, result) => {
         if(err)
         {
             res.sendError(err);
@@ -1643,7 +1670,7 @@ exports.getNextFabricReturnVouNo = function(req, res){
 }
 
 exports.getNextFabricInvoiceVouNo = function(req, res){
-    JobworkInvoice.getNextFabricInvoiceVouNo((err, result) => {
+    FabricInvoice.getNextFabricInvoiceVouNo((err, result) => {
         if(err)
         {
             res.sendError(err);

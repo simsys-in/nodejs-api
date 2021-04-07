@@ -141,7 +141,8 @@ router.get('/getOrdersForLedgerAndProcess', Controller.getOrdersForLedgerAndProc
 ////////////////////// Boopathi Workspace/////////////////
 ////////////////////// Boopathi Workspace/////////////////
 ////////////////////// Boopathi Workspace/////////////////
-
+router.get('/getNextYarnInvoiceVouNo', Controller.getNextYarnInvoiceVouNo);
+router.get('/getNextJobworkInwardVouNo', Controller.getNextJobworkInwardVouNo);
 
 
 

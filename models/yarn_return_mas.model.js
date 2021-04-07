@@ -167,6 +167,7 @@ Yarn_ReturnModel.prototype = {
                     //  vouno : result[0].vouno,
                        menu_id : 0,
                     order_id : result[0].order_id,
+                    vouno : result[0].vouno,
                     yarn_return_inventory : []
                 }
                 pool.query(sql1,match, function (err, result1) {
@@ -221,6 +222,7 @@ Yarn_ReturnModel.prototype = {
                 //  vouno : body.vouno,
                    menu_id : 0,
                 order_id : body.order_id,
+                vouno : body.vouno,
             }
             DBCON.query(`update ${TABLE_NAME} set ? where id = ?`, [yarn_return,body.id] ,(err, result) => {
                 // if(key === body.yarn_return.length - 1)
@@ -278,6 +280,7 @@ Yarn_ReturnModel.prototype = {
                             //  vouno : body.vouno,
                                menu_id : 0,
                             order_id : body.order_id,
+                            vouno : body.vouno,
                         }
                         DBCON.query(`insert into ${TABLE_NAME} set ?`, yarn_return, (err, result) => {
                             // if(key === body.yarn_return.length - 1)
