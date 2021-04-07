@@ -181,7 +181,7 @@ router.delete('/designation', Controller.deleteDesignation);
 ////////////////////// Boopathi Workspace/////////////////
 ////////////////////// Boopathi Workspace/////////////////
 ////////////////////// Boopathi Workspace/////////////////
-
+router.get('/getFabricsSB', Controller.getAllFabricsSB);
 
 
 

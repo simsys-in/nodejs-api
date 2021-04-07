@@ -214,20 +214,20 @@ exports.getProductSB = function (req, res) {
 
 
 
-exports.getFabricSB = function (req, res) {
-    const body = req.body;
-    const USER = req.user;
-    body.company = USER.company
-    const status = body.status ? body.status : 'active'
-    DBCON.query('select product.id as value, product.product as name from product left join product_category on product.product_category_id = product_category.id where product_category="FABRIC" ', function (err, data) {
-        if (err) {
-            console.log(err)
-            res.sendError(err)
-        } else {
-            res.sendInfo("", data)
-        }
-    })
-}
+// exports.getFabricSB = function (req, res) {
+//     const body = req.body;
+//     const USER = req.user;
+//     body.company = USER.company
+//     const status = body.status ? body.status : 'active'
+//     DBCON.query('select product.id as value, product.product as name from product left join product_category on product.product_category_id = product_category.id where product_category="FABRIC" ', function (err, data) {
+//         if (err) {
+//             console.log(err)
+//             res.sendError(err)
+//         } else {
+//             res.sendInfo("", data)
+//         }
+//     })
+// }
 
 exports.getNextOrderNo = function(req, res){
     OrderProgram.getNextOrderNo((err, result) => {
@@ -1218,50 +1218,50 @@ exports.deleteYarn_Outward = function (req, res) {
 
 }
 
-exports.getAllLedgerNameSB = function (req, res) {
-    const body = req.body;
-    const USER = req.user;
-    body.company = USER.company
-    const status = body.status ? body.status : 'active';
-    DBCON.query('select id as value, ledger as name from ledger ', function (err, data) {
-        if (err) {
-            console.log(err)
-            res.sendError(err)
-        } else {
-            res.sendInfo("", data)
-        }
-    })
-}
+// exports.getAllLedgerNameSB = function (req, res) {
+//     const body = req.body;
+//     const USER = req.user;
+//     body.company = USER.company
+//     const status = body.status ? body.status : 'active';
+//     DBCON.query('select id as value, ledger as name from ledger ', function (err, data) {
+//         if (err) {
+//             console.log(err)
+//             res.sendError(err)
+//         } else {
+//             res.sendInfo("", data)
+//         }
+//     })
+// }
 
-exports.getAllProcessSB = function (req, res) {
-    const body = req.body;
-    const USER = req.user;
-    body.company = USER.company
-    const status = body.status ? body.status : 'active';
-    DBCON.query('select id as value, process as name from process ', function (err, data) {
-        if (err) {
-            console.log(err)
-            res.sendError(err)
-        } else {
-            res.sendInfo("", data)
-        }
-    })
-}
+// exports.getAllProcessSB = function (req, res) {
+//     const body = req.body;
+//     const USER = req.user;
+//     body.company = USER.company
+//     const status = body.status ? body.status : 'active';
+//     DBCON.query('select id as value, process as name from process ', function (err, data) {
+//         if (err) {
+//             console.log(err)
+//             res.sendError(err)
+//         } else {
+//             res.sendInfo("", data)
+//         }
+//     })
+// }
 
-exports.getAllFabricsSB = function (req, res) {
-    const body = req.body;
-    const USER = req.user;
-    body.company = USER.company
-    const status = body.status ? body.status : 'active'
-    DBCON.query('select product.id as value, product.product as name from product left join product_category on product.product_category_id = product_category.id where product_category = "FABRIC" ', function (err, data) {
-        if (err) {
-            console.log(err)
-            res.sendError(err)
-        } else {
-            res.sendInfo("", data)
-        }
-    })
-}
+// exports.getAllFabricsSB = function (req, res) {
+//     const body = req.body;
+//     const USER = req.user;
+//     body.company = USER.company
+//     const status = body.status ? body.status : 'active'
+//     DBCON.query('select product.id as value, product.product as name from product left join product_category on product.product_category_id = product_category.id where product_category = "FABRIC" ', function (err, data) {
+//         if (err) {
+//             console.log(err)
+//             res.sendError(err)
+//         } else {
+//             res.sendInfo("", data)
+//         }
+//     })
+// }
 
 exports.getAllOrderSB = function (req, res) {
     const body = req.body;
@@ -1277,20 +1277,20 @@ exports.getAllOrderSB = function (req, res) {
         }
     })
 }
-exports.getAllColorSB = function (req, res) {
-    const body = req.body;
-    const USER = req.user;
-    body.company = USER.company
-    const status = body.status ? body.status : 'active'
-    DBCON.query('select id as value, color as name from color ', function (err, data) {
-        if (err) {
-            console.log(err)
-            res.sendError(err)
-        } else {
-            res.sendInfo("", data)
-        }
-    })
-}
+// exports.getAllColorSB = function (req, res) {
+//     const body = req.body;
+//     const USER = req.user;
+//     body.company = USER.company
+//     const status = body.status ? body.status : 'active'
+//     DBCON.query('select id as value, color as name from color ', function (err, data) {
+//         if (err) {
+//             console.log(err)
+//             res.sendError(err)
+//         } else {
+//             res.sendInfo("", data)
+//         }
+//     })
+// }
 
 
 

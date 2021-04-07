@@ -1159,20 +1159,20 @@ exports.getMobileForLedgerID = function (req, res) {
 }
 
 
-// exports.getAllFabricsSB = function (req, res) {
-//     const body = req.body;
-//     const USER = req.user;
-//     body.company = USER.company
-//     const status = body.status ? body.status : 'active';
-//     DBCON.query('select id as value, name from fabrics ', function (err, data) {
-//         if (err) {
-//             console.log(err)
-//             res.sendError(err)
-//         } else {
-//             res.sendInfo("", data)
-//         }
-//     })
-// }
+exports.getAllFabricsSB = function (req, res) {
+    const body = req.body;
+    const USER = req.user;
+    body.company = USER.company
+    const status = body.status ? body.status : 'active';
+    DBCON.query('select product.id as value, product.product as name from product left join product_category on product.product_category_id = product_category.id where product_category="FABRIC" ', function (err, data) {
+        if (err) {
+            console.log(err)
+            res.sendError(err)
+        } else {
+            res.sendInfo("", data)
+        }
+    })
+}
 
 exports.deleteProcess = function (req, res) {
     const id = req.query.id;
