@@ -1948,6 +1948,20 @@ exports.getNextGarmentsReceiptNoteVouNo = function(req, res){
 }
 
 
+//fabric outward report
+
+exports.getFabricOutwardReport = (req, res) => {
+    const ID = req.query.id;
+    FabricOutward.getFabricOutwardReport(ID, (err, result) => {
+        if(err)
+        {
+            res.sendError(err);
+        }
+        else{
+            res.sendInfo("", result);
+        }
+    })
+}
 
 
 
