@@ -1601,6 +1601,19 @@ exports.getNextJobworkInwardVouNo = function(req, res){
     })
 }
 
+exports.getJobworkInvoiceReport = (req, res) => {
+    const ID = req.query.id;
+    JobworkInvoice.getJobworkInvoiceReport(ID, (err, result) => {
+        if(err)
+        {
+            res.sendError(err);
+        }
+        else{
+            res.sendInfo("", result);
+        }
+    })
+}
+
 
 
 
