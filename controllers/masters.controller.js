@@ -1316,6 +1316,23 @@ exports.getAllSizeSB = function (req, res) {
 
 
 
+exports.getAllProcessSB = function (req, res) {
+    const body = req.body;
+    const USER = req.user;
+    body.company = USER.company
+    const status = body.status ? body.status : 'active';
+    DBCON.query('select id as value, process as name from process ', function (err, data) {
+        if (err) {
+            console.log(err)
+            res.sendError(err)
+        } else {
+            res.sendInfo("", data)
+        }
+    })
+}
+
+
+
 exports.getAllColorSB = function (req, res) {
     const body = req.body;
     const USER = req.user;

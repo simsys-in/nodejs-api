@@ -46,7 +46,7 @@ LedgerModel.prototype = {
     },
     checkAndSaveOrUpdate: function (body, callback) {
         // console.log(body.id, "Entered")
-        body.updated_at = new Date();
+        // body.updated_at = new Date();
         if (issetNotEmpty(body.id)) {
             DBCON.query(`select count(id) as c from ${TABLE_NAME} where id != ? and ledger = ?`, [body.id, body.name], (err, count) => {
                 if (err) {
@@ -68,7 +68,7 @@ LedgerModel.prototype = {
             })
         } else {
             // console.log(body.name, "Entered")
-            body.created_at = new Date();
+            // body.created_at = new Date();
             DBCON.query(`select count(id) as c from ${TABLE_NAME} where ledger = ?`, [body.name], (err, count) => {
                 if (err) {
                     callback(err)

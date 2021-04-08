@@ -134,16 +134,18 @@ exports.getAllMenusForUserPermission = function (req, res) {
     const user_group_id = req.query.user_group_id ? req.query.user_group_id : null;
     var query = `select menu_master.menu, menu_master.id as menu_id, 'menu_mas' as menu_from, ifnull(user_group_permission.view_permission,0) as view_permission, ifnull(user_group_permission.add_permission,0) as add_permission, ifnull(user_group_permission.edit_permission,0) as edit_permission, ifnull(user_group_permission.delete_permission,0) as delete_permission, menu_master.icon, user_group_permission.type from (select * from menu_master)menu_master left join user_group_permission on user_group_permission.menu_id = menu_master.id `;
 
-    // if(issetNotEmpty(user_group_id))
-    // {
+    if(issetNotEmpty(user_group_id))
+    {
         query += `  and user_group_permission.user_group_id = '${user_group_id}'`;
-    // }
+    }
     query += ` group by menu_master.id`;
 
     var query1 = `select route.voutype as menu, route.id as menu_id, 'route' as menu_from, ifnull(user_group_permission.view_permission,0) as view_permission, ifnull(user_group_permission.add_permission,0) as add_permission, ifnull(user_group_permission.edit_permission,0) as edit_permission, ifnull(user_group_permission.delete_permission,0) as delete_permission, route.icon, user_group_permission.type from (select * from route)route left join (select * from user_group_permission where user_group_id = ${user_group_id} and menu_id is null)user_group_permission on  user_group_permission.route = route.id `;
     
-    query1 += `  where user_group_permission.user_group_id = '${user_group_id}'`;
-    // }
+    if(issetNotEmpty(user_group_id))
+    {
+        query1 += `  where user_group_permission.user_group_id = '${user_group_id}'`;
+    }
     query1 += ` group by route.id`;
 
 
@@ -159,7 +161,7 @@ exports.getAllMenusForUserPermission = function (req, res) {
                 if(err)
                 {
                     console.log(err);
-                    req.sendError(err);
+                    res.sendError(err);
                 }
                 else{
                     var menuList = [...result, ...routeMenu];

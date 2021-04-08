@@ -344,7 +344,7 @@ Yarn_InvoiceModel.prototype = {
         })
     },
     getNextYarnInvoiceVouNo : (callback) => {
-        var query = 'select max(ifnull(vouno, 0)) + 1 as max_vou_no from yarn_invoice';
+        var query = 'select ifnull(max(vouno),0) + 1 as max_vou_no from yarn_invoice';
 
         DBCON.query(query, (err, result) => {
             if(err){

@@ -80,6 +80,7 @@ router.get('/getUnitForProductID', Controller.getUnitForProductID)
 router.put('/process', Controller.saveProcess);
 router.get('/process', Controller.getProcess);
 router.delete('/process', Controller.deleteProcess);
+router.get('/getAllProcessSB', Controller.getAllProcessSB);
 
 
 //size
