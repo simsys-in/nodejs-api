@@ -190,6 +190,11 @@ router.get('/garmentsDeliveryNote', Controller.getGarmentsDeliveryNote);
 router.delete('/garmentsDeliveryNote', Controller.deleteGarmentsDeliveryNote);
 router.get('/getNextGarmentsDeliveryNoteVouNo', Controller.getNextGarmentsDeliveryNoteVouNo);
 
+//garments receipt note
+router.put('/garmentsReceiptNote', Controller.saveGarmentsReceiptNote);
+router.get('/garmentsReceiptNote', Controller.getGarmentsReceiptNote);
+router.delete('/garmentsReceiptNote', Controller.deleteGarmentsReceiptNote);
+router.get('/getNextGarmentsReceiptNoteVouNo', Controller.getNextGarmentsReceiptNoteVouNo);
 
 
 
