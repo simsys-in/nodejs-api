@@ -197,6 +197,10 @@ router.delete('/garmentsReceiptNote', Controller.deleteGarmentsReceiptNote);
 router.get('/getNextGarmentsReceiptNoteVouNo', Controller.getNextGarmentsReceiptNoteVouNo);
 
 
+//fabric outward report
+
+router.get('/getFabricOutwardReport', Controller.getFabricOutwardReport);
+
 
 
 
