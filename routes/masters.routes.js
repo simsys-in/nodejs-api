@@ -131,9 +131,9 @@ router.get('/getAllColorSB', Controller.getAllColorSB);
 
 //color
 
-router.put('/masterGroup', Controller.saveMasterGroup);
-router.get('/masterGroup', Controller.getMasterGroup);
-router.delete('/masterGroup', Controller.deleteMasterGroup);
+router.put('/master_group', Controller.saveMasterGroup);
+router.get('/master_group', Controller.getMasterGroup);
+router.delete('/master_group', Controller.deleteMasterGroup);
 
 
 router.get('/getAllCuttingMasterSB', Controller.getAllCuttingMasterSB);
@@ -183,6 +183,8 @@ router.delete('/designation', Controller.deleteDesignation);
 ////////////////////// Boopathi Workspace/////////////////
 ////////////////////// Boopathi Workspace/////////////////
 router.get('/getFabricsSB', Controller.getAllFabricsSB);
+router.get('/getLedgerForOrderID', Controller.getLedgerForOrderID)
+
 
 
 

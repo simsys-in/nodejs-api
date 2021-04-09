@@ -48,7 +48,7 @@ Ledger_CategoryModel.prototype = {
         // console.log(body.id, "Entered")
         // body.updated_at = new Date();
         if (issetNotEmpty(body.id)) {
-            DBCON.query(`select count(id) as c from ${TABLE_NAME} where id != ? and ledger_category = ?`, [body.id, body.name], (err, count) => {
+            DBCON.query(`select count(id) as c from ${TABLE_NAME} where id != ? and ledger_category = ?`, [body.id, body.ledger_category], (err, count) => {
                 if (err) {
                     callback(err)
                 } else {
@@ -69,7 +69,7 @@ Ledger_CategoryModel.prototype = {
         } else {
             // console.log(body.name, "Entered")
             // body.created_at = new Date();
-            DBCON.query(`select count(id) as c from ${TABLE_NAME} where ledger_category = ?`, [body.name], (err, count) => {
+            DBCON.query(`select count(id) as c from ${TABLE_NAME} where ledger_category = ?`, [body.ledger_category], (err, count) => {
                 if (err) {
                     callback(err)
                 } else {

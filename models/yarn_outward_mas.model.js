@@ -192,7 +192,7 @@ Yarn_OutwardModel.prototype = {
         });
     },
     getAll : function(callback){
-        pool.query(`select  ${TABLE_NAME}.id, ledger.ledger, date_format(${TABLE_NAME}.vou_date, '%d-%m-%Y') as vou_date, order_program.order_no, ${TABLE_NAME}.narration, to_process.process as to_process, from_process.process as from_process,${TABLE_NAME}.vouno, ${TABLE_NAME}.refno from ${TABLE_NAME} left join ledger on ledger.id = yarn_outward.ledger_id  left join process from_process on from_process.id = yarn_outward.from_process_id left join process to_process on to_process.id = yarn_outward.to_process_id left join order_program on order_program.id = yarn_outward.order_id  `, function(err, result){
+        pool.query(`select  ${TABLE_NAME}.id, ledger.ledger, date_format(${TABLE_NAME}.vou_date, '%d-%m-%Y') as vou_date, order_program.order_no, ${TABLE_NAME}.narration, to_process.process as to_process, from_process.process as from_process,${TABLE_NAME}.vouno, ${TABLE_NAME}.refno from ${TABLE_NAME} left join ledger on ledger.id = yarn_outward.ledger_id  left join process from_process on from_process.id = yarn_outward.from_process_id left join process to_process on to_process.id = yarn_outward.to_process_id left join order_program on order_program.id = yarn_outward.order_id order by id desc `, function(err, result){
             if(err)
             {
                 callback(err)

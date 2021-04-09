@@ -60,7 +60,7 @@ Yarn_InwardModel.prototype = {
         });
     },
     getAll : function(callback){
-        pool.query(`select  ${TABLE_NAME}.id, ledger.ledger, date_format(${TABLE_NAME}.vou_date, '%d-%m-%Y') as vou_date, order_program.order_no, ${TABLE_NAME}.narration, process.process,${TABLE_NAME}.vouno, ${TABLE_NAME}.refno from ${TABLE_NAME} left join ledger on ledger.id = yarn_inward.ledger_id  left join process on process.id = yarn_inward.process_id left join order_program on order_program.id = yarn_inward.order_id `, function(err, result){
+        pool.query(`select  ${TABLE_NAME}.id, ledger.ledger, date_format(${TABLE_NAME}.vou_date, '%d-%m-%Y') as vou_date, order_program.order_no, ${TABLE_NAME}.narration, process.process,${TABLE_NAME}.vouno, ${TABLE_NAME}.refno from ${TABLE_NAME} left join ledger on ledger.id = yarn_inward.ledger_id  left join process on process.id = yarn_inward.process_id left join order_program on order_program.id = yarn_inward.order_id order by id desc `, function(err, result){
             if(err)
             {
                 callback(err)
