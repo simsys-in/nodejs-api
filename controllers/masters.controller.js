@@ -1763,20 +1763,6 @@ exports.getBranch = function (req, res) {
     }
 }
 
-exports.getAllBranchSB = function (req, res) {
-    const body = req.body;
-    const USER = req.user;
-    body.company = USER.company
-    const status = body.status ? body.status : 'active';
-    DBCON.query('select id as value, name from branch ', function (err, data) {
-        if (err) {
-            console.log(err)
-            res.sendError(err)
-        } else {
-            res.sendInfo("", data)
-        }
-    })
-}
 
 exports.deleteBranch = function (req, res) {
     const id = req.query.id;
@@ -1831,21 +1817,6 @@ exports.getDepartment = function (req, res) {
             }
         })
     }
-}
-
-exports.getAllDepartmentSB = function (req, res) {
-    const body = req.body;
-    const USER = req.user;
-    body.company = USER.company
-    const status = body.status ? body.status : 'active';
-    DBCON.query('select id as value, name from department ', function (err, data) {
-        if (err) {
-            console.log(err)
-            res.sendError(err)
-        } else {
-            res.sendInfo("", data)
-        }
-    })
 }
 
 exports.deleteDepartment = function (req, res) {
@@ -1944,20 +1915,6 @@ exports.getDesignation = function (req, res) {
     }
 }
 
-exports.getAllBankSB = function (req, res) {
-    const body = req.body;
-    const USER = req.user;
-    body.company = USER.company
-    const status = body.status ? body.status : 'active';
-    DBCON.query('select id as value, name from bank ', function (err, data) {
-        if (err) {
-            console.log(err)
-            res.sendError(err)
-        } else {
-            res.sendInfo("", data)
-        }
-    })
-}
 
 exports.deleteBank = function (req, res) {
     const id = req.query.id;
