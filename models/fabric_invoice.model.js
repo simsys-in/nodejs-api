@@ -68,7 +68,7 @@ FabricInvoiceModel.prototype = {
         });
     },
     getAll : function(callback){
-        pool.query(`select fabric_invoice.id,fabric_invoice.vouno, DATE_FORMAT(fabric_invoice.vou_date, '%d-%m-%Y') as vou_date , ledger.ledger from ${TABLE_NAME} left join ledger on ledger.id=fabric_invoice.ledger_id`, function(err, result){
+        pool.query(`select fabric_invoice.id,fabric_invoice.vouno, DATE_FORMAT(fabric_invoice.vou_date, '%d-%m-%Y') as vou_date , ledger.ledger from ${TABLE_NAME} left join ledger on ledger.id=fabric_invoice.ledger_id order by ${TABLE_NAME}.id desc`, function(err, result){
 
             if(err)
             {

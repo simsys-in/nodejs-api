@@ -34,6 +34,7 @@ JobworkOutwardModel.prototype = {
                 var jobwork_outward = {
                     ledger_id: result[0].ledger_id,
                     vou_date: result[0].vou_date,
+                    vouno:result[0].vouno,
                     narration: result[0].narration,
                     inventory_qty_total: result[0].inventory_qty_total,
                     size1_total: result[0].size1_total,
@@ -85,7 +86,7 @@ JobworkOutwardModel.prototype = {
         });
     },
     getAll: function (callback) {
-        pool.query(`select jobwork_outward.id,jobwork_outward.inventory_qty_total, DATE_FORMAT(jobwork_outward.vou_date, '%d-%m-%Y') as vou_date, order_program.order_no, ledger.ledger from ${TABLE_NAME} left join ledger on ledger.id=jobwork_outward.ledger_id left join order_program on order_program.id = jobwork_outward.order_id order by jobwork_outward.id desc`, function (err, result) {
+        pool.query(`select jobwork_outward.id,jobwork_outward.vouno,jobwork_outward.inventory_qty_total, DATE_FORMAT(jobwork_outward.vou_date, '%d-%m-%Y') as vou_date, order_program.order_no, ledger.ledger from ${TABLE_NAME} left join ledger on ledger.id=jobwork_outward.ledger_id left join order_program on order_program.id = jobwork_outward.order_id order by jobwork_outward.id desc`, function (err, result) {
 
             if (err) {
                 callback(err)
@@ -104,6 +105,7 @@ JobworkOutwardModel.prototype = {
             var jobwork_outward = {
                 ledger_id: body.ledger_id,
                 vou_date: body.vou_date,
+                vouno : body.vouno,
                 narration: body.narration,
                 inventory_qty_total: body.inventory_qty_total,
                 size1_total: body.size1_total,
@@ -199,6 +201,7 @@ JobworkOutwardModel.prototype = {
             var jobwork_outward = {
                 ledger_id: body.ledger_id,
                 vou_date: body.vou_date,
+                vouno :body.vouno,
                 narration: body.narration,
                 inventory_qty_total: body.inventory_qty_total,
                 size1_total: body.size1_total,

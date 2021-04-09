@@ -31,7 +31,7 @@ EmployeeModel.prototype = {
         });
     },
     getAll : function(callback){
-        pool.query(`select ${TABLE_NAME}.id, ${TABLE_NAME}.employee, ${TABLE_NAME}.employee_code, ${TABLE_NAME}.mobile, employee_category.employee_category from ${TABLE_NAME} left join employee_category on employee_category.id = employee.employee_category_id`, function(err, result){
+        pool.query(`select ${TABLE_NAME}.id, ${TABLE_NAME}.employee, ${TABLE_NAME}.employee_code, ${TABLE_NAME}.mobile, employee_category.employee_category from ${TABLE_NAME} left join employee_category on employee_category.id = employee.employee_category_id order by ${TABLE_NAME}.id desc`, function(err, result){
             if(err)
             {
                 callback(err)

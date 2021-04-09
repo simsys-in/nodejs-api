@@ -66,7 +66,7 @@ FabricOutwardModel.prototype = {
         });
     },
     getAll : function(callback){
-        pool.query(`select fabric_outward.id,fabric_outward.vouno, DATE_FORMAT(fabric_outward.vou_date, '%d-%m-%Y') as vou_date,ledger.ledger from ${TABLE_NAME} left join ledger on ledger.id=fabric_outward.ledger_id`, function(err, result){
+        pool.query(`select fabric_outward.id,fabric_outward.vouno, DATE_FORMAT(fabric_outward.vou_date, '%d-%m-%Y') as vou_date,ledger.ledger from ${TABLE_NAME} left join ledger on ledger.id=fabric_outward.ledger_id order by ${TABLE_NAME}.id desc`, function(err, result){
 
             if(err)
             {

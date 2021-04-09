@@ -32,7 +32,7 @@
             });
         },
         getAll : function(callback){
-            pool.query(`select product.id, product.product,product.qrcode,product_group.product_group,unit.unit,product_category.product_category from ${TABLE_NAME} left join product_group on product_group.id = product.product_group_id left join product_category on product_category.id = product.product_category_id left join unit on unit.id = product.unit_id ` , function(err, result){
+            pool.query(`select product.id, product.product,product.qrcode,product_group.product_group,unit.unit,product_category.product_category from ${TABLE_NAME} left join product_group on product_group.id = product.product_group_id left join product_category on product_category.id = product.product_category_id left join unit on unit.id = product.unit_id order by ${TABLE_NAME}.id desc` , function(err, result){
                
 
                 if(err)

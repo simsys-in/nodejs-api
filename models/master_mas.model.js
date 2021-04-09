@@ -31,7 +31,7 @@ MasterModel.prototype = {
         });
     },
     getAll : function(callback){
-        pool.query(`select ${TABLE_NAME}.id, ${TABLE_NAME}.master, ${TABLE_NAME}.narration, ${TABLE_NAME}.master_group_id, master_group.master_group from ${TABLE_NAME} left join master_group on master_group.id = ${TABLE_NAME}.master_group_id`, function(err, result){
+        pool.query(`select ${TABLE_NAME}.id, ${TABLE_NAME}.master, ${TABLE_NAME}.narration, ${TABLE_NAME}.master_group_id, master_group.master_group from ${TABLE_NAME} left join master_group on master_group.id = ${TABLE_NAME}.master_group_id order by ${TABLE_NAME}.id desc`, function(err, result){
             if(err)
             {
                 callback(err)

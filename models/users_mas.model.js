@@ -32,7 +32,7 @@ UserModel.prototype = {
         });
     },
     getAll : function(callback){
-        pool.query(`select ${TABLE_NAME}.id, ${TABLE_NAME}.name, ${TABLE_NAME}.email, ${TABLE_NAME}.password, user_group.user_group, ${TABLE_NAME}.mobile from ${TABLE_NAME} left join user_group on user_group.id = users.user_group_id`, function(err, result){
+        pool.query(`select ${TABLE_NAME}.id, ${TABLE_NAME}.name, ${TABLE_NAME}.email, ${TABLE_NAME}.password, user_group.user_group, ${TABLE_NAME}.mobile from ${TABLE_NAME} left join user_group on user_group.id = users.user_group_id order by ${TABLE_NAME}.id desc`, function(err, result){
             if(err)
             {
                 callback(err)

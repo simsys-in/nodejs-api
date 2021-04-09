@@ -31,7 +31,7 @@ SizeModel.prototype = {
         });
     },
     getAll : function(callback){
-        pool.query(`select * from ${TABLE_NAME} order by id desc`, function(err, result){
+        pool.query(`select * from ${TABLE_NAME} order by ${TABLE_NAME}.id desc`, function(err, result){
             if(err)
             {
                 callback(err)

@@ -67,7 +67,7 @@ Jobwork_InwardModel.prototype = {
         });
     },
     getAll : function(callback){
-        pool.query(`select  ${TABLE_NAME}.id, ${TABLE_NAME}.vouno, ${TABLE_NAME}.inventory_qty_total, ledger.ledger, date_format(${TABLE_NAME}.vou_date, '%d-%m-%Y') as vou_date, order_program.order_no from ${TABLE_NAME} left join ledger on ledger.id = jobwork_inward.ledger_id left join order_program on order_program.id = jobwork_inward.order_id `, function(err, result){
+        pool.query(`select  ${TABLE_NAME}.id, ${TABLE_NAME}.vouno, ${TABLE_NAME}.inventory_qty_total, ledger.ledger, date_format(${TABLE_NAME}.vou_date, '%d-%m-%Y') as vou_date, order_program.order_no from ${TABLE_NAME} left join ledger on ledger.id = jobwork_inward.ledger_id left join order_program on order_program.id = jobwork_inward.order_id order by ${TABLE_NAME}.id desc `, function(err, result){
             if(err)
             {
                 callback(err)
