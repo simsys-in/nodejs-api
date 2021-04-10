@@ -1967,7 +1967,21 @@ exports.deleteDesignation = function (req, res) {
 ////////////////////// Boopathi Workspace/////////////////
 ////////////////////// Boopathi Workspace/////////////////
 
+exports.getLedgerForOrderID = function(req,res){
+    const body = req.body;
+    const USER = req.user;
+    body.company = USER.company
+    const status = body.status ? body.status : 'active';
+    var order_id = req.query.order_id ? req.query.order_id : null;
+    DBCON.query('select ledger_id from order_program  where id = ? ', order_id, function (err, data) {
+        if(err){
+            res.sendError(err)
+        }else{
+            res.sendInfo("", data[0].ledger)
+        }
+    })
 
+}
 
 
 

@@ -48,7 +48,7 @@ ProcessModel.prototype = {
         // console.log(body.id, "Entered")
         // body.updated_at = new Date();
         if (issetNotEmpty(body.id)) {
-            DBCON.query(`select count(id) as c from ${TABLE_NAME} where id != ? and process = ?`, [body.id, body.name], (err, count) => {
+            DBCON.query(`select count(id) as c from ${TABLE_NAME} where id != ? and process = ?`, [body.id, body.process], (err, count) => {
                 if (err) {
                     callback(err)
                 } else {
@@ -69,7 +69,7 @@ ProcessModel.prototype = {
         } else {
             // console.log(body.name, "Entered")
             // body.created_at = new Date();
-            DBCON.query(`select count(id) as c from ${TABLE_NAME} where process = ?`, [body.name], (err, count) => {
+            DBCON.query(`select count(id) as c from ${TABLE_NAME} where process = ?`, [body.process], (err, count) => {
                 if (err) {
                     callback(err)
                 } else {

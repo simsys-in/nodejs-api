@@ -265,6 +265,19 @@ JobworkInvoiceModel.prototype = {
                                     } else {
                                         jobwork_invoice_details.inventory = inventory;
 
+                                        //total
+                                const GET_INVENTORYTOTAL_QUERY = `select jobwork_invoice.inventory_amount_total, jobwork_invoice.inventory_qty_total from jobwork_invoice where jobwork_invoice.id = ${id};`;
+
+                                DBCON.query(GET_INVENTORYTOTAL_QUERY, (err, inventorytotal) => {
+                                    if (err) {
+                                        console.log(err);
+                                        callback(err);
+                                    } else {
+                                        jobwork_invoice_details.inventorytotal = inventorytotal;
+
+                                        //total
+
+
                                         const GET_COMPANY_DETAILS = `select * from company limit 1`;
                                         const GET_LEDGER_DETAILS = `select ledger.ledger, ledger.delivery_address, ledger.mobile, ledger.phone, ledger.gstno from jobwork_invoice left join ledger on jobwork_invoice.ledger_id = ledger.id where jobwork_invoice.id = ${id}`;
                                         DBCON.query(GET_COMPANY_DETAILS, (err, company_details) => {
@@ -286,9 +299,9 @@ JobworkInvoiceModel.prototype = {
                                             }
                                         });
                                     }
-                    //             });
+                                });
 
-                    //         }
+                            }
                     //     })
                     // }
                 })
