@@ -48,7 +48,7 @@ UserModel.prototype = {
     checkAndSaveOrUpdate: async function (body, callback) {
         body.password = await bcrypt.hash(body.password, 12);
         if (issetNotEmpty(body.id)) {
-            DBCON.query(`select count(id) as c from ${TABLE_NAME} where id != ? and email = ?`, [body.id, body.email], (err, count) => {
+            DBCON.query(`select count(id) as c from ${TABLE_NAME} where id != ? and (email = ? or mobile = ?)`, [body.id, body.email,body.mobile], (err, count) => {
                 if (err) {
                     callback(err)
                 } else {
@@ -69,7 +69,7 @@ UserModel.prototype = {
         } else {
             console.log(body.name, "Entered")
             body.created_at = new Date();
-            DBCON.query(`select count(id) as c from ${TABLE_NAME} where name = ?`, [body.name], (err, count) => {
+            DBCON.query(`select count(id) as c from ${TABLE_NAME} where  (email = ? or mobile = ?)`, [body.email,body.mobile], (err, count) => {
                 if (err) {
                     callback(err)
                 } else {

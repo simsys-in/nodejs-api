@@ -7,9 +7,9 @@ const Controller = require('../controllers/transactions.controller');
 
 //order process
 
-router.put('/orderProgram', Controller.saveOrderProgram);
-router.get('/orderProgram', Controller.getOrderProgram);
-router.delete('/orderProgram', Controller.deleteOrderProgram);
+router.put('/order_program', Controller.saveOrderProgram);
+router.get('/order_program', Controller.getOrderProgram);
+router.delete('/order_program', Controller.deleteOrderProgram);
 
 
 router.get('/getStyleForOrderId', Controller.getStyleForOrderId);
@@ -261,7 +261,7 @@ router.get('/getJobworkOutwardColorDetails', Controller.getJobworkOutwardColorDe
 router.put('/jobworkInvoice', Controller.saveJobworkInvoice);
 router.get('/jobworkInvoice', Controller.getJobworkInvoice);
 router.delete('/jobworkInvoice', Controller.deleteJobworkInvoice);
-router.get('/getNextJobworkInwardVouNo', Controller.getNextJobworkInwardVouNo);
+router.get('/getNextJobworkInvoiceVouNo', Controller.getNextJobworkInvoiceVouNo);
 
 router.get('/getProductAndSizeSBForOrderID', Controller.getProductAndSizeSBForOrderID);
 
