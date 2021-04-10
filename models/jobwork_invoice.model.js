@@ -66,7 +66,7 @@ JobworkInvoiceModel.prototype = {
         });
     },
     getAll: function (callback) {
-        pool.query(`select jobwork_invoice.id,jobwork_invoice.inventory_qty_total, DATE_FORMAT(jobwork_invoice.vou_date, '%d-%m-%Y') as vou_date,jobwork_invoice.vouno, ledger.ledger from ${TABLE_NAME} left join ledger on ledger.id=jobwork_invoice.ledger_id  order by jobwork_invoice.id desc`, function (err, result) {
+        pool.query(`select jobwork_invoice.id,jobwork_invoice.inventory_qty_total, DATE_FORMAT(jobwork_invoice.vou_date, '%d-%m-%Y') as vou_date,jobwork_invoice.vouno, ledger.ledger from ${TABLE_NAME} left join ledger on ledger.id=jobwork_invoice.ledger_id  order by ${TABLE_NAME}.id desc`, function (err, result) {
 
             if (err) {
                 callback(err)

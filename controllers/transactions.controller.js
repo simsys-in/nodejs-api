@@ -132,7 +132,7 @@ exports.getOrderSB = function (req, res) {
     const USER = req.user;
     body.company = USER.company
     const status = body.status ? body.status : 'active'
-    DBCON.query('select id as value,order_no as name from order_program ', function (err, data) {
+    DBCON.query('select id as value,order_no as name from order_program order by id desc', function (err, data) {
         if (err) {
             console.log(err)
             res.sendError(err)

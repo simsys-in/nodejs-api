@@ -773,7 +773,7 @@ exports.getAllProductSB = function (req, res) {
     const USER = req.user;
     body.company = USER.company
     const status = body.status ? body.status : 'active'
-    DBCON.query('select id as value,product as name from product ',function (err, data) {
+    DBCON.query('select product.id as value, product.product as name from product left join product_category on product.product_category_id = product_category.id where product_category="Accessories"',function (err, data) {
         if (err) {
             console.log(err)
             res.sendError(err)
@@ -2052,7 +2052,7 @@ exports.getLedgerForOrderID = function(req,res){
 exports.getAccountsLedger = (req, res) => {
     const LEDGER_GROUP_ID = req.query.ledger_group_id;
 
-    const QUERY = `select id as value, ledger as name from ledger where ledger_group_id = ${LEDGER_GROUP_ID} order by ledger asc;`;
+    const QUERY = `select ledger.id as value, ledger.ledger as name from ledger left join ledger_group on ledger.ledger_group_id = ledger_group.id where ledger_group="Purchase Account" order by ledger asc;`;
 
     DBCON.query(QUERY, (err, result) => {
         if(err)
