@@ -1613,6 +1613,18 @@ exports.getJobworkInvoiceReport = (req, res) => {
         }
     })
 }
+exports.getYarnInvoiceReport = (req, res) => {
+    const ID = req.query.id;
+    Yarn_Invoice.getYarnInvoiceReport(ID, (err, result) => {
+        if(err)
+        {
+            res.sendError(err);
+        }
+        else{
+            res.sendInfo("", result);
+        }
+    })
+}
 
 
 

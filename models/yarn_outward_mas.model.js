@@ -166,6 +166,7 @@ Yarn_OutwardModel.prototype = {
                     to_process_id : result[0].to_process_id,
                     vouno : result[0].vouno,
                     menu_id : result[0].menu_id,
+                    vehicle_no : result[0].vehicle_no,
                     refno : result[0].refno,
                     yarn_outward_inventory : []
                 }
@@ -218,6 +219,7 @@ Yarn_OutwardModel.prototype = {
                 inventory_qty_kg_total : body.inventory_qty_kg_total,
                 from_process_id : body.from_process_id,
                 to_process_id : body.to_process_id,
+                vehicle_no : body.vehicle_no,
                 vouno : body.vouno,
                    menu_id : 0,
                 refno : body.refno
@@ -275,6 +277,7 @@ Yarn_OutwardModel.prototype = {
                             inventory_qty_kg_total : body.inventory_qty_kg_total,
                             from_process_id : body.from_process_id,
                             to_process_id : body.to_process_id,
+                            vehicle_no : body.vehicle_no,
                             vouno : body.vouno,
                                menu_id : 0,
                             refno : body.refno

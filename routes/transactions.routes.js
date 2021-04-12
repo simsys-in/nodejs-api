@@ -144,6 +144,7 @@ router.get('/getOrdersForLedgerAndProcess', Controller.getOrdersForLedgerAndProc
 router.get('/getNextYarnInvoiceVouNo', Controller.getNextYarnInvoiceVouNo);
 router.get('/getNextJobworkInwardVouNo', Controller.getNextJobworkInwardVouNo);
 router.get('/getJobworkInvoiceReport', Controller.getJobworkInvoiceReport);
+router.get('/getYarnInvoiceReport', Controller.getYarnInvoiceReport);
 
 
 

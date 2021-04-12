@@ -355,7 +355,76 @@ Yarn_InvoiceModel.prototype = {
                 callback(false,result[0]);
             }
         })
-    }
+    },
+    getYarnInvoiceReport: (id, callback) => {
+        var yarn_invoice_details = {};
+        const QUERY = `select yarn_invoice.id, yarn_invoice.vouno, yarn_invoice.vou_date,process.process, order_program.order_no from yarn_invoice left join process on process.id = yarn_invoice.process_id left join order_program on order_program.id = yarn_invoice.order_id where yarn_invoice.id = ${id};`;
+
+        DBCON.query(QUERY, (err, result) => {
+            if (err) {
+                console.log(err);
+                callback(err);
+            } else {
+                yarn_invoice_details = result[0];
+
+
+                                const GET_INVENTORY_QUERY = `select * from yarn_invoice_inventory where vou_id = ${id};`;
+
+                                DBCON.query(GET_INVENTORY_QUERY, (err, inventory) => {
+                                    if (err) {
+                                        console.log(err);
+                                        callback(err);
+                                    } else {
+                                        yarn_invoice_details.inventory = inventory;
+
+                                        //total
+                                const GET_INVENTORYTOTAL_QUERY = `select yarn_invoice.inventory_qty_kg_total, yarn_invoice.inventory_amount_total from yarn_invoice where yarn_invoice.id = ${id};`;
+
+                                DBCON.query(GET_INVENTORYTOTAL_QUERY, (err, inventorytotal) => {
+                                    if (err) {
+                                        console.log(err);
+                                        callback(err);
+                                    } else {
+                                        yarn_invoice_details.inventorytotal = inventorytotal;
+
+                                        //total
+
+
+                                        const GET_COMPANY_DETAILS = `select * from company limit 1`;
+                                        const GET_LEDGER_DETAILS = `select ledger.ledger, ledger.delivery_address, ledger.mobile, ledger.phone, ledger.gstno from yarn_invoice left join ledger on yarn_invoice.ledger_id = ledger.id where yarn_invoice.id = ${id}`;
+                                        DBCON.query(GET_COMPANY_DETAILS, (err, company_details) => {
+                                            if (err) {
+                                                console.log(err);
+                                                callback(err);
+
+                                            } else {
+                                                yarn_invoice_details.company_details = company_details[0];
+                                                DBCON.query(GET_LEDGER_DETAILS, (err, ledger_details) => {
+                                                    if (err) {
+                                                        console.log(err);
+                                                        callback(err);
+                                                    } else {
+                                                        yarn_invoice_details.ledger_details = ledger_details[0];
+                                                        callback(false, yarn_invoice_details);
+                                                    }
+                                                });
+                                            }
+                                        });
+                                    }
+                                });
+
+                            }
+                    //     })
+                    // }
+                })
+
+            }
+        })
+    },
+
+
+
+
 }
     
 module.exports = Yarn_InvoiceModel;
