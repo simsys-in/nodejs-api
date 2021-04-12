@@ -2052,7 +2052,7 @@ exports.getLedgerForOrderID = function(req,res){
 exports.getAccountsLedger = (req, res) => {
     const LEDGER_GROUP_ID = req.query.ledger_group_id;
 
-    const QUERY = `select ledger.id as value, ledger.ledger as name from ledger left join ledger_group on ledger.ledger_group_id = ledger_group.id where ledger_group="Purchase Account" order by ledger asc;`;
+    const QUERY = `select ledger.id as value, ledger.ledger as name from ledger left join ledger_group on ledger.ledger_group_id = ledger_group.id where ledger_group="Sales Account" order by ledger asc;`;
 
     DBCON.query(QUERY, (err, result) => {
         if(err)

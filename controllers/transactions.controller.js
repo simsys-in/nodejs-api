@@ -1404,6 +1404,22 @@ exports.getCuttingProgramColorDetails = function (req, res) {
     })
 }
 
+exports.getJobworkOutwardColorDetails = function (req, res) {
+    const body = req.body;
+    const USER = req.user;
+    body.company = USER.company
+    const status = body.status ? body.status : 'active';
+    DBCON.query('select jobwork_inward_inventory.color_id, jobwork_inward_inventory.size1, jobwork_inward_inventory.size2,jobwork_inward_inventory.size3,jobwork_inward_inventory.size4,jobwork_inward_inventory.size5,jobwork_inward_inventory.size6,jobwork_inward_inventory.size7,jobwork_inward_inventory.size8,jobwork_inward_inventory.size9 from jobwork_inward left join jobwork_inward_inventory on jobwork_inward_inventory.vou_id = jobwork_inward.id where order_id =?', req.query.order_id, function (err, data) {
+        if (err) {
+            console.log(err)
+            res.sendError(err)
+        } else {
+            res.sendInfo("", data)
+        }
+    })
+}
+
+
 
 exports.deleteCuttingProgram = function (req, res) {
     const id = req.query.id;
@@ -1963,6 +1979,17 @@ exports.getFabricOutwardReport = (req, res) => {
     })
 }
 
+exports.getNextJobworkOutwardVouNo = function(req, res){
+    JobworkOutward.getNextJobworkOutwardVouNo((err, result) => {
+        if(err)
+        {
+            res.sendError(err);
+        }
+        else{
+            res.sendInfo("", result)
+        }
+    })
+}
 
 
 
