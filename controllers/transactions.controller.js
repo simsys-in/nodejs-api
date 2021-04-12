@@ -1651,8 +1651,8 @@ exports.getJobworkInvoiceReport = (req, res) => {
 ////////////////////// Kowsalya Workspace/////////////////
 
 
-exports.getNextJobworkInwardVouNo = function(req, res){
-    JobworkInvoice.getNextJobworkInwardVouNo((err, result) => {
+exports.getNextJobworkInvoiceVouNo = function(req, res){
+    JobworkInvoice.getNextJobworkInvoiceVouNo((err, result) => {
         if(err)
         {
             res.sendError(err);

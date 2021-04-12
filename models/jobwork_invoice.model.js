@@ -208,7 +208,7 @@ JobworkInvoiceModel.prototype = {
     })
     },
 
-    getNextJobworkInwardVouNo : (callback) => {
+    getNextJobworkInvoiceVouNo : (callback) => {
         var query = 'select max(ifnull(vouno, 0)) + 1 as max_vou_no from jobwork_invoice';
 
         DBCON.query(query, (err, result) => {

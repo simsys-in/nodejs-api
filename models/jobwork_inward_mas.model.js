@@ -42,6 +42,7 @@ Jobwork_InwardModel.prototype = {
                     adas : result[0].adas,
                     size8_total : result[0].size8_total,
                     size9_total : result[0].size9_total,
+                    vouno : result[0].vouno,
                     jobwork_inward_inventory : []
                 }
                 pool.query(sql1,match, function (err, result1) {
@@ -102,6 +103,7 @@ Jobwork_InwardModel.prototype = {
                     adas : body.adas,
                     size8_total : body.size8_total,
                     size9_total : body.size9_total,
+                    vouno : body.vouno,
             }
             DBCON.query(`update ${TABLE_NAME} set ? where id = ?`, [jobwork_inward,body.id] ,(err, result) => {
                 // if(key === body.jobwork_inward.length - 1)
@@ -137,12 +139,13 @@ Jobwork_InwardModel.prototype = {
                                 qty : item.qty,
                             }
                             DBCON.query(`insert into jobwork_inward_inventory set ?`, jobwork_inward_inventory);
+                        }
                             if(index === body.jobwork_inward_inventory.length - 1)
                             {
                                 callback(false, result, "Jobwork inward Saved Successfully!");
                             }
                     
-                     }
+                    //  }
                     }}
                  })   
                      
@@ -167,6 +170,7 @@ Jobwork_InwardModel.prototype = {
                             adas : body.adas,
                             size8_total : body.size8_total,
                             size9_total : body.size9_total,
+                            vouno : body.vouno,
                         }
                         DBCON.query(`insert into ${TABLE_NAME} set ?`, jobwork_inward, (err, result) => {
                             // if(key === body.jobwork_inward.length - 1)
@@ -193,11 +197,12 @@ Jobwork_InwardModel.prototype = {
                                        
                                     }
                                     DBCON.query(`insert into jobwork_inward_inventory set ?`, jobwork_inward_inventory);
+                                }
                                     if(index === body.jobwork_inward_inventory.length - 1)
                                     {
                                         callback(false, result, "Jobwork inward Saved Successfully!");
                                     }
-                                }
+                                // }
                             })
                             }
                         })  
@@ -225,19 +230,7 @@ Jobwork_InwardModel.prototype = {
             }
         })
     },
-    getNextYarnReturnVouNo : (callback) => {
-        var query = 'select max(ifnull(vouno, 0)) + 1 as max_vou_no from jobwork_inward';
-
-        DBCON.query(query, (err, result) => {
-            if(err){
-                console.log(err);
-                callback(err)
-            }
-            else{
-                callback(false,result[0]);
-            }
-        })
-    },
+   
     getNextJobworkInwardVouNo : (callback) => {
         var query = 'select max(ifnull(vouno, 0)) + 1 as max_vou_no from jobwork_inward';
 
