@@ -1625,6 +1625,18 @@ exports.getYarnInvoiceReport = (req, res) => {
         }
     })
 }
+exports.getYarnOutwardReport = (req, res) => {
+    const ID = req.query.id;
+    Yarn_Outward.getYarnOutwardReport(ID, (err, result) => {
+        if(err)
+        {
+            res.sendError(err);
+        }
+        else{
+            res.sendInfo("", result);
+        }
+    })
+}
 
 
 

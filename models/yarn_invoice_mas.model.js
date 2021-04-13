@@ -368,7 +368,7 @@ Yarn_InvoiceModel.prototype = {
                 yarn_invoice_details = result[0];
 
 
-                                const GET_INVENTORY_QUERY = `select * from yarn_invoice_inventory where vou_id = ${id};`;
+                                const GET_INVENTORY_QUERY = `select yarn_invoice_inventory.id, yarn_invoice_inventory.gsm, product.product, yarn_invoice_inventory.counts, yarn_invoice_inventory.qty_kg, yarn_invoice_inventory.rate, yarn_invoice_inventory.amount from yarn_invoice_inventory left join product on product.id = yarn_invoice_inventory.fabric_id where vou_id = ${id};`;
 
                                 DBCON.query(GET_INVENTORY_QUERY, (err, inventory) => {
                                     if (err) {
