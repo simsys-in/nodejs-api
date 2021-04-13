@@ -223,7 +223,81 @@ FabricInvoiceModel.prototype = {
                 callback(false,result[0]);
             }
         })
-    }
+    },
+    getFabricInvoiceReport: (id, callback) => {
+        var fabric_outward_details = {};
+        const QUERY = `select fabric_invoice.id, 'Test' as dcno, fabric_invoice.vou_date, process.process, product.hsnsac, order_program.order_no, order_program.id as order_id, 'Vehicle No' as vehicle_no, product.product from fabric_invoice left join order_program on order_program.id = fabric_invoice.order_id left join product on product.id = order_program.style_id left join process on process.id = fabric_invoice.process_id where fabric_invoice.id = ${id};`;
+
+        DBCON.query(QUERY, (err, result) => {
+            if (err) {
+                console.log(err);
+                callback(err);
+            } else {
+                fabric_invoice_details = result[0];
+                const ORDER_ID = fabric_invoice_details.order_id;
+                // const GET_COLOR_SIZE_DETAILS_QUERY = `select concat(size.size1, ",", size.size2, ",",size.size3, ",",size.size4, ",",size.size5, ",",size.size6, ",",size.size7, ",",size.size8, ",",size.size9) as sizes from order_program left join size on size.id = order_program.size_id where order_program.id = ${ORDER_ID};`;
+
+                // DBCON.query(GET_COLOR_SIZE_DETAILS_QUERY, (err, color_size_details) => {
+                //     if (err) {
+                //         console.log(err);
+                //         callback(err)
+                //     } else {
+                //         var sizes = color_size_details.length > 0 ? color_size_details[0].sizes !== null ? color_size_details[0].sizes : "" : "";
+                //         console.log(sizes);
+                //         sizes = sizes.split(",");
+                //         // res.sendInfo("", sizes);
+                //         jobwork_outward_details.color_size_details = sizes;
+
+                        const GET_COLOR_DETAILS_QUERY = `select color.color,product.product as fabric,fabric_invoice_inventory.gsm ,fabric_invoice_inventory.dia ,fabric_invoice_inventory.roll ,fabric_invoice_inventory.weight, fabric_invoice_inventory.rate, fabric_invoice_inventory.amount  from fabric_invoice_inventory left join color on color.id = fabric_invoice_inventory.color_id left join product on product.id = fabric_invoice_inventory.fabric_id  where vou_id = ${id};`;
+
+                        DBCON.query(GET_COLOR_DETAILS_QUERY, (err, color_details) => {
+                            if (err) {
+                                console.log(err);
+                                callback(err);
+                            } else {
+                                fabric_invoice_details.color_details = color_details;
+
+                                // const GET_ACCESSORIES_QUERY = `select product.product, jobwork_outward_product.qty, unit.unit  from jobwork_outward_product left join product on product.id = jobwork_outward_product.product_id left join unit on unit.id = product.unit_id where vou_id = ${id};`;
+
+                                // DBCON.query(GET_ACCESSORIES_QUERY, (err, accessories) => {
+                                //     if (err) {
+                                //         console.log(err);
+                                //         callback(err);
+                                //     } else {
+                                //         jobwork_outward_details.accessories = accessories;
+
+                                        const GET_COMPANY_DETAILS = `select * from company limit 1`;
+                                        const GET_LEDGER_DETAILS = `select ledger.ledger, ledger.delivery_address, ledger.mobile, ledger.phone, ledger.gstno from fabric_invoice left join ledger on fabric_invoice.ledger_id = ledger.id where fabric_invoice.id = ${id}`;
+                                        DBCON.query(GET_COMPANY_DETAILS, (err, company_details) => {
+                                            if (err) {
+                                                console.log(err);
+                                                callback(err);
+
+                                            } else {
+                                                fabric_invoice_details.company_details = company_details[0];
+                                                DBCON.query(GET_LEDGER_DETAILS, (err, ledger_details) => {
+                                                    if (err) {
+                                                        console.log(err);
+                                                        callback(err);
+                                                    } else {
+                                                        fabric_invoice_details.ledger_details = ledger_details[0];
+                                                        callback(false, fabric_invoice_details);
+                                                    }
+                                                });
+                                            }
+                                        });
+                                    }
+                            //     });
+
+                            // }
+                        })
+                    }
+            //     })
+
+            // }
+        })
+    },
+
 
 
 }

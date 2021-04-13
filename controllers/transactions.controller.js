@@ -1991,6 +1991,35 @@ exports.getNextJobworkOutwardVouNo = function(req, res){
     })
 }
 
+//fabric Inward report
+
+exports.getFabricInwardReport = (req, res) => {
+    const ID = req.query.id;
+    FabricInward.getFabricInwardReport(ID, (err, result) => {
+        if(err)
+        {
+            res.sendError(err);
+        }
+        else{
+            res.sendInfo("", result);
+        }
+    })
+}
+
+//fabric Invoice report
+
+exports.getFabricInvoiceReport = (req, res) => {
+    const ID = req.query.id;
+    FabricInvoice.getFabricInvoiceReport(ID, (err, result) => {
+        if(err)
+        {
+            res.sendError(err);
+        }
+        else{
+            res.sendInfo("", result);
+        }
+    })
+}
 
 
 

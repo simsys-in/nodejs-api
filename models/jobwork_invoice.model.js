@@ -106,9 +106,9 @@ JobworkInvoiceModel.prototype = {
                         if (err) {
                             callback(err)
                         } else {
-                            // body.jobwork_invoice_inventory.map((item, index) => {
-                            for (index = 0; index < body.jobwork_invoice_inventory.length; index++) {
-                                var item = body.jobwork_invoice_inventory[index];
+                            body.jobwork_invoice_inventory.map((item, index) => {
+                            // for (index = 0; index < body.jobwork_invoice_inventory.length; index++) {
+                            //     var item = body.jobwork_invoice_inventory[index];
                                 if (item.selected && issetNotEmpty(item.order_id) && item.order_id !== 0 && issetNotEmpty(item.size_id) && item.size_id !== 0 && issetNotEmpty(item.product_id) && item.product_id !== 0) {
                                     var jobwork_invoice_inventory = {
                                         vou_id: body.id,
@@ -130,8 +130,8 @@ JobworkInvoiceModel.prototype = {
                                         callback(false, result, "Jobwork Invoice Updated Successfully!");
                                     }
                                 }
-                            }
-                            // })
+                            // }
+                            })
                         }
                     })
 
@@ -159,9 +159,9 @@ JobworkInvoiceModel.prototype = {
                     callback(err)
                 } else {
                     // console.log(result);
-                    for (index = 0; index < body.jobwork_invoice_inventory.length; index++) {
-                        var item = body.jobwork_invoice_inventory[index];
-                        // body.jobwork_invoice_inventory.map((item, index) => {
+                    // for (index = 0; index < body.jobwork_invoice_inventory.length; index++) {
+                    //     var item = body.jobwork_invoice_inventory[index];
+                        body.jobwork_invoice_inventory.map((item, index) => {
                         if (item.selected && issetNotEmpty(item.order_id) && item.order_id !== 0 && issetNotEmpty(item.size_id) && item.size_id !== 0 && issetNotEmpty(item.product_id) && item.product_id !== 0) {
                             console.log(item, index)
                             var jobwork_invoice_inventory = {
@@ -185,7 +185,8 @@ JobworkInvoiceModel.prototype = {
                                 callback(false, result, "Jobwork Invoice Updated Successfully!");
                             }
                         }
-                    }
+                    // }
+                })
 
                 }
             })

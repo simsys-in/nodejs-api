@@ -204,8 +204,12 @@ router.get('/getNextGarmentsReceiptNoteVouNo', Controller.getNextGarmentsReceipt
 
 router.get('/getFabricOutwardReport', Controller.getFabricOutwardReport);
 
+//fabric inward report
 
+router.get('/getFabricInwardReport', Controller.getFabricInwardReport);
 
+//fabric invoice report
+router.get('/getFabricInvoiceReport', Controller.getFabricInvoiceReport);
 
 
 

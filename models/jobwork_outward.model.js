@@ -226,7 +226,7 @@ JobworkOutwardModel.prototype = {
                 } else {
                     console.log(result);
                     body.jobwork_outward_inventory.map((item, index) => {
-                        if (item.selected) {
+                        if (item.selected && issetNotEmpty(item.color_id) ) {
                             var jobwork_outward_inventory = {
                                 vou_id: result.insertId,
                                 color_id: item.color_id,
