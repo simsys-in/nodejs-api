@@ -8,7 +8,7 @@ const DBConfig = require('../db_config');
 
 let publicUri = [
   '',
-  '/user/login',
+  '/core/login',
 ];
 
 

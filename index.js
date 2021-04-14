@@ -33,7 +33,20 @@ app.use(expressSession({
 }));
 // app.options('*', cors()) 
 app.use(cors({
-    origin: process.env.FRONT_END_URL,
+    origin: function (origin, callback) {
+        console.log(origin)
+        if(origin && origin.includes("http"))
+        {
+            if (process.env.FRONT_END_URL.indexOf(origin) !== -1) {
+              callback(null, true)
+            } else {
+              callback(new Error('Not allowed by CORS'))
+            }
+        }
+        else{
+            callback(null, true);
+        }
+    },
     optionsSuccessStatus: 200, // For legacy browser support
     methods : "PUT, GET, POST, DELETE"
 }));
@@ -92,29 +105,39 @@ app.use(middlewares.authenticateJWT);
 //       console.log(users[0].c);
 //   })
 
-const user = require('./routes/user.routes');
+// const user = require('./routes/user.routes');
 
-app.use('/user', user);
-
-const masters = require('./routes/masters.routes');
-
-app.use('/masters', masters);
-
-
-const transactions = require('./routes/transactions.routes');
-
-app.use('/transactions', transactions);
+// app.use('/user', user);
 
 
 
-const reports_designer = require('./routes/reports_designer.routes');
+// const payroll_masters = require('./payroll_routes/master.routes');
 
-app.use('/reports_designer', reports_designer);
+// app.use('/payroll', payroll_masters);
+
+const garments_routes = require('./garments/routes')
+app.use('/garments', garments_routes);
+app.use('/core', garments_routes);
+
+// const masters = require('./routes/masters.routes');
+
+// app.use('/masters', masters);
 
 
-const reports_viewer = require('./routes/reports_viewer.routes');
+// const transactions = require('./routes/transactions.routes');
 
-app.use('/reports_viewer', reports_viewer);
+// app.use('/transactions', transactions);
+
+
+
+// const reports_designer = require('./routes/reports_designer.routes');
+
+// app.use('/reports_designer', reports_designer);
+
+
+// const reports_viewer = require('./routes/reports_viewer.routes');
+
+// app.use('/reports_viewer', reports_viewer);
 
 
 var server = app.listen(process.env.PORT || "4000", function () {
