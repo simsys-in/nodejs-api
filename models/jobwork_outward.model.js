@@ -226,7 +226,7 @@ JobworkOutwardModel.prototype = {
                 } else {
                     console.log(result);
                     body.jobwork_outward_inventory.map((item, index) => {
-                        if (item.selected) {
+                        if (item.selected && issetNotEmpty(item.color_id) ) {
                             var jobwork_outward_inventory = {
                                 vou_id: result.insertId,
                                 color_id: item.color_id,
@@ -365,8 +365,8 @@ JobworkOutwardModel.prototype = {
     // })
     // }
 
-    getNextFabricOutwardVouNo : (callback) => {
-        var query = 'select max(ifnull(vouno, 0)) + 1 as max_vou_no from fabric_outward';
+    getNextJobworkOutwardVouNo : (callback) => {
+        var query = 'select max(ifnull(vouno, 0)) + 1 as max_vou_no from jobwork_outward';
 
         DBCON.query(query, (err, result) => {
             if(err){

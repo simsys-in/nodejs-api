@@ -50,9 +50,9 @@ JobworkInvoiceModel.prototype = {
                         callback(err)
                     } else {
                         jobwork_invoice.jobwork_invoice_inventory = result1;
-                       
+
                         callback(false, jobwork_invoice);
-                        
+
 
 
                     }
@@ -62,7 +62,7 @@ JobworkInvoiceModel.prototype = {
 
             }
 
-            
+
         });
     },
     getAll: function (callback) {
@@ -107,6 +107,8 @@ JobworkInvoiceModel.prototype = {
                             callback(err)
                         } else {
                             body.jobwork_invoice_inventory.map((item, index) => {
+                            // for (index = 0; index < body.jobwork_invoice_inventory.length; index++) {
+                            //     var item = body.jobwork_invoice_inventory[index];
                                 if (item.selected && issetNotEmpty(item.order_id) && item.order_id !== 0 && issetNotEmpty(item.size_id) && item.size_id !== 0 && issetNotEmpty(item.product_id) && item.product_id !== 0) {
                                     var jobwork_invoice_inventory = {
                                         vou_id: body.id,
@@ -122,11 +124,13 @@ JobworkInvoiceModel.prototype = {
                                     if (index === body.jobwork_invoice_inventory.length - 1) {
                                         callback(false, result, "Jobwork Invoice  Saved Successfully!");
                                     }
+
                                 } else {
                                     if (index === body.jobwork_invoice_inventory.length - 1) {
                                         callback(false, result, "Jobwork Invoice Updated Successfully!");
                                     }
                                 }
+                            // }
                             })
                         }
                     })
@@ -155,10 +159,9 @@ JobworkInvoiceModel.prototype = {
                     callback(err)
                 } else {
                     // console.log(result);
-                    for(index=0; index < body.jobwork_invoice_inventory.length; index++)
-                    {
-                        var item = body.jobwork_invoice_inventory[index];
-                    // body.jobwork_invoice_inventory.map((item, index) => {
+                    // for (index = 0; index < body.jobwork_invoice_inventory.length; index++) {
+                    //     var item = body.jobwork_invoice_inventory[index];
+                        body.jobwork_invoice_inventory.map((item, index) => {
                         if (item.selected && issetNotEmpty(item.order_id) && item.order_id !== 0 && issetNotEmpty(item.size_id) && item.size_id !== 0 && issetNotEmpty(item.product_id) && item.product_id !== 0) {
                             console.log(item, index)
                             var jobwork_invoice_inventory = {
@@ -182,14 +185,15 @@ JobworkInvoiceModel.prototype = {
                                 callback(false, result, "Jobwork Invoice Updated Successfully!");
                             }
                         }
-                    }
+                    // }
+                })
 
                 }
             })
-              
+
         }
     },
-   
+
     delete: function (id, callback) {
         pool.query(`delete from jobwork_invoice_inventory where vou_id = ?`, id, (err, result) => {
             if (err) {
@@ -198,26 +202,25 @@ JobworkInvoiceModel.prototype = {
                 if (err) {
                     callback(err)
                 } else {
-                        pool.query(`delete from jobwork_invoice where id = ?`, id, (err, result1) => {
-                       
+                    pool.query(`delete from jobwork_invoice where id = ?`, id, (err, result1) => {
+
                         callback(false, result1)
-                        
-                })
+
+                    })
+                }
             }
-        }
-    })
+        })
     },
 
-    getNextJobworkInvoiceVouNo : (callback) => {
+    getNextJobworkInvoiceVouNo: (callback) => {
         var query = 'select max(ifnull(vouno, 0)) + 1 as max_vou_no from jobwork_invoice';
 
         DBCON.query(query, (err, result) => {
-            if(err){
+            if (err) {
                 console.log(err);
                 callback(err)
-            }
-            else{
-                callback(false,result[0]);
+            } else {
+                callback(false, result[0]);
             }
         })
     },
@@ -246,62 +249,62 @@ JobworkInvoiceModel.prototype = {
                 //         // res.sendInfo("", sizes);
                 //         jobwork_invoice_details.color_size_details = sizes;
 
-                        // const GET_COLOR_DETAILS_QUERY = `select color.color, jobwork_invoice_inventory.size1,jobwork_invoice_inventory.size2,jobwork_invoice_inventory.size3,jobwork_invoice_inventory.size4,jobwork_invoice_inventory.size5,jobwork_invoice_inventory.size6,jobwork_invoice_inventory.size7,jobwork_invoice_inventory.size8, jobwork_invoice_inventory.size9, jobwork_invoice_inventory.qty from jobwork_invoice_inventory left join color on color.id = jobwork_invoice_inventory.color_id where vou_id = ${id};`;
+                // const GET_COLOR_DETAILS_QUERY = `select color.color, jobwork_invoice_inventory.size1,jobwork_invoice_inventory.size2,jobwork_invoice_inventory.size3,jobwork_invoice_inventory.size4,jobwork_invoice_inventory.size5,jobwork_invoice_inventory.size6,jobwork_invoice_inventory.size7,jobwork_invoice_inventory.size8, jobwork_invoice_inventory.size9, jobwork_invoice_inventory.qty from jobwork_invoice_inventory left join color on color.id = jobwork_invoice_inventory.color_id where vou_id = ${id};`;
 
-                        // DBCON.query(GET_COLOR_DETAILS_QUERY, (err, color_details) => {
-                        //     if (err) {
-                        //         console.log(err);
-                        //         callback(err);
-                        //     } else {
-                        //         jobwork_invoice_details.color_details = color_details;
+                // DBCON.query(GET_COLOR_DETAILS_QUERY, (err, color_details) => {
+                //     if (err) {
+                //         console.log(err);
+                //         callback(err);
+                //     } else {
+                //         jobwork_invoice_details.color_details = color_details;
 
-                                const GET_INVENTORY_QUERY = `select size.size,jobwork_invoice_inventory.amount,jobwork_invoice_inventory.rate, jobwork_invoice_inventory.qty,product.product from 
+                const GET_INVENTORY_QUERY = `select size.size,jobwork_invoice_inventory.amount,jobwork_invoice_inventory.rate, jobwork_invoice_inventory.qty,product.product from 
                                 jobwork_invoice_inventory left join size on size.id = jobwork_invoice_inventory.size_id left join product on product.id = jobwork_invoice_inventory.product_id where vou_id = ${id};`;
 
-                                DBCON.query(GET_INVENTORY_QUERY, (err, inventory) => {
+                DBCON.query(GET_INVENTORY_QUERY, (err, inventory) => {
+                    if (err) {
+                        console.log(err);
+                        callback(err);
+                    } else {
+                        jobwork_invoice_details.inventory = inventory;
+
+                        //total
+                        const GET_INVENTORYTOTAL_QUERY = `select jobwork_invoice.inventory_amount_total, jobwork_invoice.inventory_qty_total from jobwork_invoice where jobwork_invoice.id = ${id};`;
+
+                        DBCON.query(GET_INVENTORYTOTAL_QUERY, (err, inventorytotal) => {
+                            if (err) {
+                                console.log(err);
+                                callback(err);
+                            } else {
+                                jobwork_invoice_details.inventorytotal = inventorytotal;
+
+                                //total
+
+
+                                const GET_COMPANY_DETAILS = `select * from company limit 1`;
+                                const GET_LEDGER_DETAILS = `select ledger.ledger, ledger.delivery_address, ledger.mobile, ledger.phone, ledger.gstno from jobwork_invoice left join ledger on jobwork_invoice.ledger_id = ledger.id where jobwork_invoice.id = ${id}`;
+                                DBCON.query(GET_COMPANY_DETAILS, (err, company_details) => {
                                     if (err) {
                                         console.log(err);
                                         callback(err);
+
                                     } else {
-                                        jobwork_invoice_details.inventory = inventory;
-
-                                        //total
-                                const GET_INVENTORYTOTAL_QUERY = `select jobwork_invoice.inventory_amount_total, jobwork_invoice.inventory_qty_total from jobwork_invoice where jobwork_invoice.id = ${id};`;
-
-                                DBCON.query(GET_INVENTORYTOTAL_QUERY, (err, inventorytotal) => {
-                                    if (err) {
-                                        console.log(err);
-                                        callback(err);
-                                    } else {
-                                        jobwork_invoice_details.inventorytotal = inventorytotal;
-
-                                        //total
-
-
-                                        const GET_COMPANY_DETAILS = `select * from company limit 1`;
-                                        const GET_LEDGER_DETAILS = `select ledger.ledger, ledger.delivery_address, ledger.mobile, ledger.phone, ledger.gstno from jobwork_invoice left join ledger on jobwork_invoice.ledger_id = ledger.id where jobwork_invoice.id = ${id}`;
-                                        DBCON.query(GET_COMPANY_DETAILS, (err, company_details) => {
+                                        jobwork_invoice_details.company_details = company_details[0];
+                                        DBCON.query(GET_LEDGER_DETAILS, (err, ledger_details) => {
                                             if (err) {
                                                 console.log(err);
                                                 callback(err);
-
                                             } else {
-                                                jobwork_invoice_details.company_details = company_details[0];
-                                                DBCON.query(GET_LEDGER_DETAILS, (err, ledger_details) => {
-                                                    if (err) {
-                                                        console.log(err);
-                                                        callback(err);
-                                                    } else {
-                                                        jobwork_invoice_details.ledger_details = ledger_details[0];
-                                                        callback(false, jobwork_invoice_details);
-                                                    }
-                                                });
+                                                jobwork_invoice_details.ledger_details = ledger_details[0];
+                                                callback(false, jobwork_invoice_details);
                                             }
                                         });
                                     }
                                 });
-
                             }
+                        });
+
+                    }
                     //     })
                     // }
                 })

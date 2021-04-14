@@ -17,7 +17,7 @@ Jobwork_InwardModel.prototype = {
         let sql = `SELECT * FROM jobwork_inward WHERE id = ?`;
         console.log(sql);
 
-        let sql1 = `SELECT * FROM  jobwork_inward_inventory where jobwork_inward_inventory.vou_id = ?`;
+        let sql1 = `SELECT * ,1 as selected FROM  jobwork_inward_inventory where jobwork_inward_inventory.vou_id = ?`;
 
         pool.query(sql, match, function (err, result) {
             if (err){ 
