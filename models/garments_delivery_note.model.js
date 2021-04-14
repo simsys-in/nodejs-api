@@ -50,6 +50,7 @@ GarmentsDeliveryNoteModel.prototype = {
                     to_process_id: result[0].to_process_id,
                     marketing_user_id: result[0].marketing_user_id,
                     order_no: result[0].order_no,
+                    vehicle_no : result[0].vehicle_no,
                     vouno: result[0].vouno,
                     garments_delivery_note_inventory: [],
                 
@@ -118,6 +119,7 @@ GarmentsDeliveryNoteModel.prototype = {
                     to_process_id: body.to_process_id,
                     marketing_user_id: body.marketing_user_id,
                     order_no: body.order_no,
+                    vehicle_no : body.vehicle_no,
                     vouno: body.vouno, 
             
             }
@@ -186,6 +188,8 @@ GarmentsDeliveryNoteModel.prototype = {
                     to_process_id: body.to_process_id,
                     marketing_user_id: body.marketing_user_id,
                     order_no: body.order_no,
+                    vehicle_no : body.vehicle_no,
+
                     vouno: body.vouno,
             }
             DBCON.query(`insert into ${TABLE_NAME} set ?`, garments_delivery_note, (err, result) => {

@@ -46,6 +46,7 @@ JobworkOutwardModel.prototype = {
                     size7_total: result[0].size7_total,
                     size8_total: result[0].size8_total,
                     size9_total: result[0].size9_total,
+                    vehicle_no : result[0].vehicle_no,
                     order_id: result[0].order_id,
                     from_process_id: result[0].from_process_id,
                     to_process_id: result[0].to_process_id,
@@ -117,6 +118,7 @@ JobworkOutwardModel.prototype = {
                 size7_total: body.size7_total,
                 size8_total: body.size8_total,
                 size9_total: body.size9_total,
+                vehicle_no : body.vehicle_no,
                 order_id: body.order_id,
                 from_process_id: body.from_process_id,
                 to_process_id: body.to_process_id,
@@ -213,6 +215,8 @@ JobworkOutwardModel.prototype = {
                 size7_total: body.size7_total,
                 size8_total: body.size8_total,
                 size9_total: body.size9_total,
+                vehicle_no : body.vehicle_no,
+
                 order_id: body.order_id,
                 from_process_id: body.from_process_id,
                 to_process_id: body.to_process_id,
@@ -291,7 +295,7 @@ JobworkOutwardModel.prototype = {
     },
     getJobworkOutwardReport: (id, callback) => {
         var jobwork_outward_details = {};
-        const QUERY = `select jobwork_outward.id, 'Test' as dcno, jobwork_outward.vou_date, process.process, product.hsnsac, order_program.order_no, order_program.id as order_id, 'Vehicle No' as vehicle_no, product.product from jobwork_outward left join order_program on order_program.id = jobwork_outward.order_id left join product on product.id = order_program.style_id left join process on process.id = jobwork_outward.to_process_id where jobwork_outward.id = ${id};`;
+        const QUERY = `select jobwork_outward.id, 'Test' as dcno, jobwork_outward.vou_date, process.process, product.hsnsac, order_program.order_no, order_program.id as order_id, jobwork_outward.vehicle_no, product.product from jobwork_outward left join order_program on order_program.id = jobwork_outward.order_id left join product on product.id = order_program.style_id left join process on process.id = jobwork_outward.to_process_id where jobwork_outward.id = ${id};`;
 
         DBCON.query(QUERY, (err, result) => {
             if (err) {

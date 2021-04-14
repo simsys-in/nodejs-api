@@ -258,8 +258,7 @@ JobworkInvoiceModel.prototype = {
                 //     } else {
                 //         jobwork_invoice_details.color_details = color_details;
 
-                const GET_INVENTORY_QUERY = `select size.size,jobwork_invoice_inventory.amount,jobwork_invoice_inventory.rate, jobwork_invoice_inventory.qty,product.product from 
-                                jobwork_invoice_inventory left join size on size.id = jobwork_invoice_inventory.size_id left join product on product.id = jobwork_invoice_inventory.product_id where vou_id = ${id};`;
+                const GET_INVENTORY_QUERY = `select size.size,jobwork_invoice_inventory.amount,jobwork_invoice_inventory.rate, jobwork_invoice_inventory.qty,product.product,order_program.order_no from jobwork_invoice_inventory left join size on size.id = jobwork_invoice_inventory.size_id left join product on product.id = jobwork_invoice_inventory.product_id left join order_program on order_program.id = jobwork_invoice_inventory.order_id where vou_id = ${id};`;
 
                 DBCON.query(GET_INVENTORY_QUERY, (err, inventory) => {
                     if (err) {
