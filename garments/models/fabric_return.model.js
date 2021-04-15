@@ -5,6 +5,7 @@ const {
 } = require('../../helpers/common');
 
 const moment = require('moment');
+const { getDBDate } = require('../../helpers/timer')
 
 function FabricReturnModel() {};
 
@@ -85,7 +86,7 @@ FabricReturnModel.prototype = {
            
             var fabric_return ={
                 ledger_id : body.ledger_id,
-                vou_date: body.vou_date,
+                vou_date: getDBDate(body.vou_date),
                 vouno: body.vouno,
                 order_id : body.order_id,
                 narration : body.narration,
@@ -132,7 +133,7 @@ FabricReturnModel.prototype = {
            
                             var fabric_return ={
                                 ledger_id : body.ledger_id,
-                                vou_date: body.vou_date,
+                                vou_date: getDBDate(body.vou_date),
                                 vouno: body.vouno,
                                 order_id : body.order_id,
                                 narration : body.narration,

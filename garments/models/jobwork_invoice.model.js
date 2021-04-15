@@ -5,6 +5,7 @@ const {
 } = require('../../helpers/common');
 
 const moment = require('moment');
+const { getDBDate } = require('../../helpers/timer')
 
 function JobworkInvoiceModel() {};
 
@@ -86,7 +87,7 @@ JobworkInvoiceModel.prototype = {
             var jobwork_invoice = {
                 ledger_id: body.ledger_id,
                 process_id: body.process_id,
-                vou_date: body.vou_date,
+                vou_date: getDBDate(body.vou_date),
                 narration: body.narration,
                 inventory_qty_total: body.inventory_qty_total,
                 inventory_amount_total: body.inventory_amount_total,
@@ -142,7 +143,7 @@ JobworkInvoiceModel.prototype = {
             var jobwork_invoice = {
                 ledger_id: body.ledger_id,
                 process_id: body.process_id,
-                vou_date: body.vou_date,
+                vou_date: getDBDate(body.vou_date),
                 narration: body.narration,
                 inventory_qty_total: body.inventory_qty_total,
                 inventory_amount_total: body.inventory_amount_total,

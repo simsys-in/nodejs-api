@@ -5,6 +5,7 @@ const {
 } = require('../../helpers/common');
 
 const moment = require('moment');
+const { getDBDate } = require('../../helpers/timer')
 const e = require('express');
 
 function GarmentsInvoiceModel() {};
@@ -105,7 +106,7 @@ GarmentsInvoiceModel.prototype = {
 
             var garments_invoice= {
                 ledger_id: body.ledger_id,
-                vou_date: body.vou_date,
+                vou_date: getDBDate(body.vou_date),
                 narration: body.narration,
                 inventory_qty_total: body.inventory_qty_total,
                 size1_qty_total: body.size1_qty_total,
@@ -192,7 +193,7 @@ GarmentsInvoiceModel.prototype = {
 
             var garments_invoice= {
                 ledger_id: body.ledger_id,
-                vou_date: body.vou_date,
+                vou_date: getDBDate(body.vou_date),
                 narration: body.narration,
                 inventory_qty_total: body.inventory_qty_total,
                 size1_qty_total: body.size1_qty_total,

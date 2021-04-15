@@ -3,6 +3,8 @@ const DBCON = require('../../db_config');
 const {
     issetNotEmpty
 } = require('../../helpers/common');
+const moment = require('moment');
+const { getDBDate } = require('../../helpers/timer')
 
 function Yarn_OutwardModel() {};
 
@@ -82,7 +84,7 @@ Yarn_OutwardModel.prototype = {
         if (issetNotEmpty(body.id)) {
             var yarn_outward = {
                 ledger_id : body.ledger_id,
-                vou_date : body.vou_date,
+                vou_date : getDBDate(body.vou_date),
                 order_id : body.order_id,
                 narration : body.narration,
                 inventory_qty_kg_total : body.inventory_qty_kg_total,
@@ -140,7 +142,7 @@ Yarn_OutwardModel.prototype = {
             //         } else {
                         var yarn_outward = {
                             ledger_id : body.ledger_id,
-                            vou_date : body.vou_date,
+                            vou_date : getDBDate(body.vou_date),
                             order_id : body.order_id,
                             narration : body.narration,
                             inventory_qty_kg_total : body.inventory_qty_kg_total,

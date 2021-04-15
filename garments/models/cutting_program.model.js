@@ -3,6 +3,8 @@ const DBCON = require('../../db_config');
 const {
     issetNotEmpty
 } = require('../../helpers/common');
+const moment = require('moment');
+const { getDBDate } = require('../../helpers/timer')
 
 function CuttingProgramModel() {};
 
@@ -94,7 +96,7 @@ CuttingProgramModel.prototype = {
         if (issetNotEmpty(body.id)) {
             
             var cutting_program = {
-                vou_date : body.voudate,
+                vou_date : getDBDate(body.voudate),
                 narration : body.narration ? body.narration : "",
                 inventory_qty_total : body.total_fabric_qty ? body.total_fabric_qty : 0,
                 inventory_amount_total : body.total_amount ? body.total_amount : 0,
@@ -184,7 +186,7 @@ CuttingProgramModel.prototype = {
             })
         } else {
             var cutting_program = {
-                vou_date : body.voudate,
+                vou_date : getDBDate(body.voudate),
                 narration : body.narration ? body.narration : "",
                 inventory_qty_total : body.total_fabric_qty ? body.total_fabric_qty : 0,
                 inventory_amount_total : body.total_amount ? body.total_amount : 0,
