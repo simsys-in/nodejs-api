@@ -76,6 +76,8 @@ router.put('/product', MasterController.saveProduct);
 router.get('/product', MasterController.getProduct);
 router.delete('/product', MasterController.deleteProduct);
 router.get('/getProductGroupSB', MasterController.getAllProductGroupSB);
+router.get('/getAllProductAccessoriesSB', MasterController.getAllProductAccessoriesSB);
+
 router.get('/getUnitForProductID', MasterController.getUnitForProductID)
 //process
 router.put('/process', MasterController.saveProcess);
@@ -332,8 +334,12 @@ router.get('/getProductAndSizeSBForOrderID', TransactionsController.getProductAn
 ////////////////////// Kowsalya Workspace/////////////////
 ////////////////////// Kowsalya Workspace/////////////////
 
+//product_details
 
-
+router.get('/getSizeDetails', MasterController.getSizeDetails);
+router.put('/productDetails', MasterController.saveProductDetails);
+router.get('/productDetails', MasterController.getProductDetails);
+router.delete('/productDetails', MasterController.deleteProductDetails);
 
 
 
