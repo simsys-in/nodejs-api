@@ -2051,6 +2051,41 @@ exports.getSizeDetails = function (req, res) {
     })
 }
 
+exports.getPrefilledProductDetails = (req,res) => {
+    var product_id = req.query.product_id;
+    DBCON.query(`select * from product_details where product_id=?`, product_id,(err, result) => {
+        if(err)
+        {
+            res.sendError(err);
+        }
+        else{
+            var resData = result.length ? result[0] :  {
+                product_id : product_id,
+                size_id : null,
+                size1_total : '',
+                size2_total : '',
+                size3_total : '',
+                size4_total : '',
+                size5_total : '',
+                size6_total : '',
+                size7_total : '',
+                size8_total : '',
+                size9_total : '',
+                size1_rate : '',
+                size2_rate : '',
+                size3_rate : '',
+                size4_rate : '',
+                size5_rate : '',
+                size6_rate : '',
+                size7_rate : '',
+                size8_rate : '',
+                size9_rate : '',
+            }
+            resData.size_details = [];
+            res.sendInfo("", resData);
+        }
+    })
+}
 
 //Product_details
 exports.saveProductDetails = function (req, res) {
@@ -2068,9 +2103,9 @@ exports.saveProductDetails = function (req, res) {
 
 
 exports.getProductDetails = function (req, res) {
-    var ID = req.query.id;
-    if (issetNotEmpty(ID)) {
-        ProductDetails.find(Number(ID), function (err, data) {
+    var id = req.query.id;
+    if (issetNotEmpty(id)) {
+        ProductDetails.find(Number(id), function (err, data) {
             if (err) {
                 console.log(err);
                 res.sendError(err)
@@ -2111,11 +2146,6 @@ exports.deleteProductDetails = function (req, res) {
     }
 
 }
-
-
-
-
-
 
 
 
@@ -2183,3 +2213,4 @@ exports.getAccountsLedger = (req, res) => {
 ////////////////////// Hariprakash Workspace/////////////////
 ////////////////////// Hariprakash Workspace/////////////////
 ////////////////////// Hariprakash Workspace/////////////////
+////////////////////// HariPrakash Workspace/////////////////

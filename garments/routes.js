@@ -340,6 +340,7 @@ router.get('/getSizeDetails', MasterController.getSizeDetails);
 router.put('/productDetails', MasterController.saveProductDetails);
 router.get('/productDetails', MasterController.getProductDetails);
 router.delete('/productDetails', MasterController.deleteProductDetails);
+router.get('/getPrefilledProductDetails', MasterController.getPrefilledProductDetails);
 
 
 
