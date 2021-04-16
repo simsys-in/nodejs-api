@@ -298,6 +298,16 @@ router.get('/getProductAndSizeSBForOrderID', TransactionsController.getProductAn
 ////////////////////// Boopathi Workspace/////////////////
 ////////////////////// Boopathi Workspace/////////////////
 ////////////////////// Boopathi Workspace/////////////////
+//dyeing porgram
+router.put('/DyeingProgram', TransactionsController.saveDyeingProgram);
+router.get('/DyeingProgram', TransactionsController.getDyeingProgram);
+router.delete('/DyeingProgram', TransactionsController.deleteDyeingProgram);
+//report
+router.get('/getDyeingProgramReport', TransactionsController.getFabricInwardReport);
+//vouno dyeing Porgram
+router.get('/getNextDyeingProgramVouNo', TransactionsController.getNextDyeingProgramVouNo);
+
+router.get('/getFabricsForOrderID', MasterController.getFabricsForOrderID);
 
 
 

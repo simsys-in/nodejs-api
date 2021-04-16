@@ -1654,6 +1654,94 @@ exports.getYarnOutwardReport = (req, res) => {
     })
 }
 
+const DyeingProgramModel = require('../models/dyeing_program.model');
+const DyeingProgram = new DyeingProgramModel();
+
+exports.saveDyeingProgram = function (req, res) {
+    const body = req.body;
+    body.id = req.query.id;
+    DyeingProgram.checkAndSaveOrUpdate(body, (err, result, msg) => {
+        if (err) {
+            console.log(err);
+            res.sendError(err);
+        } else {
+            res.sendSuccess(msg, result)
+        }
+    })
+}
+
+exports.getNextDyeingProgramVouNo = function(req, res){
+    DyeingProgram.getNextDyeingProgramVouNo((err, result) => {
+        if(err)
+        {
+            res.sendError(err);
+        }
+        else{
+            res.sendInfo("", result)
+        }
+    })
+}
+
+exports.getDyeingProgram = function (req, res) {
+    var ID = req.query.id;
+    if (issetNotEmpty(ID)) {
+        DyeingProgram.find(Number(ID), function (err, data) {
+            if (err) {
+                console.log(err);
+                res.sendError(err)
+            } else {
+                res.sendInfo("", data);
+            }
+        })
+    } else {
+        DyeingProgram.getAll((err, data) => {
+            if (err) {
+                console.log(err)
+                res.sendError(err)
+            } else {
+                res.sendSuccess("", data)
+            }
+        })
+    }
+}
+
+
+exports.deleteDyeingProgram = function (req, res) {
+    const id = req.query.id;
+    console.log("ID : " + id);
+
+    if (issetNotEmpty(id)) {
+        DyeingProgram.delete(Number(id), function (err, data) {
+            if (err) {
+                console.log(err);
+                res.sendError(err)
+            } else {
+                res.sendInfo("Dyeing  Deleted Successfully!");
+            }
+        })
+    } else {
+        res.sendWarning("Dyeing Program Not Found! ")
+    }
+
+}
+
+exports.getDyeingProgramReport = (req, res) => {
+    const ID = req.query.id;
+    DyeingProgram.getDyeingProgramReport(ID, (err, result) => {
+        if(err)
+        {
+            res.sendError(err);
+        }
+        else{
+            res.sendInfo("", result);
+        }
+    })
+}
+
+
+
+
+
 
 
 
