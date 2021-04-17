@@ -1983,6 +1983,24 @@ exports.getLedgerForOrderID = function(req,res){
 
 }
 
+exports.getFabricsForOrderID = function (req, res) {
+    const body = req.body;
+    const USER = req.user;
+    body.company = USER.company
+    const status = body.status ? body.status : 'active';
+    var order_id = req.query.order_id ? req.query.order_id : null;
+    DBCON.query(`select cutting_program_inventory.gsm, cutting_program_inventory. dia, cutting_program_inventory.fabric_id, cutting_program_inventory.color_id, cutting_program_inventory.fabric_qty  from cutting_program_inventory left join cutting_program on cutting_program.id = cutting_program_inventory.vou_id where order_id = ${order_id}; `, function (err, data) {
+        if (err) {
+            console.log(err)
+            res.sendError(err)
+        } else {
+          
+                res.sendInfo("", data)
+            }
+        
+    })
+}
+
 
 
 

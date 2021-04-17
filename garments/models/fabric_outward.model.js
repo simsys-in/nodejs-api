@@ -5,6 +5,7 @@ const {
 } = require('../../helpers/common');
 
 const moment = require('moment');
+const { getDBDate } = require('../../helpers/timer')
 
 function FabricOutwardModel() {};
 
@@ -89,7 +90,7 @@ FabricOutwardModel.prototype = {
            
             var fabric_outward ={
                 ledger_id : body.ledger_id,
-                vou_date: body.vou_date,
+                vou_date: getDBDate(body.vou_date),
                 order_id : body.order_id,
                 narration : body.narration,
                 inventory_roll_total : body.inventory_roll_total,
@@ -140,7 +141,7 @@ FabricOutwardModel.prototype = {
            
                             var fabric_outward ={
                                 ledger_id : body.ledger_id,
-                                vou_date: body.vou_date,
+                                vou_date: getDBDate(body.vou_date),
                                 order_id : body.order_id,
                                 narration : body.narration,
                                 inventory_roll_total : body.inventory_roll_total,

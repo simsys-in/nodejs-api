@@ -5,6 +5,7 @@ const {
 } = require('../../helpers/common');
 
 const moment = require('moment');
+const { getDBDate } = require('../../helpers/timer')
 const e = require('express');
 
 function JobworkOutwardModel() {};
@@ -105,7 +106,7 @@ JobworkOutwardModel.prototype = {
         if (issetNotEmpty(body.id)) {
             var jobwork_outward = {
                 ledger_id: body.ledger_id,
-                vou_date: body.vou_date,
+                vou_date: getDBDate(body.vou_date),
                 vouno : body.vouno,
                 narration: body.narration,
                 inventory_qty_total: body.inventory_qty_total,
@@ -202,7 +203,7 @@ JobworkOutwardModel.prototype = {
             //         } else {
             var jobwork_outward = {
                 ledger_id: body.ledger_id,
-                vou_date: body.vou_date,
+                vou_date: getDBDate(body.vou_date),
                 vouno :body.vouno,
                 narration: body.narration,
                 inventory_qty_total: body.inventory_qty_total,

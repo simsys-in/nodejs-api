@@ -3,6 +3,8 @@ const DBCON = require('../../db_config');
 const {
     issetNotEmpty
 } = require('../../helpers/common');
+const moment = require('moment');
+const { getDBDate } = require('../../helpers/timer')
 
 function Jobwork_InwardModel() {};
 
@@ -88,7 +90,7 @@ Jobwork_InwardModel.prototype = {
         if (issetNotEmpty(body.id)) {
             var jobwork_inward = {
                 ledger_id : body.ledger_id,
-                    vou_date : body.vou_date,
+                vou_date: getDBDate(body.vou_date),
                     narration : body.narration,
                     inventory_qty_total : body.inventory_qty_total,
                     size1_total : body.size1_total,
@@ -155,7 +157,7 @@ Jobwork_InwardModel.prototype = {
            
                         var jobwork_inward = {
                             ledger_id : body.ledger_id,
-                            vou_date : body.vou_date,
+                            vou_date: getDBDate(body.vou_date),
                             narration : body.narration,
                             inventory_qty_total : body.inventory_qty_total,
                             size1_total : body.size1_total,
