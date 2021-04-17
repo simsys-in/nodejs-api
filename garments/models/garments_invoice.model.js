@@ -94,7 +94,7 @@ GarmentsInvoiceModel.prototype = {
         });
     },
     getAll: function (callback) {
-        DBCON.query(`select garments_invoice.id,garments_invoice.inventory_qty_total,  garments_invoice.vouno,DATE_FORMAT(garments_invoice.vou_date, '%d-%m-%Y') as vou_date, ledger.ledger from ${TABLE_NAME} left join ledger on ledger.id=garments_invoice.ledger_id  order by garments_invoice.id desc`, function (err, result) {
+        DBCON.query(`select garments_invoice.id,garments_invoice.inventory_qty_total,garments_invoice.vouno, DATE_FORMAT(garments_invoice.vou_date, '%d-%m-%Y') as vou_date, ledger.ledger from ${TABLE_NAME} left join ledger on ledger.id=garments_invoice.ledger_id  order by garments_invoice.id desc`, function (err, result) {
 
             if (err) {
                 callback(err)

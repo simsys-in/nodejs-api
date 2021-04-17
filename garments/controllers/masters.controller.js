@@ -16,6 +16,8 @@ const ColorModel = require('../models/color_mas.model');
 const Color = new ColorModel();
 const MasterGroupModel = require('../models/master_group_mas.model');
 const MasterGroup = new MasterGroupModel();
+const ProductDetailsModel = require('../models/product_details.model');
+const ProductDetails = new ProductDetailsModel();
 
 
 
@@ -768,12 +770,28 @@ exports.getAllLedger_CategorySB = function (req, res) {
 
 
 
-exports.getAllProductSB = function (req, res) {
+exports.getAllProductAccessoriesSB = function (req, res) {
     const body = req.body;
     const USER = req.user;
     body.company = USER.company
     const status = body.status ? body.status : 'active'
     DBCON.query('select product.id as value, product.product as name from product left join product_category on product.product_category_id = product_category.id where product_category="Accessories"',function (err, data) {
+        if (err) {
+            console.log(err)
+            res.sendError(err)
+        } else {
+            res.sendInfo("", data)
+        }
+    })
+}
+
+
+exports.getAllProductSB = function (req, res) {
+    const body = req.body;
+    const USER = req.user;
+    body.company = USER.company
+    const status = body.status ? body.status : 'active'
+    DBCON.query('select id as value , product as name from product',function (err, data) {
         if (err) {
             console.log(err)
             res.sendError(err)
@@ -2032,8 +2050,120 @@ exports.getFabricsForOrderID = function (req, res) {
 ////////////////////// Kowsalya Workspace/////////////////
 ////////////////////// Kowsalya Workspace/////////////////
 
+exports.getSizeDetails = function (req, res) {
+    const body = req.body;
+    const USER = req.user;
+    const size_id = req.query.size_id
+    body.company = USER.company
+    const status = body.status ? body.status : 'active';
+    DBCON.query('select concat(size.size1, ",", size.size2, ",",size.size3, ",",size.size4, ",",size.size5, ",",size.size6, ",",size.size7, ",",size.size8, ",",size.size9) as sizes from size where id = ?',size_id, function (err, data) {
+        if (err) {
+            console.log(err)
+            res.sendError(err)
+        } else {
+            var sizes = data.length > 0 ? data[0].sizes !== null ? data[0].sizes : "" : "";
+            console.log(sizes);
+            sizes = sizes.split(",");
+            res.sendInfo("", sizes);
+        }
+    })
+}
+
+exports.getPrefilledProductDetails = (req,res) => {
+    var product_id = req.query.product_id;
+    DBCON.query(`select * from product_details where product_id=?`, product_id,(err, result) => {
+        if(err)
+        {
+            res.sendError(err);
+        }
+        else{
+            var resData = result.length ? result[0] :  {
+                product_id : product_id,
+                size_id : null,
+                size1_total : '',
+                size2_total : '',
+                size3_total : '',
+                size4_total : '',
+                size5_total : '',
+                size6_total : '',
+                size7_total : '',
+                size8_total : '',
+                size9_total : '',
+                size1_rate : '',
+                size2_rate : '',
+                size3_rate : '',
+                size4_rate : '',
+                size5_rate : '',
+                size6_rate : '',
+                size7_rate : '',
+                size8_rate : '',
+                size9_rate : '',
+            }
+            resData.size_details = [];
+            res.sendInfo("", resData);
+        }
+    })
+}
+
+//Product_details
+exports.saveProductDetails = function (req, res) {
+    const body = req.body;
+    body.id = req.query.id;
+    ProductDetails.checkAndSaveOrUpdate(body, (err, result, msg) => {
+        if (err) {
+            console.log(err);
+            res.sendError(err);
+        } else {
+            res.sendSuccess(msg, result)
+        }
+    })
+}
 
 
+exports.getProductDetails = function (req, res) {
+    var id = req.query.id;
+    if (issetNotEmpty(id)) {
+        ProductDetails.find(Number(id), function (err, data) {
+            if (err) {
+                console.log(err);
+                res.sendError(err)
+            } else {
+                res.sendInfo("", data);
+            }
+        })
+    } else {
+        ProductDetails.getAll((err, data) => {
+            if (err) {
+                console.log(err)
+                res.sendError(err)
+            } else {
+                res.sendSuccess("", data)
+            }
+        })
+    }
+}
+
+
+
+
+exports.deleteProductDetails = function (req, res) {
+    const id = req.query.id;
+    console.log("ID : " + id);
+
+    if (issetNotEmpty(id)) {
+        ProductDetails.delete(Number(id), function (err, data) {
+            if (err) {
+                console.log(err);
+                res.sendError(err)
+            } else {
+                res.sendInfo("Product Details Deleted Successfully!");
+            }
+        })
+    } else {
+        res.sendWarning("Product Details Not Found! ")
+    }
+
+}
 
 
 
@@ -2101,3 +2231,4 @@ exports.getAccountsLedger = (req, res) => {
 ////////////////////// Hariprakash Workspace/////////////////
 ////////////////////// Hariprakash Workspace/////////////////
 ////////////////////// Hariprakash Workspace/////////////////
+////////////////////// HariPrakash Workspace/////////////////

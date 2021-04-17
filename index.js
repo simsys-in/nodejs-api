@@ -34,7 +34,7 @@ app.use(expressSession({
 // app.options('*', cors()) 
 app.use(cors({
     origin: function (origin, callback) {
-        console.log(origin)
+        // console.log(origin)
         if(origin && origin.includes("http"))
         {
             if (process.env.FRONT_END_URL.indexOf(origin) !== -1) {
