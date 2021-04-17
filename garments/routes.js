@@ -1,3 +1,4 @@
+const { Router } = require("express");
 const express = require("express");
 const router = express.Router();
 
@@ -366,7 +367,7 @@ router.get('/getProductAndSizeSBForOrderID', TransactionsController.getProductAn
 ////////////////////// Hariprakash Workspace/////////////////
 
 
-
+router.get('/getGarmentsInvoicePrint', TransactionsController.getGarmentsInvoicePrint);
 
 
 

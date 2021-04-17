@@ -53,6 +53,7 @@ const GarmentsDeliveryNote = new GarmentsDeliveryNoteModel();
 
 //garments receipt note
 const GarmentsReceiptNoteModel = require('../models/garments_receipt_note.model');
+const { result } = require('lodash');
 const GarmentsReceiptNote = new GarmentsReceiptNoteModel();
 
 
@@ -2094,7 +2095,41 @@ exports.getOrdersForLedgerAndProcess = (req, res) => {
 
 
 
+exports.getSizeForProduct = (req, res) => {
+    const PRODUCT_ID = req.query.product_id;
+    if(issetNotEmpty(PRODUCT_ID))
+    {
+        DBCON.query(`select concat(size.size1, ",", size.size2, ",",size.size3, ",",size.size4, ",",size.size5, ",",size.size6, ",",size.size7, ",",size.size8, ",",size.size9) as sizes from product_details left join size on size.id = product_details.size_id where product_details.product_id = ${PRODUCT_ID}`, (err, result ) => {
+            if(err)
+            {
+                res.sendError(err);
+            }
+            else{
+                var sizes = result.length > 0 ? result[0].sizes !== null ? result[0].sizes : "" : "";
+                console.log(sizes);
+                sizes = sizes.split(",");
+                res.sendInfo("", sizes);
+            }
+        })
+    }
+    else{
+        res.sendError("Product not found!")
+    }
+}
 
+
+exports.getGarmentsInvoicePrint = (req, res) => {
+    GarmentsInvoice.getGarmentsInvoicePrint(req.query.id, (err, result) => {
+        if(err)
+        {
+            console.log(err);
+            res.sendError(err);
+        }
+        else{
+            res.sendInfo("", result);
+        }
+    })
+}
 
 
 
