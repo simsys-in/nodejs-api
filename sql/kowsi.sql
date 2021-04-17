@@ -2,3 +2,5 @@ ALTER TABLE `product_details` ADD `size1_rate` FLOAT(10,3) NOT NULL AFTER `size9
 
 
 ALTER TABLE `product_details` ADD `id` INT(255) NOT NULL AUTO_INCREMENT FIRST, ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `knitting_program` ADD `vouno` VARCHAR(255) NOT NULL AFTER `order_id`;

@@ -53,9 +53,11 @@ const GarmentsDeliveryNote = new GarmentsDeliveryNoteModel();
 
 //garments receipt note
 const GarmentsReceiptNoteModel = require('../models/garments_receipt_note.model');
-const { result } = require('lodash');
 const GarmentsReceiptNote = new GarmentsReceiptNoteModel();
 
+//knitting program
+const KnittingProgramModel = require('../models/knitting_program.model');
+const KnittingProgram = new KnittingProgramModel();
 
 
 //orderProgram
@@ -158,20 +160,6 @@ exports.getColorSB = function (req, res) {
     })
 }
 
-exports.getOrderSB = function (req, res) {
-    const body = req.body;
-    const USER = req.user;
-    body.company = USER.company
-    const status = body.status ? body.status : 'active'
-    DBCON.query('select id as value,order_no as name from order_program ', function (err, data) {
-        if (err) {
-            console.log(err)
-            res.sendError(err)
-        } else {
-            res.sendInfo("", data)
-        }
-    })
-}
 
 exports.getLedgerNameSB = function (req, res) {
     const body = req.body;
@@ -2133,6 +2121,96 @@ exports.getFabricInvoiceReport = (req, res) => {
         }
     })
 }
+
+//knitting program
+
+
+exports.saveKnittingProgram = function (req, res) {
+    const body = req.body;
+    body.id = req.query.id;
+    KnittingProgram.checkAndSaveOrUpdate(body, (err, result, msg) => {
+        if (err) {
+            console.log(err);
+            res.sendError(err);
+        } else {
+            res.sendSuccess(msg, result)
+        }
+    })
+}
+
+
+exports.getKnittingProgram = function (req, res) {
+    var ID = req.query.id;
+    if (issetNotEmpty(ID)) {
+        KnittingProgram.find(Number(ID), function (err, data) {
+            if (err) {
+                console.log(err);
+                res.sendError(err)
+            } else {
+                res.sendInfo("", data);
+            }
+        })
+    } else {
+        KnittingProgram.getAll((err, data) => {
+            if (err) {
+                console.log(err)
+                res.sendError(err)
+            } else {
+                res.sendSuccess("", data)
+            }
+        })
+    }
+}
+
+
+
+exports.deleteKnittingProgram = function (req, res) {
+    const id = req.query.id;
+    console.log("ID : " + id);
+
+    if (issetNotEmpty(id)) {
+        KnittingProgram.delete(Number(id), function (err, data) {
+            if (err) {
+                console.log(err);
+                res.sendError(err)
+            } else {
+                res.sendInfo("Knitting Program Deleted Successfully!");
+            }
+        })
+    } else {
+        res.sendWarning("Knitting Program Not Found! ")
+    }
+
+}
+
+exports.getNextKnittingProgramVouNo = function(req, res){
+    KnittingProgram.getNextKnittingProgramVouNo((err, result) => {
+        if(err)
+        {
+            res.sendError(err);
+        }
+        else{
+            res.sendInfo("", result)
+        }
+    })
+}
+
+exports.getYarnSB = function (req, res) {
+    const body = req.body;
+    const USER = req.user;
+    body.company = USER.company
+    const status = body.status ? body.status : 'active';
+    DBCON.query('select product.id as value, product.product as name from product left join product_category on product.product_category_id = product_category.id where product_category="YARN" ', function (err, data) {
+        if (err) {
+            console.log(err)
+            res.sendError(err)
+        } else {
+            res.sendInfo("", data)
+        }
+    })
+}
+
+
 
 
 

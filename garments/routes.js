@@ -355,7 +355,13 @@ router.get('/getPrefilledProductDetails', MasterController.getPrefilledProductDe
 router.get('/getSizeForProductID', MasterController.getSizeForProductID)
 
 
+//knitting_program
 
+router.put('/knittingProgram', TransactionsController.saveKnittingProgram);
+router.get('/knittingProgram', TransactionsController.getKnittingProgram);
+router.delete('/knittingProgram', TransactionsController.deleteKnittingProgram);
+router.get('/getNextKnittingProgramVouNo',TransactionsController.getNextKnittingProgramVouNo )
+router.get('/getYarnSB', TransactionsController.getYarnSB);
 
 
 
