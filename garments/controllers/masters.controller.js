@@ -2164,6 +2164,27 @@ exports.deleteProductDetails = function (req, res) {
 }
 
 
+exports.getSizeForProductID = function(req,res){
+    const body = req.body;
+    const USER = req.user;
+    body.company = USER.company
+    const status = body.status ? body.status : 'active';
+    var product_id = req.query.product_id ? req.query.product_id : null;
+    DBCON.query(`select concat(size.size1, ",", size.size2, ",",size.size3, ",",size.size4, ",",size.size5, ",",size.size6, ",",size.size7, ",",size.size8, ",",size.size9) as sizes from product_details left join size on size.id = product_details.size_id where product_id = ${product_id}`, (err, data) => {
+        if(err)
+        {
+            console.log(err);
+            res.sendError(err);
+        }
+        else{
+            var sizes = data.length > 0 ? data[0].sizes !== null ? data[0].sizes : "" : "";
+            console.log(sizes);
+            sizes = sizes.split(",");
+            res.sendInfo("", sizes);
+        }
+    })
+
+}
 
 
 

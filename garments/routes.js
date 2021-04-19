@@ -352,9 +352,16 @@ router.put('/productDetails', MasterController.saveProductDetails);
 router.get('/productDetails', MasterController.getProductDetails);
 router.delete('/productDetails', MasterController.deleteProductDetails);
 router.get('/getPrefilledProductDetails', MasterController.getPrefilledProductDetails);
+router.get('/getSizeForProductID', MasterController.getSizeForProductID)
 
 
+//knitting_program
 
+router.put('/knittingProgram', TransactionsController.saveKnittingProgram);
+router.get('/knittingProgram', TransactionsController.getKnittingProgram);
+router.delete('/knittingProgram', TransactionsController.deleteKnittingProgram);
+router.get('/getNextKnittingProgramVouNo',TransactionsController.getNextKnittingProgramVouNo )
+router.get('/getYarnSB', TransactionsController.getYarnSB);
 
 
 
