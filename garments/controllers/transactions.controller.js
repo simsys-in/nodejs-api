@@ -158,20 +158,6 @@ exports.getColorSB = function (req, res) {
     })
 }
 
-exports.getOrderSB = function (req, res) {
-    const body = req.body;
-    const USER = req.user;
-    body.company = USER.company
-    const status = body.status ? body.status : 'active'
-    DBCON.query('select id as value,order_no as name from order_program ', function (err, data) {
-        if (err) {
-            console.log(err)
-            res.sendError(err)
-        } else {
-            res.sendInfo("", data)
-        }
-    })
-}
 
 exports.getLedgerNameSB = function (req, res) {
     const body = req.body;
