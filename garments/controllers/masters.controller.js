@@ -64,7 +64,12 @@ const Department = new DepartmentModel();
 const BankModel = require('../models/bank_mas.model');
 const Bank = new BankModel();
 
+const VoucherModel = require('../models/voucher.model');
+const Voucher = new VoucherModel();
 
+//report
+const ReportModel = require('../models/report.model');
+const Report = new ReportModel();
 
 
 
@@ -2186,7 +2191,143 @@ exports.getSizeForProductID = function(req,res){
 
 }
 
+exports.getLedgerForLedgerGroup= (req, res) => {
+    const ledger_group_id = req.query.ledger_group_id;
 
+    const QUERY = `select ledger.id as value, ledger.ledger as name from ledger where ledger_group_id=${ledger_group_id} order by ledger asc;`;
+    console.log(QUERY);
+    DBCON.query(QUERY, (err, result) => {
+        if(err)
+        {
+            console.log(err);
+            res.sendError(err);
+        }
+        else{
+            res.sendInfo("", result);
+        }
+    })
+
+}
+
+//voucher
+exports.saveVoucher = function (req, res) {
+    const body = req.body;
+    body.id = req.query.id;
+    Voucher.checkAndSaveOrUpdate(body, (err, result, msg) => {
+        if (err) {
+            console.log(err);
+            res.sendError(err);
+        } else {
+            res.sendSuccess(msg, result)
+        }
+    })
+}
+
+
+exports.getVoucher = function (req, res) {
+    var id = req.query.id;
+    if (issetNotEmpty(id)) {
+        Voucher.find(Number(id), function (err, data) {
+            if (err) {
+                console.log(err);
+                res.sendError(err)
+            } else {
+                res.sendInfo("", data);
+            }
+        })
+    } else {
+        Voucher.getAll((err, data) => {
+            if (err) {
+                console.log(err)
+                res.sendError(err)
+            } else {
+                res.sendSuccess("", data)
+            }
+        })
+    }
+}
+
+
+
+
+exports.deleteVoucher = function (req, res) {
+    const id = req.query.id;
+    console.log("ID : " + id);
+
+    if (issetNotEmpty(id)) {
+        Voucher.delete(Number(id), function (err, data) {
+            if (err) {
+                console.log(err);
+                res.sendError(err)
+            } else {
+                res.sendInfo("Voucher Deleted Successfully!");
+            }
+        })
+    } else {
+        res.sendWarning("Voucher Details Not Found! ")
+    }
+
+}
+
+//report
+exports.saveReport = function (req, res) {
+    const body = req.body;
+    body.id = req.query.id;
+    Report.checkAndSaveOrUpdate(body, (err, result, msg) => {
+        if (err) {
+            console.log(err);
+            res.sendError(err);
+        } else {
+            res.sendSuccess(msg, result)
+        }
+    })
+}
+
+
+exports.getReport = function (req, res) {
+    var id = req.query.id;
+    if (issetNotEmpty(id)) {
+        Report.find(Number(id), function (err, data) {
+            if (err) {
+                console.log(err);
+                res.sendError(err)
+            } else {
+                res.sendInfo("", data);
+            }
+        })
+    } else {
+        Report.getAll((err, data) => {
+            if (err) {
+                console.log(err)
+                res.sendError(err)
+            } else {
+                res.sendSuccess("", data)
+            }
+        })
+    }
+}
+
+
+
+
+exports.deleteReport = function (req, res) {
+    const id = req.query.id;
+    console.log("ID : " + id);
+
+    if (issetNotEmpty(id)) {
+        Report.delete(Number(id), function (err, data) {
+            if (err) {
+                console.log(err);
+                res.sendError(err)
+            } else {
+                res.sendInfo("Report Deleted Successfully!");
+            }
+        })
+    } else {
+        res.sendWarning("Report Details Not Found! ")
+    }
+
+}
 
 
 
