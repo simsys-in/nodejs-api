@@ -18,7 +18,7 @@ Yarn_InvoiceModel.prototype = {
         let sql = `SELECT * FROM yarn_invoice WHERE id = ?`;
         console.log(sql);
 
-        let sql1 = `SELECT * FROM  yarn_invoice_inventory where yarn_invoice_inventory.vou_id = ?`;
+        let sql1 = `SELECT *, 1 as selected FROM  yarn_invoice_inventory where yarn_invoice_inventory.vou_id = ?`;
 
         DBCON.query(sql, match, function (err, result) {
             if (err){ 
@@ -111,19 +111,23 @@ Yarn_InvoiceModel.prototype = {
                      }
                      else{
                         body.yarn_invoice_inventory.map((item, index) => {
-                            var yarn_invoice_inventory = {
-                                // yarn_invoice_id : result.insertId,
-                                vou_id : body.id,
-                                fabric_id : item.fabric_id,
-                                gsm : item.gsm,
-                               qty_kg : item.qty_kg,
-                               counts : item.counts,
-                               qty_bag : item.qty_bag,
-                               qtybag_per : item.qtybag_per,
-                               rate : item.rate,
-                               amount : item.amount,
+                            if (item.selected && issetNotEmpty(item.fabric_id) && item.fabric_id !== 0){ 
+
+                                var yarn_invoice_inventory = {
+                                    // yarn_invoice_id : result.insertId,
+                                    vou_id : body.id,
+                                    fabric_id : item.fabric_id,
+                                    gsm : item.gsm,
+                                   qty_kg : item.qty_kg,
+                                   counts : item.counts,
+                                   qty_bag : item.qty_bag,
+                                   qtybag_per : item.qtybag_per,
+                                   rate : item.rate,
+                                   amount : item.amount,
+                                }
+                                DBCON.query(`insert into yarn_invoice_inventory set ?`, yarn_invoice_inventory);
                             }
-                            DBCON.query(`insert into yarn_invoice_inventory set ?`, yarn_invoice_inventory);
+
                             if(index === body.yarn_invoice_inventory.length - 1)
                             {
                                 callback(false, result, "Yarn invoice Saved Successfully!");
@@ -167,21 +171,25 @@ Yarn_InvoiceModel.prototype = {
                             } else {
                                 console.log(result)
                                 body.yarn_invoice_inventory.map((item, index) => {
-                                    var yarn_invoice_inventory = {
-                                        // yarn_invoice_id : result.insertId,
-                                        vou_id : result.insertId,
-                                        fabric_id : item.fabric_id,
-                                        gsm : item.gsm,
-                                       qty_kg : item.qty_kg,
-                                       counts : item.counts,
-                                       qty_bag : item.qty_bag,
-                                       qtybag_per : item.qtybag_per,
-                                       rate : item.rate,
-                                       amount : item.amount
+                                    if (item.selected && issetNotEmpty(item.fabric_id) && item.fabric_id !== 0){ 
 
-                        
+                                        var yarn_invoice_inventory = {
+                                            // yarn_invoice_id : result.insertId,
+                                            vou_id : result.insertId,
+                                            fabric_id : item.fabric_id,
+                                            gsm : item.gsm,
+                                           qty_kg : item.qty_kg,
+                                           counts : item.counts,
+                                           qty_bag : item.qty_bag,
+                                           qtybag_per : item.qtybag_per,
+                                           rate : item.rate,
+                                           amount : item.amount
+    
+                            
+                                        }
+                                        DBCON.query(`insert into yarn_invoice_inventory set ?`, yarn_invoice_inventory);
                                     }
-                                    DBCON.query(`insert into yarn_invoice_inventory set ?`, yarn_invoice_inventory);
+
                                     if(index === body.yarn_invoice_inventory.length - 1)
                                     {
                                         callback(false, result, "Yarn invoice Saved Successfully!");

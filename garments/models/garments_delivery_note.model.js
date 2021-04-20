@@ -276,6 +276,80 @@ GarmentsDeliveryNoteModel.prototype = {
                 callback(false,result[0]);
             }
         })
+    },
+    getGarmentsDeliveryNotePrint: (id, callback) => {
+        if (issetNotEmpty(id)) {
+            DBCON.query(`select * from garments_delivery_note where garments_delivery_note.id = ${id}`, (err, result) => {
+                if (err) {
+                    callback(err)
+                } else {
+                    if (result.length > 0) {
+                        console.log('Got Invoice Data');
+                        var delivery_note_details = result[0];
+                        delivery_note_details.vou_date = getDBDate(delivery_note_details.vou_date)
+                        DBCON.query(`select * from ledger where id = ${delivery_note_details.ledger_id}`, (err, ledger) => {
+                            if (err) {
+                                console.log(err);
+                                callback(err)
+                            } else {
+                                console.log('Got Ledger Data');
+                                delivery_note_details.ledger_details = ledger.length ? ledger[0] : {};
+                                DBCON.query(`select * from company limit 1`, (err, company_data) => {
+                                    if (err) {
+                                        console.log(err);
+                                        callback(err)
+                                    } else {
+                                        console.log('Got Company Data');
+                                        delivery_note_details.company_details = company_data[0];
+                                        DBCON.query(`select garments_delivery_note_inventory.*, product.product, product.hsnsac, product.gst, unit.unit ,color.color from garments_delivery_note_inventory left join product on product.id = garments_delivery_note_inventory.product_id left join unit on unit.id = product.unit_id left join color on color.id = garments_delivery_note_inventory.color_id where vou_id = ${id}`, (err, inventories) => {
+                                            if (err) {
+                                                console.log(err);
+                                                callback(err);
+                                            } else {
+                                                if (inventories.length > 0) {
+                                                    console.log('Got Inventory Data : ', inventories.length);
+                                                    // for (i = 0; i < inventories.length; i++) {
+                                                    for (const [i] in inventories) {
+                                                        var item = Object.assign({}, inventories[i]);
+                                                        console.log(item);
+                                                        item.size_data = [];
+                                                        DBCON.query(`select concat(ifnull(size.size1, ""), ",", ifnull(size.size2, ""), ",",ifnull(size.size3, ""), ",",ifnull(size.size4, ""), ",",ifnull(size.size5, ""), ",",ifnull(size.size6, ""), ",",ifnull(size.size7, ""), ",",ifnull(size.size8, ""), ",",ifnull(size.size9, "")) as sizes from product_details left join size on size.id = product_details.size_id where product_details.product_id = ${inventories[i].product_id}`, (err, size_details) => {
+                                                            if (err) {
+                                                                console.log(err);
+                                                                callback(err);
+                                                            } else {
+                                                                var sizes = size_details.length > 0 ? size_details[0].sizes !== null ? size_details[0].sizes : `'','','','','','','','',''` : `'','','','','','','','',''`;
+                                                                sizes = sizes.split(",");
+                                                                console.log(sizes);
+                                                                inventories[i].size_data = sizes;
+                                                                console.log(Number(i), inventories.length);
+                                                                if (Number(i) === inventories.length - 1) {
+                                                                    delivery_note_details.inventories = inventories;
+                                                                    console.log("Finished")
+                                                                    callback(false, delivery_note_details);
+                                                                }
+                                                            }
+                                                        })
+                                                    }
+                                                } else {
+                                                    console.log('Got Inventory Data : ', 0);
+                                                    delivery_note_details.inventories = [];
+                                                    callback(false, delivery_note_details);
+                                                }
+                                            }
+                                        })
+                                    }
+                                })
+                            }
+                        })
+                    } else {
+                        callback("Delivery Note not found!")
+                    }
+                }
+            })
+        } else {
+            callback("Delivery Note not found!")
+        }
     }
 }
 

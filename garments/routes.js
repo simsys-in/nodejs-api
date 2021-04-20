@@ -152,6 +152,7 @@ router.get('/getNextOrderNo', TransactionsController.getNextOrderNo);
 router.put('/fabricInward', TransactionsController.saveFabricInward);
 router.get('/fabricInward', TransactionsController.getFabricInward);
 router.delete('/fabricInward', TransactionsController.deleteFabricInward);
+router.get('/getFabricOutwardInventoryDetails', TransactionsController.getFabricOutwardInventoryDetails);
 router.get('/getOrderSB', TransactionsController.getOrderSB);
 router.get('/getNextFabricInwardVouNo', TransactionsController.getNextFabricInwardVouNo);
 router.get('/getNextFabricOutwardVouNo', TransactionsController.getNextFabricOutwardVouNo);
@@ -167,10 +168,12 @@ router.put('/fabricOutward', TransactionsController.saveFabricOutward);
 router.get('/fabricOutward', TransactionsController.getFabricOutward);
 router.delete('/fabricOutward', TransactionsController.deleteFabricOutward);
 
+
 //fabric invoice
 router.put('/fabricInvoice', TransactionsController.saveFabricInvoice);
 router.get('/fabricInvoice', TransactionsController.getFabricInvoice);
 router.delete('/fabricInvoice', TransactionsController.deleteFabricInvoice);
+router.get('/getFabricInwardInventoryDetails', TransactionsController.getFabricInwardInventoryDetails);
 
 
 //fabric return
@@ -191,11 +194,15 @@ router.get('/getNextJobworkOutwardVouNo', TransactionsController.getNextJobworkO
 router.put('/yarn_inward', TransactionsController.saveYarn_Inward);
 router.get('/yarn_inward', TransactionsController.getYarn_Inward);
 router.delete('/yarn_inward', TransactionsController.deleteYarn_Inward);
+router.get('/getYarnOutwardInventoryDetails', TransactionsController.getYarnOutwardInventoryDetails);
+
 //yarn invoice
 
 router.put('/yarn_invoice', TransactionsController.saveYarn_Invoice);
 router.get('/yarn_invoice', TransactionsController.getYarn_Invoice);
 router.delete('/yarn_invoice', TransactionsController.deleteYarn_Invoice);
+router.get('/getYarnInwardInventoryDetails', TransactionsController.getYarnInwardInventoryDetails);
+
 
 // yarn outward
 router.put('/yarn_outward', TransactionsController.saveYarn_Outward);
@@ -386,6 +393,12 @@ router.delete('/voucher', MasterController.deleteVoucher);
 router.put('/report', MasterController.saveReport);
 router.get('/report', MasterController.getReport);
 router.delete('/report', MasterController.deleteReport);
+
+router.get('/getGarmentsDeliveryNotePrint', TransactionsController.getGarmentsDeliveryNotePrint);
+router.get('/getGarmentsReceiptNotePrint', TransactionsController.getGarmentsReceiptNotePrint);
+
+router.get('/getJobworkInwardReport', TransactionsController.getJobworkInwardReport);
+
 
 
 ////////////////////// Kowsalya Workspace/////////////////

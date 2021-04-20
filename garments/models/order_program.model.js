@@ -44,7 +44,7 @@ OrderProgramModel.prototype = {
                     product_id : 0,
                     menu : 0,
                     order_process : [],
-                    order_fabrics : []
+                    order_fabric : []
                     
                 }
                 DBCON.query(sql1, match, function (err, result1) {
@@ -56,7 +56,7 @@ OrderProgramModel.prototype = {
                             if(err){
                                 callback(err)
                             }else{
-                                order_program.order_fabrics = result2;
+                                order_program.order_fabric = result2;
                                 callback(false,order_program);
                             }
                         })
@@ -136,19 +136,19 @@ OrderProgramModel.prototype = {
                                 }
         
                                 DBCON.query(`insert into order_process set ?`, order_process);
-                                    if(index === body.order_fabrics.length - 1)
+                                    if(index === body.order_process.length - 1)
                                     {
-                                        body.order_fabrics.map((fabric, key) => {
-                                            var order_fabrics = {
+                                        body.order_fabric.map((fabric, key) => {
+                                            var order_fabric = {
                                                 order_id : body.id,
                                                 fabric_id : fabric.fabric_id,
                                                 dia : fabric.dia,
                                                 gsm : fabric.gsm
                                             }
                                             
-                                            DBCON.query(`insert into order_fabric set ?`, order_fabrics);
+                                            DBCON.query(`insert into order_fabric set ?`, order_fabric);
 
-                                            if(key === body.order_fabrics.length - 1)
+                                            if(key === body.order_fabric.length - 1)
                                             {
                                                 callback(false, result, "Order Program  Saved Successfully!");
                                             }
@@ -201,19 +201,19 @@ OrderProgramModel.prototype = {
                                         waste : item.waste,
                                     }
                                     DBCON.query(`insert into order_process set ?`, order_process);
-                                    if(index === body.order_fabrics.length - 1)
+                                    if(index === body.order_process.length - 1)
                                     {
-                                        body.order_fabrics.map((fabric, key) => {
-                                            var order_fabrics = {
+                                        body.order_fabric.map((fabric, key) => {
+                                            var order_fabric = {
                                                 order_id : result.insertId,
                                                 fabric_id : fabric.fabric_id,
                                                 dia : fabric.dia,
                                                 gsm : fabric.gsm
                                             }
                                             
-                                            DBCON.query(`insert into order_fabric set ?`, order_fabrics);
+                                            DBCON.query(`insert into order_fabric set ?`, order_fabric);
 
-                                            if(key === body.order_fabrics.length - 1)
+                                            if(key === body.order_fabric.length - 1)
                                             {
                                                 callback(false, result, "Order Program  Saved Successfully!");
                                             }

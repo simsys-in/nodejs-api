@@ -1393,20 +1393,6 @@ exports.getCuttingProgramColorDetails = function (req, res) {
     })
 }
 
-exports.getJobworkOutwardColorDetails = function (req, res) {
-    const body = req.body;
-    const USER = req.user;
-    body.company = USER.company
-    const status = body.status ? body.status : 'active';
-    DBCON.query('select jobwork_inward_inventory.color_id, jobwork_inward_inventory.size1, jobwork_inward_inventory.size2,jobwork_inward_inventory.size3,jobwork_inward_inventory.size4,jobwork_inward_inventory.size5,jobwork_inward_inventory.size6,jobwork_inward_inventory.size7,jobwork_inward_inventory.size8,jobwork_inward_inventory.size9 from jobwork_inward left join jobwork_inward_inventory on jobwork_inward_inventory.vou_id = jobwork_inward.id where order_id =?', req.query.order_id, function (err, data) {
-        if (err) {
-            console.log(err)
-            res.sendError(err)
-        } else {
-            res.sendInfo("", data)
-        }
-    })
-}
 
 
 
@@ -1480,6 +1466,7 @@ exports.getSizesForOrderID = (req, res) => {
 }
 
 exports.getFabricsForOrderID = (req, res) => {
+    
     const ORDER_ID = req.query.order_id;
 
     DBCON.query(`select product.product as name, product.id as value from order_fabric left join product on product.id = order_fabric.fabric_id where order_id  = ${ORDER_ID}`, (err, data) => {
@@ -2224,9 +2211,105 @@ exports.getYarnSB = function (req, res) {
     })
 }
 
+exports.getFabricOutwardInventoryDetails = function (req, res) {
+    const body = req.body;
+    const USER = req.user;
+    body.company = USER.company
+    const status = body.status ? body.status : 'active';
+    DBCON.query('select fabric_outward_inventory.fabric_id, fabric_outward_inventory.color_id,fabric_outward_inventory.dia,fabric_outward_inventory.roll,fabric_outward_inventory.weight,fabric_outward_inventory.gsm from fabric_outward left join fabric_outward_inventory on fabric_outward_inventory.vou_id = fabric_outward.id where fabric_outward.ledger_id =?', req.query.ledger_id, function (err, data) {
+        if (err) {
+            console.log(err)
+            res.sendError(err)
+        } else {
+            res.sendInfo("", data)
+        }
+    })
+}
+
+exports.getFabricInwardInventoryDetails = function (req, res) {
+    const body = req.body;
+    const USER = req.user;
+    body.company = USER.company
+    const status = body.status ? body.status : 'active';
+    DBCON.query('select fabric_inward_inventory.fabric_id, fabric_inward_inventory.color_id,fabric_inward_inventory.dia,fabric_inward_inventory.roll,fabric_inward_inventory.weight,fabric_inward_inventory.gsm from fabric_inward left join fabric_inward_inventory on fabric_inward_inventory.vou_id = fabric_inward.id where fabric_inward.ledger_id =?', req.query.ledger_id, function (err, data) {
+        if (err) {
+            console.log(err)
+            res.sendError(err)
+        } else {
+            res.sendInfo("", data)
+        }
+    })
+}
+
+exports.getYarnOutwardInventoryDetails = function (req, res) {
+    const body = req.body;
+    const USER = req.user;
+    body.company = USER.company
+    const status = body.status ? body.status : 'active';
+    DBCON.query('select yarn_outward_inventory.fabric_id,yarn_outward_inventory.gsm,yarn_outward_inventory.counts,yarn_outward_inventory.qtybag_per,yarn_outward_inventory.qty_bag,yarn_outward_inventory.qty_kg from yarn_outward left join yarn_outward_inventory on yarn_outward_inventory.vou_id = yarn_outward.id where yarn_outward.ledger_id =?', req.query.ledger_id, function (err, data) {
+        if (err) {
+            console.log(err)
+            res.sendError(err)
+        } else {
+            res.sendInfo("", data)
+        }
+    })
+}
+
+exports.getYarnInwardInventoryDetails = function (req, res) {
+    const body = req.body;
+    const USER = req.user;
+    body.company = USER.company
+    const status = body.status ? body.status : 'active';
+    DBCON.query('select yarn_inward_inventory.fabric_id,yarn_inward_inventory.gsm,yarn_inward_inventory.counts,yarn_inward_inventory.qtybag_per,yarn_inward_inventory.qty_bag,yarn_inward_inventory.qty_kg from yarn_inward left join yarn_inward_inventory on yarn_inward_inventory.vou_id = yarn_inward.id where yarn_inward.ledger_id =?', req.query.ledger_id, function (err, data) {
+        if (err) {
+            console.log(err)
+            res.sendError(err)
+        } else {
+            res.sendInfo("", data)
+        }
+    })
+}
+
+exports.getGarmentsDeliveryNotePrint = (req, res) => {
+    GarmentsDeliveryNote.getGarmentsDeliveryNotePrint(req.query.id, (err, result) => {
+        if(err)
+        {
+            console.log(err);
+            res.sendError(err);
+        }
+        else{
+            res.sendInfo("", result);
+        }
+    })
+}
+
+exports.getGarmentsReceiptNotePrint = (req, res) => {
+    GarmentsReceiptNote.getGarmentsReceiptNotePrint(req.query.id, (err, result) => {
+        if(err)
+        {
+            console.log(err);
+            res.sendError(err);
+        }
+        else{
+            res.sendInfo("", result);
+        }
+    })
+}
 
 
-
+exports.getJobworkInwardReport = (req, res) => {
+    const ID = req.query.id;
+    Jobwork_Inward.getJobworkInwardReport(ID, (err, result) => {
+        if(err)
+        {
+            res.sendError(err);
+        }
+        else{
+            res.sendInfo("", result);
+        }
+    })
+}
 
 
 ////////////////////// Kowsalya Workspace/////////////////

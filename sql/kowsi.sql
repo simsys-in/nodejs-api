@@ -6,3 +6,5 @@ ALTER TABLE `product_details` ADD `id` INT(255) NOT NULL AUTO_INCREMENT FIRST, A
 ALTER TABLE `knitting_program` ADD `vouno` VARCHAR(255) NOT NULL AFTER `order_id`;
 
 ALTER TABLE `route_accounts` ADD `description` VARCHAR(255) NOT NULL AFTER `vou_id`;
+
+ALTER TABLE `jobwork_inward` ADD `vehicle_no` VARCHAR(255) NOT NULL AFTER `size9_total`;
