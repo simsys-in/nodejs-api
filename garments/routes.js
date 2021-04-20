@@ -312,6 +312,17 @@ router.get('/getNextDyeingProgramVouNo', TransactionsController.getNextDyeingPro
 
 router.get('/getFabricsForOrderID', MasterController.getFabricsForOrderID);
 
+//company Details
+
+router.put('/company', MasterController.saveCompany);
+router.get('/company', MasterController.getCompany);
+router.delete('/company', MasterController.deleteCompany);
+
+//shortcut
+router.put('/shortcut', MasterController.saveShortcut);
+router.get('/shortcut', MasterController.getShortcut);
+router.delete('/shortcut', MasterController.deleteShortcut);
+
 
 
 

@@ -247,35 +247,6 @@ exports.deleteLedger = function (req, res) {
 
 
 
-//product_category 
-
-// exports.saveProduct_Category = function (req, res) {
-//     const body = req.body;
-//     body.id = req.query.id;
-//     Product_Category.checkAndSaveOrUpdate(body, (err, result, msg) => {
-//         if (err) {
-//             console.log(err);
-//             res.sendError(err);
-//         } else {
-//             res.sendSuccess(msg, result)
-//         }
-//     })
-// }
-
-
-// exports.getAllProduct_Categorys = function (req, res) {
-//     const body = req.body;
-//     const USER = req.user;
-//     body.company = USER.company
-//     Product_Category.getAll((err, data) => {
-//         if (err) {
-//             console.log(err)
-//             res.sendError(err)
-//         } else {
-//             res.sendSuccess("", data)
-//         }
-//     })
-// }
 
 
 exports.getAllProduct_CategorySB = function (req, res) {
@@ -293,62 +264,6 @@ exports.getAllProduct_CategorySB = function (req, res) {
     })
 }
 
-// exports.getProduct_Category = function (req, res) {
-//     // const id = req.query.id;
-//     // console.log("ID : " + id);
-//     // const USER = req.user;
-
-//     // Product_Category.find(Number(id), function (err, data) {
-//     //     if (err) {
-//     //         console.log(err);
-//     //         res.sendError(err)
-//     //     } else {
-//     //         res.sendInfo("", data);
-//     //     }
-//     // })
-//     var ID = req.query.id;
-//     if(issetNotEmpty(ID))
-//     {
-//         Product_Category.find(Number(ID), function (err, data) {
-//             if (err) {
-//                 console.log(err);
-//                 res.sendError(err)
-//             } else {
-//                 res.sendInfo("", data);
-//             }
-//         })
-//     }
-//     else{
-//         Product_Category.getAll((err, data) => {
-//             if (err) {
-//                 console.log(err)
-//                 res.sendError(err)
-//             } else {
-//                 res.sendSuccess("", data)
-//             }
-//         })
-//     }
-// }
-
-// exports.deleteProduct_Category = function (req, res) {
-//     const id = req.query.id;
-//     console.log("ID : " + id);
-//     const USER = req.user;
-
-//     if (issetNotEmpty(id)) {
-//         Product_Category.delete(Number(id), function (err, data) {
-//             if (err) {
-//                 console.log(err);
-//                 res.sendError(err)
-//             } else {
-//                 res.sendInfo("Product Category Deleted Successfully!");
-//             }
-//         })
-//     } else {
-//         res.sendWarning("Product Category Not Found! ")
-//     }
-
-// }
 
 
 
@@ -2017,6 +1932,156 @@ exports.getFabricsForOrderID = function (req, res) {
     })
 }
 
+const CompanyModel = require('../models/company_mas.model');
+const Company = new CompanyModel();
+
+exports.saveCompany = function (req, res) {
+    const body = req.body;
+    body.id = req.query.id;
+    Company.checkAndSaveOrUpdate(body, (err, result, msg) => {
+        if (err) {
+            console.log(err);
+            res.sendError(err);
+        } else {
+            res.sendSuccess(msg, result)
+        }
+    })
+}
+
+exports.getCompany = function (req, res) {
+    var ID = req.query.id;
+    if (issetNotEmpty(ID)) {
+        Company.find(Number(ID), function (err, data) {
+
+            if (err) {
+                console.log(err)
+                res.sendError(err)
+            } else {
+                res.sendSuccess("", data)
+            }
+        })
+    } else {
+        Company.getAll((err, data) => {
+
+            if (err) {
+                console.log(err)
+                res.sendError(err)
+            } else {
+                res.sendSuccess("", data)
+            }
+        })
+    }
+}
+
+exports.deleteCompany = function (req, res) {
+    const id = req.query.id;
+    console.log("ID : " + id);
+
+    if (issetNotEmpty(id)) {
+        Company.delete(Number(id), function (err, data) {
+            if (err) {
+                console.log(err);
+                res.sendError(err)
+            } else {
+                res.sendInfo("Company Details Deleted Successfully!");
+            }
+        })
+    } else {
+        res.sendWarning("Company Details Not Found! ")
+    }
+
+}
+
+exports.getAllCompanySB = function (req, res) {
+    const body = req.body;
+    const USER = req.user;
+    body.company = USER.company
+    const status = body.status ? body.status : 'active'
+    DBCON.query('select id as value, company as name from company',  function (err, data) {
+        if (err) {
+            console.log(err)
+            res.sendError(err)
+        } else {
+            res.sendInfo("", data)
+        }
+    })
+}
+
+
+const ShortcutModel = require('../models/shortcut_mas.model');
+const Shortcut = new ShortcutModel();
+
+exports.saveShortcut = function (req, res) {
+    const body = req.body;
+    body.id = req.query.id;
+    Shortcut.checkAndSaveOrUpdate(body, (err, result, msg) => {
+        if (err) {
+            console.log(err);
+            res.sendError(err);
+        } else {
+            res.sendSuccess(msg, result)
+        }
+    })
+}
+
+exports.getShortcut = function (req, res) {
+    var ID = req.query.id;
+    if (issetNotEmpty(ID)) {
+        Shortcut.find(Number(ID), function (err, data) {
+
+            if (err) {
+                console.log(err)
+                res.sendError(err)
+            } else {
+                res.sendSuccess("", data)
+            }
+        })
+    } else {
+        Shortcut.getAll((err, data) => {
+
+            if (err) {
+                console.log(err)
+                res.sendError(err)
+            } else {
+                res.sendSuccess("", data)
+            }
+        })
+    }
+}
+
+exports.deleteShortcut = function (req, res) {
+    const id = req.query.id;
+    console.log("ID : " + id);
+
+    if (issetNotEmpty(id)) {
+        Shortcut.delete(Number(id), function (err, data) {
+            if (err) {
+                console.log(err);
+                res.sendError(err)
+            } else {
+                res.sendInfo("Shortcut Details Deleted Successfully!");
+            }
+        })
+    } else {
+        res.sendWarning("Shortcut Details Not Found! ")
+    }
+
+}
+
+exports.getAllShortcutSB = function (req, res) {
+    const body = req.body;
+    const USER = req.user;
+    body.shortcut = USER.shortcut
+    const status = body.status ? body.status : 'active'
+    DBCON.query('select id as value, shortcut as name from shortcut',  function (err, data) {
+        if (err) {
+            console.log(err)
+            res.sendError(err)
+        } else {
+            res.sendInfo("", data)
+        }
+    })
+}
 
 
 
