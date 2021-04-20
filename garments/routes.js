@@ -284,7 +284,7 @@ router.put('/jobworkInvoice', TransactionsController.saveJobworkInvoice);
 router.get('/jobworkInvoice', TransactionsController.getJobworkInvoice);
 router.delete('/jobworkInvoice', TransactionsController.deleteJobworkInvoice);
 router.get('/getNextJobworkInvoiceVouNo', TransactionsController.getNextJobworkInvoiceVouNo);
-router.get('/getJobworkOutwardColorDetails', TransactionsController.getJobworkOutwardColorDetails);
+router.get('/getJobworkInwardColorDetails', TransactionsController.getJobworkInwardColorDetails);
 
 router.get('/getProductAndSizeSBForOrderID', TransactionsController.getProductAndSizeSBForOrderID);
 
@@ -374,6 +374,18 @@ router.delete('/knittingProgram', TransactionsController.deleteKnittingProgram);
 router.get('/getNextKnittingProgramVouNo',TransactionsController.getNextKnittingProgramVouNo )
 router.get('/getYarnSB', TransactionsController.getYarnSB);
 
+//Voucher
+router.get('/getLedgerForLedgerGroup', MasterController.getLedgerForLedgerGroup)
+router.put('/voucher', MasterController.saveVoucher);
+router.get('/voucher', MasterController.getVoucher);
+router.delete('/voucher', MasterController.deleteVoucher);
+
+
+//report
+
+router.put('/report', MasterController.saveReport);
+router.get('/report', MasterController.getReport);
+router.delete('/report', MasterController.deleteReport);
 
 
 ////////////////////// Kowsalya Workspace/////////////////
