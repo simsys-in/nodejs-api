@@ -34,7 +34,7 @@ app.use(expressSession({
 // app.options('*', cors()) 
 app.use(cors({
     origin: function (origin, callback) {
-        // console.log(origin)
+        console.log(origin)
         if(origin && origin.includes("http"))
         {
             if (process.env.FRONT_END_URL.indexOf(origin) !== -1) {
@@ -115,9 +115,13 @@ app.use(middlewares.authenticateJWT);
 
 // app.use('/payroll', payroll_masters);
 
-const garments_routes = require('./garments/routes')
-app.use('/garments', garments_routes);
-app.use('/core', garments_routes);
+// const garments_routes = require('./garments/routes')
+app.use('/garments', require('./garments/routes'));
+// app.use('/core', garments_routes);
+
+
+// const core_routes = require('./core/routes')
+app.use('/core', require('./core/routes'));
 
 // const masters = require('./routes/masters.routes');
 

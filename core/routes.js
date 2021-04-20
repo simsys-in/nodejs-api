@@ -121,9 +121,9 @@ Router.delete('/addon/:id',addonController.destroy);
 
 Router.get('/vouchers',vouchersController.index);
 Router.get('/vouchers/:id',vouchersController.show);
-Router.put('/vouchers',vouchersController.update);
+Router.put('/vouchers/:id',vouchersController.update);
 Router.post('/vouchers',vouchersController.store);
-Router.delete('/vouchers',vouchersController.destroy);
+Router.delete('/vouchers/:id',vouchersController.destroy);
 
 
 
