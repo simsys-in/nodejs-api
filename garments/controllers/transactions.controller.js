@@ -1740,6 +1740,57 @@ exports.getDyeingProgramReport = (req, res) => {
         }
     })
 }
+//fabric return report 
+exports.getFabricReturnReport = (req, res) => {
+    const ID = req.query.id;
+    FabricReturn.getFabricReturnReport(ID, (err, result) => {
+        if(err)
+        {
+            res.sendError(err);
+        }
+        else{
+            res.sendInfo("", result);
+        }
+    })
+}
+//yarn inward report
+exports.getYarnInwardReport = (req, res) => {
+    const ID = req.query.id;
+    Yarn_Inward.getYarnInwardReport(ID, (err, result) => {
+        if(err)
+        {
+            res.sendError(err);
+        }
+        else{
+            res.sendInfo("", result);
+        }
+    })
+}
+//yarn return report 
+exports.getYarnReturnReport = (req, res) => {
+    const ID = req.query.id;
+    Yarn_Return.getYarnReturnReport(ID, (err, result) => {
+        if(err)
+        {
+            res.sendError(err);
+        }
+        else{
+            res.sendInfo("", result);
+        }
+    })
+}
+exports.getDyeingProgramReport = (req, res) => {
+    const ID = req.query.id;
+    DyeingProgram.getDyeingProgramReport(ID, (err, result) => {
+        if(err)
+        {
+            res.sendError(err);
+        }
+        else{
+            res.sendInfo("", result);
+        }
+    })
+}
 
 
 

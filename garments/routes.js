@@ -306,7 +306,7 @@ router.put('/DyeingProgram', TransactionsController.saveDyeingProgram);
 router.get('/DyeingProgram', TransactionsController.getDyeingProgram);
 router.delete('/DyeingProgram', TransactionsController.deleteDyeingProgram);
 //report
-router.get('/getDyeingProgramReport', TransactionsController.getFabricInwardReport);
+router.get('/getDyeingProgramReport', TransactionsController.getDyeingProgramReport);
 //vouno dyeing Porgram
 router.get('/getNextDyeingProgramVouNo', TransactionsController.getNextDyeingProgramVouNo);
 
@@ -322,6 +322,14 @@ router.delete('/company', MasterController.deleteCompany);
 router.put('/shortcut', MasterController.saveShortcut);
 router.get('/shortcut', MasterController.getShortcut);
 router.delete('/shortcut', MasterController.deleteShortcut);
+//report fabric return
+router.get('/getFabricReturnReport', TransactionsController.getFabricReturnReport);
+//report yarn inward
+router.get('/getYarnInwardReport', TransactionsController.getYarnInwardReport);
+//report yarn return
+router.get('/getYarnReturnReport', TransactionsController.getYarnReturnReport);
+
+
 
 
 
