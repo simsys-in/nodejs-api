@@ -249,7 +249,7 @@ JobworkOutwardModel.prototype = {
                                 inward_inv_id: item.inward_inv_id
                             }
                             DBCON.query(`insert into jobwork_outward_inventory set ?`, jobwork_outward_inventory);
-                            if (index === body.jobwork_outward_product.length - 1) {
+                            if (index === body.jobwork_outward_inventory.length - 1) {
                                 body.jobwork_outward_product.map((jobworkproduct, key) => {
                                     var jobwork_outward_product = {
                                         vou_id: result.insertId,

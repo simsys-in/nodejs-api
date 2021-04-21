@@ -2362,6 +2362,28 @@ exports.getJobworkInwardReport = (req, res) => {
 }
 
 
+exports.getGarmentsDeliveryNoteInventoryDetails = function (req, res) {
+    const body = req.body;
+    const USER = req.user;
+    body.company = USER.company
+    const status = body.status ? body.status : 'active';
+    DBCON.query('select garments_delivery_note_inventory.product_id, garments_delivery_note_inventory.unit,garments_delivery_note_inventory.size1_qty,garments_delivery_note_inventory.size2_qty,garments_delivery_note_inventory.size3_qty,garments_delivery_note_inventory.size4_qty,garments_delivery_note_inventory.size5_qty,garments_delivery_note_inventory.size6_qty,garments_delivery_note_inventory.size7_qty,garments_delivery_note_inventory.size9_qty from garments_delivery_note left join garments_delivery_note_inventory on garments_delivery_note_inventory.vou_id = garments_delivery_note.id where garments_delivery_note.ledger_id =?', req.query.ledger_id, function (err, data) {
+        if (err) {
+            console.log(err)
+            res.sendError(err)
+        } else {
+            data.map((item, index) => {
+                item.size_details = [];
+                if(index === data.length - 1)
+                {
+                    res.sendInfo("", data)
+                }
+            })
+        }
+    })
+}
+
+
 ////////////////////// Kowsalya Workspace/////////////////
 ////////////////////// Kowsalya Workspace/////////////////
 ////////////////////// Kowsalya Workspace/////////////////

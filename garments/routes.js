@@ -406,6 +406,7 @@ router.get('/getGarmentsDeliveryNotePrint', TransactionsController.getGarmentsDe
 router.get('/getGarmentsReceiptNotePrint', TransactionsController.getGarmentsReceiptNotePrint);
 
 router.get('/getJobworkInwardReport', TransactionsController.getJobworkInwardReport);
+router.get('/getGarmentsDeliveryNoteInventoryDetails', TransactionsController.getGarmentsDeliveryNoteInventoryDetails);
 
 
 

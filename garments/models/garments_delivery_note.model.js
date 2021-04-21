@@ -63,8 +63,14 @@ GarmentsDeliveryNoteModel.prototype = {
                         console.log(err);
                         callback(err)
                     } else {
-                        garments_delivery_note.garments_delivery_note_inventory = result1;
+                        result1.map((item, index) => {
+                            item.size_details = [];
+                            if(index === result1.length - 1)
+                            {
+                                garments_delivery_note.garments_delivery_note_inventory = result1;
                                 callback(false, garments_delivery_note);
+                            }
+                        })
                             }
                         
                 })
