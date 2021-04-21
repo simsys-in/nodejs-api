@@ -17,7 +17,7 @@ Yarn_InwardModel.prototype = {
         let sql = `SELECT * FROM yarn_inward WHERE id = ?`;
         console.log(sql);
 
-        let sql1 = `SELECT * FROM  yarn_inward_inventory where yarn_inward_inventory.vou_id = ?`;
+        let sql1 = `SELECT *,1 as selected FROM  yarn_inward_inventory where yarn_inward_inventory.vou_id = ? order by id `;
 
         DBCON.query(sql, match, function (err, result) {
             if (err){ 
@@ -102,21 +102,26 @@ Yarn_InwardModel.prototype = {
                      }
                      else{
                         body.yarn_inward_inventory.map((item, index) => {
-                            var yarn_inward_inventory = {
-                                // yarn_inward_id : result.insertId,
-                                vou_id : body.id,
-                                fabric_id : item.fabric_id,
-                                gsm : item.gsm,
-                               qty_kg : item.qty_kg,
-                               counts : item.counts,
-                               qty_bag : item.qty_bag,
-                               qtybag_per : item.qtybag_per,
+                            if (item.selected && issetNotEmpty(item.fabric_id) && item.fabric_id !== 0){
+
+                                var yarn_inward_inventory = {
+                                    // yarn_inward_id : result.insertId,
+                                    vou_id : body.id,
+                                    fabric_id : item.fabric_id,
+                                    gsm : item.gsm,
+                                   qty_kg : item.qty_kg,
+                                   counts : item.counts,
+                                   qty_bag : item.qty_bag,
+                                   qtybag_per : item.qtybag_per,
+                                }
+                                DBCON.query(`insert into yarn_inward_inventory set ?`, yarn_inward_inventory);
                             }
-                            DBCON.query(`insert into yarn_inward_inventory set ?`, yarn_inward_inventory);
-                            if(index === body.yarn_inward_inventory.length - 1)
-                            {
-                                callback(false, result, "Yarn inward Saved Successfully!");
-                            }
+                                if(index === body.yarn_inward_inventory.length - 1)
+                                {
+                                    callback(false, result, "Yarn inward Saved Successfully!");
+                                }
+                            // }
+
                     })
                      }
                  })   
@@ -152,21 +157,26 @@ Yarn_InwardModel.prototype = {
                             } else {
                                 console.log(result)
                                 body.yarn_inward_inventory.map((item, index) => {
-                                    var yarn_inward_inventory = {
-                                        // yarn_inward_id : result.insertId,
-                                        vou_id : result.insertId,
-                                        fabric_id : item.fabric_id,
-                                        gsm : item.gsm,
-                                       qty_kg : item.qty_kg,
-                                       counts : item.counts,
-                                       qty_bag : item.qty_bag,
-                                       qtybag_per : item.qtybag_per,
+                                    if (item.selected && issetNotEmpty(item.fabric_id) && item.fabric_id !== 0){
+
+                                        var yarn_inward_inventory = {
+                                            // yarn_inward_id : result.insertId,
+                                            vou_id : result.insertId,
+                                            fabric_id : item.fabric_id,
+                                            gsm : item.gsm,
+                                           qty_kg : item.qty_kg,
+                                           counts : item.counts,
+                                           qty_bag : item.qty_bag,
+                                           qtybag_per : item.qtybag_per,
+                                        }
+                                        DBCON.query(`insert into yarn_inward_inventory set ?`, yarn_inward_inventory);
                                     }
-                                    DBCON.query(`insert into yarn_inward_inventory set ?`, yarn_inward_inventory);
-                                    if(index === body.yarn_inward_inventory.length - 1)
-                                    {
-                                        callback(false, result, "Yarn inward Saved Successfully!");
-                                    }
+                                        if(index === body.yarn_inward_inventory.length - 1)
+                                        {
+                                            callback(false, result, "Yarn inward Saved Successfully!");
+                                        }
+                                    // }
+
                             })
                             }
                         })  

@@ -245,7 +245,80 @@ Jobwork_InwardModel.prototype = {
                 callback(false,result[0]);
             }
         })
-    }
+    },
+    getJobworkInwardReport: (id, callback) => {
+        var jobwork_inward_details = {};
+        const QUERY = `select jobwork_inward.id, 'Test' as dcno, jobwork_inward.vou_date, process.process, product.hsnsac, order_program.order_no, order_program.id as order_id, product.product,jobwork_inward.vehicle_no, jobwork_inward.inventory_qty_total,jobwork_inward.size1_total, jobwork_inward.size2_total, jobwork_inward.size3_total, jobwork_inward.size4_total, jobwork_inward.size5_total, jobwork_inward.size6_total, jobwork_inward.size7_total, jobwork_inward.size8_total, jobwork_inward.size9_total  from jobwork_inward left join order_program on order_program.id = jobwork_inward.order_id left join product on product.id = order_program.style_id left join process on process.id = jobwork_inward.process_id where jobwork_inward.id = ${id};`;
+
+        DBCON.query(QUERY, (err, result) => {
+            if (err) {
+                console.log(err);
+                callback(err);
+            } else {
+                jobwork_inward_details = result[0];
+                const ORDER_ID = jobwork_inward_details.order_id;
+                const GET_COLOR_SIZE_DETAILS_QUERY = `select concat(size.size1, ",", size.size2, ",",size.size3, ",",size.size4, ",",size.size5, ",",size.size6, ",",size.size7, ",",size.size8, ",",size.size9) as sizes from order_program left join size on size.id = order_program.size_id where order_program.id = ${ORDER_ID};`;
+
+                DBCON.query(GET_COLOR_SIZE_DETAILS_QUERY, (err, color_size_details) => {
+                    if (err) {
+                        console.log(err);
+                        callback(err)
+                    } else {
+                        var sizes = color_size_details.length > 0 ? color_size_details[0].sizes !== null ? color_size_details[0].sizes : "" : "";
+                        console.log(sizes);
+                        sizes = sizes.split(",");
+                        // res.sendInfo("", sizes);
+                        jobwork_inward_details.color_size_details = sizes;
+
+                        const GET_COLOR_DETAILS_QUERY = `select color.color, jobwork_inward_inventory.size1,jobwork_inward_inventory.size2,jobwork_inward_inventory.size3,jobwork_inward_inventory.size4,jobwork_inward_inventory.size5,jobwork_inward_inventory.size6,jobwork_inward_inventory.size7,jobwork_inward_inventory.size8, jobwork_inward_inventory.size9, jobwork_inward_inventory.qty from jobwork_inward_inventory left join color on color.id = jobwork_inward_inventory.color_id where vou_id = ${id};`;
+
+                        DBCON.query(GET_COLOR_DETAILS_QUERY, (err, color_details) => {
+                            if (err) {
+                                console.log(err);
+                                callback(err);
+                            } else {
+                                jobwork_inward_details.color_details = color_details;
+
+                                // const GET_ACCESSORIES_QUERY = `select product.product, jobwork_inward_product.qty, unit.unit  from jobwork_inward_product left join product on product.id = jobwork_inward_product.product_id left join unit on unit.id = product.unit_id where vou_id = ${id};`;
+
+                                // DBCON.query(GET_ACCESSORIES_QUERY, (err, accessories) => {
+                                //     if (err) {
+                                //         console.log(err);
+                                //         callback(err);
+                                //     } else {
+                                //         jobwork_outward_details.accessories = accessories;
+
+                                        const GET_COMPANY_DETAILS = `select * from company limit 1`;
+                                        const GET_LEDGER_DETAILS = `select ledger.ledger, ledger.delivery_address, ledger.mobile, ledger.phone, ledger.gstno from jobwork_inward left join ledger on jobwork_inward.ledger_id = ledger.id where jobwork_inward.id = ${id}`;
+                                        DBCON.query(GET_COMPANY_DETAILS, (err, company_details) => {
+                                            if (err) {
+                                                console.log(err);
+                                                callback(err);
+
+                                            } else {
+                                                jobwork_inward_details.company_details = company_details[0];
+                                                DBCON.query(GET_LEDGER_DETAILS, (err, ledger_details) => {
+                                                    if (err) {
+                                                        console.log(err);
+                                                        callback(err);
+                                                    } else {
+                                                        jobwork_inward_details.ledger_details = ledger_details[0];
+                                                        callback(false, jobwork_inward_details);
+                                                    }
+                                                });
+                                            }
+                                        });
+                                //     }
+                                // });
+
+                            }
+                        })
+                    }
+                })
+
+            }
+        })
+    },
 }
     
 module.exports = Jobwork_InwardModel;
