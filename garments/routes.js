@@ -406,7 +406,14 @@ router.get('/getGarmentsDeliveryNotePrint', TransactionsController.getGarmentsDe
 router.get('/getGarmentsReceiptNotePrint', TransactionsController.getGarmentsReceiptNotePrint);
 
 router.get('/getJobworkInwardReport', TransactionsController.getJobworkInwardReport);
+router.get('/getGarmentsDeliveryNoteInventoryDetails', TransactionsController.getGarmentsDeliveryNoteInventoryDetails);
 
+//purchase order
+router.put('/purchaseOrder', TransactionsController.savePurchaseOrder);
+router.get('/purchaseOrder', TransactionsController.getPurchaseOrder);
+router.delete('/purchaseOrder', TransactionsController.deletePurchaseOrder);
+router.get('/getNextPurchaseOrderVouNo',TransactionsController.getNextPurchaseOrderVouNo )
+router.get('/getHsnAndRateForProductId',TransactionsController.getHsnAndRateForProductId )
 
 
 ////////////////////// Kowsalya Workspace/////////////////

@@ -73,8 +73,14 @@ GarmentsInvoiceModel.prototype = {
                         console.log(err);
                         callback(err)
                     } else {
-                        garments_invoice.garments_invoice_inventory = result1;
-                        callback(false, garments_invoice);
+                        result1.map((item, index) => {
+                            item.size_details = [];
+                            if(index === result1.length - 1)
+                            {
+                                garments_invoice.garments_invoice_inventory = result1;
+                                callback(false, garments_invoice);
+                            }
+                        })
                     }
 
                 })
