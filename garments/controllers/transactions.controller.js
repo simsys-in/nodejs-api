@@ -1479,7 +1479,7 @@ exports.getSizesForOrderID = (req, res) => {
 
 }
 
-exports.getFabricsForOrderID = (req, res) => {
+exports.getFabricsForOrderIDForCuttingProgram = (req, res) => {
     const ORDER_ID = req.query.order_id;
 
     DBCON.query(`select product.product as name, product.id as value from order_fabric left join product on product.id = order_fabric.fabric_id where order_id  = ${ORDER_ID}`, (err, data) => {

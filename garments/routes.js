@@ -229,7 +229,7 @@ router.get('/cutting_program', TransactionsController.getCuttingProgram);
 router.delete('/cutting_program', TransactionsController.deleteCuttingProgram);
 router.get('/getSizesForOrderID', TransactionsController.getSizesForOrderID);
 router.get('/getNextCuttingProgLotNo', TransactionsController.getNextCuttingProgLotNo);
-// router.get('/getFabricsForOrderID', TransactionsController.getFabricsForOrderID);
+router.get('/getFabricsForOrderIDForCuttingProgram', TransactionsController.getFabricsForOrderIDForCuttingProgram);
 router.get('/getFabricDetailForOrder', TransactionsController.getFabricDetailForOrder);
 router.get('/getJobworkOutwardReport', TransactionsController.getJobworkOutwardReport);
 router.get('/getOrdersForLedgerAndProcess', TransactionsController.getOrdersForLedgerAndProcess);
