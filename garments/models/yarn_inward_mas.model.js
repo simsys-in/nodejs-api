@@ -218,7 +218,73 @@ Yarn_InwardModel.prototype = {
                 callback(false,result[0]);
             }
         })
-    }
+    },
+    getYarnInwardReport: (id, callback) => {
+        var yarn_inward_details = {};
+        const QUERY = `select yarn_inward.id, yarn_inward.vouno, yarn_inward.vou_date,process.process, order_program.order_no from yarn_inward left join process on process.id = yarn_inward.process_id left join order_program on order_program.id = yarn_inward.order_id where yarn_inward.id = ${id};`;
+
+        DBCON.query(QUERY, (err, result) => {
+            if (err) {
+                console.log(err);
+                callback(err);
+            } else {
+                yarn_inward_details = result[0];
+
+
+                                const GET_INVENTORY_QUERY = `select yarn_inward_inventory.id, product.product, yarn_inward_inventory.gsm, yarn_inward_inventory.counts, yarn_inward_inventory.qtybag_per, yarn_inward_inventory.qty_bag, yarn_inward_inventory.qty_kg from yarn_inward_inventory left join product on product.id = yarn_inward_inventory.fabric_id where vou_id = ${id};`;
+
+                                DBCON.query(GET_INVENTORY_QUERY, (err, inventory) => {
+                                    if (err) {
+                                        console.log(err);
+                                        callback(err);
+                                    } else {
+                                        yarn_inward_details.inventory = inventory;
+
+                                        //total
+                                const GET_INVENTORYTOTAL_QUERY = `select yarn_inward.inventory_qty_kg_total from yarn_inward where yarn_inward.id = ${id};`;
+
+                                DBCON.query(GET_INVENTORYTOTAL_QUERY, (err, inventorytotal) => {
+                                    if (err) {
+                                        console.log(err);
+                                        callback(err);
+                                    } else {
+                                        yarn_inward_details.inventorytotal = inventorytotal;
+
+                                        //total
+
+
+                                        const GET_COMPANY_DETAILS = `select * from company limit 1`;
+                                        const GET_LEDGER_DETAILS = `select ledger.ledger, ledger.delivery_address, ledger.mobile, ledger.phone, ledger.gstno from yarn_inward left join ledger on yarn_inward.ledger_id = ledger.id where yarn_inward.id = ${id}`;
+                                        DBCON.query(GET_COMPANY_DETAILS, (err, company_details) => {
+                                            if (err) {
+                                                console.log(err);
+                                                callback(err);
+
+                                            } else {
+                                                yarn_inward_details.company_details = company_details[0];
+                                                DBCON.query(GET_LEDGER_DETAILS, (err, ledger_details) => {
+                                                    if (err) {
+                                                        console.log(err);
+                                                        callback(err);
+                                                    } else {
+                                                        yarn_inward_details.ledger_details = ledger_details[0];
+                                                        callback(false, yarn_inward_details);
+                                                    }
+                                                });
+                                            }
+                                        });
+                                    }
+                                });
+
+                            }
+                    //     })
+                    // }
+                })
+
+            }
+        })
+    },
+
 }
     
 module.exports = Yarn_InwardModel;
