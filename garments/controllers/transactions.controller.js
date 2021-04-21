@@ -59,6 +59,11 @@ const GarmentsReceiptNote = new GarmentsReceiptNoteModel();
 const KnittingProgramModel = require('../models/knitting_program.model');
 const KnittingProgram = new KnittingProgramModel();
 
+//purchase order
+const PurchaseOrderModel = require('../models/purchase_order.model');
+const PurchaseOrder = new PurchaseOrderModel();
+
+
 
 //orderProgram
 exports.saveOrderProgram = function (req, res) {
@@ -2382,6 +2387,96 @@ exports.getGarmentsDeliveryNoteInventoryDetails = function (req, res) {
         }
     })
 }
+
+//purchase order
+
+
+exports.savePurchaseOrder = function (req, res) {
+    const body = req.body;
+    body.id = req.query.id;
+    PurchaseOrder.checkAndSaveOrUpdate(body, (err, result, msg) => {
+        if (err) {
+            console.log(err);
+            res.sendError(err);
+        } else {
+            res.sendSuccess(msg, result)
+        }
+    })
+}
+
+
+exports.getPurchaseOrder = function (req, res) {
+    var ID = req.query.id;
+    if (issetNotEmpty(ID)) {
+        PurchaseOrder.find(Number(ID), function (err, data) {
+            if (err) {
+                console.log(err);
+                res.sendError(err)
+            } else {
+                res.sendInfo("", data);
+            }
+        })
+    } else {
+        PurchaseOrder.getAll((err, data) => {
+            if (err) {
+                console.log(err)
+                res.sendError(err)
+            } else {
+                res.sendSuccess("", data)
+            }
+        })
+    }
+}
+
+
+
+exports.deletePurchaseOrder = function (req, res) {
+    const id = req.query.id;
+    console.log("ID : " + id);
+
+    if (issetNotEmpty(id)) {
+        PurchaseOrder.delete(Number(id), function (err, data) {
+            if (err) {
+                console.log(err);
+                res.sendError(err)
+            } else {
+                res.sendInfo("Knitting Program Deleted Successfully!");
+            }
+        })
+    } else {
+        res.sendWarning("Knitting Program Not Found! ")
+    }
+
+}
+
+exports.getNextPurchaseOrderVouNo = function(req, res){
+    PurchaseOrder.getNextPurchaseOrderVouNo((err, result) => {
+        if(err)
+        {
+            res.sendError(err);
+        }
+        else{
+            res.sendInfo("", result)
+        }
+    })
+}
+
+exports.getHsnAndRateForProductId = function (req, res) {
+    const body = req.body;
+    const USER = req.user;
+    body.company = USER.company
+    const status = body.status ? body.status : 'active';
+    var product_id = req.query.product_id ? req.query.product_id : null;
+    DBCON.query('select id as product_id, unit_id,hsnsac,purchase_amount from product  where id = ? ', product_id, function (err, data) {
+        if (err) {
+            console.log(err)
+            res.sendError(err)
+        } else {
+            res.sendInfo("", data[0])
+        }
+    })
+}
+
 
 
 ////////////////////// Kowsalya Workspace/////////////////
