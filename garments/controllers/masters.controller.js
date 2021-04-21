@@ -203,7 +203,7 @@ exports.getAllLedgerSB = function (req, res) {
     const USER = req.user;
     body.company = USER.company
     // const status = body.status ? body.status : 'active'
-    DBCON.query('select id as value, ledger as name from ledger order by ledger asc', function (err, data) {
+    DBCON.query('select id as value, ledger as name from ledger order by ledger.id desc', function (err, data) {
         if (err) {
             console.log(err)
             res.sendError(err)
@@ -259,7 +259,7 @@ exports.getAllProduct_CategorySB = function (req, res) {
     const USER = req.user;
     body.company = USER.company
     const status = body.status ? body.status : 'active'
-    DBCON.query('select id as value, product_category as name from product_category',  function (err, data) {
+    DBCON.query('select id as value, product_category as name from product_category order by product_category.id desc',  function (err, data) {
         if (err) {
             console.log(err)
             res.sendError(err)
@@ -356,7 +356,7 @@ exports.getAllProductGroupSB = function (req, res) {
     const USER = req.user;
     body.company = USER.company
     const status = body.status ? body.status : 'active'
-    DBCON.query('select id as value, product_group as name from product_group ',  function (err, data) {
+    DBCON.query('select id as value, product_group as name from product_group order by product_group.id desc ',  function (err, data) {
         if (err) {
             console.log(err)
             res.sendError(err)
@@ -372,7 +372,7 @@ exports.getAllMasterGroupSB = function (req, res) {
     const USER = req.user;
     body.company = USER.company
     const status = body.status ? body.status : 'active'
-    DBCON.query('select id as value, master_group as name from master_group ',  function (err, data) {
+    DBCON.query('select id as value, master_group as name from master_group order by master_group.id desc ',  function (err, data) {
         if (err) {
             console.log(err)
             res.sendError(err)
@@ -516,7 +516,7 @@ exports.getAllLedger_GroupSB = function (req, res) {
     const USER = req.user;
     body.company = USER.company
     const status = body.status ? body.status : 'active'
-    DBCON.query('select id as value, name from ledger_group ', function (err, data) {
+    DBCON.query('select id as value, name from ledger_group order by ledger_group.id desc ', function (err, data) {
         if (err) {
             console.log(err)
             res.sendError(err)
@@ -530,7 +530,7 @@ exports.getAllUnitSB = function (req, res) {
     const USER = req.user;
     body.company = USER.company
     const status = body.status ? body.status : 'active'
-    DBCON.query('select id as value, unit as name from unit ', function (err, data) {
+    DBCON.query('select id as value, unit as name from unit order by unit.id desc ', function (err, data) {
         if (err) {
             console.log(err)
             res.sendError(err)
@@ -676,7 +676,7 @@ exports.getAllLedger_CategorySB = function (req, res) {
     const USER = req.user;
     body.company = USER.company
     const status = body.status ? body.status : 'active';
-    DBCON.query('select id as value, name from ledger_category ', function (err, data) {
+    DBCON.query('select id as value, name from ledger_category order by ledger_category.id desc ', function (err, data) {
         if (err) {
             console.log(err)
             res.sendError(err)
@@ -711,7 +711,7 @@ exports.getAllProductSB = function (req, res) {
     const USER = req.user;
     body.company = USER.company
     const status = body.status ? body.status : 'active'
-    DBCON.query('select id as value , product as name from product',function (err, data) {
+    DBCON.query('select id as value , product as name from product order by product.id desc',function (err, data) {
         if (err) {
             console.log(err)
             res.sendError(err)
@@ -1227,7 +1227,7 @@ exports.getAllSizeSB = function (req, res) {
     const USER = req.user;
     body.company = USER.company
     const status = body.status ? body.status : 'active';
-    DBCON.query('select id as value, size as name from size ', function (err, data) {
+    DBCON.query('select id as value, size as name from size order by size.id desc ', function (err, data) {
         if (err) {
             console.log(err)
             res.sendError(err)
@@ -1244,7 +1244,7 @@ exports.getAllProcessSB = function (req, res) {
     const USER = req.user;
     body.company = USER.company
     const status = body.status ? body.status : 'active';
-    DBCON.query('select id as value, process as name from process ', function (err, data) {
+    DBCON.query('select id as value, process as name from process order by process.id desc ', function (err, data) {
         if (err) {
             console.log(err)
             res.sendError(err)
@@ -1261,7 +1261,7 @@ exports.getAllColorSB = function (req, res) {
     const USER = req.user;
     body.company = USER.company
     // const status = body.status ? body.status : 'active';
-    DBCON.query('select id as value, color as name from color ', function (err, data) {
+    DBCON.query('select id as value, color as name from color order by color.id desc ', function (err, data) {
         if (err) {
             console.log(err)
             res.sendError(err)
@@ -1335,7 +1335,7 @@ exports.getAllMasterSB = function (req, res) {
     const USER = req.user;
     body.company = USER.company
     const status = body.status ? body.status : 'active';
-    DBCON.query('select id as value, name from master ', function (err, data) {
+    DBCON.query('select id as value, name from master order by master.id desc ', function (err, data) {
         if (err) {
             console.log(err)
             res.sendError(err)
@@ -1373,7 +1373,7 @@ exports.getAllLedgerCategorySB = function (req, res) {
     const USER = req.user;
     body.company = USER.company
     const status = body.status ? body.status : 'active'
-    DBCON.query('select id as value, ledger_category as name from ledger_category ', function (err, data) {
+    DBCON.query('select id as value, ledger_category as name from ledger_category order by ledger_category.id desc ', function (err, data) {
         if (err) {
             console.log(err)
             res.sendError(err)
@@ -1388,7 +1388,7 @@ exports.getAllLedgerGroupSB = function (req, res) {
     const USER = req.user;
     body.company = USER.company
     const status = body.status ? body.status : 'active'
-    DBCON.query('select id as value, ledger_group as name from ledger_group ', function (err, data) {
+    DBCON.query('select id as value, ledger_group as name from ledger_group order by ledger_group.id desc ', function (err, data) {
         if (err) {
             console.log(err)
             res.sendError(err)
@@ -1441,7 +1441,7 @@ exports.getAllEmployee_CategorySB = function (req, res) {
     const USER = req.user;
     body.company = USER.company
     const status = body.status ? body.status : 'active';
-    DBCON.query('select id as value, name from employee_category ', function (err, data) {
+    DBCON.query('select id as value, name from employee_category order by employee_category.id desc ', function (err, data) {
         if (err) {
             console.log(err)
             res.sendError(err)
@@ -1511,7 +1511,7 @@ exports.getAllEmployeeSB = function (req, res) {
     const USER = req.user;
     body.company = USER.company
     const status = body.status ? body.status : 'active';
-    DBCON.query('select id as value, name from employee ', function (err, data) {
+    DBCON.query('select id as value, name from employee order by employee.id desc', function (err, data) {
         if (err) {
             console.log(err)
             res.sendError(err)
@@ -1544,7 +1544,7 @@ exports.getAllEmployeeCategorySB = function (req, res) {
     const USER = req.user;
     body.company = USER.company
     const status = body.status ? body.status : 'active'
-    DBCON.query('select id as value, employee_category as name from employee_category ', function (err, data) {
+    DBCON.query('select id as value, employee_category as name from employee_category order by employee_category.id desc ', function (err, data) {
         if (err) {
             console.log(err)
             res.sendError(err)
@@ -1558,7 +1558,7 @@ exports.getAllShiftSB = function (req, res) {
     const USER = req.user;
     body.company = USER.company
     const status = body.status ? body.status : 'active'
-    DBCON.query('select id as value, shift as name from shift ', function (err, data) {
+    DBCON.query('select id as value, shift as name from shift order by shift.id desc ', function (err, data) {
         if (err) {
             console.log(err)
             res.sendError(err)
@@ -1572,7 +1572,7 @@ exports.getAllDesignationSB = function (req, res) {
     const USER = req.user;
     body.company = USER.company
     const status = body.status ? body.status : 'active'
-    DBCON.query('select id as value, designation as name from designation ', function (err, data) {
+    DBCON.query('select id as value, designation as name from designation order by designation.id desc ', function (err, data) {
         if (err) {
             console.log(err)
             res.sendError(err)
@@ -1586,7 +1586,7 @@ exports.getAllDepartmentSB = function (req, res) {
     const USER = req.user;
     body.company = USER.company
     const status = body.status ? body.status : 'active'
-    DBCON.query('select id as value, department as name from department ', function (err, data) {
+    DBCON.query('select id as value, department as name from department order by department.id desc ', function (err, data) {
         if (err) {
             console.log(err)
             res.sendError(err)
@@ -1600,7 +1600,7 @@ exports.getAllCuttingMasterSB = function (req, res) {
     const USER = req.user;
     body.company = USER.company
     const status = body.status ? body.status : 'active'
-    DBCON.query('select id as value, employee as name from employee ', function (err, data) {
+    DBCON.query('select id as value, employee as name from employee order by employee.id desc ', function (err, data) {
         if (err) {
             console.log(err)
             res.sendError(err)
@@ -1614,7 +1614,7 @@ exports.getAllBranchSB = function (req, res) {
     const USER = req.user;
     body.company = USER.company
     const status = body.status ? body.status : 'active'
-    DBCON.query('select id as value, branch as name from branch ', function (err, data) {
+    DBCON.query('select id as value, branch as name from branch order by branch.id desc ', function (err, data) {
         if (err) {
             console.log(err)
             res.sendError(err)
@@ -1628,7 +1628,7 @@ exports.getAllBankSB = function (req, res) {
     const USER = req.user;
     body.company = USER.company
     const status = body.status ? body.status : 'active'
-    DBCON.query('select id as value, bank as name from bank ', function (err, data) {
+    DBCON.query('select id as value, bank as name from bank order by bank.id desc ', function (err, data) {
         if (err) {
             console.log(err)
             res.sendError(err)
@@ -1987,7 +1987,7 @@ exports.getAllCompanySB = function (req, res) {
     const USER = req.user;
     body.company = USER.company
     const status = body.status ? body.status : 'active'
-    DBCON.query('select id as value, company as name from company',  function (err, data) {
+    DBCON.query('select id as value, company as name from company order by company.id desc',  function (err, data) {
         if (err) {
             console.log(err)
             res.sendError(err)
@@ -2063,7 +2063,7 @@ exports.getAllShortcutSB = function (req, res) {
     const USER = req.user;
     body.shortcut = USER.shortcut
     const status = body.status ? body.status : 'active'
-    DBCON.query('select id as value, shortcut as name from shortcut',  function (err, data) {
+    DBCON.query('select id as value, shortcut as name from shortcut order by shortcut.id desc',  function (err, data) {
         if (err) {
             console.log(err)
             res.sendError(err)

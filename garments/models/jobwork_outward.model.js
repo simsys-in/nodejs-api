@@ -372,7 +372,7 @@ JobworkOutwardModel.prototype = {
     // }
 
     getNextJobworkOutwardVouNo: (callback) => {
-        var query = 'select max(ifnull(vouno, 0)) + 1 as max_vou_no from jobwork_outward';
+        var query = 'select ifnull(max(cast(vouno as UNSIGNED)), 0) + 1 as max_vou_no from jobwork_outward';
 
         DBCON.query(query, (err, result) => {
             if (err) {
