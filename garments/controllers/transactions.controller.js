@@ -1465,8 +1465,7 @@ exports.getSizesForOrderID = (req, res) => {
 
 }
 
-exports.getFabricsForOrderID = (req, res) => {
-    
+exports.getFabricsForOrderIDForCuttingProgram = (req, res) => {
     const ORDER_ID = req.query.order_id;
 
     DBCON.query(`select product.product as name, product.id as value from order_fabric left join product on product.id = order_fabric.fabric_id where order_id  = ${ORDER_ID}`, (err, data) => {
@@ -1715,6 +1714,57 @@ exports.deleteDyeingProgram = function (req, res) {
 
 }
 
+exports.getDyeingProgramReport = (req, res) => {
+    const ID = req.query.id;
+    DyeingProgram.getDyeingProgramReport(ID, (err, result) => {
+        if(err)
+        {
+            res.sendError(err);
+        }
+        else{
+            res.sendInfo("", result);
+        }
+    })
+}
+//fabric return report 
+exports.getFabricReturnReport = (req, res) => {
+    const ID = req.query.id;
+    FabricReturn.getFabricReturnReport(ID, (err, result) => {
+        if(err)
+        {
+            res.sendError(err);
+        }
+        else{
+            res.sendInfo("", result);
+        }
+    })
+}
+//yarn inward report
+exports.getYarnInwardReport = (req, res) => {
+    const ID = req.query.id;
+    Yarn_Inward.getYarnInwardReport(ID, (err, result) => {
+        if(err)
+        {
+            res.sendError(err);
+        }
+        else{
+            res.sendInfo("", result);
+        }
+    })
+}
+//yarn return report 
+exports.getYarnReturnReport = (req, res) => {
+    const ID = req.query.id;
+    Yarn_Return.getYarnReturnReport(ID, (err, result) => {
+        if(err)
+        {
+            res.sendError(err);
+        }
+        else{
+            res.sendInfo("", result);
+        }
+    })
+}
 exports.getDyeingProgramReport = (req, res) => {
     const ID = req.query.id;
     DyeingProgram.getDyeingProgramReport(ID, (err, result) => {

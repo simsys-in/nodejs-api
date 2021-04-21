@@ -215,7 +215,73 @@ Yarn_ReturnModel.prototype = {
                 callback(false,result[0]);
             }
         })
-    }
+    },
+    getYarnReturnReport: (id, callback) => {
+        var yarn_return_details = {};
+        const QUERY = `select yarn_return.id, yarn_return.vouno, yarn_return.vou_date,process.process, order_program.order_no from yarn_return left join process on process.id = yarn_return.process_id left join order_program on order_program.id = yarn_return.order_id where yarn_return.id = ${id};`;
+
+        DBCON.query(QUERY, (err, result) => {
+            if (err) {
+                console.log(err);
+                callback(err);
+            } else {
+                yarn_return_details = result[0];
+
+
+                                const GET_INVENTORY_QUERY = `select yarn_return_inventory.id, product.product, yarn_return_inventory.gsm, yarn_return_inventory.counts, yarn_return_inventory.qtybag_per, yarn_return_inventory.qty_bag, yarn_return_inventory.qty_kg from yarn_return_inventory left join product on product.id = yarn_return_inventory.fabric_id where vou_id = ${id};`;
+
+                                DBCON.query(GET_INVENTORY_QUERY, (err, inventory) => {
+                                    if (err) {
+                                        console.log(err);
+                                        callback(err);
+                                    } else {
+                                        yarn_return_details.inventory = inventory;
+
+                                        //total
+                                const GET_INVENTORYTOTAL_QUERY = `select yarn_return.inventory_qty_kg_total, yarn_return.inventory_qty_bag_total  from yarn_return where yarn_return.id = ${id};`;
+
+                                DBCON.query(GET_INVENTORYTOTAL_QUERY, (err, inventorytotal) => {
+                                    if (err) {
+                                        console.log(err);
+                                        callback(err);
+                                    } else {
+                                        yarn_return_details.inventorytotal = inventorytotal;
+
+                                        //total
+
+
+                                        const GET_COMPANY_DETAILS = `select * from company limit 1`;
+                                        const GET_LEDGER_DETAILS = `select ledger.ledger, ledger.delivery_address, ledger.mobile, ledger.phone, ledger.gstno from yarn_return left join ledger on yarn_return.ledger_id = ledger.id where yarn_return.id = ${id}`;
+                                        DBCON.query(GET_COMPANY_DETAILS, (err, company_details) => {
+                                            if (err) {
+                                                console.log(err);
+                                                callback(err);
+
+                                            } else {
+                                                yarn_return_details.company_details = company_details[0];
+                                                DBCON.query(GET_LEDGER_DETAILS, (err, ledger_details) => {
+                                                    if (err) {
+                                                        console.log(err);
+                                                        callback(err);
+                                                    } else {
+                                                        yarn_return_details.ledger_details = ledger_details[0];
+                                                        callback(false, yarn_return_details);
+                                                    }
+                                                });
+                                            }
+                                        });
+                                    }
+                                });
+
+                            }
+                    //     })
+                    // }
+                })
+
+            }
+        })
+    },
+
 }
     
 module.exports = Yarn_ReturnModel;
