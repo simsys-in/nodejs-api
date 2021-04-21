@@ -289,7 +289,7 @@ Jobwork_InwardModel.prototype = {
                                 //         jobwork_outward_details.accessories = accessories;
 
                                         const GET_COMPANY_DETAILS = `select * from company limit 1`;
-                                        const GET_LEDGER_DETAILS = `select ledger.ledger, ledger.delivery_address, ledger.mobile, ledger.phone, ledger.gstno from jobwork_inward left join ledger on jobwork_inward.ledger_id = ledger.id where jobwork_inward.id = ${id}`;
+                                        const GET_LEDGER_DETAILS = `select ledger.ledger, ledger.address, ledger.mobile, ledger.phone, ledger.gstno from jobwork_inward left join ledger on jobwork_inward.ledger_id = ledger.id where jobwork_inward.id = ${id}`;
                                         DBCON.query(GET_COMPANY_DETAILS, (err, company_details) => {
                                             if (err) {
                                                 console.log(err);

@@ -269,7 +269,7 @@ Yarn_InvoiceModel.prototype = {
 
 
                                         const GET_COMPANY_DETAILS = `select * from company limit 1`;
-                                        const GET_LEDGER_DETAILS = `select ledger.ledger, ledger.delivery_address, ledger.mobile, ledger.phone, ledger.gstno from yarn_invoice left join ledger on yarn_invoice.ledger_id = ledger.id where yarn_invoice.id = ${id}`;
+                                        const GET_LEDGER_DETAILS = `select ledger.ledger, ledger.address, ledger.mobile, ledger.phone, ledger.gstno from yarn_invoice left join ledger on yarn_invoice.ledger_id = ledger.id where yarn_invoice.id = ${id}`;
                                         DBCON.query(GET_COMPANY_DETAILS, (err, company_details) => {
                                             if (err) {
                                                 console.log(err);

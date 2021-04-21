@@ -1782,6 +1782,20 @@ exports.getDyeingProgramReport = (req, res) => {
         }
     })
 }
+//report yarn purchase order 
+
+exports.getYarnPurchaseOrderReport = (req, res) => {
+    const ID = req.query.id;
+    PurchaseOrder.getYarnPurchaseOrderReport(ID, (err, result) => {
+        if(err)
+        {
+            res.sendError(err);
+        }
+        else{
+            res.sendInfo("", result);
+        }
+    })
+}
 
 
 
