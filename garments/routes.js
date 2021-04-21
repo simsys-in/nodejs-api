@@ -335,6 +335,10 @@ router.get('/getFabricReturnReport', TransactionsController.getFabricReturnRepor
 router.get('/getYarnInwardReport', TransactionsController.getYarnInwardReport);
 //report yarn return
 router.get('/getYarnReturnReport', TransactionsController.getYarnReturnReport);
+//report purchase order
+router.get('/getYarnPurchaseOrderReport', TransactionsController.getYarnPurchaseOrderReport);
+
+
 
 
 

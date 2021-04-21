@@ -250,7 +250,7 @@ Yarn_OutwardModel.prototype = {
 
 
                                         const GET_COMPANY_DETAILS = `select * from company limit 1`;
-                                        const GET_LEDGER_DETAILS = `select ledger.ledger, ledger.delivery_address, ledger.mobile, ledger.phone, ledger.gstno from yarn_outward left join ledger on yarn_outward.ledger_id = ledger.id where yarn_outward.id = ${id}`;
+                                        const GET_LEDGER_DETAILS = `select ledger.ledger, ledger.address, ledger.mobile, ledger.phone, ledger.gstno from yarn_outward left join ledger on yarn_outward.ledger_id = ledger.id where yarn_outward.id = ${id}`;
                                         DBCON.query(GET_COMPANY_DETAILS, (err, company_details) => {
                                             if (err) {
                                                 console.log(err);

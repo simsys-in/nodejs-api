@@ -108,6 +108,7 @@ PurchaseOrderModel.prototype = {
                                 
                                     var purchase_order_inventory = {
                                         vou_id: body.id,
+                                        unit_id: item.unit_id,
                             
                                         yarn_id: item.yarn_id,
                                         hsnsac: item.hsnsac,
@@ -159,7 +160,8 @@ PurchaseOrderModel.prototype = {
                             console.log(item, index)
                             var purchase_order_inventory = {
                                 vou_id: result.insertId,
-                        
+                                unit_id: item.unit_id,
+
                                 yarn_id: item.yarn_id,
                                 hsnsac: item.hsnsac,
                                 qty: item.qty,
@@ -216,6 +218,72 @@ PurchaseOrderModel.prototype = {
             }
         })
     },
+    getYarnPurchaseOrderReport: (id, callback) => {
+        var purchase_order_details = {};
+        const QUERY = `select purchase_order.id, purchase_order.vouno, purchase_order.vou_date, purchase_order.delivery_address, purchase_order.ledger_id, purchase_order.inventory_qty_total, purchase_order.inventory_amount_total from purchase_order where purchase_order.id = ${id};`;
+
+        DBCON.query(QUERY, (err, result) => {
+            if (err) {
+                console.log(err);
+                callback(err);
+            } else {
+                purchase_order_details = result[0];
+
+
+                                const GET_INVENTORY_QUERY = `select purchase_order_inventory.id, purchase_order_inventory.hsnsac, product.product, unit.unit, purchase_order_inventory.qty, purchase_order_inventory.rate, purchase_order_inventory.amount from purchase_order_inventory left join product on product.id = purchase_order_inventory.yarn_id left join unit on unit.id = purchase_order_inventory.unit_id where vou_id = ${id};`;
+
+                                DBCON.query(GET_INVENTORY_QUERY, (err, inventory) => {
+                                    if (err) {
+                                        console.log(err);
+                                        callback(err);
+                                    } else {
+                                        purchase_order_details.inventory = inventory;
+
+                                        //total
+                                // const GET_INVENTORYTOTAL_QUERY = `select purchase_order.inventory_qty_kg_total, purchase_order.inventory_amount_total from purchase_order where purchase_order.id = ${id};`;
+
+                                // DBCON.query(GET_INVENTORYTOTAL_QUERY, (err, inventorytotal) => {
+                                //     if (err) {
+                                //         console.log(err);
+                                //         callback(err);
+                                //     } else {
+                                //         purchase_order_details.inventorytotal = inventorytotal;
+
+                                        //total
+
+
+                                        const GET_COMPANY_DETAILS = `select * from company limit 1`;
+                                        const GET_LEDGER_DETAILS = `select ledger.ledger, ledger.address, ledger.mobile, ledger.phone, ledger.gstno from purchase_order left join ledger on purchase_order.ledger_id = ledger.id where purchase_order.id = ${id}`;
+                                        DBCON.query(GET_COMPANY_DETAILS, (err, company_details) => {
+                                            if (err) {
+                                                console.log(err);
+                                                callback(err);
+
+                                            } else {
+                                                purchase_order_details.company_details = company_details[0];
+                                                DBCON.query(GET_LEDGER_DETAILS, (err, ledger_details) => {
+                                                    if (err) {
+                                                        console.log(err);
+                                                        callback(err);
+                                                    } else {
+                                                        purchase_order_details.ledger_details = ledger_details[0];
+                                                        callback(false, purchase_order_details);
+                                                    }
+                                                });
+                                            }
+                                        });
+                                    }
+                            //     });
+
+                            // }
+                    //     })
+                    // }
+                })
+
+            }
+        })
+    },
+
    
 }
 
