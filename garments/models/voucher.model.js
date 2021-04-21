@@ -149,7 +149,7 @@ VoucherModel.prototype = {
                                 var route_accounts = {
                                     vou_id : body.id,
                                     slno : 0,
-                                    description : item.description,
+                                    narration : item.description,
                                     uid : 0,
                                     ledger_id : item.ledger_id,
                                     narration : 0,
@@ -211,7 +211,7 @@ VoucherModel.prototype = {
                                     var route_accounts = {
                                         vou_id :result.insertId,
                                         slno : 0,
-                                        description : item.description,
+                                        narration : item.description,
                                         uid : 0,
                                         ledger_id : item.ledger_id,
                                         narration : 0,

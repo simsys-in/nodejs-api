@@ -205,7 +205,7 @@ PurchaseOrderModel.prototype = {
     },
 
     getNextPurchaseOrderVouNo: (callback) => {
-        var query = 'select max(ifnull(vouno, 0)) + 1 as max_vou_no from purchase_order';
+        var query = 'select ifnull(max(ifnull(vouno, 0)),0) + 1 as max_vou_no from purchase_order';
 
         DBCON.query(query, (err, result) => {
             if (err) {

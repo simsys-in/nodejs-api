@@ -150,7 +150,14 @@ exports.getAllMenusForUserPermission = function (req, res) {
     }
     query += ` group by menu_master.id`;
 
-    var query1 = `select route.voutype as menu, route.id as menu_id, 'route' as menu_from, ifnull(user_group_permission.view_permission,0) as view_permission, ifnull(user_group_permission.add_permission,0) as add_permission, ifnull(user_group_permission.edit_permission,0) as edit_permission, ifnull(user_group_permission.delete_permission,0) as delete_permission, route.icon, user_group_permission.type from (select * from route)route left join (select * from user_group_permission where user_group_id = ${user_group_id} and menu_id is null)user_group_permission on  user_group_permission.route = route.id `;
+    var subquery = `select * from user_group_permission where menu_id is null`;
+
+    if(issetNotEmpty(user_group_id))
+    {
+        subquery = `select * from user_group_permission where user_group_id = ${user_group_id} and menu_id is null`;
+    }
+
+    var query1 = `select route.voutype as menu, route.id as menu_id, 'route' as menu_from, ifnull(user_group_permission.view_permission,0) as view_permission, ifnull(user_group_permission.add_permission,0) as add_permission, ifnull(user_group_permission.edit_permission,0) as edit_permission, ifnull(user_group_permission.delete_permission,0) as delete_permission, route.icon, user_group_permission.type from (select * from route)route left join (${subquery})user_group_permission on  user_group_permission.route = route.id `;
 
     if (issetNotEmpty(user_group_id)) {
         query1 += `  where user_group_permission.user_group_id = '${user_group_id}'`;
