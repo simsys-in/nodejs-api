@@ -34,7 +34,6 @@ app.use(expressSession({
 // app.options('*', cors()) 
 app.use(cors({
     origin: function (origin, callback) {
-        console.log(origin)
         if(origin && origin.includes("http"))
         {
             if (process.env.FRONT_END_URL.indexOf(origin) !== -1) {
@@ -57,7 +56,7 @@ process.env['DB_NAME'] = process.env.DB_NAME;
 process.env['DB_USER'] = process.env.DB_USER;
 process.env['DB_PASS'] = process.env.DB_PASS;
 
-var DBCON = require('./db_config');
+var DBCON = require('./app/db_config');
 DBCON.query("select 1 as c", function(err, result){
     if(err)
     {
@@ -116,12 +115,12 @@ app.use(middlewares.authenticateJWT);
 // app.use('/payroll', payroll_masters);
 
 // const garments_routes = require('./garments/routes')
-app.use('/garments', require('./garments/routes'));
+app.use('/garments', require('./app/garments/routes'));
 // app.use('/core', garments_routes);
 
 
 // const core_routes = require('./core/routes')
-app.use('/core', require('./core/routes'));
+app.use('/core', require('./app/core/routes'));
 
 // const masters = require('./routes/masters.routes');
 
