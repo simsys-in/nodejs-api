@@ -104,25 +104,32 @@ DyeingProgramModel.prototype = {
                         if (err) {
                             callback(err)
                         } else {
-                            body.dyeing_program_inventory.map((item, index) => {
-                                if (item.selected) {
-                                    var dyeing_program_inventory = {
-                                        vou_id: body.id,
-                                        fabric_id: item.fabric_id,
-                                        // ledger_id : item.ledger_id,
-                                        rolls: item.rolls,
-                                        narration :item.narration,
-                                        weight: item.weight,
-                                        color_id: item.color_id,
-                                        dia: item.dia,
-                                        gsm: item.gsm,
+                            if (body.dyeing_program_inventory.length > 0) {
+
+                                body.dyeing_program_inventory.map((item, index) => {
+                                    if (item.selected) {
+                                        var dyeing_program_inventory = {
+                                            vou_id: body.id,
+                                            fabric_id: item.fabric_id,
+                                            // ledger_id : item.ledger_id,
+                                            rolls: item.rolls,
+                                            narration :item.narration,
+                                            weight: item.weight,
+                                            color_id: item.color_id,
+                                            dia: item.dia,
+                                            gsm: item.gsm,
+                                        }
+                                        DBCON.query(`insert into dyeing_program_inventory set ?`, dyeing_program_inventory);
                                     }
-                                    DBCON.query(`insert into dyeing_program_inventory set ?`, dyeing_program_inventory);
-                                }
-                                if (index === body.dyeing_program_inventory.length - 1) {
-                                    callback(false, result, "Fabric Inward  Saved Successfully!");
-                                }
-                            })
+                                    if (index === body.dyeing_program_inventory.length - 1) {
+                                        callback(false, result, "Fabric Inward  Saved Successfully!");
+                                    }
+                                })
+                            }else{
+                                callback(false, result, "Fabric Inward  Saved Successfully!");
+
+                            }
+
                         }
                     })
 
@@ -149,25 +156,32 @@ DyeingProgramModel.prototype = {
                     callback(err)
                 } else {
                     console.log(result);
-                    body.dyeing_program_inventory.map((item, index) => {
-                        if (item.selected) {
-                            var dyeing_program_inventory = {
-                                vou_id: result.insertId,
-                                fabric_id: item.fabric_id,
-                                // ledger_id : item.ledger_id,
-                                rolls: item.rolls,
-                                narration :item.narration,
-                                weight: item.weight,
-                                color_id: item.color_id,
-                                dia: item.dia,
-                                gsm: item.gsm,
+                    if (body.dyeing_program_inventory.length > 0) {
+
+                        body.dyeing_program_inventory.map((item, index) => {
+                            if (item.selected) {
+                                var dyeing_program_inventory = {
+                                    vou_id: result.insertId,
+                                    fabric_id: item.fabric_id,
+                                    // ledger_id : item.ledger_id,
+                                    rolls: item.rolls,
+                                    narration :item.narration,
+                                    weight: item.weight,
+                                    color_id: item.color_id,
+                                    dia: item.dia,
+                                    gsm: item.gsm,
+                                }
+                                DBCON.query(`insert into dyeing_program_inventory set ?`, dyeing_program_inventory);
                             }
-                            DBCON.query(`insert into dyeing_program_inventory set ?`, dyeing_program_inventory);
-                        }
-                        if (index === body.dyeing_program_inventory.length - 1) {
-                            callback(false, result, "Fabric Inward  Updated Successfully!");
-                        }
-                    })
+                            if (index === body.dyeing_program_inventory.length - 1) {
+                                callback(false, result, "Fabric Inward  Updated Successfully!");
+                            }
+                        })
+                    }else{
+                        callback(false, result, "Fabric Inward  Updated Successfully!");
+
+                    }
+
 
                 }
             })

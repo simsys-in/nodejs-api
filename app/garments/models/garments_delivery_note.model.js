@@ -139,36 +139,42 @@ GarmentsDeliveryNoteModel.prototype = {
                         if (err) {
                             callback(err)
                         } else {
-                            body.garments_delivery_note_inventory.map((item, index) => {
-                                
-                                    var garments_delivery_note_inventory = {
-                                        vou_id: body.id,
-                                        color_id: item.color_id,
-                                        color: item.color,
-                                        size1_qty: item.size1_qty,
-                                        size2_qty: item.size2_qty,
-                                        size3_qty: item.size3_qty,
-                                        size4_qty: item.size4_qty,
-                                        size5_qty: item.size5_qty,
-                                        size6_qty: item.size6_qty,
-                                        size7_qty: item.size7_qty,
-                                        size8_qty: item.size8_qty,
-                                        size9_qty: item.size9_qty,
-                                        product_id: item.product_id,
-                                        qty: item.qty,
-                                        unit: item.unit,
-                                        description: item.description
-                                    }
-                                    DBCON.query(`insert into garments_delivery_note_inventory set ?`, garments_delivery_note_inventory);
-                                    if (index === body.garments_delivery_note_inventory.length - 1) {
-                                        callback(false, result, "Garments Delivery Note  Updated Successfully!");
-                                    }
-                                // } else {
-                                //     if (index === body.garments_delivery_note_inventory.length - 1) {
-                                //         callback(false, result, "Garments Delivery Note Updated Successfully!");
-                                //     }
-                                // }
-                            })
+                            if(body.garments_delivery_note_inventory.length >0){
+
+                                body.garments_delivery_note_inventory.map((item, index) => {
+                                    
+                                        var garments_delivery_note_inventory = {
+                                            vou_id: body.id,
+                                            color_id: item.color_id,
+                                            color: item.color,
+                                            size1_qty: item.size1_qty,
+                                            size2_qty: item.size2_qty,
+                                            size3_qty: item.size3_qty,
+                                            size4_qty: item.size4_qty,
+                                            size5_qty: item.size5_qty,
+                                            size6_qty: item.size6_qty,
+                                            size7_qty: item.size7_qty,
+                                            size8_qty: item.size8_qty,
+                                            size9_qty: item.size9_qty,
+                                            product_id: item.product_id,
+                                            qty: item.qty,
+                                            unit: item.unit,
+                                            description: item.description
+                                        }
+                                        DBCON.query(`insert into garments_delivery_note_inventory set ?`, garments_delivery_note_inventory);
+                                        if (index === body.garments_delivery_note_inventory.length - 1) {
+                                            callback(false, result, "Garments Delivery Note  Updated Successfully!");
+                                        }
+                                    // } else {
+                                    //     if (index === body.garments_delivery_note_inventory.length - 1) {
+                                    //         callback(false, result, "Garments Delivery Note Updated Successfully!");
+                                    //     }
+                                    // }
+                                })
+                            }else{
+                                callback(false, result, "Garments Delivery Note  Updated Successfully!");
+
+                            }
                         }
                     })
 
@@ -204,41 +210,48 @@ GarmentsDeliveryNoteModel.prototype = {
                     callback(err)
                 } else {
                     // console.log(result);
-                    for(index=0; index < body.garments_delivery_note_inventory.length; index++)
-                    {
-                        var item = body.garments_delivery_note_inventory[index];
-                    //  body.garments_delivery_note_inventory.map((item, index) => {
-                        
-                            console.log(item, index)
-                            var garments_delivery_note_inventory = {
-                                vou_id: result.insertId,
-                                color_id: item.color_id,
-                                        color: item.color,
-                                        size1_qty: item.size1_qty,
-                                        size2_qty: item.size2_qty,
-                                        size3_qty: item.size3_qty,
-                                        size4_qty: item.size4_qty,
-                                        size5_qty: item.size5_qty,
-                                        size6_qty: item.size6_qty,
-                                        size7_qty: item.size7_qty,
-                                        size8_qty: item.size8_qty,
-                                        size9_qty: item.size9_qty,
-                                        product_id: item.product_id,
-                                        qty: item.qty,
-                                        unit:item.unit,
-                                        description: item.description
+                    if(body.garments_delivery_note_inventory.length > 0){
+
+                        for(index=0; index < body.garments_delivery_note_inventory.length; index++)
+                        {
+                            var item = body.garments_delivery_note_inventory[index];
+                        //  body.garments_delivery_note_inventory.map((item, index) => {
+                            
+                                console.log(item, index)
+                                var garments_delivery_note_inventory = {
+                                    vou_id: result.insertId,
+                                    color_id: item.color_id,
+                                            color: item.color,
+                                            size1_qty: item.size1_qty,
+                                            size2_qty: item.size2_qty,
+                                            size3_qty: item.size3_qty,
+                                            size4_qty: item.size4_qty,
+                                            size5_qty: item.size5_qty,
+                                            size6_qty: item.size6_qty,
+                                            size7_qty: item.size7_qty,
+                                            size8_qty: item.size8_qty,
+                                            size9_qty: item.size9_qty,
+                                            product_id: item.product_id,
+                                            qty: item.qty,
+                                            unit:item.unit,
+                                            description: item.description
+                                }
+                                DBCON.query(`insert into garments_delivery_note_inventory set ?`, garments_delivery_note_inventory);
+                                if (index === body.garments_delivery_note_inventory.length - 1) {
+                                    callback(false, result, "Garments Delivery Note Updated Successfully!");
+                                }
+                            // } else {
+                            //     if (index === body.garments_delivery_note_inventory.length - 1) {
+                            //         callback(false, result, "Garments Delivery Note Updated Successfully!");
+                            //     }
+                            // }
+                        // })
                             }
-                            DBCON.query(`insert into garments_delivery_note_inventory set ?`, garments_delivery_note_inventory);
-                            if (index === body.garments_delivery_note_inventory.length - 1) {
-                                callback(false, result, "Garments Delivery Note Updated Successfully!");
-                            }
-                        // } else {
-                        //     if (index === body.garments_delivery_note_inventory.length - 1) {
-                        //         callback(false, result, "Garments Delivery Note Updated Successfully!");
-                        //     }
-                        // }
-                    // })
-                        }
+                    }else{
+                        callback(false, result, "Garments Delivery Note Updated Successfully!");
+
+                    }
+
                 }
                 
             })

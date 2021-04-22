@@ -141,50 +141,62 @@ JobworkOutwardModel.prototype = {
                                 if (err) {
                                     callback(err)
                                 } else {
-                                    // for (const [index, item] in body.jobwork_outward_inventory) {
-                                    for (index = 0; index < body.jobwork_outward_inventory.length; index++) {
-                                        var item = body.jobwork_outward_inventory[index];
-                                        // body.jobwork_outward_inventory.map((item, index) => {
-                                        console.log(item)
-                                        if (item.selected) {
-                                            var jobwork_outward_inventory = {
-                                                vou_id: body.id,
-                                                color_id: item.color_id,
-                                                size1: item.size1,
-                                                size2: item.size2,
-                                                size3: item.size3,
-                                                size4: item.size4,
-                                                size5: item.size5,
-                                                size6: item.size6,
-                                                size7: item.size7,
-                                                size8: item.size8,
-                                                size9: item.size9,
-                                                qty: item.qty,
-                                                inward_inv_id: item.inward_inv_id
-                                            }
+                                    if(body.jobwork_outward_inventory.length >0){
 
-                                            DBCON.query(`insert into jobwork_outward_inventory set ?`, jobwork_outward_inventory);
-                                            if (index === body.jobwork_outward_inventory.length - 1) {
-                                                body.jobwork_outward_product.map((jobworkproduct, key) => {
-                                                    var jobwork_outward_product = {
-                                                        product_id: jobworkproduct.product_id,
-                                                        qty: jobworkproduct.qty,
-                                                        vou_id: body.id
-                                                    }
+                                        for (index = 0; index < body.jobwork_outward_inventory.length; index++) {
+                                            var item = body.jobwork_outward_inventory[index];
+                                           // for (const [index, item] in body.jobwork_outward_inventory) {
+                                            // body.jobwork_outward_inventory.map((item, index) => {
+                                            console.log(item)
+                                            if (item.selected) {
+                                                var jobwork_outward_inventory = {
+                                                    vou_id: body.id,
+                                                    color_id: item.color_id,
+                                                    size1: item.size1,
+                                                    size2: item.size2,
+                                                    size3: item.size3,
+                                                    size4: item.size4,
+                                                    size5: item.size5,
+                                                    size6: item.size6,
+                                                    size7: item.size7,
+                                                    size8: item.size8,
+                                                    size9: item.size9,
+                                                    qty: item.qty,
+                                                    inward_inv_id: item.inward_inv_id
+                                                }
+    
+                                                DBCON.query(`insert into jobwork_outward_inventory set ?`, jobwork_outward_inventory);
+                                                if (index === body.jobwork_outward_inventory.length - 1) {
+                                                    if(body.jobwork_outward_product.length > 0){
 
-                                                    DBCON.query(`insert into jobwork_outward_product set ?`, jobwork_outward_product);
-
-                                                    if (key === body.jobwork_outward_product.length - 1) {
+                                                        body.jobwork_outward_product.map((jobworkproduct, key) => {
+                                                            var jobwork_outward_product = {
+                                                                product_id: jobworkproduct.product_id,
+                                                                qty: jobworkproduct.qty,
+                                                                vou_id: body.id
+                                                            }
+        
+                                                            DBCON.query(`insert into jobwork_outward_product set ?`, jobwork_outward_product);
+        
+                                                            if (key === body.jobwork_outward_product.length - 1) {
+                                                                callback(false, result, "Jobwork Outward  Updated Successfully!");
+                                                            }
+                                                        })
+                                                    }else{
                                                         callback(false, result, "Jobwork Outward  Updated Successfully!");
+
                                                     }
-                                                })
-                                            }
-                                        } else {
-                                            console.log(index, body.jobwork_outward_inventory.length - 1)
-                                            if (index === body.jobwork_outward_inventory.length - 1) {
-                                                callback(false, result, "Jobwork Outward  Updated Successfully!");
+                                                }
+                                            } else {
+                                                console.log(index, body.jobwork_outward_inventory.length - 1)
+                                                if (index === body.jobwork_outward_inventory.length - 1) {
+                                                    callback(false, result, "Jobwork Outward  Updated Successfully!");
+                                                }
                                             }
                                         }
+                                    }else{
+                                        callback(false, result, "Jobwork Outward  Updated Successfully!");
+
                                     }
                                 }
                             })
@@ -231,41 +243,53 @@ JobworkOutwardModel.prototype = {
                     callback(err)
                 } else {
                     console.log(result);
-                    body.jobwork_outward_inventory.map((item, index) => {
-                        if (item.selected && issetNotEmpty(item.color_id)) {
-                            var jobwork_outward_inventory = {
-                                vou_id: result.insertId,
-                                color_id: item.color_id,
-                                size1: item.size1,
-                                size2: item.size2,
-                                size3: item.size3,
-                                size4: item.size4,
-                                size5: item.size5,
-                                size6: item.size6,
-                                size7: item.size7,
-                                size8: item.size8,
-                                size9: item.size9,
-                                qty: item.qty,
-                                inward_inv_id: item.inward_inv_id
-                            }
-                            DBCON.query(`insert into jobwork_outward_inventory set ?`, jobwork_outward_inventory);
-                            if (index === body.jobwork_outward_inventory.length - 1) {
-                                body.jobwork_outward_product.map((jobworkproduct, key) => {
-                                    var jobwork_outward_product = {
-                                        vou_id: result.insertId,
-                                        product_id: jobworkproduct.product_id,
-                                        qty: jobworkproduct.qty
-                                    }
+                    if(body.jobwork_outward_inventory.length > 0){
 
-                                    DBCON.query(`insert into jobwork_outward_product set ?`, jobwork_outward_product);
+                        body.jobwork_outward_inventory.map((item, index) => {
+                            if (item.selected && issetNotEmpty(item.color_id)) {
+                                var jobwork_outward_inventory = {
+                                    vou_id: result.insertId,
+                                    color_id: item.color_id,
+                                    size1: item.size1,
+                                    size2: item.size2,
+                                    size3: item.size3,
+                                    size4: item.size4,
+                                    size5: item.size5,
+                                    size6: item.size6,
+                                    size7: item.size7,
+                                    size8: item.size8,
+                                    size9: item.size9,
+                                    qty: item.qty,
+                                    inward_inv_id: item.inward_inv_id
+                                }
+                                DBCON.query(`insert into jobwork_outward_inventory set ?`, jobwork_outward_inventory);
+                                if (index === body.jobwork_outward_inventory.length - 1) {
+                                    if(body.jobwork_outward_product.length > 0){
 
-                                    if (key === body.jobwork_outward_product.length - 1) {
+                                        body.jobwork_outward_product.map((jobworkproduct, key) => {
+                                            var jobwork_outward_product = {
+                                                vou_id: result.insertId,
+                                                product_id: jobworkproduct.product_id,
+                                                qty: jobworkproduct.qty
+                                            }
+        
+                                            DBCON.query(`insert into jobwork_outward_product set ?`, jobwork_outward_product);
+        
+                                            if (key === body.jobwork_outward_product.length - 1) {
+                                                callback(false, result, "Jobwork Outward  Saved Successfully!");
+                                            }
+                                        })
+                                    }else{
                                         callback(false, result, "Jobwork Outward  Saved Successfully!");
+
                                     }
-                                })
+                                }
                             }
-                        }
-                    })
+                        })
+                    }else{
+                        callback(false, result, "Jobwork Outward  Saved Successfully!");
+
+                    }
 
                 }
             })

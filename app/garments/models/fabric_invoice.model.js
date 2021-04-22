@@ -115,29 +115,36 @@ FabricInvoiceModel.prototype = {
                             callback(err)
                         }
                         else{
-                            body.fabric_invoice_inventory.map((item, index) => {
-                                if (item.selected && issetNotEmpty(item.fabric_id) && item.fabric_id !== 0 && issetNotEmpty(item.color_id) && item.color_id !== 0){
+                            if (body.fabric_invoice_inventory.length > 0) {
 
-                                    var fabric_invoice_inventory = {
-                                        vou_id : body.id,
-                                        fabric_id : item.fabric_id,
-                                        roll : item.roll,
-                                        weight : item.weight,
-                                        color_id : item.color_id,
-                                        dia : item.dia,
-                                        gsm : item.gsm,
-                                        rate : item.rate,
-                                        amount : item.amount
+                                body.fabric_invoice_inventory.map((item, index) => {
+                                    if (item.selected && issetNotEmpty(item.fabric_id) && item.fabric_id !== 0 && issetNotEmpty(item.color_id) && item.color_id !== 0){
     
+                                        var fabric_invoice_inventory = {
+                                            vou_id : body.id,
+                                            fabric_id : item.fabric_id,
+                                            roll : item.roll,
+                                            weight : item.weight,
+                                            color_id : item.color_id,
+                                            dia : item.dia,
+                                            gsm : item.gsm,
+                                            rate : item.rate,
+                                            amount : item.amount
+        
+                                        }
+                                        DBCON.query(`insert into fabric_invoice_inventory set ?`, fabric_invoice_inventory);
                                     }
-                                    DBCON.query(`insert into fabric_invoice_inventory set ?`, fabric_invoice_inventory);
-                                }
-                                    if(index === body.fabric_invoice_inventory.length - 1)
-                                            {
-                                                callback(false, result, "Fabric Invoice  Updated Successfully!");
-                                            }
+                                        if(index === body.fabric_invoice_inventory.length - 1)
+                                                {
+                                                    callback(false, result, "Fabric Invoice  Updated Successfully!");
+                                                }
+    
+                                })
+                            }else{
+                                callback(false, result, "Fabric Invoice  Updated Successfully!");
 
-                            })
+                            }
+
                         }
                     })
 
@@ -168,28 +175,35 @@ FabricInvoiceModel.prototype = {
                                 callback(err)
                             } else {
                                 console.log(result);
-                                body.fabric_invoice_inventory.map((item, index) => {
-                                    if (item.selected && issetNotEmpty(item.fabric_id) && item.fabric_id !== 0 && issetNotEmpty(item.color_id) && item.color_id !== 0 ) {
+                                if (body.fabric_invoice_inventory.length > 0) {
 
-                                        var fabric_invoice_inventory = {
-                                            vou_id : result.insertId,
-                                            fabric_id : item.fabric_id,
-                                            roll : item.roll,
-                                            weight : item.weight,
-                                            color_id : item.color_id,
-                                            dia : item.dia,
-                                            gsm : item.gsm,
-                                            rate : item.rate,
-                                            amount : item.amount
-        
+                                    body.fabric_invoice_inventory.map((item, index) => {
+                                        if (item.selected && issetNotEmpty(item.fabric_id) && item.fabric_id !== 0 && issetNotEmpty(item.color_id) && item.color_id !== 0 ) {
+    
+                                            var fabric_invoice_inventory = {
+                                                vou_id : result.insertId,
+                                                fabric_id : item.fabric_id,
+                                                roll : item.roll,
+                                                weight : item.weight,
+                                                color_id : item.color_id,
+                                                dia : item.dia,
+                                                gsm : item.gsm,
+                                                rate : item.rate,
+                                                amount : item.amount
+            
+                                            }
+                                            DBCON.query(`insert into fabric_invoice_inventory set ?`, fabric_invoice_inventory);
                                         }
-                                        DBCON.query(`insert into fabric_invoice_inventory set ?`, fabric_invoice_inventory);
-                                    }
-                                        if(index === body.fabric_invoice_inventory.length - 1)
-                                                {
-                                                    callback(false, result, "Fabric Invoice  Saved Successfully!");
-                                                }
-                                })
+                                            if(index === body.fabric_invoice_inventory.length - 1)
+                                                    {
+                                                        callback(false, result, "Fabric Invoice  Saved Successfully!");
+                                                    }
+                                    })
+                                }else{
+                                    callback(false, result, "Fabric Invoice  Saved Successfully!");
+
+                                }
+
 
                             }
                         })

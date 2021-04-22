@@ -106,31 +106,37 @@ GeneralPurchaseOrderModel.prototype = {
                         if (err) {
                             callback(err)
                         } else {
-                            body.general_purchase_order_inventory.map((item, index) => {
-                            // for (index = 0; index < body.purchase_order_inventory.length; index++) {
-                            //     var item = body.purchase_order_inventory[index];
-                                
-                                    var general_purchase_order_inventory = {
-                                        vou_id: body.id,
-                                        unit_id: item.unit_id,
-                                        product_id: item.product_id,
-                                        hsnsac: item.hsnsac,
-                                        qty: item.qty,
-                                        rate: item.rate,
-                                        amount: item.amount,
-                                    }
-                                    DBCON.query(`insert into general_purchase_order_inventory set ?`, general_purchase_order_inventory);
-                                    if (index === body.general_purchase_order_inventory.length - 1) {
-                                        callback(false, result, "General Purchase Order  Saved Successfully!");
-                                    }
+                            if(body.general_purchase_order_inventory.length > 0){
 
-                                 else {
-                                    if (index === body.general_purchase_order_inventory.length - 1) {
-                                        callback(false, result, "General Purchase Order Updated Successfully!");
+                                body.general_purchase_order_inventory.map((item, index) => {
+                                // for (index = 0; index < body.purchase_order_inventory.length; index++) {
+                                //     var item = body.purchase_order_inventory[index];
+                                    
+                                        var general_purchase_order_inventory = {
+                                            vou_id: body.id,
+                                            unit_id: item.unit_id,
+                                            product_id: item.product_id,
+                                            hsnsac: item.hsnsac,
+                                            qty: item.qty,
+                                            rate: item.rate,
+                                            amount: item.amount,
+                                        }
+                                        DBCON.query(`insert into general_purchase_order_inventory set ?`, general_purchase_order_inventory);
+                                        if (index === body.general_purchase_order_inventory.length - 1) {
+                                            callback(false, result, "General Purchase Order  Saved Successfully!");
+                                        }
+    
+                                     else {
+                                        if (index === body.general_purchase_order_inventory.length - 1) {
+                                            callback(false, result, "General Purchase Order Updated Successfully!");
+                                        }
                                     }
-                                }
-                            // }
-                            })
+                                // }
+                                })
+                            }else{
+                                callback(false, result, "General Purchase Order Updated Successfully!");
+
+                            }
                         }
                     })
 
@@ -159,6 +165,8 @@ GeneralPurchaseOrderModel.prototype = {
                     // console.log(result);
                     // for (index = 0; index < body.purchase_order_inventory.length; index++) {
                     //     var item = body.purchase_order_inventory[index];
+                    if(body.general_purchase_order_inventory.length > 0){
+
                         body.general_purchase_order_inventory.map((item, index) => {
                         
                             console.log(item, index)
@@ -184,7 +192,11 @@ GeneralPurchaseOrderModel.prototype = {
                             }
                         }
                     // }
-                })
+                 })
+                    }else{
+                        callback(false, result, "General Purchase Order Updated Successfully!");
+
+                    }
 
                 }
             })

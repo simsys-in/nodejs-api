@@ -153,50 +153,56 @@ GarmentsInvoiceModel.prototype = {
                         if (err) {
                             callback(err)
                         } else {
-                            body.garments_invoice_inventory.map((item, index) => {
-                                if (item.selected) {
-                                    var garments_invoice_inventory = {
-                                        vou_id: body.id,
-                                        color_id: item.color_id,
-                                        size1_qty: item.size1_qty,
-                                        size2_qty: item.size2_qty,
-                                        size3_qty: item.size3_qty,
-                                        size4_qty: item.size4_qty,
-                                        size5_qty: item.size5_qty,
-                                        size6_qty: item.size6_qty,
-                                        size7_qty: item.size7_qty,
-                                        size8_qty: item.size8_qty,
-                                        size9_qty: item.size9_qty,
-                                        rate: item.rate,
-                                        amount: item.amount,
-                                        product_id: item.product_id,
-                                        outward_id: item.outward_id,
-                                        qty: item.qty,
-                                        size1_rate: item.size1_rate,
-                                        size2_rate: item.size2_rate,
-                                        size3_rate: item.size3_rate,
-                                        size4_rate: item.size4_rate,
-                                        size5_rate: item.size5_rate,
-                                        size6_rate: item.size6_rate,
-                                        size7_rate: item.size7_rate,
-                                        size8_rate: item.size8_rate,
-                                        size9_rate: item.size9_rate,
-                                        narration: item.narration,
-                                        refno: item.refno,
-                                        disc_percentage: item.disc_percentage,
-                                        disc_value: item.disc_value,
-                                        description: item.description
+                            if(body.garments_invoice_inventory.length > 0){
+
+                                body.garments_invoice_inventory.map((item, index) => {
+                                    if (item.selected) {
+                                        var garments_invoice_inventory = {
+                                            vou_id: body.id,
+                                            color_id: item.color_id,
+                                            size1_qty: item.size1_qty,
+                                            size2_qty: item.size2_qty,
+                                            size3_qty: item.size3_qty,
+                                            size4_qty: item.size4_qty,
+                                            size5_qty: item.size5_qty,
+                                            size6_qty: item.size6_qty,
+                                            size7_qty: item.size7_qty,
+                                            size8_qty: item.size8_qty,
+                                            size9_qty: item.size9_qty,
+                                            rate: item.rate,
+                                            amount: item.amount,
+                                            product_id: item.product_id,
+                                            outward_id: item.outward_id,
+                                            qty: item.qty,
+                                            size1_rate: item.size1_rate,
+                                            size2_rate: item.size2_rate,
+                                            size3_rate: item.size3_rate,
+                                            size4_rate: item.size4_rate,
+                                            size5_rate: item.size5_rate,
+                                            size6_rate: item.size6_rate,
+                                            size7_rate: item.size7_rate,
+                                            size8_rate: item.size8_rate,
+                                            size9_rate: item.size9_rate,
+                                            narration: item.narration,
+                                            refno: item.refno,
+                                            disc_percentage: item.disc_percentage,
+                                            disc_value: item.disc_value,
+                                            description: item.description
+                                        }
+                                        DBCON.query(`insert into garments_invoice_inventory set ?`, garments_invoice_inventory);
+                                        if (index === body.garments_invoice_inventory.length - 1) {
+                                            callback(false, result, "Garments Invoice  Saved Successfully!");
+                                        }
+                                    } else {
+                                        if (index === body.garments_invoice_inventory.length - 1) {
+                                            callback(false, result, "Garments Invoice Updated Successfully!");
+                                        }
                                     }
-                                    DBCON.query(`insert into garments_invoice_inventory set ?`, garments_invoice_inventory);
-                                    if (index === body.garments_invoice_inventory.length - 1) {
-                                        callback(false, result, "Garments Invoice  Saved Successfully!");
-                                    }
-                                } else {
-                                    if (index === body.garments_invoice_inventory.length - 1) {
-                                        callback(false, result, "Garments Invoice Updated Successfully!");
-                                    }
-                                }
-                            })
+                                })
+                            }else{
+                                callback(false, result, "Garments Invoice Updated Successfully!");
+
+                            }
                         }
                     })
 
@@ -236,52 +242,58 @@ GarmentsInvoiceModel.prototype = {
                     callback(err)
                 } else {
                     // console.log(result);
-                    for (index = 0; index < body.garments_invoice_inventory.length; index++) {
-                        var item = body.garments_invoice_inventory[index];
-                        // body.jobwork_invoice_inventory.map((item, index) => {
-                        if (item.selected) {
-                            console.log(item, index)
-                            var garments_invoice_inventory = {
-                                vou_id: result.insertId,
-                                color_id: item.color_id,
-                                size1_qty: item.size1_qty,
-                                size2_qty: item.size2_qty,
-                                size3_qty: item.size3_qty,
-                                size4_qty: item.size4_qty,
-                                size5_qty: item.size5_qty,
-                                size6_qty: item.size6_qty,
-                                size7_qty: item.size7_qty,
-                                size8_qty: item.size8_qty,
-                                size9_qty: item.size9_qty,
-                                rate: item.rate,
-                                amount: item.amount,
-                                product_id: item.product_id,
-                                outward_id: item.outward_id,
-                                qty: item.qty,
-                                size1_rate: item.size1_rate,
-                                size2_rate: item.size2_rate,
-                                size3_rate: item.size3_rate,
-                                size4_rate: item.size4_rate,
-                                size5_rate: item.size5_rate,
-                                size6_rate: item.size6_rate,
-                                size7_rate: item.size7_rate,
-                                size8_rate: item.size8_rate,
-                                size9_rate: item.size9_rate,
-                                narration: item.narration,
-                                refno: item.refno,
-                                disc_percentage: item.disc_percentage,
-                                disc_value: item.disc_value,
-                                description: item.description
-                            }
-                            DBCON.query(`insert into garments_invoice_inventory set ?`, garments_invoice_inventory);
-                            if (index === body.garments_invoice_inventory.length - 1) {
-                                callback(false, result, "Garments Invoice Updated Successfully!");
-                            }
-                        } else {
-                            if (index === body.garments_invoice_inventory.length - 1) {
-                                callback(false, result, "Garments Invoice Updated Successfully!");
+                    if(body.garments_invoice_inventory.length > 0){
+
+                        for (index = 0; index < body.garments_invoice_inventory.length; index++) {
+                            var item = body.garments_invoice_inventory[index];
+                            // body.jobwork_invoice_inventory.map((item, index) => {
+                            if (item.selected) {
+                                console.log(item, index)
+                                var garments_invoice_inventory = {
+                                    vou_id: result.insertId,
+                                    color_id: item.color_id,
+                                    size1_qty: item.size1_qty,
+                                    size2_qty: item.size2_qty,
+                                    size3_qty: item.size3_qty,
+                                    size4_qty: item.size4_qty,
+                                    size5_qty: item.size5_qty,
+                                    size6_qty: item.size6_qty,
+                                    size7_qty: item.size7_qty,
+                                    size8_qty: item.size8_qty,
+                                    size9_qty: item.size9_qty,
+                                    rate: item.rate,
+                                    amount: item.amount,
+                                    product_id: item.product_id,
+                                    outward_id: item.outward_id,
+                                    qty: item.qty,
+                                    size1_rate: item.size1_rate,
+                                    size2_rate: item.size2_rate,
+                                    size3_rate: item.size3_rate,
+                                    size4_rate: item.size4_rate,
+                                    size5_rate: item.size5_rate,
+                                    size6_rate: item.size6_rate,
+                                    size7_rate: item.size7_rate,
+                                    size8_rate: item.size8_rate,
+                                    size9_rate: item.size9_rate,
+                                    narration: item.narration,
+                                    refno: item.refno,
+                                    disc_percentage: item.disc_percentage,
+                                    disc_value: item.disc_value,
+                                    description: item.description
+                                }
+                                DBCON.query(`insert into garments_invoice_inventory set ?`, garments_invoice_inventory);
+                                if (index === body.garments_invoice_inventory.length - 1) {
+                                    callback(false, result, "Garments Invoice Updated Successfully!");
+                                }
+                            } else {
+                                if (index === body.garments_invoice_inventory.length - 1) {
+                                    callback(false, result, "Garments Invoice Updated Successfully!");
+                                }
                             }
                         }
+                    }else{
+                        callback(false, result, "Garments Invoice Updated Successfully!");
+
                     }
 
                 }

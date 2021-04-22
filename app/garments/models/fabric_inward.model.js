@@ -108,26 +108,32 @@ FabricInwardModel.prototype = {
                             callback(err)
                         }
                         else{
-                            body.fabric_inward_inventory.map((item, index) => {
-                                if (item.selected && issetNotEmpty(item.fabric_id) && item.fabric_id !== 0 && issetNotEmpty(item.color_id) && item.color_id !== 0){
-
-                                    var fabric_inward_inventory = {
-                                        vou_id : body.id,
-                                        fabric_id : item.fabric_id,
-                                        ledger_id : item.ledger_id,
-                                        roll : item.roll,
-                                        weight : item.weight,
-                                        color_id : item.color_id,
-                                        dia : item.dia,
-                                        gsm : item.gsm,
+                            if (body.fabric_invoice_inventory.length > 0) {
+                                
+                                body.fabric_inward_inventory.map((item, index) => {
+                                    if (item.selected && issetNotEmpty(item.fabric_id) && item.fabric_id !== 0 && issetNotEmpty(item.color_id) && item.color_id !== 0){
+    
+                                        var fabric_inward_inventory = {
+                                            vou_id : body.id,
+                                            fabric_id : item.fabric_id,
+                                            ledger_id : item.ledger_id,
+                                            roll : item.roll,
+                                            weight : item.weight,
+                                            color_id : item.color_id,
+                                            dia : item.dia,
+                                            gsm : item.gsm,
+                                        }
+                                        DBCON.query(`insert into fabric_inward_inventory set ?`, fabric_inward_inventory);
                                     }
-                                    DBCON.query(`insert into fabric_inward_inventory set ?`, fabric_inward_inventory);
-                                }
-                                    if(index === body.fabric_inward_inventory.length - 1)
-                                            {
-                                                callback(false, result, "Fabric Inward  Saved Successfully!");
-                                            }
-                            })
+                                        if(index === body.fabric_inward_inventory.length - 1)
+                                                {
+                                                    callback(false, result, "Fabric Inward  Saved Successfully!");
+                                                }
+                                })
+                            }else{
+                                callback(false, result, "Fabric Inward  Saved Successfully!");
+
+                            }
                         }
                     })
 
@@ -154,7 +160,9 @@ FabricInwardModel.prototype = {
                                 callback(err)
                             } else {
                                 console.log(result);
-                                body.fabric_inward_inventory.map((item, index) => {
+                                if (body.fabric_invoice_inventory.length > 0) {
+
+                                    body.fabric_inward_inventory.map((item, index) => {
                                     if (item.selected && issetNotEmpty(item.fabric_id) && item.fabric_id !== 0 && issetNotEmpty(item.color_id) && item.color_id !== 0 ) {
 
                                         var fabric_inward_inventory = {
@@ -174,6 +182,10 @@ FabricInwardModel.prototype = {
                                                     callback(false, result, "Fabric Inward  Updated Successfully!");
                                                 }
                                 })
+                                }else{
+                                    callback(false, result, "Fabric Inward  Updated Successfully!");
+
+                                }
 
                             }
                         })
