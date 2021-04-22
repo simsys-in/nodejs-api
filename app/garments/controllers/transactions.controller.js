@@ -60,9 +60,12 @@ const KnittingProgramModel = require('../models/knitting_program.model');
 const KnittingProgram = new KnittingProgramModel();
 
 //purchase order
-const PurchaseOrderModel = require('../models/purchase_order.model');
-const PurchaseOrder = new PurchaseOrderModel();
+const YarnPurchaseOrderModel = require('../models/yarn_purchase_order.model');
+const YarnPurchaseOrder = new YarnPurchaseOrderModel();
 
+//purchase order
+const GeneralPurchaseOrderModel = require('../models/general_purchase_order.model');
+const GeneralPurchaseOrder = new GeneralPurchaseOrderModel();
 
 
 //orderProgram
@@ -2405,10 +2408,10 @@ exports.getGarmentsDeliveryNoteInventoryDetails = function (req, res) {
 //purchase order
 
 
-exports.savePurchaseOrder = function (req, res) {
+exports.saveYarnPurchaseOrder = function (req, res) {
     const body = req.body;
     body.id = req.query.id;
-    PurchaseOrder.checkAndSaveOrUpdate(body, (err, result, msg) => {
+    YarnPurchaseOrder.checkAndSaveOrUpdate(body, (err, result, msg) => {
         if (err) {
             console.log(err);
             res.sendError(err);
@@ -2419,10 +2422,10 @@ exports.savePurchaseOrder = function (req, res) {
 }
 
 
-exports.getPurchaseOrder = function (req, res) {
+exports.getYarnPurchaseOrder = function (req, res) {
     var ID = req.query.id;
     if (issetNotEmpty(ID)) {
-        PurchaseOrder.find(Number(ID), function (err, data) {
+        YarnPurchaseOrder.find(Number(ID), function (err, data) {
             if (err) {
                 console.log(err);
                 res.sendError(err)
@@ -2431,7 +2434,7 @@ exports.getPurchaseOrder = function (req, res) {
             }
         })
     } else {
-        PurchaseOrder.getAll((err, data) => {
+        YarnPurchaseOrder.getAll((err, data) => {
             if (err) {
                 console.log(err)
                 res.sendError(err)
@@ -2444,27 +2447,27 @@ exports.getPurchaseOrder = function (req, res) {
 
 
 
-exports.deletePurchaseOrder = function (req, res) {
+exports.deleteYarnPurchaseOrder = function (req, res) {
     const id = req.query.id;
     console.log("ID : " + id);
 
     if (issetNotEmpty(id)) {
-        PurchaseOrder.delete(Number(id), function (err, data) {
+        YarnPurchaseOrder.delete(Number(id), function (err, data) {
             if (err) {
                 console.log(err);
                 res.sendError(err)
             } else {
-                res.sendInfo("Knitting Program Deleted Successfully!");
+                res.sendInfo("Yarn Purchase Order Deleted Successfully!");
             }
         })
     } else {
-        res.sendWarning("Knitting Program Not Found! ")
+        res.sendWarning("Yarn Purchase Order Not Found! ")
     }
 
 }
 
-exports.getNextPurchaseOrderVouNo = function(req, res){
-    PurchaseOrder.getNextPurchaseOrderVouNo((err, result) => {
+exports.getNextYarnPurchaseOrderVouNo = function(req, res){
+    YarnPurchaseOrder.getNextYarnPurchaseOrderVouNo((err, result) => {
         if(err)
         {
             res.sendError(err);
@@ -2487,6 +2490,78 @@ exports.getHsnAndRateForProductId = function (req, res) {
             res.sendError(err)
         } else {
             res.sendInfo("", data[0])
+        }
+    })
+}
+//general purchase order
+
+
+exports.saveGeneralPurchaseOrder = function (req, res) {
+    const body = req.body;
+    body.id = req.query.id;
+    GeneralPurchaseOrder.checkAndSaveOrUpdate(body, (err, result, msg) => {
+        if (err) {
+            console.log(err);
+            res.sendError(err);
+        } else {
+            res.sendSuccess(msg, result)
+        }
+    })
+}
+
+
+exports.getGeneralPurchaseOrder = function (req, res) {
+    var ID = req.query.id;
+    if (issetNotEmpty(ID)) {
+        GeneralPurchaseOrder.find(Number(ID), function (err, data) {
+            if (err) {
+                console.log(err);
+                res.sendError(err)
+            } else {
+                res.sendInfo("", data);
+            }
+        })
+    } else {
+        GeneralPurchaseOrder.getAll((err, data) => {
+            if (err) {
+                console.log(err)
+                res.sendError(err)
+            } else {
+                res.sendSuccess("", data)
+            }
+        })
+    }
+}
+
+
+
+exports.deleteGeneralPurchaseOrder = function (req, res) {
+    const id = req.query.id;
+    console.log("ID : " + id);
+
+    if (issetNotEmpty(id)) {
+        GeneralPurchaseOrder.delete(Number(id), function (err, data) {
+            if (err) {
+                console.log(err);
+                res.sendError(err)
+            } else {
+                res.sendInfo("General Purchase Order Deleted Successfully!");
+            }
+        })
+    } else {
+        res.sendWarning("General Purchase Order Not Found! ")
+    }
+
+}
+
+exports.getNextGeneralPurchaseOrderVouNo = function(req, res){
+    GeneralPurchaseOrder.getNextGeneralPurchaseOrderVouNo((err, result) => {
+        if(err)
+        {
+            res.sendError(err);
+        }
+        else{
+            res.sendInfo("", result)
         }
     })
 }

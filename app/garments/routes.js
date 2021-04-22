@@ -413,11 +413,18 @@ router.get('/getJobworkInwardReport', TransactionsController.getJobworkInwardRep
 router.get('/getGarmentsDeliveryNoteInventoryDetails', TransactionsController.getGarmentsDeliveryNoteInventoryDetails);
 
 //purchase order
-router.put('/purchaseOrder', TransactionsController.savePurchaseOrder);
-router.get('/purchaseOrder', TransactionsController.getPurchaseOrder);
-router.delete('/purchaseOrder', TransactionsController.deletePurchaseOrder);
-router.get('/getNextPurchaseOrderVouNo',TransactionsController.getNextPurchaseOrderVouNo )
+router.put('/yarnPurchaseOrder', TransactionsController.saveYarnPurchaseOrder);
+router.get('/yarnPurchaseOrder', TransactionsController.getYarnPurchaseOrder);
+router.delete('/yarnPurchaseOrder', TransactionsController.deleteYarnPurchaseOrder);
+router.get('/getNextYarnPurchaseOrderVouNo',TransactionsController.getNextYarnPurchaseOrderVouNo )
 router.get('/getHsnAndRateForProductId',TransactionsController.getHsnAndRateForProductId )
+
+
+//purchase order
+router.put('/generalPurchaseOrder', TransactionsController.saveGeneralPurchaseOrder);
+router.get('/generalPurchaseOrder', TransactionsController.getGeneralPurchaseOrder);
+router.delete('/generalPurchaseOrder', TransactionsController.deleteGeneralPurchaseOrder);
+router.get('/getNextGeneralPurchaseOrderVouNo',TransactionsController.getNextGeneralPurchaseOrderVouNo )
 
 
 ////////////////////// Kowsalya Workspace/////////////////
