@@ -240,14 +240,14 @@ Yarn_InwardModel.prototype = {
                         yarn_inward_details.inventory = inventory;
 
                         //total
-                        const GET_INVENTORYTOTAL_QUERY = `select yarn_inward.inventory_qty_kg_total from yarn_inward where yarn_inward.id = ${id};`;
+                        // const GET_INVENTORYTOTAL_QUERY = `select yarn_inward.inventory_qty_kg_total from yarn_inward where yarn_inward.id = ${id};`;
 
-                        DBCON.query(GET_INVENTORYTOTAL_QUERY, (err, inventorytotal) => {
-                            if (err) {
-                                console.log(err);
-                                callback(err);
-                            } else {
-                                yarn_inward_details.inventorytotal = inventorytotal;
+                        // DBCON.query(GET_INVENTORYTOTAL_QUERY, (err, inventorytotal) => {
+                        //     if (err) {
+                        //         console.log(err);
+                        //         callback(err);
+                        //     } else {
+                        //         yarn_inward_details.inventorytotal = inventorytotal;
 
                                 //total
 
@@ -273,9 +273,9 @@ Yarn_InwardModel.prototype = {
                                     }
                                 });
                             }
-                        });
+                    //     });
 
-                    }
+                    // }
                     //     })
                     // }
                 })
