@@ -108,7 +108,7 @@ FabricInwardModel.prototype = {
                             callback(err)
                         }
                         else{
-                            if (body.fabric_invoice_inventory.length > 0) {
+                            if (body.fabric_inward_inventory.length > 0) {
                                 
                                 body.fabric_inward_inventory.map((item, index) => {
                                     if (item.selected && issetNotEmpty(item.fabric_id) && item.fabric_id !== 0 && issetNotEmpty(item.color_id) && item.color_id !== 0){
@@ -160,7 +160,7 @@ FabricInwardModel.prototype = {
                                 callback(err)
                             } else {
                                 console.log(result);
-                                if (body.fabric_invoice_inventory.length > 0) {
+                                if (body.fabric_inward_inventory.length > 0) {
 
                                     body.fabric_inward_inventory.map((item, index) => {
                                     if (item.selected && issetNotEmpty(item.fabric_id) && item.fabric_id !== 0 && issetNotEmpty(item.color_id) && item.color_id !== 0 ) {
