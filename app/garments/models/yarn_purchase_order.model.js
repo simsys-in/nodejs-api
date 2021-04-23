@@ -234,7 +234,7 @@ YarnPurchaseOrderModel.prototype = {
             }
         })
     },
-    getYarnYarnPurchaseOrderReport: (id, callback) => {
+    getYarnPurchaseOrderReport: (id, callback) => {
         var yarn_purchase_order_details = {};
         const QUERY = `select yarn_purchase_order.id, yarn_purchase_order.vouno, yarn_purchase_order.vou_date, yarn_purchase_order.delivery_address, yarn_purchase_order.ledger_id, yarn_purchase_order.inventory_qty_total, yarn_purchase_order.inventory_amount_total from yarn_purchase_order where yarn_purchase_order.id = ${id};`;
 
@@ -246,7 +246,7 @@ YarnPurchaseOrderModel.prototype = {
                 yarn_purchase_order_details = result[0];
 
 
-                const GET_INVENTORY_QUERY = `select yarn_purchase_order_inventory.id, yarn_purchase_order_inventory.hsnsac, product.product, unit.unit, yarn_purchase_order_inventory.qty, yarn_purchase_order_inventory.rate, yarn_purchase_order_inventory.amount from yarn_purchase_order_inventory left join product on product.id = yarn_purchase_order_inventory.yarn_id left join unit on unit.id = yarn_purchase_order_inventory.unit_id where vou_id = ${id};`;
+                const GET_INVENTORY_QUERY = `select yarn_purchase_order_inventory.id, yarn_purchase_order_inventory.hsnsac, yarn_purchase_order_inventory.count, yarn_purchase_order_inventory.gsm, product.product, unit.unit, yarn_purchase_order_inventory.qty, yarn_purchase_order_inventory.rate, yarn_purchase_order_inventory.amount from yarn_purchase_order_inventory left join product on product.id = yarn_purchase_order_inventory.yarn_id left join unit on unit.id = yarn_purchase_order_inventory.unit_id where vou_id = ${id};`;
 
                 DBCON.query(GET_INVENTORY_QUERY, (err, inventory) => {
                     if (err) {

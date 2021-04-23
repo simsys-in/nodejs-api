@@ -1789,7 +1789,7 @@ exports.getDyeingProgramReport = (req, res) => {
 
 exports.getYarnPurchaseOrderReport = (req, res) => {
     const ID = req.query.id;
-    PurchaseOrder.getYarnPurchaseOrderReport(ID, (err, result) => {
+    YarnPurchaseOrder.getYarnPurchaseOrderReport(ID, (err, result) => {
         if(err)
         {
             res.sendError(err);
