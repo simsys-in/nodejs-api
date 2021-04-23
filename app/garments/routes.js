@@ -337,6 +337,10 @@ router.get('/getYarnInwardReport', TransactionsController.getYarnInwardReport);
 router.get('/getYarnReturnReport', TransactionsController.getYarnReturnReport);
 //report purchase order
 router.get('/getYarnPurchaseOrderReport', TransactionsController.getYarnPurchaseOrderReport);
+//shift
+router.put('/shift', MasterController.saveShift);
+router.get('/shift', MasterController.getShift);
+router.delete('/shift', MasterController.deleteShift);
 
 
 
