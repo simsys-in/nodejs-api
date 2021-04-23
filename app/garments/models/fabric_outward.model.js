@@ -115,23 +115,29 @@ FabricOutwardModel.prototype = {
                             callback(err)
                         }
                         else{
-                            body.fabric_outward_inventory.map((item, index) => {
-                                var fabric_outward_inventory = {
-                                    vou_id : body.id,
-                                    fabric_id : item.fabric_id,
-                                    ledger_id : item.ledger_id,
-                                    roll : item.roll,
-                                    weight : item.weight,
-                                    color_id : item.color_id,
-                                    dia : item.dia,
-                                    gsm : item.gsm,
-                                }
-                                DBCON.query(`insert into fabric_outward_inventory set ?`, fabric_outward_inventory);
-                                if(index === body.fabric_outward_inventory.length - 1)
-                                        {
-                                            callback(false, result, "Fabric Inward  Updated Successfully!");
-                                        }
-                            })
+                            if(body.fabric_outward_inventory.length > 0){
+
+                                body.fabric_outward_inventory.map((item, index) => {
+                                    var fabric_outward_inventory = {
+                                        vou_id : body.id,
+                                        fabric_id : item.fabric_id,
+                                        ledger_id : item.ledger_id,
+                                        roll : item.roll,
+                                        weight : item.weight,
+                                        color_id : item.color_id,
+                                        dia : item.dia,
+                                        gsm : item.gsm,
+                                    }
+                                    DBCON.query(`insert into fabric_outward_inventory set ?`, fabric_outward_inventory);
+                                    if(index === body.fabric_outward_inventory.length - 1)
+                                            {
+                                                callback(false, result, "Fabric Inward  Updated Successfully!");
+                                            }
+                                })
+                            }else{
+                                callback(false, result, "Fabric Inward  Updated Successfully!");
+
+                            }
                         }
                     })
 
@@ -160,23 +166,29 @@ FabricOutwardModel.prototype = {
                                 callback(err)
                             } else {
                                 console.log(result);
-                                body.fabric_outward_inventory.map((item, index) => {
-                                    var fabric_outward_inventory = {
-                                        vou_id : result.insertId,
-                                        fabric_id : item.fabric_id,
-                                        ledger_id : item.ledger_id,
-                                        roll : item.roll,
-                                        weight : item.weight,
-                                        color_id : item.color_id,
-                                        dia : item.dia,
-                                        gsm : item.gsm,
-                                    }
-                                    DBCON.query(`insert into fabric_outward_inventory set ?`, fabric_outward_inventory);
-                                    if(index === body.fabric_outward_inventory.length - 1)
-                                            {
-                                                callback(false, result, "Fabric outward  Saved Successfully!");
-                                            }
-                                })
+                                if(body.fabric_outward_inventory.length > 0){
+
+                                    body.fabric_outward_inventory.map((item, index) => {
+                                        var fabric_outward_inventory = {
+                                            vou_id : result.insertId,
+                                            fabric_id : item.fabric_id,
+                                            ledger_id : item.ledger_id,
+                                            roll : item.roll,
+                                            weight : item.weight,
+                                            color_id : item.color_id,
+                                            dia : item.dia,
+                                            gsm : item.gsm,
+                                        }
+                                        DBCON.query(`insert into fabric_outward_inventory set ?`, fabric_outward_inventory);
+                                        if(index === body.fabric_outward_inventory.length - 1)
+                                                {
+                                                    callback(false, result, "Fabric outward  Saved Successfully!");
+                                                }
+                                    })
+                                }else{
+                                    callback(false, result, "Fabric outward  Saved Successfully!");
+
+                                }
 
                             }
                         })

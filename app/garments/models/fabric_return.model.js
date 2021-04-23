@@ -108,22 +108,29 @@ FabricReturnModel.prototype = {
                             callback(err)
                         }
                         else{
-                            body.fabric_return_inventory.map((item, index) => {
-                                var fabric_return_inventory = {
-                                    vou_id : body.id,
-                                    fabric_id : item.fabric_id,
-                                    roll : item.roll,
-                                    weight : item.weight,
-                                    color_id : item.color_id,
-                                    dia : item.dia,
-                                    gsm : item.gsm,
-                                }
-                                DBCON.query(`insert into fabric_return_inventory set ?`, fabric_return_inventory);
-                                if(index === body.fabric_return_inventory.length - 1)
-                                        {
-                                            callback(false, result, "Fabric Return  Updated Successfully!");
-                                        }
-                            })
+                            if(body.fabric_return_inventory.length > 0){
+
+                                body.fabric_return_inventory.map((item, index) => {
+                                    var fabric_return_inventory = {
+                                        vou_id : body.id,
+                                        fabric_id : item.fabric_id,
+                                        roll : item.roll,
+                                        weight : item.weight,
+                                        color_id : item.color_id,
+                                        dia : item.dia,
+                                        gsm : item.gsm,
+                                    }
+                                    DBCON.query(`insert into fabric_return_inventory set ?`, fabric_return_inventory);
+                                    if(index === body.fabric_return_inventory.length - 1)
+                                            {
+                                                callback(false, result, "Fabric Return  Updated Successfully!");
+                                            }
+                                })
+                            }else{
+                                callback(false, result, "Fabric Return  Updated Successfully!");
+
+                            }
+
                         }
                     })
 
@@ -151,22 +158,29 @@ FabricReturnModel.prototype = {
                                 callback(err)
                             } else {
                                 console.log(result);
-                                body.fabric_return_inventory.map((item, index) => {
-                                    var fabric_return_inventory = {
-                                        vou_id : result.insertId,
-                                        fabric_id : item.fabric_id,
-                                        roll : item.roll,
-                                        weight : item.weight,
-                                        color_id : item.color_id,
-                                        dia : item.dia,
-                                        gsm : item.gsm,
-                                    }
-                                    DBCON.query(`insert into fabric_return_inventory set ?`, fabric_return_inventory);
-                                    if(index === body.fabric_return_inventory.length - 1)
-                                            {
-                                                callback(false, result, "Fabric Return  Saved Successfully!");
-                                            }
-                                })
+                                if(body.fabric_return_inventory.length > 0){
+
+                                    body.fabric_return_inventory.map((item, index) => {
+                                        var fabric_return_inventory = {
+                                            vou_id : result.insertId,
+                                            fabric_id : item.fabric_id,
+                                            roll : item.roll,
+                                            weight : item.weight,
+                                            color_id : item.color_id,
+                                            dia : item.dia,
+                                            gsm : item.gsm,
+                                        }
+                                        DBCON.query(`insert into fabric_return_inventory set ?`, fabric_return_inventory);
+                                        if(index === body.fabric_return_inventory.length - 1)
+                                                {
+                                                    callback(false, result, "Fabric Return  Saved Successfully!");
+                                                }
+                                    })
+                                }else{
+                                    callback(false, result, "Fabric Return  Saved Successfully!");
+
+                                }
+
 
                             }
                         })

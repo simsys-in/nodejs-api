@@ -133,52 +133,58 @@ CuttingProgramModel.prototype = {
                             callback(err);
                         }
                         else{
-                            
-                    body.fabrics.map((fabric, index) => {
-                        const inventory = {
-                            vou_id : ORDER_ID,
-                            color_id : fabric.color_id ? fabric.color_id : 0,
-                            product_id : fabric.product_id ? fabric.product_id : 0,
-                            size1 : fabric.size1 ? fabric.size1 : 0,
-                            size2 : fabric.size2 ? fabric.size2 : 0,
-                            size3 : fabric.size3 ? fabric.size3 : 0,
-                            size4 : fabric.size4 ? fabric.size4 : 0,
-                            size5 : fabric.size5 ? fabric.size5 : 0,
-                            size6 : fabric.size6 ? fabric.size6 : 0,
-                            size7 : fabric.size7 ? fabric.size7 : 0,
-                            size8 : fabric.size8 ? fabric.size8 : 0,
-                            size9 : fabric.size9 ? fabric.size9 : 0,
-                            qty : fabric.qty ? fabric.qty : 0,
-                            rate : fabric.rate ? fabric.rate : 0,
-                            amount : fabric.amount ? fabric.amount : 0,
-                            employee_id : fabric.employee_id ? fabric.employee_id : 0,
-                            fabric_id : fabric.fabric_id ? fabric.fabric_id : 0,
-                            dia : fabric.dia ? fabric.dia : 0,
-                            gsm : fabric.gsm ? fabric.gsm : 0,
-                            fabric_qty : fabric.fabric_qty ? fabric.fabric_qty : 0,
-                            fabric_wastage : fabric.fabric_wastage ? fabric.fabric_wastage : 0,
-                            fabric_qty_net : fabric.fabric_return_qty ? fabric.fabric_return_qty : 0,
-                            qty_bundle : fabric.qty_bundle ? fabric.qty_bundle : 0,
-                            menu_id : fabric.menu_id ? fabric.menu_id : 0,
-                            ledger_id : fabric.ledger_id ? fabric.ledger_id : 0,
-                            fabric_return_qty : fabric.fabric_return_qty ? fabric.fabric_return_qty : 0
-                        }
+                        if (body.fabrics.length > 0) {
 
-                        DBCON.query(`insert into cutting_program_inventory set ?`, inventory, (err, result1) => {
-                            if(err)
-                            {
-                                console.log(err);
-                                callback(err);
-                            }
-                            else{
-                                if(index === body.fabrics.length - 1)
-                                {
-                                    callback(false, result, "Cutting Program updated successfully!")
-                                }
-                            }
+                            body.fabrics.map((fabric, index) => {
+                             const inventory = {
+                                 vou_id : ORDER_ID,
+                                 color_id : fabric.color_id ? fabric.color_id : 0,
+                                 product_id : fabric.product_id ? fabric.product_id : 0,
+                                 size1 : fabric.size1 ? fabric.size1 : 0,
+                                 size2 : fabric.size2 ? fabric.size2 : 0,
+                                 size3 : fabric.size3 ? fabric.size3 : 0,
+                                 size4 : fabric.size4 ? fabric.size4 : 0,
+                                 size5 : fabric.size5 ? fabric.size5 : 0,
+                                 size6 : fabric.size6 ? fabric.size6 : 0,
+                                 size7 : fabric.size7 ? fabric.size7 : 0,
+                                 size8 : fabric.size8 ? fabric.size8 : 0,
+                                 size9 : fabric.size9 ? fabric.size9 : 0,
+                                 qty : fabric.qty ? fabric.qty : 0,
+                                 rate : fabric.rate ? fabric.rate : 0,
+                                 amount : fabric.amount ? fabric.amount : 0,
+                                 employee_id : fabric.employee_id ? fabric.employee_id : 0,
+                                 fabric_id : fabric.fabric_id ? fabric.fabric_id : 0,
+                                 dia : fabric.dia ? fabric.dia : 0,
+                                 gsm : fabric.gsm ? fabric.gsm : 0,
+                                 fabric_qty : fabric.fabric_qty ? fabric.fabric_qty : 0,
+                                 fabric_wastage : fabric.fabric_wastage ? fabric.fabric_wastage : 0,
+                                 fabric_qty_net : fabric.fabric_return_qty ? fabric.fabric_return_qty : 0,
+                                 qty_bundle : fabric.qty_bundle ? fabric.qty_bundle : 0,
+                                 menu_id : fabric.menu_id ? fabric.menu_id : 0,
+                                 ledger_id : fabric.ledger_id ? fabric.ledger_id : 0,
+                                 fabric_return_qty : fabric.fabric_return_qty ? fabric.fabric_return_qty : 0
+                             }
+     
+                             DBCON.query(`insert into cutting_program_inventory set ?`, inventory, (err, result1) => {
+                                 if(err)
+                                 {
+                                     console.log(err);
+                                     callback(err);
+                                 }
+                                 else{
+                                     if(index === body.fabrics.length - 1)
+                                     {
+                                         callback(false, result, "Cutting Program updated successfully!")
+                                     }
+                                 }
+                             })
+       
+    
                         })
+                        }else{
+                            callback(false, result, "Cutting Program updated successfully!")
 
-                    })
+                        }
 
                         }
                     })
@@ -216,52 +222,58 @@ CuttingProgramModel.prototype = {
                 }
                 else{
                     const ORDER_ID = result.insertId;
+                    if (body.fabrics.length > 0) { 
 
-                    body.fabrics.map((fabric, index) => {
-                        const inventory = {
-                            vou_id : ORDER_ID,
-                            color_id : fabric.color_id ? fabric.color_id : 0,
-                            product_id : fabric.product_id ? fabric.product_id : 0,
-                            size1 : fabric.size1 ? fabric.size1 : 0,
-                            size2 : fabric.size2 ? fabric.size2 : 0,
-                            size3 : fabric.size3 ? fabric.size3 : 0,
-                            size4 : fabric.size4 ? fabric.size4 : 0,
-                            size5 : fabric.size5 ? fabric.size5 : 0,
-                            size6 : fabric.size6 ? fabric.size6 : 0,
-                            size7 : fabric.size7 ? fabric.size7 : 0,
-                            size8 : fabric.size8 ? fabric.size8 : 0,
-                            size9 : fabric.size9 ? fabric.size9 : 0,
-                            qty : fabric.qty ? fabric.qty : 0,
-                            rate : fabric.rate ? fabric.rate : 0,
-                            amount : fabric.amount ? fabric.amount : 0,
-                            employee_id : fabric.employee_id ? fabric.employee_id : 0,
-                            fabric_id : fabric.fabric_id ? fabric.fabric_id : 0,
-                            dia : fabric.dia ? fabric.dia : 0,
-                            gsm : fabric.gsm ? fabric.gsm : 0,
-                            fabric_qty : fabric.fabric_qty ? fabric.fabric_qty : 0,
-                            fabric_wastage : fabric.fabric_wastage ? fabric.fabric_wastage : 0,
-                            fabric_qty_net : fabric.fabric_return_qty ? fabric.fabric_return_qty : 0,
-                            qty_bundle : fabric.qty_bundle ? fabric.qty_bundle : 0,
-                            menu_id : fabric.menu_id ? fabric.menu_id : 0,
-                            ledger_id : fabric.ledger_id ? fabric.ledger_id : 0,
-                            fabric_return_qty : fabric.fabric_return_qty ? fabric.fabric_return_qty : 0
-                        }
-
-                        DBCON.query(`insert into cutting_program_inventory set ?`, inventory, (err, result1) => {
-                            if(err)
-                            {
-                                console.log(err);
-                                callback(err);
+                        body.fabrics.map((fabric, index) => {
+                            const inventory = {
+                                vou_id : ORDER_ID,
+                                color_id : fabric.color_id ? fabric.color_id : 0,
+                                product_id : fabric.product_id ? fabric.product_id : 0,
+                                size1 : fabric.size1 ? fabric.size1 : 0,
+                                size2 : fabric.size2 ? fabric.size2 : 0,
+                                size3 : fabric.size3 ? fabric.size3 : 0,
+                                size4 : fabric.size4 ? fabric.size4 : 0,
+                                size5 : fabric.size5 ? fabric.size5 : 0,
+                                size6 : fabric.size6 ? fabric.size6 : 0,
+                                size7 : fabric.size7 ? fabric.size7 : 0,
+                                size8 : fabric.size8 ? fabric.size8 : 0,
+                                size9 : fabric.size9 ? fabric.size9 : 0,
+                                qty : fabric.qty ? fabric.qty : 0,
+                                rate : fabric.rate ? fabric.rate : 0,
+                                amount : fabric.amount ? fabric.amount : 0,
+                                employee_id : fabric.employee_id ? fabric.employee_id : 0,
+                                fabric_id : fabric.fabric_id ? fabric.fabric_id : 0,
+                                dia : fabric.dia ? fabric.dia : 0,
+                                gsm : fabric.gsm ? fabric.gsm : 0,
+                                fabric_qty : fabric.fabric_qty ? fabric.fabric_qty : 0,
+                                fabric_wastage : fabric.fabric_wastage ? fabric.fabric_wastage : 0,
+                                fabric_qty_net : fabric.fabric_return_qty ? fabric.fabric_return_qty : 0,
+                                qty_bundle : fabric.qty_bundle ? fabric.qty_bundle : 0,
+                                menu_id : fabric.menu_id ? fabric.menu_id : 0,
+                                ledger_id : fabric.ledger_id ? fabric.ledger_id : 0,
+                                fabric_return_qty : fabric.fabric_return_qty ? fabric.fabric_return_qty : 0
                             }
-                            else{
-                                if(index === body.fabrics.length - 1)
+    
+                            DBCON.query(`insert into cutting_program_inventory set ?`, inventory, (err, result1) => {
+                                if(err)
                                 {
-                                    callback(false, result, "Cutting Program Saved successfully!")
+                                    console.log(err);
+                                    callback(err);
                                 }
-                            }
+                                else{
+                                    if(index === body.fabrics.length - 1)
+                                    {
+                                        callback(false, result, "Cutting Program Saved successfully!")
+                                    }
+                                }
+                            })
+    
                         })
+                    }else{
+                        callback(false, result, "Cutting Program Saved successfully!")
 
-                    })
+                    }
+
 
                 }
             })

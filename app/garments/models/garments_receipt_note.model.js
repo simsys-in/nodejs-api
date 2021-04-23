@@ -127,36 +127,42 @@ GarmentsReceiptNoteModel.prototype = {
                         if (err) {
                             callback(err)
                         } else {
-                            body.garments_receipt_note_inventory.map((item, index) => {
-                                
-                                    var garments_receipt_note_inventory = {
-                                        vou_id: body.id,
-                                        color_id: item.color_id,
-                                        color: item.color,
-                                        size1: item.size1,
-                                        size2: item.size2,
-                                        size3: item.size3,
-                                        size4: item.size4,
-                                        size5: item.size5,
-                                        size6: item.size6,
-                                        size7: item.size7,
-                                        size8: item.size8,
-                                        size9: item.size9,
-                                        product_id: item.product_id,
-                                        qty: item.qty,
-                                        unit: item.unit,
-                                        description: item.description
-                                    }
-                                    DBCON.query(`insert into garments_receipt_note_inventory set ?`, garments_receipt_note_inventory);
-                                    if (index === body.garments_receipt_note_inventory.length - 1) {
-                                        callback(false, result, "Garments Receipt Note  Updated Successfully!");
-                                    }
-                                // } else {
-                                //     if (index === body.garments_delivery_note_inventory.length - 1) {
-                                //         callback(false, result, "Garments Delivery Note Updated Successfully!");
-                                //     }
-                                // }
-                            })
+                            if(body.garments_receipt_note_inventory.length > 0){
+
+                                body.garments_receipt_note_inventory.map((item, index) => {
+                                    
+                                        var garments_receipt_note_inventory = {
+                                            vou_id: body.id,
+                                            color_id: item.color_id,
+                                            color: item.color,
+                                            size1: item.size1,
+                                            size2: item.size2,
+                                            size3: item.size3,
+                                            size4: item.size4,
+                                            size5: item.size5,
+                                            size6: item.size6,
+                                            size7: item.size7,
+                                            size8: item.size8,
+                                            size9: item.size9,
+                                            product_id: item.product_id,
+                                            qty: item.qty,
+                                            unit: item.unit,
+                                            description: item.description
+                                        }
+                                        DBCON.query(`insert into garments_receipt_note_inventory set ?`, garments_receipt_note_inventory);
+                                        if (index === body.garments_receipt_note_inventory.length - 1) {
+                                            callback(false, result, "Garments Receipt Note  Updated Successfully!");
+                                        }
+                                    // } else {
+                                    //     if (index === body.garments_delivery_note_inventory.length - 1) {
+                                    //         callback(false, result, "Garments Delivery Note Updated Successfully!");
+                                    //     }
+                                    // }
+                                })
+                            }else{
+                                callback(false, result, "Garments Receipt Note  Updated Successfully!");
+
+                            }
                         }
                     })
 
@@ -188,41 +194,47 @@ GarmentsReceiptNoteModel.prototype = {
                     callback(err)
                 } else {
                     // console.log(result);
-                    for(index=0; index < body.garments_receipt_note_inventory.length; index++)
-                    {
-                        var item = body.garments_receipt_note_inventory[index];
-                    //  body.garments_delivery_note_inventory.map((item, index) => {
-                        
-                            console.log(item, index)
-                            var garments_receipt_note_inventory = {
-                                vou_id: result.insertId,
-                                color_id: item.color_id,
-                                        color: item.color,
-                                        size1: item.size1,
-                                        size2: item.size2,
-                                        size3: item.size3,
-                                        size4: item.size4,
-                                        size5: item.size5,
-                                        size6: item.size6,
-                                        size7: item.size7,
-                                        size8: item.size8,
-                                        size9: item.size9,
-                                        product_id: item.product_id,
-                                        qty: item.qty,
-                                        unit:item.unit,
-                                        description: item.description
+                    if(body.garments_receipt_note_inventory.length > 0){
+
+                        for(index=0; index < body.garments_receipt_note_inventory.length; index++)
+                        {
+                            var item = body.garments_receipt_note_inventory[index];
+                        //  body.garments_delivery_note_inventory.map((item, index) => {
+                            
+                                console.log(item, index)
+                                var garments_receipt_note_inventory = {
+                                    vou_id: result.insertId,
+                                    color_id: item.color_id,
+                                            color: item.color,
+                                            size1: item.size1,
+                                            size2: item.size2,
+                                            size3: item.size3,
+                                            size4: item.size4,
+                                            size5: item.size5,
+                                            size6: item.size6,
+                                            size7: item.size7,
+                                            size8: item.size8,
+                                            size9: item.size9,
+                                            product_id: item.product_id,
+                                            qty: item.qty,
+                                            unit:item.unit,
+                                            description: item.description
+                                }
+                                DBCON.query(`insert into garments_receipt_note_inventory set ?`, garments_receipt_note_inventory);
+                                if (index === body.garments_receipt_note_inventory.length - 1) {
+                                    callback(false, result, "Garments Receipt Note Updated Successfully!");
+                                }
+                            // } else {
+                            //     if (index === body.garments_delivery_note_inventory.length - 1) {
+                            //         callback(false, result, "Garments Delivery Note Updated Successfully!");
+                            //     }
+                            // }
+                        // })
                             }
-                            DBCON.query(`insert into garments_receipt_note_inventory set ?`, garments_receipt_note_inventory);
-                            if (index === body.garments_receipt_note_inventory.length - 1) {
-                                callback(false, result, "Garments Receipt Note Updated Successfully!");
-                            }
-                        // } else {
-                        //     if (index === body.garments_delivery_note_inventory.length - 1) {
-                        //         callback(false, result, "Garments Delivery Note Updated Successfully!");
-                        //     }
-                        // }
-                    // })
-                        }
+                    }else{
+                        callback(false, result, "Garments Receipt Note Updated Successfully!");
+
+                    }
                 }
                 
             })

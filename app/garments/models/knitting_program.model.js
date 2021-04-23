@@ -33,11 +33,11 @@ KnittingProgramModel.prototype = {
                     ledger_id: result[0].ledger_id,
                     vou_date: result[0].vou_date,
                     narration: result[0].narration,
-                    order_id : result[0].order_id,
+                    order_id: result[0].order_id,
                     inventory_bag_total: result[0].inventory_bag_total,
                     inventory_yarn_weight_total: result[0].inventory_yarn_weight_total,
                     vouno: result[0].vouno,
-                    inventory_program_weight_total : result[0].inventory_program_weight_total,
+                    inventory_program_weight_total: result[0].inventory_program_weight_total,
                     knitting_program_inventory: [],
                     // jobwork_invoice_product: []
 
@@ -84,11 +84,11 @@ KnittingProgramModel.prototype = {
                 ledger_id: body.ledger_id,
                 vou_date: body.vou_date,
                 narration: body.narration,
-                order_id : body.order_id,
+                order_id: body.order_id,
                 inventory_bag_total: body.inventory_bag_total,
                 inventory_yarn_weight_total: body.inventory_yarn_weight_total,
                 vouno: body.vouno,
-                inventory_program_weight_total : body.inventory_program_weight_total,
+                inventory_program_weight_total: body.inventory_program_weight_total,
             }
             DBCON.query(`update ${TABLE_NAME} set ? where id = ?`, [knitting_program, body.id], (err, result) => {
                 if (err) {
@@ -99,37 +99,43 @@ KnittingProgramModel.prototype = {
                         if (err) {
                             callback(err)
                         } else {
-                            body.knitting_program_inventory.map((item, index) => {
-                            // for (index = 0; index < body.jobwork_invoice_inventory.length; index++) {
-                            //     var item = body.jobwork_invoice_inventory[index];
-                                if (item.selected && issetNotEmpty(item.yarn_id)) {
-                                    var knitting_program_inventory = {
-                                        vou_id: body.id,
-                                        yarn_id: item.yarn_id,
-                                        fabric_id: item.fabric_id,
-                                        counts: item.counts,
-                                        bag_per: item.bag_per,
-                                        bag: item.bag,
-                                        narration: item.narration,
-                                        gsm: item.gsm,
-                                        dia: item.dia,
-                                        program_weight: item.program_weight,
-                                        gg: item.gg,
-                                        ll: item.ll,
-                                        yarn_weight: item.yarn_weight,
-                                    }
-                                    DBCON.query(`insert into knitting_program_inventory set ?`, knitting_program_inventory);
-                                    if (index === body.knitting_program_inventory.length - 1) {
-                                        callback(false, result, "Knitting Program  Saved Successfully!");
-                                    }
+                            if(body.knitting_program_inventory.length > 0){
 
-                                } else {
-                                    if (index === body.knitting_program_inventory.length - 1) {
-                                        callback(false, result, "Knitting Program Updated Successfully!");
+                                body.knitting_program_inventory.map((item, index) => {
+                                    // for (index = 0; index < body.jobwork_invoice_inventory.length; index++) {
+                                    //     var item = body.jobwork_invoice_inventory[index];
+                                    if (item.selected && issetNotEmpty(item.yarn_id)) {
+                                        var knitting_program_inventory = {
+                                            vou_id: body.id,
+                                            yarn_id: item.yarn_id,
+                                            fabric_id: item.fabric_id,
+                                            counts: item.counts,
+                                            bag_per: item.bag_per,
+                                            bag: item.bag,
+                                            narration: item.narration,
+                                            gsm: item.gsm,
+                                            dia: item.dia,
+                                            program_weight: item.program_weight,
+                                            gg: item.gg,
+                                            ll: item.ll,
+                                            yarn_weight: item.yarn_weight,
+                                        }
+                                        DBCON.query(`insert into knitting_program_inventory set ?`, knitting_program_inventory);
+                                        if (index === body.knitting_program_inventory.length - 1) {
+                                            callback(false, result, "Knitting Program  Saved Successfully!");
+                                        }
+    
+                                    } else {
+                                        if (index === body.knitting_program_inventory.length - 1) {
+                                            callback(false, result, "Knitting Program Updated Successfully!");
+                                        }
                                     }
-                                }
-                            // }
-                            })
+                                    // }
+                                })
+                            }else{
+                                callback(false, result, "Knitting Program Updated Successfully!");
+
+                            }
                         }
                     })
 
@@ -141,11 +147,11 @@ KnittingProgramModel.prototype = {
                 ledger_id: body.ledger_id,
                 vou_date: body.vou_date,
                 narration: body.narration,
-                order_id : body.order_id,
+                order_id: body.order_id,
                 inventory_bag_total: body.inventory_bag_total,
                 inventory_yarn_weight_total: body.inventory_yarn_weight_total,
                 vouno: body.vouno,
-                inventory_program_weight_total : body.inventory_program_weight_total,
+                inventory_program_weight_total: body.inventory_program_weight_total,
 
             }
 
@@ -156,37 +162,43 @@ KnittingProgramModel.prototype = {
                     // console.log(result);
                     // for (index = 0; index < body.knitting_program_inventory.length; index++) {
                     //     var item = body.knitting_program_inventory[index];
+                    if(body.knitting_program_inventory.length > 0){
+
                         body.knitting_program_inventory.map((item, index) => {
-                        if (item.selected && issetNotEmpty(item.yarn_id)) {
-                            console.log(item, index)
-                            var knitting_program_inventory = {
-                                       vou_id: result.insertId,
-                                        yarn_id: item.yarn_id,
-                                        fabric_id: item.fabric_id,
-                                        counts: item.counts,
-                                        bag_per: item.bag_per,
-                                        bag: item.bag,
-                                        narration: item.narration,
-                                        gsm: item.gsm,
-                                        dia: item.dia,
-                                        program_weight: item.program_weight,
-                                        gg: item.gg,
-                                        ll: item.ll,
-                                        yarn_weight: item.yarn_weight,
+                            if (item.selected && issetNotEmpty(item.yarn_id)) {
+                                console.log(item, index)
+                                var knitting_program_inventory = {
+                                    vou_id: result.insertId,
+                                    yarn_id: item.yarn_id,
+                                    fabric_id: item.fabric_id,
+                                    counts: item.counts,
+                                    bag_per: item.bag_per,
+                                    bag: item.bag,
+                                    narration: item.narration,
+                                    gsm: item.gsm,
+                                    dia: item.dia,
+                                    program_weight: item.program_weight,
+                                    gg: item.gg,
+                                    ll: item.ll,
+                                    yarn_weight: item.yarn_weight,
+    
+    
+                                }
+                                DBCON.query(`insert into knitting_program_inventory set ?`, knitting_program_inventory);
+                                if (index === body.knitting_program_inventory.length - 1) {
+                                    callback(false, result, "Knitting Program Updated Successfully!");
+                                }
+                            } else {
+                                if (index === body.knitting_program_inventory.length - 1) {
+                                    callback(false, result, "Knitting Program Updated Successfully!");
+                                }
+                            }
+                            // }
+                        })
+                    }else{
+                        callback(false, result, "Knitting Program Updated Successfully!");
 
-
-                            }
-                            DBCON.query(`insert into knitting_program_inventory set ?`, knitting_program_inventory);
-                            if (index === body.knitting_program_inventory.length - 1) {
-                                callback(false, result, "Knitting Program Updated Successfully!");
-                            }
-                        } else {
-                            if (index === body.knitting_program_inventory.length - 1) {
-                                callback(false, result, "Knitting Program Updated Successfully!");
-                            }
-                        }
-                    // }
-                })
+                    }
 
                 }
             })
@@ -224,7 +236,7 @@ KnittingProgramModel.prototype = {
             }
         })
     },
-   
+
 }
 
 module.exports = KnittingProgramModel;

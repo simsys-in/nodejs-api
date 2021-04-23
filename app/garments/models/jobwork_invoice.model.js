@@ -107,32 +107,38 @@ JobworkInvoiceModel.prototype = {
                         if (err) {
                             callback(err)
                         } else {
-                            body.jobwork_invoice_inventory.map((item, index) => {
-                            // for (index = 0; index < body.jobwork_invoice_inventory.length; index++) {
-                            //     var item = body.jobwork_invoice_inventory[index];
-                                if (item.selected && issetNotEmpty(item.order_id) && item.order_id !== 0 && issetNotEmpty(item.size_id) && item.size_id !== 0 && issetNotEmpty(item.product_id) && item.product_id !== 0) {
-                                    var jobwork_invoice_inventory = {
-                                        vou_id: body.id,
-                                        order_id: item.order_id,
-                                        product_id: item.product_id,
-                                        size_id: item.size_id,
-                                        qty: item.qty,
-                                        inward_id: item.inward_id,
-                                        rate: item.rate,
-                                        amount: item.amount,
-                                    }
-                                    DBCON.query(`insert into jobwork_invoice_inventory set ?`, jobwork_invoice_inventory);
-                                    if (index === body.jobwork_invoice_inventory.length - 1) {
-                                        callback(false, result, "Jobwork Invoice  Saved Successfully!");
-                                    }
+                            if (body.jobwork_invoice_inventory.length > 0) {
 
-                                } else {
-                                    if (index === body.jobwork_invoice_inventory.length - 1) {
-                                        callback(false, result, "Jobwork Invoice Updated Successfully!");
+                                body.jobwork_invoice_inventory.map((item, index) => {
+                                    // for (index = 0; index < body.jobwork_invoice_inventory.length; index++) {
+                                    //     var item = body.jobwork_invoice_inventory[index];
+                                    if (item.selected && issetNotEmpty(item.order_id) && item.order_id !== 0 && issetNotEmpty(item.size_id) && item.size_id !== 0 && issetNotEmpty(item.product_id) && item.product_id !== 0) {
+                                        var jobwork_invoice_inventory = {
+                                            vou_id: body.id,
+                                            order_id: item.order_id,
+                                            product_id: item.product_id,
+                                            size_id: item.size_id,
+                                            qty: item.qty,
+                                            inward_id: item.inward_id,
+                                            rate: item.rate,
+                                            amount: item.amount,
+                                        }
+                                        DBCON.query(`insert into jobwork_invoice_inventory set ?`, jobwork_invoice_inventory);
+                                        if (index === body.jobwork_invoice_inventory.length - 1) {
+                                            callback(false, result, "Jobwork Invoice  Saved Successfully!");
+                                        }
+
+                                    } else {
+                                        if (index === body.jobwork_invoice_inventory.length - 1) {
+                                            callback(false, result, "Jobwork Invoice Updated Successfully!");
+                                        }
                                     }
-                                }
-                            // }
-                            })
+                                    // }
+                                })
+                            } else {
+                                callback(false, result, "Jobwork Invoice Updated Successfully!");
+
+                            }
                         }
                     })
 
@@ -162,32 +168,38 @@ JobworkInvoiceModel.prototype = {
                     // console.log(result);
                     // for (index = 0; index < body.jobwork_invoice_inventory.length; index++) {
                     //     var item = body.jobwork_invoice_inventory[index];
+                    if (body.jobwork_invoice_inventory.length > 0) {
+
                         body.jobwork_invoice_inventory.map((item, index) => {
-                        if (item.selected && issetNotEmpty(item.order_id) && item.order_id !== 0 && issetNotEmpty(item.size_id) && item.size_id !== 0 && issetNotEmpty(item.product_id) && item.product_id !== 0) {
-                            console.log(item, index)
-                            var jobwork_invoice_inventory = {
-                                vou_id: result.insertId,
-                                order_id: item.order_id,
-                                product_id: item.product_id,
-                                size_id: item.size_id,
-                                qty: item.qty,
-                                inward_id: item.inward_id,
-                                rate: item.rate,
-                                amount: item.amount,
+                            if (item.selected && issetNotEmpty(item.order_id) && item.order_id !== 0 && issetNotEmpty(item.size_id) && item.size_id !== 0 && issetNotEmpty(item.product_id) && item.product_id !== 0) {
+                                console.log(item, index)
+                                var jobwork_invoice_inventory = {
+                                    vou_id: result.insertId,
+                                    order_id: item.order_id,
+                                    product_id: item.product_id,
+                                    size_id: item.size_id,
+                                    qty: item.qty,
+                                    inward_id: item.inward_id,
+                                    rate: item.rate,
+                                    amount: item.amount,
 
 
+                                }
+                                DBCON.query(`insert into jobwork_invoice_inventory set ?`, jobwork_invoice_inventory);
+                                if (index === body.jobwork_invoice_inventory.length - 1) {
+                                    callback(false, result, "Jobwork Invoice Updated Successfully!");
+                                }
+                            } else {
+                                if (index === body.jobwork_invoice_inventory.length - 1) {
+                                    callback(false, result, "Jobwork Invoice Updated Successfully!");
+                                }
                             }
-                            DBCON.query(`insert into jobwork_invoice_inventory set ?`, jobwork_invoice_inventory);
-                            if (index === body.jobwork_invoice_inventory.length - 1) {
-                                callback(false, result, "Jobwork Invoice Updated Successfully!");
-                            }
-                        } else {
-                            if (index === body.jobwork_invoice_inventory.length - 1) {
-                                callback(false, result, "Jobwork Invoice Updated Successfully!");
-                            }
-                        }
-                    // }
-                })
+                            // }
+                        })
+                    } else {
+                        callback(false, result, "Jobwork Invoice Updated Successfully!");
+
+                    }
 
                 }
             })

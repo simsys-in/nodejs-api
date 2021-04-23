@@ -206,24 +206,30 @@ VoucherModel.prototype = {
                     callback(err)
                 } else {
                     console.log(result);
-                    body.route_accounts.map((item, index) => {
-                        var route_accounts = {
-                            vou_id: result.insertId,
-                            slno: 0,
-                            narration: item.description,
-                            uid: 0,
-                            ledger_id: item.ledger_id,
-                            narration: 0,
-                            percentage: item.percentage,
-                            amount: item.amount,
-                            part: 0,
+                    if (body.route_accounts.length > 0) {
 
-                        }
-                        DBCON.query(`insert into route_accounts set ?`, route_accounts);
-                        if (index === body.route_accounts.length - 1) {
-                            callback(false, result, "Voucher Saved Successfully!");
-                        }
-                    })
+                        body.route_accounts.map((item, index) => {
+                            var route_accounts = {
+                                vou_id: result.insertId,
+                                slno: 0,
+                                narration: item.description,
+                                uid: 0,
+                                ledger_id: item.ledger_id,
+                                narration: 0,
+                                percentage: item.percentage,
+                                amount: item.amount,
+                                part: 0,
+    
+                            }
+                            DBCON.query(`insert into route_accounts set ?`, route_accounts);
+                            if (index === body.route_accounts.length - 1) {
+                                callback(false, result, "Voucher Saved Successfully!");
+                            }
+                        })
+                    }else{
+                        callback(false, result, "Voucher Saved Successfully!");
+
+                    }
 
                 }
             })
