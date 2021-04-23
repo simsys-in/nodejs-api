@@ -1,10 +1,10 @@
 
-const DBCON = require('../../db_config');
+const DBCON = require('../../../db_config');
 const {
     issetNotEmpty
-} = require('../../helpers/common');
+} = require('../../../helpers/common');
 const moment = require('moment');
-const { getDBDate } = require('../../helpers/timer')
+const { getDBDate } = require('../../../helpers/timer')
 
 function FabricInvoiceModel() {};
 

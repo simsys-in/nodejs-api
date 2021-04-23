@@ -1,7 +1,7 @@
-const DBCON = require('../../db_config');
+const DBCON = require('../../../db_config');
 const {
     issetNotEmpty
-} = require('../../helpers/common');
+} = require('../../../helpers/common');
 const AddLessModel = require('../models/add_less_mas.model');
 const AddLess = new AddLessModel();
 const LedgerModel = require('../models/ledger_mas.model');

@@ -58,7 +58,7 @@ class menu_masterController{
         // }
 
 
-        return this.errors.length>0?false:true;
+        return Object.keys(this.errors).length>0?false:true;
     }
 
 }

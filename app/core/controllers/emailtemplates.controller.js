@@ -47,7 +47,7 @@ class emailtemplatesController{
         if (data.emailtemplates_name.length <3){
             this.errors.emailtemplates_name =lang.error.emailtemplates_name;
         }
-        return this.errors.length>0?false:true;
+        return Object.keys(this.errors).length>0?false:true;
     }
 
 }

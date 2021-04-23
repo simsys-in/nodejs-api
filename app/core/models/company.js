@@ -1,45 +1,45 @@
 const db = require('../../../db_config');
 
-class shortcutModel {
+class companyModel {
     constructor() {
 
     }
 
     queries(req, callback) {
-        const query = 'select * from shortcut';
+        const query = 'select * from company';
         db.query(query,(err, result)=>{callback(err,result)})
     }
 
     show(id,callback) {
-        const query = db.format('select * from shortcut where id = ?', id);
+        const query = db.format('select * from company where id = ?', id);
         db.query(query,(err, result)=>{callback(err,result)})
     }
 
     update(req, callback) {
-        const query = db.format(`update shortcut set ? where id= ?`, [this.fill(req), req.id])
+        const query = db.format(`update company set ? where id= ?`, [this.fill(req), req.id])
         db.query(query,(err, result)=>{callback(err,result)})
     }
 
     destroy(id, callback) {
-        let query = db.format(`delete from shortcut where id= ${id};`)
+        let query = db.format(`delete from company where id= ${id};`)
         db.query(query,(err, result)=>{callback(err,result)})
     }
 
     store(req, callback) {
-        let query = db.format(`insert into shortcut set ?`, this.fill(req))
+        let query = db.format(`insert into company set ?`, this.fill(req))
         db.query(query,(err, result)=>{callback(err,result)})
     }
 
     fill(d){
         let filled ={};
         if (typeof d.id =='string' && d.id) filled.id=d.id
-        if (typeof d.shortcut =='string') filled.shortcut=d.shortcut
-        // if (typeof d.menu_route =='string') filled.menu_route=d.menu_route
-        // if (typeof d.email =='string') filled.email=d.email
-        // if (typeof d.phone =='string') filled.phone=d.phone
+        if (typeof d.company =='string') filled.company=d.company
+        if (typeof d.alias =='string') filled.alias=d.alias
+        if (typeof d.email =='string') filled.email=d.email
+        if (typeof d.phone =='string') filled.phone=d.phone
         console.log(filled);
         return filled;
     }
 
 }
-module.exports = shortcutModel;
+module.exports = companyModel;

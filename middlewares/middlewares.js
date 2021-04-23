@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config({
   path: __dirname + '/.env'
 });
-const DBConfig = require('../app/db_config');
+const DBConfig = require('../db_config');
 
 
 let publicUri = [

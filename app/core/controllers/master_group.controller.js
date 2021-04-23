@@ -3,7 +3,7 @@ const master_group = new master_groupModel();
 const lang = require('../lang')
 
 class master_groupController{
-    constructor(){ 
+    constructor(){
         this.errors ={}
     }
 
@@ -43,22 +43,10 @@ class master_groupController{
     }
 
     validate(data){
-        
         if (data.master_group.length <3){
             this.errors.master_group =lang.error.master_group;
-        }
-        // if (data.alias <1){
-        //     this.errors.alias =lang.error.alias;
-        // }
-        // if (data.email <1){
-        //     this.errors.email =lang.error.email;
-        // }
-        // if (data.phone <1){
-        //     this.errors.phone =lang.error.phone;
-        // }
-
-
-        return this.errors.length>0?false:true;
+        } 
+        return Object.keys(this.errors).length>0?false:true;
     }
 
 }

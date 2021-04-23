@@ -1,9 +1,9 @@
-const db = require('../../db_config');
+const db = require('../../../db_config');
 
 class master_groupModel {
     constructor() {
 
-    }
+    } 
 
     queries(req, callback) {
         const query = 'select * from master_group';
@@ -34,12 +34,8 @@ class master_groupModel {
         let filled ={};
         if (typeof d.id =='string' && d.id) filled.id=d.id
         if (typeof d.master_group =='string') filled.master_group=d.master_group
-        // if (typeof d.alias =='string') filled.alias=d.alias
-        // if (typeof d.email =='string') filled.email=d.email
-        // if (typeof d.phone =='string') filled.phone=d.phone
         console.log(filled);
         return filled;
     }
-
 }
 module.exports = master_groupModel;

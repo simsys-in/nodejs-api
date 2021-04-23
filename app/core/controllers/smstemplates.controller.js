@@ -59,7 +59,7 @@ class smstemplatesController{
         // }
 
 
-        return this.errors.length>0?false:true;
+        return Object.keys(this.errors).length>0?false:true;
     }
 
 }

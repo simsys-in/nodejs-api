@@ -1,4 +1,4 @@
-const DBCON =  require('../../db_config');
+const DBCON =  require('../../../db_config');
 
 function product_group(){}; 
 

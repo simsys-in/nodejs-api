@@ -56,7 +56,7 @@ process.env['DB_NAME'] = process.env.DB_NAME;
 process.env['DB_USER'] = process.env.DB_USER;
 process.env['DB_PASS'] = process.env.DB_PASS;
 
-var DBCON = require('./app/db_config');
+var DBCON = require('./db_config');
 DBCON.query("select 1 as c", function(err, result){
     if(err)
     {

@@ -1,11 +1,11 @@
 const jwt = require("jsonwebtoken");
-const DBCON = require('../../db_config');
+const DBCON = require('../../../db_config');
 const UserMasModel = require('../models/users.model');
 const md5 = require('md5');
 const bcrypt = require('bcryptjs');
 const {
     issetNotEmpty
-} = require('../../helpers/common');
+} = require('../../../helpers/common');
 const _ = require('lodash')
 // const UserMasModel = require('../models/users.model');
 // const md5 = require('md5');

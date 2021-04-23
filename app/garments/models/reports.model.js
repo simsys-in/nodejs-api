@@ -1,10 +1,10 @@
 const e = require('express');
 const { query } = require('../db_config');
 
-const DBCON = require('../../db_config');
+const DBCON = require('../../../db_config');
 const {
     issetNotEmpty
-} = require('../../helpers/common');
+} = require('../../../helpers/common');
 
 function ReportsModel() {};
 

@@ -1,10 +1,10 @@
-const DBCON = require('../../db_config');
+const DBCON = require('../../../db_config');
 const {
     issetNotEmpty
-} = require('../../helpers/common');
+} = require('../../../helpers/common');
 
 const moment = require('moment');
-const { getDBDate } = require('../../helpers/timer')
+const { getDBDate } = require('../../../helpers/timer')
 const e = require('express');
 const {
     result
@@ -13,7 +13,7 @@ const LedgerModel = require('./ledger_mas.model');
 const Ledger = new LedgerModel();
 // const {
 //     getDBDate
-// } = require('../../helpers/timer');
+// } = require('../../../helpers/timer');
 
 function GarmentsInvoiceModel() {};
 

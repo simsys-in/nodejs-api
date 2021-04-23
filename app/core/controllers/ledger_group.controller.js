@@ -56,7 +56,7 @@ class ledger_groupController{
         // if (data.phone <1){
         //     this.errors.phone =lang.error.phone;
         // }
-        return this.errors.length>0?false:true;
+        return Object.keys(this.errors).length>0?false:true;
     }
 
 }

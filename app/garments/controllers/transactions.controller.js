@@ -1,7 +1,7 @@
-const DBCON = require('../../db_config');
+const DBCON = require('../../../db_config');
 const {
     issetNotEmpty
-} = require('../../helpers/common');
+} = require('../../../helpers/common');
 const OrderProgramModel = require('../models/order_program.model');
 const OrderProgram = new OrderProgramModel();
 

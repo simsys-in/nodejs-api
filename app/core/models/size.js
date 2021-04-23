@@ -1,4 +1,4 @@
-const db = require('../../db_config');
+const db = require('../../../db_config');
 
 class sizeModel {
     constructor() {

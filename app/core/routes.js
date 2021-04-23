@@ -14,10 +14,10 @@ const smstemplatesController = require('./controllers/smstemplates.controller');
 const addonController = require('./controllers/addon.controller');
 const vouchersController = require('./controllers/vouchers.controller');
 const UserController = require('./controllers/user.controller');
-// const companyController = require('./controllers/company.controller');
-// const unitController = require('./controllers/unit.controller');
-// const ledger_categoryController = require('./controllers/ledger_category.controller');
-// const user_groupController = require('./controllers/user_group.controller');
+const companyController = require('./controllers/company.controller');
+const unitController = require('./controllers/unit.controller');
+const ledger_categoryController = require('./controllers/ledger_category.controller');
+const user_groupController = require('./controllers/user_group.controller');
 
 
 Router.post('/login', UserController.login);
@@ -131,31 +131,31 @@ Router.post('/vouchers',vouchersController.store);
 Router.delete('/vouchers/:id',vouchersController.destroy);
 
 // // company routes 
-// Router.get('/company',companyController.index);
-// Router.get('/company/:id',companyController.show);
-// Router.put('/company/:id',companyController.update);
-// Router.post('/company',companyController.store);
-// Router.delete('/company/:id',companyController.destroy);
+Router.get('/company',companyController.index);
+Router.get('/company/:id',companyController.show);
+Router.put('/company/:id',companyController.update);
+Router.post('/company',companyController.store);
+Router.delete('/company/:id',companyController.destroy);
 
 // unit
-// Router.get('/unit',unitController.index);
-// Router.get('/unit/:id',unitController.show);
-// Router.put('/unit/:id',unitController.update);
-// Router.post('/unit',unitController.store);
-// Router.delete('/unit/:id',unitController.destroy);
+Router.get('/unit',unitController.index);
+Router.get('/unit/:id',unitController.show);
+Router.put('/unit/:id',unitController.update);
+Router.post('/unit',unitController.store);
+Router.delete('/unit/:id',unitController.destroy);
 
 // ledger_category routes 
-// Router.get('/ledger_category',ledger_categoryController.index);
-// Router.get('/ledger_category/:id',ledger_categoryController.show);
-// Router.put('/ledger_category/:id',ledger_categoryController.update);
-// Router.post('/ledger_category',ledger_categoryController.store);
-// Router.delete('/ledger_category/:id',ledger_categoryController.destroy);
+Router.get('/ledger_category',ledger_categoryController.index);
+Router.get('/ledger_category/:id',ledger_categoryController.show);
+Router.put('/ledger_category/:id',ledger_categoryController.update);
+Router.post('/ledger_category',ledger_categoryController.store);
+Router.delete('/ledger_category/:id',ledger_categoryController.destroy);
 
 // user_group routes 
-// Router.get('/user_group',user_groupController.index);
-// Router.get('/user_group/:id',user_groupController.show);
-// Router.put('/user_group/:id',user_groupController.update);
-// Router.post('/user_group',user_groupController.store);
-// Router.delete('/user_group/:id',user_groupController.destroy);
+Router.get('/user_group',user_groupController.index);
+Router.get('/user_group/:id',user_groupController.show);
+Router.put('/user_group/:id',user_groupController.update);
+Router.post('/user_group',user_groupController.store);
+Router.delete('/user_group/:id',user_groupController.destroy);
 
 module.exports = Router;
