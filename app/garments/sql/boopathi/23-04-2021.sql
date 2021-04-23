@@ -1,0 +1,1 @@
+ALTER TABLE `order_fabric` CHANGE `fabric_id` `fabric_id` INT(255) NOT NULL;

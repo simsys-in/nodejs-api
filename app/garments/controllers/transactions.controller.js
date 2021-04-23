@@ -1799,6 +1799,19 @@ exports.getYarnPurchaseOrderReport = (req, res) => {
         }
     })
 }
+//report general purchase order
+exports.getGeneralPurchaseOrderReport = (req, res) => {
+    const ID = req.query.id;
+    GeneralPurchaseOrder.getGeneralPurchaseOrderReport(ID, (err, result) => {
+        if(err)
+        {
+            res.sendError(err);
+        }
+        else{
+            res.sendInfo("", result);
+        }
+    })
+}
 
 
 

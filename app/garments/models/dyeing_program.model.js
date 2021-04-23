@@ -113,7 +113,7 @@ DyeingProgramModel.prototype = {
                                             fabric_id: item.fabric_id,
                                             // ledger_id : item.ledger_id,
                                             rolls: item.rolls,
-                                            narration :item.narration,
+                                            narration : issetNotEmpty(item.narration) ? item.narration : "",
                                             weight: item.weight,
                                             color_id: item.color_id,
                                             dia: item.dia,
@@ -122,11 +122,11 @@ DyeingProgramModel.prototype = {
                                         DBCON.query(`insert into dyeing_program_inventory set ?`, dyeing_program_inventory);
                                     }
                                     if (index === body.dyeing_program_inventory.length - 1) {
-                                        callback(false, result, "Fabric Inward  Saved Successfully!");
+                                        callback(false, result, "Dyeing Program  Saved Successfully!");
                                     }
                                 })
                             }else{
-                                callback(false, result, "Fabric Inward  Saved Successfully!");
+                                callback(false, result, "Dyeing Program  Saved Successfully!");
 
                             }
 
@@ -165,7 +165,7 @@ DyeingProgramModel.prototype = {
                                     fabric_id: item.fabric_id,
                                     // ledger_id : item.ledger_id,
                                     rolls: item.rolls,
-                                    narration :item.narration,
+                                    narration : issetNotEmpty(item.narration) ? item.narration : "",
                                     weight: item.weight,
                                     color_id: item.color_id,
                                     dia: item.dia,
@@ -174,11 +174,11 @@ DyeingProgramModel.prototype = {
                                 DBCON.query(`insert into dyeing_program_inventory set ?`, dyeing_program_inventory);
                             }
                             if (index === body.dyeing_program_inventory.length - 1) {
-                                callback(false, result, "Fabric Inward  Updated Successfully!");
+                                callback(false, result, "  Dyeing Program Updated Successfully!");
                             }
                         })
                     }else{
-                        callback(false, result, "Fabric Inward  Updated Successfully!");
+                        callback(false, result, "  Dyeing Program Updated Successfully!");
 
                     }
 
