@@ -16,7 +16,7 @@ UserModel.prototype = {
         }
 
         let sql = `SELECT * FROM ${TABLE_NAME} WHERE id = ?`;
-        console.log(sql);
+        // console.log(sql);
 
         DBCON.query(sql, match, function (err, result) {
             if (err){ 
@@ -67,7 +67,7 @@ UserModel.prototype = {
                 }
             })
         } else {
-            console.log(body.name, "Entered")
+            // console.log(body.name, "Entered")
             body.created_at = new Date();
             DBCON.query(`select count(id) as c from ${TABLE_NAME} where  (email = ? or mobile = ?)`, [body.email,body.mobile], (err, count) => {
                 if (err) {

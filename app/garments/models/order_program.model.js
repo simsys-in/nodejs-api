@@ -17,7 +17,7 @@ OrderProgramModel.prototype = {
         }
 
         let sql = `SELECT * FROM order_program WHERE id = ?`;
-        console.log(sql);
+        // console.log(sql);
 
         let sql1 = `SELECT * FROM order_process WHERE order_process.order_id = ?`;
 
@@ -111,7 +111,7 @@ OrderProgramModel.prototype = {
                 if (err) {
                     callback(err)
                 } else {
-                    console.log(result);
+                    // console.log(result);
                     DBCON.query(`delete from order_process where order_id = ?`, body.id, (err, deletedData) => {
                         if (err) {
                             callback(err)
@@ -195,7 +195,7 @@ OrderProgramModel.prototype = {
                 if (err) {
                     callback(err)
                 } else {
-                    console.log(result);
+                    // console.log(result);
                     if(body.order_process.length > 0){
 
                         body.order_process.map((item, index) => {
@@ -268,7 +268,7 @@ OrderProgramModel.prototype = {
 
         DBCON.query(query, (err, result) => {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 callback(err)
             } else {
                 callback(false, result[0]);
@@ -278,7 +278,7 @@ OrderProgramModel.prototype = {
     getStyleForOrderId: (order_id, callback) => {
         DBCON.query(`select style_id from ${TABLE_NAME} where id = ${order_id}`, (err, result) => {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 callback(err);
             } else {
                 var style_id = result && result[0] && result[0].style_id ? result[0].style_id : null;

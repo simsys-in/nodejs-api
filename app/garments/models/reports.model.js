@@ -17,7 +17,7 @@ ReportsModel.prototype = {
         }
 
         let sql = `SELECT * FROM ${TABLE_NAME} WHERE ${field} = ?`;
-        console.log(sql);
+        // console.log(sql);
 
         DBCON.query(sql, match, function (err, result) {
             if (err){ 

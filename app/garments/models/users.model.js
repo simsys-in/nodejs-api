@@ -16,7 +16,7 @@ User.prototype = {
         }
         // prepare the sql query
         let sql = `select * from users where email = '${user}';`;
-        console.log(sql, field, user)
+        // console.log(sql, field, user)
 
         DBCON.query(sql, function (err, result) {
             if (err) {
@@ -35,7 +35,7 @@ User.prototype = {
         // find the user data by his username.
         this.find(username, function (err, user) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 callback(err);
             } else {
                 if (user) {

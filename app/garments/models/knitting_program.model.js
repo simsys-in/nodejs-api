@@ -18,7 +18,7 @@ KnittingProgramModel.prototype = {
         }
 
         let sql = `SELECT * FROM knitting_program WHERE id = ?`;
-        console.log(sql);
+        // console.log(sql);
 
         let sql1 = `SELECT *, 1 as selected FROM knitting_program_inventory WHERE knitting_program_inventory.vou_id = ?`;
 
@@ -94,7 +94,7 @@ KnittingProgramModel.prototype = {
                 if (err) {
                     callback(err)
                 } else {
-                    console.log(result);
+                    // console.log(result);
                     DBCON.query(`delete from knitting_program_inventory where vou_id = ?`, body.id, (err, deletedData) => {
                         if (err) {
                             callback(err)
@@ -166,7 +166,7 @@ KnittingProgramModel.prototype = {
 
                         body.knitting_program_inventory.map((item, index) => {
                             if (item.selected && issetNotEmpty(item.yarn_id)) {
-                                console.log(item, index)
+                                // console.log(item, index)
                                 var knitting_program_inventory = {
                                     vou_id: result.insertId,
                                     yarn_id: item.yarn_id,
@@ -229,7 +229,7 @@ KnittingProgramModel.prototype = {
 
         DBCON.query(query, (err, result) => {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 callback(err)
             } else {
                 callback(false, result[0]);

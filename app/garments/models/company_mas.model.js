@@ -16,7 +16,7 @@ CompanyModel.prototype = {
         }
 
         let sql = `SELECT * FROM company WHERE id = ?`;
-        console.log(sql);
+        // console.log(sql);
 
         let sql1 = `SELECT * FROM  company_details where company_details.company_id = ?`;
 

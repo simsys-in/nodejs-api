@@ -26,40 +26,40 @@ const User = new UserModel();
 
 
 exports.login = function (req, res) {
-    console.log(req.body)
+    // console.log(req.body)
     var email = req.body.username;
     var password = req.body.password;
     var cpin = req.body.cpin;
 
     process.env['DB_NAME'] = "erp" + cpin;
-    console.log(process.env.DB_NAME)
+    // console.log(process.env.DB_NAME)
     DBCON.changeUser({
         database: process.env.DB_NAME,
     }, (err) => {
         if (err) throw err;
-        console.log(process.env.DB_NAME + " DB Connected")
+        // console.log(process.env.DB_NAME + " DB Connected")
 
 
         Users.login(email, password, function (err, result) {
             if (err) {
-                console.log(err)
+                // console.log(err)
                 res.sendError(err)
             } else {
-                console.log(result)
+                // console.log(result)
                 if (result.length > 0) {
                     var user = Object.assign({}, result[0])
-                    console.log(user.password, md5(password), password)
+                    // console.log(user.password, md5(password), password)
                     if (bcrypt.compareSync(password, user.password) || password === user.password) {
                         DBCON.query(`select  user_group_permission.*, menu_master.menu , menu_master.menu_route as route,  menu_master.icon, menu_master.sort_order from user_group_permission left join menu_master on menu_master.id = user_group_permission.menu_id where user_group_permission.user_group_id = ${user.user_group_id} and user_group_permission.add_permission = 1 and menu_id is not null union all select  user_group_permission.*, route.voutype as name, route.vou_route as url, route.icon, route.sort_order from user_group_permission left join route on route.id = user_group_permission.route where user_group_permission.user_group_id = ${user.user_group_id} and user_group_permission.add_permission = 1 and user_group_permission.route is not null`, (err, permission) => {
                             if (err) {
-                                console.log(err);
+                                // console.log(err);
                                 res.sendError(err);
                             } else {
                                 // 
                                 var result = {};
                                 var menuList = permission;
                                 var payload = user;
-                                console.log("pay", user, payload)
+                                // console.log("pay", user, payload)
                                 let token = jwt.sign(payload, process.env.SIGN_TOKEN, {
                                     expiresIn: "4h",
                                 });
@@ -85,7 +85,7 @@ exports.login = function (req, res) {
                                 // res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
                                 // res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
                                 res.cookie("refreshToken", refreshToken);
-                                console.log(result);
+                                // console.log(result);
                                 res.cookie("token", token, {
                                     httpOnly: true
                                 }).sendSuccess("Login Success", result);
@@ -110,7 +110,7 @@ exports.saveMenu_Master = function (req, res) {
     body.id = req.query.id;
     Menu_Master.checkAndSaveOrUpdate(body, (err, result, msg) => {
         if (err) {
-            console.log(err);
+            // console.log(err);
             res.sendError(err);
         } else {
             res.sendSuccess(msg, result)
@@ -123,7 +123,7 @@ exports.getMenu_Master = function (req, res) {
     if (issetNotEmpty(ID)) {
         Menu_Master.find(Number(ID), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("", data);
@@ -132,7 +132,7 @@ exports.getMenu_Master = function (req, res) {
     } else {
         Menu_Master.getAll((err, data) => {
             if (err) {
-                console.log(err)
+                // console.log(err)
                 res.sendError(err)
             } else {
                 res.sendSuccess("", data)
@@ -158,15 +158,15 @@ exports.getAllMenusForUserPermission = function (req, res) {
     query1 += ` group by route.id`;
 
 
-    console.log(query, query1);
+    // console.log(query, query1);
     DBCON.query(query, (err, result) => {
         if (err) {
-            console.log(err);
+            // console.log(err);
             res.sendError(err)
         } else {
             DBCON.query(query1, (err, routeMenu) => {
                 if (err) {
-                    console.log(err);
+                    // console.log(err);
                     res.sendError(err);
                 } else {
                     var menuList = [...result, ...routeMenu];
@@ -186,7 +186,7 @@ exports.getAllMenu_MasterSB = function (req, res) {
     const status = body.status ? body.status : 'active'
     DBCON.query('select id as value, menu from menu_master ', function (err, data) {
         if (err) {
-            console.log(err)
+            // console.log(err)
             res.sendError(err)
         } else {
             res.sendInfo("", data)
@@ -196,12 +196,12 @@ exports.getAllMenu_MasterSB = function (req, res) {
 
 exports.deleteMenu_Master = function (req, res) {
     const id = req.query.id;
-    console.log("ID : " + id);
+    // console.log("ID : " + id);
 
     if (issetNotEmpty(id)) {
         Menu_Master.delete(Number(id), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("Menu master Deleted Successfully!");
@@ -219,7 +219,7 @@ exports.saveUser_Group = function (req, res) {
     body.id = req.query.id;
     User_Group.checkAndSaveOrUpdate(body, (err, result, msg) => {
         if (err) {
-            console.log(err);
+            // console.log(err);
             res.sendError(err);
         } else {
             res.sendSuccess(msg, result)
@@ -232,7 +232,7 @@ exports.getUser_Group = function (req, res) {
     if (issetNotEmpty(ID)) {
         User_Group.find(Number(ID), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("", data);
@@ -241,7 +241,7 @@ exports.getUser_Group = function (req, res) {
     } else {
         User_Group.getAll((err, data) => {
             if (err) {
-                console.log(err)
+                // console.log(err)
                 res.sendError(err)
             } else {
                 res.sendSuccess("", data)
@@ -257,7 +257,7 @@ exports.getAllUser_GroupSB = function (req, res) {
     const status = body.status ? body.status : 'active'
     DBCON.query('select id as value, menu from user_group ', function (err, data) {
         if (err) {
-            console.log(err)
+            // console.log(err)
             res.sendError(err)
         } else {
             res.sendInfo("", data)
@@ -267,12 +267,12 @@ exports.getAllUser_GroupSB = function (req, res) {
 
 exports.deleteUser_Group = function (req, res) {
     const id = req.query.id;
-    console.log("ID : " + id);
+    // console.log("ID : " + id);
 
     if (issetNotEmpty(id)) {
         User_Group.delete(Number(id), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("User Group Deleted Successfully!");
@@ -289,7 +289,7 @@ exports.saveUser = function (req, res) {
     body.id = req.query.id;
     User.checkAndSaveOrUpdate(body, (err, result, msg) => {
         if (err) {
-            console.log(err);
+            // console.log(err);
             res.sendError(err);
         } else {
             res.sendSuccess(msg, result)
@@ -302,7 +302,7 @@ exports.getUser = function (req, res) {
     if (issetNotEmpty(ID)) {
         User.find(Number(ID), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("", data);
@@ -311,7 +311,7 @@ exports.getUser = function (req, res) {
     } else {
         User.getAll((err, data) => {
             if (err) {
-                console.log(err)
+                // console.log(err)
                 res.sendError(err)
             } else {
                 res.sendSuccess("", data)
@@ -327,7 +327,7 @@ exports.getAllUserSB = function (req, res) {
     const status = body.status ? body.status : 'active'
     DBCON.query('select id as value, name from users ', function (err, data) {
         if (err) {
-            console.log(err)
+            // console.log(err)
             res.sendError(err)
         } else {
             res.sendInfo("", data)
@@ -337,12 +337,12 @@ exports.getAllUserSB = function (req, res) {
 
 exports.deleteUser = function (req, res) {
     const id = req.query.id;
-    console.log("ID : " + id);
+    // console.log("ID : " + id);
 
     if (issetNotEmpty(id)) {
         User.delete(Number(id), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("User Deleted Successfully!");
@@ -361,7 +361,7 @@ exports.getAllUserGroupSB = function (req, res) {
     const status = body.status ? body.status : 'active'
     DBCON.query('select id as value, user_group as name from user_group ', function (err, data) {
         if (err) {
-            console.log(err)
+            // console.log(err)
             res.sendError(err)
         } else {
             res.sendInfo("", data)

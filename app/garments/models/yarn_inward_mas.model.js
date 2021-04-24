@@ -15,7 +15,7 @@ Yarn_InwardModel.prototype = {
         }
 
         let sql = `SELECT * FROM yarn_inward WHERE id = ?`;
-        console.log(sql);
+        // console.log(sql);
 
         let sql1 = `SELECT *,1 as selected FROM  yarn_inward_inventory where yarn_inward_inventory.vou_id = ? order by id `;
 
@@ -90,7 +90,7 @@ Yarn_InwardModel.prototype = {
                 if (err) {
                     callback(err)
                 } else {
-                    console.log(result)
+                    // console.log(result)
                     DBCON.query('delete from yarn_inward_inventory where vou_id = ? ', body.id, (err, deleteData) => {
                         if (err) {
                             callback(err)
@@ -154,7 +154,7 @@ Yarn_InwardModel.prototype = {
                 if (err) {
                     callback(err)
                 } else {
-                    console.log(result)
+                    // console.log(result)
                     if(body.yarn_inward_inventory.length > 0){
 
                         body.yarn_inward_inventory.map((item, index) => {
@@ -211,7 +211,7 @@ Yarn_InwardModel.prototype = {
 
         DBCON.query(query, (err, result) => {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 callback(err)
             } else {
                 callback(false, result[0]);
@@ -224,7 +224,7 @@ Yarn_InwardModel.prototype = {
 
         DBCON.query(QUERY, (err, result) => {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 callback(err);
             } else {
                 yarn_inward_details = result[0];
@@ -234,7 +234,7 @@ Yarn_InwardModel.prototype = {
 
                 DBCON.query(GET_INVENTORY_QUERY, (err, inventory) => {
                     if (err) {
-                        console.log(err);
+                        // console.log(err);
                         callback(err);
                     } else {
                         yarn_inward_details.inventory = inventory;
@@ -256,14 +256,14 @@ Yarn_InwardModel.prototype = {
                                 const GET_LEDGER_DETAILS = `select ledger.ledger, ledger.address, ledger.mobile, ledger.phone, ledger.gstno from yarn_inward left join ledger on yarn_inward.ledger_id = ledger.id where yarn_inward.id = ${id}`;
                                 DBCON.query(GET_COMPANY_DETAILS, (err, company_details) => {
                                     if (err) {
-                                        console.log(err);
+                                        // console.log(err);
                                         callback(err);
 
                                     } else {
                                         yarn_inward_details.company_details = company_details[0];
                                         DBCON.query(GET_LEDGER_DETAILS, (err, ledger_details) => {
                                             if (err) {
-                                                console.log(err);
+                                                // console.log(err);
                                                 callback(err);
                                             } else {
                                                 yarn_inward_details.ledger_details = ledger_details[0];
