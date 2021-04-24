@@ -203,7 +203,7 @@ exports.getAllLedgerSB = function (req, res) {
     const USER = req.user;
     body.company = USER.company
     // const status = body.status ? body.status : 'active'
-    DBCON.query('select id as value, ledger as name from ledger order by ledger.id desc', function (err, data) {
+    DBCON.query('select id as value, ledger as name from ledger order by ledger.ledger asc', function (err, data) {
         if (err) {
             console.log(err)
             res.sendError(err)
@@ -1087,7 +1087,7 @@ exports.getAllFabricsSB = function (req, res) {
     const USER = req.user;
     body.company = USER.company
     const status = body.status ? body.status : 'active';
-    DBCON.query('select product.id as value, product.product as name from product left join product_category on product.product_category_id = product_category.id where product_category="FABRIC" ', function (err, data) {
+    DBCON.query('select product.id as value, product.product as name from product left join product_category on product.product_category_id = product_category.id where product_category="FABRIC" order by product.product asc', function (err, data) {
         if (err) {
             console.log(err)
             res.sendError(err)
@@ -1261,7 +1261,7 @@ exports.getAllColorSB = function (req, res) {
     const USER = req.user;
     body.company = USER.company
     // const status = body.status ? body.status : 'active';
-    DBCON.query('select id as value, color as name from color order by color.id desc ', function (err, data) {
+    DBCON.query('select id as value, color as name from color order by color.color asc ', function (err, data) {
         if (err) {
             console.log(err)
             res.sendError(err)

@@ -236,7 +236,7 @@ YarnPurchaseOrderModel.prototype = {
     },
     getYarnPurchaseOrderReport: (id, callback) => {
         var yarn_purchase_order_details = {};
-        const QUERY = `select yarn_purchase_order.id, yarn_purchase_order.vouno, yarn_purchase_order.vou_date, yarn_purchase_order.delivery_address, yarn_purchase_order.ledger_id, yarn_purchase_order.inventory_qty_total, yarn_purchase_order.inventory_amount_total from yarn_purchase_order where yarn_purchase_order.id = ${id};`;
+        const QUERY = `select yarn_purchase_order.id, yarn_purchase_order.vouno, yarn_purchase_order.vou_date, yarn_purchase_order.payment_mode, yarn_purchase_order.delivery_address, yarn_purchase_order.ledger_id, yarn_purchase_order.inventory_qty_total, yarn_purchase_order.inventory_amount_total from yarn_purchase_order where yarn_purchase_order.id = ${id};`;
 
         DBCON.query(QUERY, (err, result) => {
             if (err) {

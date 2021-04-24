@@ -114,7 +114,7 @@ GeneralPurchaseOrderModel.prototype = {
                                     
                                         var general_purchase_order_inventory = {
                                             vou_id: body.id,
-                                            unit_id: item.unit_id,
+                                            unit_id: issetNotEmpty(item.unit_id) ? item.unit_id : 0,
                                             product_id: item.product_id,
                                             hsnsac: item.hsnsac,
                                             qty: item.qty,
@@ -172,7 +172,7 @@ GeneralPurchaseOrderModel.prototype = {
                             console.log(item, index)
                             var general_purchase_order_inventory = {
                                 vou_id: result.insertId,
-                                unit_id: item.unit_id,
+                                unit_id: issetNotEmpty(item.unit_id) ? item.unit_id : 0,
 
                                 product_id: item.product_id,
                                 hsnsac: item.hsnsac,
