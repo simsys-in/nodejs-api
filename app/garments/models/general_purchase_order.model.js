@@ -123,18 +123,18 @@ GeneralPurchaseOrderModel.prototype = {
                                         }
                                         DBCON.query(`insert into general_purchase_order_inventory set ?`, general_purchase_order_inventory);
                                         if (index === body.general_purchase_order_inventory.length - 1) {
-                                            callback(false, result, "General Purchase Order  Saved Successfully!");
+                                            callback(false, result, "Purchase Order  Saved Successfully!");
                                         }
     
                                      else {
                                         if (index === body.general_purchase_order_inventory.length - 1) {
-                                            callback(false, result, "General Purchase Order Updated Successfully!");
+                                            callback(false, result, "Purchase Order Updated Successfully!");
                                         }
                                     }
                                 // }
                                 })
                             }else{
-                                callback(false, result, "General Purchase Order Updated Successfully!");
+                                callback(false, result, "Purchase Order Updated Successfully!");
 
                             }
                         }
@@ -184,17 +184,17 @@ GeneralPurchaseOrderModel.prototype = {
                             }
                             DBCON.query(`insert into general_purchase_order_inventory set ?`, general_purchase_order_inventory);
                             if (index === body.general_purchase_order_inventory.length - 1) {
-                                callback(false, result, "General Purchase Order Updated Successfully!");
+                                callback(false, result, "Purchase Order Updated Successfully!");
                             }
                          else {
                             if (index === body.general_purchase_order_inventory.length - 1) {
-                                callback(false, result, "General Purchase Order Updated Successfully!");
+                                callback(false, result, "Purchase Order Updated Successfully!");
                             }
                         }
                     // }
                  })
                     }else{
-                        callback(false, result, "General Purchase Order Updated Successfully!");
+                        callback(false, result, "Purchase Order Updated Successfully!");
 
                     }
 
