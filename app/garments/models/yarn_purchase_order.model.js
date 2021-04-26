@@ -31,6 +31,8 @@ YarnPurchaseOrderModel.prototype = {
             } else {
                 var yarn_purchase_order = {
                     ledger_id: result[0].ledger_id,
+                    order_id: result[0].order_id,
+
                     delivery_address: result[0].delivery_address,
                     vou_date: result[0].vou_date,
                     narration: result[0].narration,
@@ -86,6 +88,8 @@ YarnPurchaseOrderModel.prototype = {
 
             var yarn_purchase_order = {
                 ledger_id: body.ledger_id,
+                order_id: body.order_id,
+
                 delivery_address: body.delivery_address,
                 vou_date: getDBDate(body.vou_date),
                 narration: body.narration,
@@ -146,6 +150,8 @@ YarnPurchaseOrderModel.prototype = {
 
             var yarn_purchase_order = {
                 ledger_id: body.ledger_id,
+                order_id: body.order_id,
+
                 delivery_address: body.delivery_address,
                 vou_date: getDBDate(body.vou_date),
                 narration: body.narration,
