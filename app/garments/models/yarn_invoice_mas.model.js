@@ -28,6 +28,7 @@ Yarn_InvoiceModel.prototype = {
                 var yarn_invoice = {
                     ledger_id: result[0].ledger_id,
                     narration: result[0].narration,
+                    vehicle_no: result[0].vehilce,
                     vou_date: result[0].vou_date,
 
                     inventory_qty_kg_total: result[0].inventory_qty_kg_total,
@@ -82,6 +83,7 @@ Yarn_InvoiceModel.prototype = {
             var yarn_invoice = {
                 ledger_id: body.ledger_id,
                 narration: body.narration,
+                vehicle_no: body.vehicle_no,
                 vou_date: getDBDate(body.vou_date),
 
                 inventory_qty_kg_total: body.inventory_qty_kg_total,
@@ -151,6 +153,7 @@ Yarn_InvoiceModel.prototype = {
             var yarn_invoice = {
                 ledger_id: body.ledger_id,
                 narration: body.narration,
+                vehicle_no: body.vehicle_no,
                 vou_date: getDBDate(body.vou_date),
 
                 inventory_qty_kg_total: body.inventory_qty_kg_total,
@@ -235,7 +238,7 @@ Yarn_InvoiceModel.prototype = {
     },
     getYarnInvoiceReport: (id, callback) => {
         var yarn_invoice_details = {};
-        const QUERY = `select yarn_invoice.id, yarn_invoice.vouno, yarn_invoice.vou_date,process.process, order_program.order_no from yarn_invoice left join process on process.id = yarn_invoice.process_id left join order_program on order_program.id = yarn_invoice.order_id where yarn_invoice.id = ${id};`;
+        const QUERY = `select yarn_invoice.id, yarn_invoice.vouno,yarn_invoice.vehicle_no, yarn_invoice.vou_date,process.process, order_program.order_no from yarn_invoice left join process on process.id = yarn_invoice.process_id left join order_program on order_program.id = yarn_invoice.order_id where yarn_invoice.id = ${id};`;
 
         DBCON.query(QUERY, (err, result) => {
             if (err) {

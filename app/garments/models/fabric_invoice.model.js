@@ -35,6 +35,7 @@ FabricInvoiceModel.prototype = {
                     vouno: result[0].vouno,
                     order_id : result[0].order_id,
                     narration : result[0].narration,
+                    vehicle_no : result[0].vehicle_no,
                     inventory_qty_total : result[0].inventory_qty_total,
                     inventory_qty2_total : result[0].inventory_qty2_total,
                     process_id : result[0].process_id,
@@ -94,6 +95,7 @@ FabricInvoiceModel.prototype = {
                 vouno: body.vouno,
                 order_id : body.order_id,
                 narration : body.narration,
+                vehicle_no : body.vehicle_no,
                 inventory_qty_total : 0,
                 inventory_qty2_total : 0,
                 process_id : body.process_id,
@@ -158,6 +160,7 @@ FabricInvoiceModel.prototype = {
                                 vouno: body.vouno,
                                 order_id : body.order_id,
                                 narration : body.narration,
+                                vehicle_no : body.vehicle_no,
                                 inventory_qty_total : 0,
                                 inventory_qty2_total : 0,
                                 process_id : body.process_id,
@@ -247,7 +250,7 @@ FabricInvoiceModel.prototype = {
     },
     getFabricInvoiceReport: (id, callback) => {
         var fabric_outward_details = {};
-        const QUERY = `select fabric_invoice.id, 'Test' as dcno, fabric_invoice.vou_date, process.process, product.hsnsac, order_program.order_no, order_program.id as order_id, 'Vehicle No' as vehicle_no, product.product from fabric_invoice left join order_program on order_program.id = fabric_invoice.order_id left join product on product.id = order_program.style_id left join process on process.id = fabric_invoice.process_id where fabric_invoice.id = ${id};`;
+        const QUERY = `select fabric_invoice.id, 'Test' as dcno, fabric_invoice.vou_date, process.process, product.hsnsac, order_program.order_no, order_program.id as order_id,fabric_invoice.vehicle_no , product.product from fabric_invoice left join order_program on order_program.id = fabric_invoice.order_id left join product on product.id = order_program.style_id left join process on process.id = fabric_invoice.process_id where fabric_invoice.id = ${id};`;
 
         DBCON.query(QUERY, (err, result) => {
             if (err) {
