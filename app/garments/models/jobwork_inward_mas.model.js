@@ -17,7 +17,7 @@ Jobwork_InwardModel.prototype = {
         }
 
         let sql = `SELECT * FROM jobwork_inward WHERE id = ?`;
-        console.log(sql);
+        // console.log(sql);
 
         let sql1 = `SELECT * ,1 as selected FROM  jobwork_inward_inventory where jobwork_inward_inventory.vou_id = ?`;
 
@@ -108,7 +108,7 @@ Jobwork_InwardModel.prototype = {
                 if (err) {
                     callback(err)
                 } else {
-                    console.log(result)
+                    // console.log(result)
                     DBCON.query('delete from jobwork_inward_inventory where vou_id = ? ', body.id, (err, deleteData) => {
                         if (err) {
                             callback(err)
@@ -118,7 +118,7 @@ Jobwork_InwardModel.prototype = {
                                 for (index = 0; index < body.jobwork_inward_inventory.length; index++) {
                                     var item = body.jobwork_inward_inventory[index];
                                     // body.jobwork_inward_inventory.map((item, index) => {
-                                    console.log(item)
+                                    // console.log(item)
                                     if (item.selected) {
                                         // body.jobwork_inward_inventory.map((item, index) => {
                                         var jobwork_inward_inventory = {
@@ -179,7 +179,7 @@ Jobwork_InwardModel.prototype = {
                 if (err) {
                     callback(err)
                 } else {
-                    console.log(result)
+                    // console.log(result)
                     if(body.jobwork_inward_inventory.length > 0){
 
                         body.jobwork_inward_inventory.map((item, index) => {
@@ -239,7 +239,7 @@ Jobwork_InwardModel.prototype = {
 
         DBCON.query(query, (err, result) => {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 callback(err)
             } else {
                 callback(false, result[0]);
@@ -252,7 +252,7 @@ Jobwork_InwardModel.prototype = {
 
         DBCON.query(QUERY, (err, result) => {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 callback(err);
             } else {
                 jobwork_inward_details = result[0];
@@ -261,11 +261,11 @@ Jobwork_InwardModel.prototype = {
 
                 DBCON.query(GET_COLOR_SIZE_DETAILS_QUERY, (err, color_size_details) => {
                     if (err) {
-                        console.log(err);
+                        // console.log(err);
                         callback(err)
                     } else {
                         var sizes = color_size_details.length > 0 ? color_size_details[0].sizes !== null ? color_size_details[0].sizes : "" : "";
-                        console.log(sizes);
+                        // console.log(sizes);
                         sizes = sizes.split(",");
                         // res.sendInfo("", sizes);
                         jobwork_inward_details.color_size_details = sizes;
@@ -274,7 +274,7 @@ Jobwork_InwardModel.prototype = {
 
                         DBCON.query(GET_COLOR_DETAILS_QUERY, (err, color_details) => {
                             if (err) {
-                                console.log(err);
+                                // console.log(err);
                                 callback(err);
                             } else {
                                 jobwork_inward_details.color_details = color_details;
@@ -292,14 +292,14 @@ Jobwork_InwardModel.prototype = {
                                 const GET_LEDGER_DETAILS = `select ledger.ledger, ledger.address, ledger.mobile, ledger.phone, ledger.gstno from jobwork_inward left join ledger on jobwork_inward.ledger_id = ledger.id where jobwork_inward.id = ${id}`;
                                 DBCON.query(GET_COMPANY_DETAILS, (err, company_details) => {
                                     if (err) {
-                                        console.log(err);
+                                        // console.log(err);
                                         callback(err);
 
                                     } else {
                                         jobwork_inward_details.company_details = company_details[0];
                                         DBCON.query(GET_LEDGER_DETAILS, (err, ledger_details) => {
                                             if (err) {
-                                                console.log(err);
+                                                // console.log(err);
                                                 callback(err);
                                             } else {
                                                 jobwork_inward_details.ledger_details = ledger_details[0];

@@ -74,7 +74,7 @@ exports.saveOrderProgram = function (req, res) {
     body.id = req.query.id;
     OrderProgram.checkAndSaveOrUpdate(body, (err, result, msg) => {
         if (err) {
-            console.log(err);
+            // console.log(err);
             res.sendError(err);
         } else {
             res.sendSuccess(msg, result)
@@ -88,7 +88,7 @@ exports.getOrderProgram = function (req, res) {
     if (issetNotEmpty(ID)) {
         OrderProgram.find(Number(ID), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("", data);
@@ -97,7 +97,7 @@ exports.getOrderProgram = function (req, res) {
     } else {
         OrderProgram.getAll((err, data) => {
             if (err) {
-                console.log(err)
+                // console.log(err)
                 res.sendError(err)
             } else {
                 res.sendSuccess("", data)
@@ -114,7 +114,7 @@ exports.getSizeSB = function (req, res) {
     const status = body.status ? body.status : 'active'
     DBCON.query('select id as value, size as name from size ', function (err, data) {
         if (err) {
-            console.log(err)
+            // console.log(err)
             res.sendError(err)
         } else {
             res.sendInfo("", data)
@@ -130,7 +130,7 @@ exports.getStyleSB = function (req, res) {
     const status = body.status ? body.status : 'active'
     DBCON.query('select product.id as value, product.product as name from product left join product_category on product.product_category_id = product_category.id where product_category="Style" ', function (err, data) {
         if (err) {
-            console.log(err)
+            // console.log(err)
             res.sendError(err)
         } else {
             res.sendInfo("", data)
@@ -145,7 +145,7 @@ exports.getOrderSB = function (req, res) {
     const status = body.status ? body.status : 'active'
     DBCON.query('select id as value,order_no as name from order_program order by id desc', function (err, data) {
         if (err) {
-            console.log(err)
+            // console.log(err)
             res.sendError(err)
         } else {
             res.sendInfo("", data)
@@ -160,7 +160,7 @@ exports.getColorSB = function (req, res) {
     const status = body.status ? body.status : 'active'
     DBCON.query('select id as value,color as name from color ', function (err, data) {
         if (err) {
-            console.log(err)
+            // console.log(err)
             res.sendError(err)
         } else {
             res.sendInfo("", data)
@@ -176,7 +176,7 @@ exports.getLedgerNameSB = function (req, res) {
     // const status = body.status ? body.status : 'active'
     DBCON.query('select id as value, name from ledger where ledger_group_id = 1 ', function (err, data) {
         if (err) {
-            console.log(err)
+            // console.log(err)
             res.sendError(err)
         } else {
             res.sendInfo("", data)
@@ -191,7 +191,7 @@ exports.getProcessSB = function (req, res) {
     const status = body.status ? body.status : 'active'
     DBCON.query('select id as value,process as name from process ', function (err, data) {
         if (err) {
-            console.log(err)
+            // console.log(err)
             res.sendError(err)
         } else {
             res.sendInfo("", data)
@@ -206,7 +206,7 @@ exports.getProductSB = function (req, res) {
     const status = body.status ? body.status : 'active'
     DBCON.query('select id as value,product as name from product ', function (err, data) {
         if (err) {
-            console.log(err)
+            // console.log(err)
             res.sendError(err)
         } else {
             res.sendInfo("", data)
@@ -223,7 +223,7 @@ exports.getProductSB = function (req, res) {
 //     const status = body.status ? body.status : 'active'
 //     DBCON.query('select product.id as value, product.product as name from product left join product_category on product.product_category_id = product_category.id where product_category="FABRIC" ', function (err, data) {
 //         if (err) {
-//             console.log(err)
+            // console.log(err)
 //             res.sendError(err)
 //         } else 
 //             res.sendInfo("", data)
@@ -262,12 +262,12 @@ exports.getNextOrderNo = function(req, res){
 
 exports.deleteOrderProgram = function (req, res) {
     const id = req.query.id;
-    console.log("ID : " + id);
+    // console.log("ID : " + id);
 
     if (issetNotEmpty(id)) {
         OrderProgram.delete(Number(id), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("Order Program Deleted Successfully!");
@@ -287,7 +287,7 @@ exports.saveFabricInward = function (req, res) {
     body.id = req.query.id;
     FabricInward.checkAndSaveOrUpdate(body, (err, result, msg) => {
         if (err) {
-            console.log(err);
+            // console.log(err);
             res.sendError(err);
         } else {
             res.sendSuccess(msg, result)
@@ -346,7 +346,7 @@ exports.getFabricInward = function (req, res) {
     if (issetNotEmpty(ID)) {
         FabricInward.find(Number(ID), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("", data);
@@ -355,7 +355,7 @@ exports.getFabricInward = function (req, res) {
     } else {
         FabricInward.getAll((err, data) => {
             if (err) {
-                console.log(err)
+                // console.log(err)
                 res.sendError(err)
             } else {
                 res.sendSuccess("", data)
@@ -372,7 +372,7 @@ exports.getFabricInward = function (req, res) {
 //     const status = body.status ? body.status : 'active'
 //     DBCON.query('select id as value, size as name from size ', function (err, data) {
 //         if (err) {
-//             console.log(err)
+            // console.log(err)
 //             res.sendError(err)
 //         } else {
 //             res.sendInfo("", data)
@@ -388,7 +388,7 @@ exports.getFabricInward = function (req, res) {
 //     const status = body.status ? body.status : 'active'
 //     DBCON.query('select product.id as value, product.product as name from product left join product_category on product.product_category_id = product_category.id where product_category="Style" ', function (err, data) {
 //         if (err) {
-//             console.log(err)
+            // console.log(err)
 //             res.sendError(err)
 //         } else {
 //             res.sendInfo("", data)
@@ -429,12 +429,12 @@ exports.getFabricInward = function (req, res) {
 
 exports.deleteFabricInward = function (req, res) {
     const id = req.query.id;
-    console.log("ID : " + id);
+    // console.log("ID : " + id);
 
     if (issetNotEmpty(id)) {
         FabricInward.delete(Number(id), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("Fabric Inward Deleted Successfully!");
@@ -455,7 +455,7 @@ exports.saveFabricOutward = function (req, res) {
     body.id = req.query.id;
     FabricOutward.checkAndSaveOrUpdate(body, (err, result, msg) => {
         if (err) {
-            console.log(err);
+            // console.log(err);
             res.sendError(err);
         } else {
             res.sendSuccess(msg, result)
@@ -469,7 +469,7 @@ exports.getFabricOutward = function (req, res) {
     if (issetNotEmpty(ID)) {
         FabricOutward.find(Number(ID), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("", data);
@@ -478,7 +478,7 @@ exports.getFabricOutward = function (req, res) {
     } else {
         FabricOutward.getAll((err, data) => {
             if (err) {
-                console.log(err)
+                // console.log(err)
                 res.sendError(err)
             } else {
                 res.sendSuccess("", data)
@@ -495,7 +495,7 @@ exports.getFabricOutward = function (req, res) {
 //     const status = body.status ? body.status : 'active'
 //     DBCON.query('select id as value, size as name from size ', function (err, data) {
 //         if (err) {
-//             console.log(err)
+            // console.log(err)
 //             res.sendError(err)
 //         } else {
 //             res.sendInfo("", data)
@@ -511,7 +511,7 @@ exports.getFabricOutward = function (req, res) {
 //     const status = body.status ? body.status : 'active'
 //     DBCON.query('select product.id as value, product.product as name from product left join product_category on product.product_category_id = product_category.id where product_category="Style" ', function (err, data) {
 //         if (err) {
-//             console.log(err)
+            // console.log(err)
 //             res.sendError(err)
 //         } else {
 //             res.sendInfo("", data)
@@ -552,12 +552,12 @@ exports.getFabricOutward = function (req, res) {
 
 exports.deleteFabricOutward = function (req, res) {
     const id = req.query.id;
-    console.log("ID : " + id);
+    // console.log("ID : " + id);
 
     if (issetNotEmpty(id)) {
         FabricOutward.delete(Number(id), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("Fabric Outward Deleted Successfully!");
@@ -577,7 +577,7 @@ exports.saveFabricInvoice = function (req, res) {
     body.id = req.query.id;
     FabricInvoice.checkAndSaveOrUpdate(body, (err, result, msg) => {
         if (err) {
-            console.log(err);
+            // console.log(err);
             res.sendError(err);
         } else {
             res.sendSuccess(msg, result)
@@ -591,7 +591,7 @@ exports.getFabricInvoice = function (req, res) {
     if (issetNotEmpty(ID)) {
         FabricInvoice.find(Number(ID), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("", data);
@@ -600,7 +600,7 @@ exports.getFabricInvoice = function (req, res) {
     } else {
         FabricInvoice.getAll((err, data) => {
             if (err) {
-                console.log(err)
+                // console.log(err)
                 res.sendError(err)
             } else {
                 res.sendSuccess("", data)
@@ -617,7 +617,7 @@ exports.getFabricInvoice = function (req, res) {
 //     const status = body.status ? body.status : 'active'
 //     DBCON.query('select id as value, size as name from size ', function (err, data) {
 //         if (err) {
-//             console.log(err)
+            // console.log(err)
 //             res.sendError(err)
 //         } else {
 //             res.sendInfo("", data)
@@ -674,12 +674,12 @@ exports.getFabricInvoice = function (req, res) {
 
 exports.deleteFabricInvoice = function (req, res) {
     const id = req.query.id;
-    console.log("ID : " + id);
+    // console.log("ID : " + id);
 
     if (issetNotEmpty(id)) {
         FabricInvoice.delete(Number(id), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("Fabric Invoice Deleted Successfully!");
@@ -699,7 +699,7 @@ exports.saveFabricReturn = function (req, res) {
     body.id = req.query.id;
     FabricReturn.checkAndSaveOrUpdate(body, (err, result, msg) => {
         if (err) {
-            console.log(err);
+            // console.log(err);
             res.sendError(err);
         } else {
             res.sendSuccess(msg, result)
@@ -713,7 +713,7 @@ exports.getFabricReturn = function (req, res) {
     if (issetNotEmpty(ID)) {
         FabricReturn.find(Number(ID), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("", data);
@@ -722,7 +722,7 @@ exports.getFabricReturn = function (req, res) {
     } else {
         FabricReturn.getAll((err, data) => {
             if (err) {
-                console.log(err)
+                // console.log(err)
                 res.sendError(err)
             } else {
                 res.sendSuccess("", data)
@@ -739,7 +739,7 @@ exports.getFabricReturn = function (req, res) {
 //     const status = body.status ? body.status : 'active'
 //     DBCON.query('select id as value, size as name from size ', function (err, data) {
 //         if (err) {
-//             console.log(err)
+            // console.log(err)
 //             res.sendError(err)
 //         } else {
 //             res.sendInfo("", data)
@@ -796,12 +796,12 @@ exports.getFabricReturn = function (req, res) {
 
 exports.deleteFabricReturn = function (req, res) {
     const id = req.query.id;
-    console.log("ID : " + id);
+    // console.log("ID : " + id);
 
     if (issetNotEmpty(id)) {
         FabricReturn.delete(Number(id), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("Fabric Return Deleted Successfully!");
@@ -820,7 +820,7 @@ exports.saveJobworkOutward = function (req, res) {
     body.id = req.query.id;
     JobworkOutward.checkAndSaveOrUpdate(body, (err, result, msg) => {
         if (err) {
-            console.log(err);
+            // console.log(err);
             res.sendError(err);
         } else {
             res.sendSuccess(msg, result)
@@ -832,7 +832,7 @@ exports.saveYarn_Inward = function (req, res) {
     body.id = req.query.id;
     Yarn_Inward.checkAndSaveOrUpdate(body, (err, result, msg) => {
         if (err) {
-            console.log(err);
+            // console.log(err);
             res.sendError(err);
         } else {
             res.sendSuccess(msg, result)
@@ -844,7 +844,7 @@ exports.getYarn_Inward = function (req, res) {
     if (issetNotEmpty(ID)) {
         Yarn_Inward.find(Number(ID), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("", data);
@@ -853,7 +853,7 @@ exports.getYarn_Inward = function (req, res) {
     } else {
         Yarn_Inward.getAll((err, data) => {
             if (err) {
-                console.log(err)
+                // console.log(err)
                 res.sendError(err)
             } else {
                 res.sendSuccess("", data)
@@ -869,7 +869,7 @@ exports.getAllYarn_InwardSB = function (req, res) {
     const status = body.status ? body.status : 'active'
     DBCON.query('select id as value, name from yarn_inward ', function (err, data) {
         if (err) {
-            console.log(err)
+            // console.log(err)
             res.sendError(err)
         } else {
             res.sendInfo("", data)
@@ -879,12 +879,12 @@ exports.getAllYarn_InwardSB = function (req, res) {
 
 exports.deleteYarn_Inward = function (req, res) {
     const id = req.query.id;
-    console.log("ID : " + id);
+    // console.log("ID : " + id);
 
     if (issetNotEmpty(id)) {
         Yarn_Inward.delete(Number(id), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("Yarn Inward Deleted Successfully!");
@@ -901,7 +901,7 @@ exports.saveYarn_Invoice = function (req, res) {
     body.id = req.query.id;
     Yarn_Invoice.checkAndSaveOrUpdate(body, (err, result, msg) => {
         if (err) {
-            console.log(err);
+            // console.log(err);
             res.sendError(err);
         } else {
             res.sendSuccess(msg, result)
@@ -915,7 +915,7 @@ exports.getJobworkOutward = function (req, res) {
     if (issetNotEmpty(ID)) {
         JobworkOutward.find(Number(ID), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("", data);
@@ -925,7 +925,7 @@ exports.getJobworkOutward = function (req, res) {
         
         JobworkOutward.getAll((err, data) => {
             if (err) {
-                console.log(err)
+                // console.log(err)
                 res.sendError(err)
             } else {
                 res.sendSuccess("", data)
@@ -939,7 +939,7 @@ exports.getYarn_Invoice = function (req, res) {
     if (issetNotEmpty(ID)) {
         Yarn_Invoice.find(Number(ID), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("", data);
@@ -948,7 +948,7 @@ exports.getYarn_Invoice = function (req, res) {
     } else {
         Yarn_Invoice.getAll((err, data) => {
             if (err) {
-                console.log(err)
+                // console.log(err)
                 res.sendError(err)
             } else {
                 res.sendSuccess("", data)
@@ -964,7 +964,7 @@ exports.getAllYarn_InvoiceSB = function (req, res) {
     const status = body.status ? body.status : 'active'
     DBCON.query('select id as value, name from yarn_invoice ', function (err, data) {
         if (err) {
-            console.log(err)
+            // console.log(err)
             res.sendError(err)
         } else {
             res.sendInfo("", data)
@@ -974,12 +974,12 @@ exports.getAllYarn_InvoiceSB = function (req, res) {
 
 exports.deleteYarn_Invoice = function (req, res) {
     const id = req.query.id;
-    console.log("ID : " + id);
+    // console.log("ID : " + id);
 
     if (issetNotEmpty(id)) {
         Yarn_Invoice.delete(Number(id), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("Yarn Invoice Deleted Successfully!");
@@ -996,7 +996,7 @@ exports.saveYarn_Return = function (req, res) {
     body.id = req.query.id;
     Yarn_Return.checkAndSaveOrUpdate(body, (err, result, msg) => {
         if (err) {
-            console.log(err);
+            // console.log(err);
             res.sendError(err);
         } else {
             res.sendSuccess(msg, result)
@@ -1009,7 +1009,7 @@ exports.getYarn_Return = function (req, res) {
     if (issetNotEmpty(ID)) {
         Yarn_Return.find(Number(ID), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("", data);
@@ -1018,7 +1018,7 @@ exports.getYarn_Return = function (req, res) {
     } else {
         Yarn_Return.getAll((err, data) => {
             if (err) {
-                console.log(err)
+                // console.log(err)
                 res.sendError(err)
             } else {
                 res.sendSuccess("", data)
@@ -1034,7 +1034,7 @@ exports.getAllYarn_ReturnSB = function (req, res) {
     const status = body.status ? body.status : 'active'
     DBCON.query('select id as value, name from yarn_return ', function (err, data) {
         if (err) {
-            console.log(err)
+            // console.log(err)
             res.sendError(err)
         } else {
             res.sendInfo("", data)
@@ -1044,12 +1044,12 @@ exports.getAllYarn_ReturnSB = function (req, res) {
 
 exports.deleteYarn_Return = function (req, res) {
     const id = req.query.id;
-    console.log("ID : " + id);
+    // console.log("ID : " + id);
 
     if (issetNotEmpty(id)) {
         Yarn_Return.delete(Number(id), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("Yarn Return Deleted Successfully!");
@@ -1066,7 +1066,7 @@ exports.saveJobwork_Inward = function (req, res) {
     body.id = req.query.id;
     Jobwork_Inward.checkAndSaveOrUpdate(body, (err, result, msg) => {
         if (err) {
-            console.log(err);
+            // console.log(err);
             res.sendError(err);
         } else {
             res.sendSuccess(msg, result)
@@ -1079,7 +1079,7 @@ exports.getJobwork_Inward = function (req, res) {
     if (issetNotEmpty(ID)) {
         Jobwork_Inward.find(Number(ID), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("", data);
@@ -1088,7 +1088,7 @@ exports.getJobwork_Inward = function (req, res) {
     } else {
         Jobwork_Inward.getAll((err, data) => {
             if (err) {
-                console.log(err)
+                // console.log(err)
                 res.sendError(err)
             } else {
                 res.sendSuccess("", data)
@@ -1104,7 +1104,7 @@ exports.getAllJobwork_InwardSB = function (req, res) {
     const status = body.status ? body.status : 'active'
     DBCON.query('select id as value, name from jobwork_inward ', function (err, data) {
         if (err) {
-            console.log(err)
+            // console.log(err)
             res.sendError(err)
         } else {
             res.sendInfo("", data)
@@ -1114,12 +1114,12 @@ exports.getAllJobwork_InwardSB = function (req, res) {
 
 exports.deleteJobwork_Inward = function (req, res) {
     const id = req.query.id;
-    console.log("ID : " + id);
+    // console.log("ID : " + id);
 
     if (issetNotEmpty(id)) {
         Jobwork_Inward.delete(Number(id), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("Jobwork Inward Deleted Successfully!");
@@ -1137,7 +1137,7 @@ exports.saveYarn_Outward = function (req, res) {
     body.id = req.query.id;
     Yarn_Outward.checkAndSaveOrUpdate(body, (err, result, msg) => {
         if (err) {
-            console.log(err);
+            // console.log(err);
             res.sendError(err);
         } else {
             res.sendSuccess(msg, result)
@@ -1150,7 +1150,7 @@ exports.getYarn_Outward = function (req, res) {
     if (issetNotEmpty(ID)) {
         Yarn_Outward.find(Number(ID), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("", data);
@@ -1159,7 +1159,7 @@ exports.getYarn_Outward = function (req, res) {
     } else {
         Yarn_Outward.getAll((err, data) => {
             if (err) {
-                console.log(err)
+                // console.log(err)
                 res.sendError(err)
             } else {
                 res.sendSuccess("", data)
@@ -1172,7 +1172,7 @@ exports.getYarn_Outward = function (req, res) {
 
 exports.deleteJobworkOutward = function (req, res) {
     const id = req.query.id;
-    console.log("ID : " + id);
+    // console.log("ID : " + id);
 
     if (issetNotEmpty(id)) {
         
@@ -1192,7 +1192,7 @@ exports.getAllYarn_OutwardSB = function (req, res) {
     const status = body.status ? body.status : 'active'
     DBCON.query('select id as value, name from yarn_outward ', function (err, data) {
         if (err) {
-            console.log(err)
+            // console.log(err)
             res.sendError(err)
         } else {
             res.sendInfo("", data)
@@ -1202,12 +1202,12 @@ exports.getAllYarn_OutwardSB = function (req, res) {
 
 exports.deleteYarn_Outward = function (req, res) {
     const id = req.query.id;
-    console.log("ID : " + id);
+    // console.log("ID : " + id);
 
     if (issetNotEmpty(id)) {
         Yarn_Outward.delete(Number(id), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("Yarn Outward Deleted Successfully!");
@@ -1227,7 +1227,7 @@ exports.deleteYarn_Outward = function (req, res) {
 //     const status = body.status ? body.status : 'active';
 //     DBCON.query('select id as value, ledger as name from ledger ', function (err, data) {
 //         if (err) {
-//             console.log(err)
+            // console.log(err)
 //             res.sendError(err)
 //         } else {
 //             res.sendInfo("", data)
@@ -1272,7 +1272,7 @@ exports.getAllOrderSB = function (req, res) {
     const status = body.status ? body.status : 'active'
     DBCON.query('select id as value, order_no as name from order_program ', function (err, data) {
         if (err) {
-            console.log(err)
+            // console.log(err)
             res.sendError(err)
         } else {
             res.sendInfo("", data)
@@ -1286,7 +1286,7 @@ exports.getAllOrderSB = function (req, res) {
 //     const status = body.status ? body.status : 'active'
 //     DBCON.query('select id as value, color as name from color ', function (err, data) {
 //         if (err) {
-//             console.log(err)
+            // console.log(err)
 //             res.sendError(err)
 //         } else {
 //             res.sendInfo("", data)
@@ -1340,7 +1340,7 @@ exports.saveCuttingProgram = function (req, res) {
     body.id = req.query.id;
     CuttingProgram.checkAndSaveOrUpdate(body, (err, result, msg) => {
         if (err) {
-            console.log(err);
+            // console.log(err);
             res.sendError(err);
         } else {
             res.sendSuccess(msg, result)
@@ -1353,7 +1353,7 @@ exports.getCuttingProgram = function (req, res) {
     if (issetNotEmpty(ID)) {
         CuttingProgram.find(Number(ID), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("", data);
@@ -1362,7 +1362,7 @@ exports.getCuttingProgram = function (req, res) {
     } else {
         CuttingProgram.getAll((err, data) => {
             if (err) {
-                console.log(err)
+                // console.log(err)
                 res.sendError(err)
             } else {
                 res.sendSuccess("", data)
@@ -1378,7 +1378,7 @@ exports.getAllCuttingProgramSB = function (req, res) {
     const status = body.status ? body.status : 'active';
     DBCON.query('select id as value, name from cutting_program ', function (err, data) {
         if (err) {
-            console.log(err)
+            // console.log(err)
             res.sendError(err)
         } else {
             res.sendInfo("", data)
@@ -1393,7 +1393,7 @@ exports.getCuttingProgramColorDetails = function (req, res) {
     const status = body.status ? body.status : 'active';
     DBCON.query('select cutting_program_inventory.color_id, cutting_program_inventory.size1, cutting_program_inventory.size2,cutting_program_inventory.size3,cutting_program_inventory.size4,cutting_program_inventory.size5,cutting_program_inventory.size6,cutting_program_inventory.size7,cutting_program_inventory.size8,cutting_program_inventory.size9 from cutting_program left join cutting_program_inventory on cutting_program_inventory.vou_id = cutting_program.id where order_id =?', req.query.order_id, function (err, data) {
         if (err) {
-            console.log(err)
+            // console.log(err)
             res.sendError(err)
         } else {
             res.sendInfo("", data)
@@ -1406,12 +1406,12 @@ exports.getCuttingProgramColorDetails = function (req, res) {
 
 exports.deleteCuttingProgram = function (req, res) {
     const id = req.query.id;
-    console.log("ID : " + id);
+    // console.log("ID : " + id);
 
     if (issetNotEmpty(id)) {
         CuttingProgram.delete(Number(id), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("Yarn Outward Deleted Successfully!");
@@ -1460,12 +1460,12 @@ exports.getSizesForOrderID = (req, res) => {
     DBCON.query(`select concat(size.size1, ",", size.size2, ",",size.size3, ",",size.size4, ",",size.size5, ",",size.size6, ",",size.size7, ",",size.size8, ",",size.size9) as sizes from order_program left join size on size.id = order_program.size_id where order_program.id = ${ORDER_ID}`, (err, data) => {
         if(err)
         {
-            console.log(err);
+            // console.log(err);
             res.sendError(err);
         }
         else{
             var sizes = data.length > 0 ? data[0].sizes !== null ? data[0].sizes : "" : "";
-            console.log(sizes);
+            // console.log(sizes);
             sizes = sizes.split(",");
             res.sendInfo("", sizes);
         }
@@ -1479,7 +1479,7 @@ exports.getFabricsForOrderIDForCuttingProgram = (req, res) => {
     DBCON.query(`select product.product as name, product.id as value from order_fabric left join product on product.id = order_fabric.fabric_id where order_id  = ${ORDER_ID}`, (err, data) => {
         if(err)
         {
-            console.log(err);
+            // console.log(err);
             res.sendError(err);
         }
         else{
@@ -1496,7 +1496,7 @@ exports.getFabricDetailForOrder = (req, res) => {
     DBCON.query(`select order_fabric.dia, order_fabric.gsm from order_fabric left join product on product.id = order_fabric.fabric_id where order_id  = ${ORDER_ID} and fabric_id = ${FABRIC_ID}`, (err, data) => {
         if(err)
         {
-            console.log(err);
+            // console.log(err);
             res.sendError(err);
         }
         else{
@@ -1541,7 +1541,7 @@ exports.getJobworkOutwardColorDetails = function (req, res) {
     const status = body.status ? body.status : 'active';
     DBCON.query('select jobwork_outward_inventory.color_id, jobwork_outward_inventory.size1, jobwork_outward_inventory.size2,jobwork_outward_inventory.size3,jobwork_outward_inventory.size4,jobwork_outward_inventory.size5,jobwork_outward_inventory.size6,jobwork_outward_inventory.size7,jobwork_outward_inventory.size8,jobwork_outward_inventory.size9 from jobwork_outward left join jobwork_outward_inventory on jobwork_outward_inventory.vou_id = jobwork_outward.id where jobwork_outward.order_id =?', req.query.order_id, function (err, data) {
         if (err) {
-            console.log(err)
+            // console.log(err)
             res.sendError(err)
         } else {
             res.sendInfo("", data)
@@ -1555,7 +1555,7 @@ exports.saveJobworkInvoice = function (req, res) {
     body.id = req.query.id;
     JobworkInvoice.checkAndSaveOrUpdate(body, (err, result, msg) => {
         if (err) {
-            console.log(err);
+            // console.log(err);
             res.sendError(err);
         } else {
             res.sendSuccess(msg, result)
@@ -1570,7 +1570,7 @@ exports.getJobworkInwardColorDetails = function (req, res) {
     const status = body.status ? body.status : 'active';
     DBCON.query('select jobwork_inward_inventory.color_id, jobwork_inward_inventory.size1, jobwork_inward_inventory.size2,jobwork_inward_inventory.size3,jobwork_inward_inventory.size4,jobwork_inward_inventory.size5,jobwork_inward_inventory.size6,jobwork_inward_inventory.size7,jobwork_inward_inventory.size8,jobwork_inward_inventory.size9 from jobwork_inward left join jobwork_inward_inventory on jobwork_inward_inventory.vou_id = jobwork_inward.id where jobwork_inward.order_id =?', req.query.order_id, function (err, data) {
         if (err) {
-            console.log(err)
+            // console.log(err)
             res.sendError(err)
         } else {
             res.sendInfo("", data)
@@ -1659,7 +1659,7 @@ exports.saveDyeingProgram = function (req, res) {
     body.id = req.query.id;
     DyeingProgram.checkAndSaveOrUpdate(body, (err, result, msg) => {
         if (err) {
-            console.log(err);
+            // console.log(err);
             res.sendError(err);
         } else {
             res.sendSuccess(msg, result)
@@ -1684,7 +1684,7 @@ exports.getDyeingProgram = function (req, res) {
     if (issetNotEmpty(ID)) {
         DyeingProgram.find(Number(ID), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("", data);
@@ -1693,7 +1693,7 @@ exports.getDyeingProgram = function (req, res) {
     } else {
         DyeingProgram.getAll((err, data) => {
             if (err) {
-                console.log(err)
+                // console.log(err)
                 res.sendError(err)
             } else {
                 res.sendSuccess("", data)
@@ -1705,12 +1705,12 @@ exports.getDyeingProgram = function (req, res) {
 
 exports.deleteDyeingProgram = function (req, res) {
     const id = req.query.id;
-    console.log("ID : " + id);
+    // console.log("ID : " + id);
 
     if (issetNotEmpty(id)) {
         DyeingProgram.delete(Number(id), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("Dyeing  Deleted Successfully!");
@@ -1908,7 +1908,7 @@ exports.saveGarmentsInvoice = function (req, res) {
     body.id = req.query.id;
     GarmentsInvoice.checkAndSaveOrUpdate(body, (err, result, msg) => {
         if (err) {
-            console.log(err);
+            // console.log(err);
             res.sendError(err);
         } else {
             res.sendSuccess(msg, result)
@@ -1922,7 +1922,7 @@ exports.getGarmentsInvoice = function (req, res) {
     if (issetNotEmpty(ID)) {
         GarmentsInvoice.find(Number(ID), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("", data);
@@ -1931,7 +1931,7 @@ exports.getGarmentsInvoice = function (req, res) {
     } else {
         GarmentsInvoice.getAll((err, data) => {
             if (err) {
-                console.log(err)
+                // console.log(err)
                 res.sendError(err)
             } else {
                 res.sendSuccess("", data)
@@ -1944,12 +1944,12 @@ exports.getGarmentsInvoice = function (req, res) {
 
 exports.deleteGarmentsInvoice = function (req, res) {
     const id = req.query.id;
-    console.log("ID : " + id);
+    // console.log("ID : " + id);
 
     if (issetNotEmpty(id)) {
         GarmentsInvoice.delete(Number(id), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("Garments Invoice Deleted Successfully!");
@@ -1980,7 +1980,7 @@ exports.getMarketingUserSB = function (req, res) {
     const status = body.status ? body.status : 'active';
     DBCON.query('select id as value, name as name from users ', function (err, data) {
         if (err) {
-            console.log(err)
+            // console.log(err)
             res.sendError(err)
         } else {
             res.sendInfo("", data)
@@ -1996,7 +1996,7 @@ exports.getLedgerForOrderAndProcessID = function (req, res) {
     const status = body.status ? body.status : 'active';
     DBCON.query('select ledger_id  from order_process where order_process.order_id =? and order_process.process_id=?', [req.query.order_id,req.query.process_id],function (err, data) {
         if (err) {
-            console.log(err)
+            // console.log(err)
             res.sendError(err)
         } else {
             res.sendInfo("", data)
@@ -2012,7 +2012,7 @@ exports.saveGarmentsDeliveryNote = function (req, res) {
     body.id = req.query.id;
     GarmentsDeliveryNote.checkAndSaveOrUpdate(body, (err, result, msg) => {
         if (err) {
-            console.log(err);
+            // console.log(err);
             res.sendError(err);
         } else {
             res.sendSuccess(msg, result)
@@ -2026,7 +2026,7 @@ exports.getGarmentsDeliveryNote = function (req, res) {
     if (issetNotEmpty(ID)) {
         GarmentsDeliveryNote.find(Number(ID), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("", data);
@@ -2035,7 +2035,7 @@ exports.getGarmentsDeliveryNote = function (req, res) {
     } else {
         GarmentsDeliveryNote.getAll((err, data) => {
             if (err) {
-                console.log(err)
+                // console.log(err)
                 res.sendError(err)
             } else {
                 res.sendSuccess("", data)
@@ -2048,12 +2048,12 @@ exports.getGarmentsDeliveryNote = function (req, res) {
 
 exports.deleteGarmentsDeliveryNote = function (req, res) {
     const id = req.query.id;
-    console.log("ID : " + id);
+    // console.log("ID : " + id);
 
     if (issetNotEmpty(id)) {
         GarmentsDeliveryNote.delete(Number(id), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("Garments Delivery Note Deleted Successfully!");
@@ -2085,7 +2085,7 @@ exports.saveGarmentsReceiptNote = function (req, res) {
     body.id = req.query.id;
     GarmentsReceiptNote.checkAndSaveOrUpdate(body, (err, result, msg) => {
         if (err) {
-            console.log(err);
+            // console.log(err);
             res.sendError(err);
         } else {
             res.sendSuccess(msg, result)
@@ -2099,7 +2099,7 @@ exports.getGarmentsReceiptNote = function (req, res) {
     if (issetNotEmpty(ID)) {
         GarmentsReceiptNote.find(Number(ID), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("", data);
@@ -2108,7 +2108,7 @@ exports.getGarmentsReceiptNote = function (req, res) {
     } else {
         GarmentsReceiptNote.getAll((err, data) => {
             if (err) {
-                console.log(err)
+                // console.log(err)
                 res.sendError(err)
             } else {
                 res.sendSuccess("", data)
@@ -2121,12 +2121,12 @@ exports.getGarmentsReceiptNote = function (req, res) {
 
 exports.deleteGarmentsReceiptNote = function (req, res) {
     const id = req.query.id;
-    console.log("ID : " + id);
+    // console.log("ID : " + id);
 
     if (issetNotEmpty(id)) {
         GarmentsReceiptNote.delete(Number(id), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("Garments Receipt Note Deleted Successfully!");
@@ -2216,7 +2216,7 @@ exports.saveKnittingProgram = function (req, res) {
     body.id = req.query.id;
     KnittingProgram.checkAndSaveOrUpdate(body, (err, result, msg) => {
         if (err) {
-            console.log(err);
+            // console.log(err);
             res.sendError(err);
         } else {
             res.sendSuccess(msg, result)
@@ -2230,7 +2230,7 @@ exports.getKnittingProgram = function (req, res) {
     if (issetNotEmpty(ID)) {
         KnittingProgram.find(Number(ID), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("", data);
@@ -2239,7 +2239,7 @@ exports.getKnittingProgram = function (req, res) {
     } else {
         KnittingProgram.getAll((err, data) => {
             if (err) {
-                console.log(err)
+                // console.log(err)
                 res.sendError(err)
             } else {
                 res.sendSuccess("", data)
@@ -2252,12 +2252,12 @@ exports.getKnittingProgram = function (req, res) {
 
 exports.deleteKnittingProgram = function (req, res) {
     const id = req.query.id;
-    console.log("ID : " + id);
+    // console.log("ID : " + id);
 
     if (issetNotEmpty(id)) {
         KnittingProgram.delete(Number(id), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("Knitting Program Deleted Successfully!");
@@ -2288,7 +2288,7 @@ exports.getYarnSB = function (req, res) {
     const status = body.status ? body.status : 'active';
     DBCON.query('select product.id as value, product.product as name from product left join product_category on product.product_category_id = product_category.id where product_category="YARN" ', function (err, data) {
         if (err) {
-            console.log(err)
+            // console.log(err)
             res.sendError(err)
         } else {
             res.sendInfo("", data)
@@ -2303,7 +2303,7 @@ exports.getFabricOutwardInventoryDetails = function (req, res) {
     const status = body.status ? body.status : 'active';
     DBCON.query('select fabric_outward_inventory.fabric_id, fabric_outward_inventory.color_id,fabric_outward_inventory.dia,fabric_outward_inventory.roll,fabric_outward_inventory.weight,fabric_outward_inventory.gsm from fabric_outward left join fabric_outward_inventory on fabric_outward_inventory.vou_id = fabric_outward.id where fabric_outward.ledger_id =?', req.query.ledger_id, function (err, data) {
         if (err) {
-            console.log(err)
+            // console.log(err)
             res.sendError(err)
         } else {
             res.sendInfo("", data)
@@ -2318,7 +2318,7 @@ exports.getFabricInwardInventoryDetails = function (req, res) {
     const status = body.status ? body.status : 'active';
     DBCON.query('select fabric_inward_inventory.fabric_id, fabric_inward_inventory.color_id,fabric_inward_inventory.dia,fabric_inward_inventory.roll,fabric_inward_inventory.weight,fabric_inward_inventory.gsm from fabric_inward left join fabric_inward_inventory on fabric_inward_inventory.vou_id = fabric_inward.id where fabric_inward.ledger_id =?', req.query.ledger_id, function (err, data) {
         if (err) {
-            console.log(err)
+            // console.log(err)
             res.sendError(err)
         } else {
             res.sendInfo("", data)
@@ -2333,7 +2333,7 @@ exports.getYarnOutwardInventoryDetails = function (req, res) {
     const status = body.status ? body.status : 'active';
     DBCON.query('select yarn_outward_inventory.fabric_id,yarn_outward_inventory.gsm,yarn_outward_inventory.counts,yarn_outward_inventory.qtybag_per,yarn_outward_inventory.qty_bag,yarn_outward_inventory.qty_kg from yarn_outward left join yarn_outward_inventory on yarn_outward_inventory.vou_id = yarn_outward.id where yarn_outward.ledger_id =?', req.query.ledger_id, function (err, data) {
         if (err) {
-            console.log(err)
+            // console.log(err)
             res.sendError(err)
         } else {
             res.sendInfo("", data)
@@ -2348,7 +2348,7 @@ exports.getYarnInwardInventoryDetails = function (req, res) {
     const status = body.status ? body.status : 'active';
     DBCON.query('select yarn_inward_inventory.fabric_id,yarn_inward_inventory.gsm,yarn_inward_inventory.counts,yarn_inward_inventory.qtybag_per,yarn_inward_inventory.qty_bag,yarn_inward_inventory.qty_kg from yarn_inward left join yarn_inward_inventory on yarn_inward_inventory.vou_id = yarn_inward.id where yarn_inward.ledger_id =?', req.query.ledger_id, function (err, data) {
         if (err) {
-            console.log(err)
+            // console.log(err)
             res.sendError(err)
         } else {
             res.sendInfo("", data)
@@ -2360,7 +2360,7 @@ exports.getGarmentsDeliveryNotePrint = (req, res) => {
     GarmentsDeliveryNote.getGarmentsDeliveryNotePrint(req.query.id, (err, result) => {
         if(err)
         {
-            console.log(err);
+            // console.log(err);
             res.sendError(err);
         }
         else{
@@ -2373,7 +2373,7 @@ exports.getGarmentsReceiptNotePrint = (req, res) => {
     GarmentsReceiptNote.getGarmentsReceiptNotePrint(req.query.id, (err, result) => {
         if(err)
         {
-            console.log(err);
+            // console.log(err);
             res.sendError(err);
         }
         else{
@@ -2404,7 +2404,7 @@ exports.getGarmentsDeliveryNoteInventoryDetails = function (req, res) {
     const status = body.status ? body.status : 'active';
     DBCON.query('select garments_delivery_note_inventory.product_id, 0 as amount, 0 as disc_percentage, garments_delivery_note_inventory.unit,ifnull(garments_delivery_note_inventory.size1_qty, 0) as size1_qty,ifnull(garments_delivery_note_inventory.size2_qty, 0) as size2_qty,ifnull(garments_delivery_note_inventory.size3_qty, 0) as size3_qty,ifnull(garments_delivery_note_inventory.size4_qty, 0) as size4_qty,ifnull(garments_delivery_note_inventory.size5_qty, 0) as size5_qty,ifnull(garments_delivery_note_inventory.size6_qty, 0) as size6_qty,ifnull(garments_delivery_note_inventory.size7_qty, 0) as size7_qty,ifnull(garments_delivery_note_inventory.size8_qty, 0) as size8_qty,ifnull(garments_delivery_note_inventory.size9_qty, 0) as size9_qty from garments_delivery_note left join garments_delivery_note_inventory on garments_delivery_note_inventory.vou_id = garments_delivery_note.id where garments_delivery_note.ledger_id =?', req.query.ledger_id, function (err, data) {
         if (err) {
-            console.log(err)
+            // console.log(err)
             res.sendError(err)
         } else {
             data.map((item, index) => {
@@ -2426,7 +2426,7 @@ exports.saveYarnPurchaseOrder = function (req, res) {
     body.id = req.query.id;
     YarnPurchaseOrder.checkAndSaveOrUpdate(body, (err, result, msg) => {
         if (err) {
-            console.log(err);
+            // console.log(err);
             res.sendError(err);
         } else {
             res.sendSuccess(msg, result)
@@ -2440,7 +2440,7 @@ exports.getYarnPurchaseOrder = function (req, res) {
     if (issetNotEmpty(ID)) {
         YarnPurchaseOrder.find(Number(ID), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("", data);
@@ -2449,7 +2449,7 @@ exports.getYarnPurchaseOrder = function (req, res) {
     } else {
         YarnPurchaseOrder.getAll((err, data) => {
             if (err) {
-                console.log(err)
+                // console.log(err)
                 res.sendError(err)
             } else {
                 res.sendSuccess("", data)
@@ -2462,12 +2462,12 @@ exports.getYarnPurchaseOrder = function (req, res) {
 
 exports.deleteYarnPurchaseOrder = function (req, res) {
     const id = req.query.id;
-    console.log("ID : " + id);
+    // console.log("ID : " + id);
 
     if (issetNotEmpty(id)) {
         YarnPurchaseOrder.delete(Number(id), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("Yarn Purchase Order Deleted Successfully!");
@@ -2499,7 +2499,7 @@ exports.getHsnAndRateForProductId = function (req, res) {
     var product_id = req.query.product_id ? req.query.product_id : null;
     DBCON.query('select id as product_id, unit_id,hsnsac,purchase_amount from product  where id = ? ', product_id, function (err, data) {
         if (err) {
-            console.log(err)
+            // console.log(err)
             res.sendError(err)
         } else {
             res.sendInfo("", data[0])
@@ -2514,7 +2514,7 @@ exports.saveGeneralPurchaseOrder = function (req, res) {
     body.id = req.query.id;
     GeneralPurchaseOrder.checkAndSaveOrUpdate(body, (err, result, msg) => {
         if (err) {
-            console.log(err);
+            // console.log(err);
             res.sendError(err);
         } else {
             res.sendSuccess(msg, result)
@@ -2528,7 +2528,7 @@ exports.getGeneralPurchaseOrder = function (req, res) {
     if (issetNotEmpty(ID)) {
         GeneralPurchaseOrder.find(Number(ID), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("", data);
@@ -2537,7 +2537,7 @@ exports.getGeneralPurchaseOrder = function (req, res) {
     } else {
         GeneralPurchaseOrder.getAll((err, data) => {
             if (err) {
-                console.log(err)
+                // console.log(err)
                 res.sendError(err)
             } else {
                 res.sendSuccess("", data)
@@ -2550,12 +2550,12 @@ exports.getGeneralPurchaseOrder = function (req, res) {
 
 exports.deleteGeneralPurchaseOrder = function (req, res) {
     const id = req.query.id;
-    console.log("ID : " + id);
+    // console.log("ID : " + id);
 
     if (issetNotEmpty(id)) {
         GeneralPurchaseOrder.delete(Number(id), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("General Purchase Order Deleted Successfully!");
@@ -2615,7 +2615,7 @@ exports.getOrdersForLedgerAndProcess = (req, res) => {
     DBCON.query(`select order_program.id as order_id, order_process.rate, order_program.product_id, order_program.size_id, jobwork_inward.inventory_qty_total as qty, (jobwork_inward.inventory_qty_total * order_process.rate) as amount from order_process left join order_program on order_program.id = order_process.order_id left join jobwork_inward on jobwork_inward.order_id = order_process.order_id  where order_process.process_id = ${PROCESS} and order_process.ledger_id = ${LEDGER} and jobwork_inward.inventory_qty_total > 0;`, (err, result) => {
         if(err)
         {
-            console.log(err);
+            // console.log(err);
             res.sendError(err);
         }
         else{
@@ -2638,7 +2638,7 @@ exports.getSizeForProduct = (req, res) => {
             }
             else{
                 var sizes = result.length > 0 ? result[0].sizes !== null ? result[0].sizes : "" : "";
-                console.log(sizes);
+                // console.log(sizes);
                 sizes = sizes.split(",");
                 res.sendInfo("", sizes);
             }
@@ -2654,7 +2654,7 @@ exports.getGarmentsInvoicePrint = (req, res) => {
     GarmentsInvoice.getGarmentsInvoicePrint(req.query.id, (err, result) => {
         if(err)
         {
-            console.log(err);
+            // console.log(err);
             res.sendError(err);
         }
         else{
@@ -2682,7 +2682,7 @@ exports.getJobworkInvoice = function (req, res) {
     if (issetNotEmpty(ID)) {
         JobworkInvoice.find(Number(ID), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("", data);
@@ -2691,7 +2691,7 @@ exports.getJobworkInvoice = function (req, res) {
     } else {
         JobworkInvoice.getAll((err, data) => {
             if (err) {
-                console.log(err)
+                // console.log(err)
                 res.sendError(err)
             } else {
                 res.sendSuccess("", data)
@@ -2728,12 +2728,12 @@ exports.getProductAndSizeSBForOrderID = (req, res) => {
 
 exports.deleteJobworkInvoice = function (req, res) {
     const id = req.query.id;
-    console.log("ID : " + id);
+    // console.log("ID : " + id);
 
     if (issetNotEmpty(id)) {
         JobworkInvoice.delete(Number(id), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("Jobwork Invoice Deleted Successfully!");

@@ -19,7 +19,7 @@ VoucherModel.prototype = {
         }
 
         let sql = `SELECT * FROM route WHERE id = ?`;
-        console.log(sql);
+        // console.log(sql);
 
         let sql1 = `SELECT * FROM  route_accounts WHERE route_accounts.vou_id = ?`;
 
@@ -136,7 +136,7 @@ VoucherModel.prototype = {
                 if (err) {
                     callback(err)
                 } else {
-                    console.log(result);
+                    // console.log(result);
                     DBCON.query(`delete from route_accounts where vou_id = ?`, body.id, (err, deletedData) => {
                         if (err) {
                             callback(err)
@@ -205,7 +205,7 @@ VoucherModel.prototype = {
                 if (err) {
                     callback(err)
                 } else {
-                    console.log(result);
+                    // console.log(result);
                     if (body.route_accounts.length > 0) {
 
                         body.route_accounts.map((item, index) => {

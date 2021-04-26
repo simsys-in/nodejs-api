@@ -12,7 +12,7 @@ ProductDetailsModel.prototype = {
     find: function (match = null, callback) {
        
         let sql = `SELECT * FROM ${TABLE_NAME} WHERE id = ?`;
-        console.log(sql);
+        // console.log(sql);
 
         DBCON.query(sql, match, function (err, result) {
             if (err){ 
@@ -23,11 +23,11 @@ ProductDetailsModel.prototype = {
                 result[0].size_details = [];
                 DBCON.query('select concat(size.size1, ",", size.size2, ",",size.size3, ",",size.size4, ",",size.size5, ",",size.size6, ",",size.size7, ",",size.size8, ",",size.size9) as sizes from size where id = ?',result[0].size_id, function (err, data) {
                     if (err) {
-                        console.log(err)
+                        // console.log(err)
                         callback(err)
                     } else {
                         var sizes = data.length > 0 ? data[0].sizes !== null ? data[0].sizes : "" : "";
-                        console.log(sizes);
+                        // console.log(sizes);
                         sizes = sizes.split(",");
                         result[0].size_details = sizes;
                         // res.sendInfo("", sizes);
@@ -79,7 +79,7 @@ ProductDetailsModel.prototype = {
             size8_rate : body.size8_rate,
             size9_rate : body.size9_rate
         }
-        console.log(data.id);
+        // console.log(data.id);
         if (issetNotEmpty(body.id)) {
             DBCON.query(`select count(id) as c from ${TABLE_NAME} where  id != ? and product_id = ? and size_id = ?`, [ body.id,data.product_id, data.size_id], (err, count) => {
                 if (err) {

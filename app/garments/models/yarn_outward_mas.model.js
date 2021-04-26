@@ -17,7 +17,7 @@ Yarn_OutwardModel.prototype = {
         }
 
         let sql = `SELECT * FROM yarn_outward WHERE id = ?`;
-        console.log(sql);
+        // console.log(sql);
 
         let sql1 = `SELECT * FROM  yarn_outward_inventory where yarn_outward_inventory.vou_id = ?`;
 
@@ -96,7 +96,7 @@ Yarn_OutwardModel.prototype = {
                 if (err) {
                     callback(err)
                 } else {
-                    console.log(result)
+                    // console.log(result)
                     DBCON.query('delete from yarn_outward_inventory where vou_id = ? ', body.id, (err, deleteData) => {
                         if (err) {
                             callback(err)
@@ -157,7 +157,7 @@ Yarn_OutwardModel.prototype = {
                 if (err) {
                     callback(err)
                 } else {
-                    console.log(result)
+                    // console.log(result)
                     if(body.yarn_outward_inventory.length > 0){
 
                         body.yarn_outward_inventory.map((item, index) => {
@@ -207,7 +207,7 @@ Yarn_OutwardModel.prototype = {
 
         DBCON.query(query, (err, result) => {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 callback(err)
             } else {
                 callback(false, result[0]);
@@ -220,7 +220,7 @@ Yarn_OutwardModel.prototype = {
 
         DBCON.query(QUERY, (err, result) => {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 callback(err);
             } else {
                 yarn_outward_details = result[0];
@@ -230,7 +230,7 @@ Yarn_OutwardModel.prototype = {
 
                 DBCON.query(GET_INVENTORY_QUERY, (err, inventory) => {
                     if (err) {
-                        console.log(err);
+                        // console.log(err);
                         callback(err);
                     } else {
                         yarn_outward_details.inventory = inventory;
@@ -240,7 +240,7 @@ Yarn_OutwardModel.prototype = {
 
                         DBCON.query(GET_INVENTORYTOTAL_QUERY, (err, inventorytotal) => {
                             if (err) {
-                                console.log(err);
+                                // console.log(err);
                                 callback(err);
                             } else {
                                 yarn_outward_details.inventorytotal = inventorytotal;
@@ -252,14 +252,14 @@ Yarn_OutwardModel.prototype = {
                                 const GET_LEDGER_DETAILS = `select ledger.ledger, ledger.address, ledger.mobile, ledger.phone, ledger.gstno from yarn_outward left join ledger on yarn_outward.ledger_id = ledger.id where yarn_outward.id = ${id}`;
                                 DBCON.query(GET_COMPANY_DETAILS, (err, company_details) => {
                                     if (err) {
-                                        console.log(err);
+                                        // console.log(err);
                                         callback(err);
 
                                     } else {
                                         yarn_outward_details.company_details = company_details[0];
                                         DBCON.query(GET_LEDGER_DETAILS, (err, ledger_details) => {
                                             if (err) {
-                                                console.log(err);
+                                                // console.log(err);
                                                 callback(err);
                                             } else {
                                                 yarn_outward_details.ledger_details = ledger_details[0];

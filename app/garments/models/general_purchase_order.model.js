@@ -18,7 +18,7 @@ GeneralPurchaseOrderModel.prototype = {
         }
 
         let sql = `SELECT * FROM general_purchase_order WHERE id = ?`;
-        console.log(sql);
+        // console.log(sql);
 
         let sql1 = `SELECT * FROM general_purchase_order_inventory WHERE general_purchase_order_inventory.vou_id = ?`;
 
@@ -101,7 +101,7 @@ GeneralPurchaseOrderModel.prototype = {
                 if (err) {
                     callback(err)
                 } else {
-                    console.log(result);
+                    // console.log(result);
                     DBCON.query(`delete from general_purchase_order_inventory where vou_id = ?`, body.id, (err, deletedData) => {
                         if (err) {
                             callback(err)
@@ -169,7 +169,7 @@ GeneralPurchaseOrderModel.prototype = {
 
                         body.general_purchase_order_inventory.map((item, index) => {
                         
-                            console.log(item, index)
+                            // console.log(item, index)
                             var general_purchase_order_inventory = {
                                 vou_id: result.insertId,
                                 unit_id: issetNotEmpty(item.unit_id) ? item.unit_id : 0,
@@ -227,7 +227,7 @@ GeneralPurchaseOrderModel.prototype = {
 
         DBCON.query(query, (err, result) => {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 callback(err)
             } else {
                 callback(false, result[0]);
@@ -241,7 +241,7 @@ GeneralPurchaseOrderModel.prototype = {
 
         DBCON.query(QUERY, (err, result) => {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 callback(err);
             } else {
                 general_purchase_order_details = result[0];
@@ -251,7 +251,7 @@ GeneralPurchaseOrderModel.prototype = {
 
                 DBCON.query(GET_INVENTORY_QUERY, (err, inventory) => {
                     if (err) {
-                        console.log(err);
+                        // console.log(err);
                         callback(err);
                     } else {
                         general_purchase_order_details.inventory = inventory;
@@ -273,14 +273,14 @@ GeneralPurchaseOrderModel.prototype = {
                         const GET_LEDGER_DETAILS = `select ledger.ledger, ledger.address, ledger.mobile, ledger.phone, ledger.gstno from general_purchase_order left join ledger on general_purchase_order.ledger_id = ledger.id where general_purchase_order.id = ${id}`;
                         DBCON.query(GET_COMPANY_DETAILS, (err, company_details) => {
                             if (err) {
-                                console.log(err);
+                                // console.log(err);
                                 callback(err);
 
                             } else {
                                 general_purchase_order_details.company_details = company_details[0];
                                 DBCON.query(GET_LEDGER_DETAILS, (err, ledger_details) => {
                                     if (err) {
-                                        console.log(err);
+                                        // console.log(err);
                                         callback(err);
                                     } else {
                                         general_purchase_order_details.ledger_details = ledger_details[0];

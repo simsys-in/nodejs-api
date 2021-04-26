@@ -18,7 +18,7 @@ FabricReturnModel.prototype = {
         }
 
         let sql = `SELECT * FROM fabric_return WHERE id = ?`;
-        console.log(sql);
+        // console.log(sql);
         
         let sql1 = `SELECT * FROM  fabric_return_inventory WHERE fabric_return_inventory.vou_id = ?`;
         
@@ -101,7 +101,7 @@ FabricReturnModel.prototype = {
                 if (err) {
                     callback(err)
                 } else {
-                    console.log(result);
+                    // console.log(result);
                     DBCON.query(`delete from fabric_return_inventory where vou_id = ?`, body.id, (err, deletedData) =>  {
                         if(err)
                         {
@@ -157,7 +157,7 @@ FabricReturnModel.prototype = {
                             if (err) {
                                 callback(err)
                             } else {
-                                console.log(result);
+                                // console.log(result);
                                 if(body.fabric_return_inventory.length > 0){
 
                                     body.fabric_return_inventory.map((item, index) => {
@@ -214,7 +214,7 @@ FabricReturnModel.prototype = {
 
         DBCON.query(query, (err, result) => {
             if(err){
-                console.log(err);
+                // console.log(err);
                 callback(err)
             }
             else{
@@ -229,7 +229,7 @@ FabricReturnModel.prototype = {
 
         DBCON.query(QUERY, (err, result) => {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 callback(err);
             } else {
                 fabric_return_details = result[0];
@@ -240,7 +240,7 @@ FabricReturnModel.prototype = {
 
                         DBCON.query(GET_COLOR_DETAILS_QUERY, (err, color_details) => {
                             if (err) {
-                                console.log(err);
+                                // console.log(err);
                                 callback(err);
                             } else {
                                 fabric_return_details.color_details = color_details;
@@ -258,14 +258,14 @@ FabricReturnModel.prototype = {
                                         const GET_LEDGER_DETAILS = `select ledger.ledger, ledger.address, ledger.mobile, ledger.phone, ledger.gstno from fabric_return left join ledger on fabric_return.ledger_id = ledger.id where fabric_return.id = ${id}`;
                                         DBCON.query(GET_COMPANY_DETAILS, (err, company_details) => {
                                             if (err) {
-                                                console.log(err);
+                                                // console.log(err);
                                                 callback(err);
 
                                             } else {
                                                 fabric_return_details.company_details = company_details[0];
                                                 DBCON.query(GET_LEDGER_DETAILS, (err, ledger_details) => {
                                                     if (err) {
-                                                        console.log(err);
+                                                        // console.log(err);
                                                         callback(err);
                                                     } else {
                                                         fabric_return_details.ledger_details = ledger_details[0];

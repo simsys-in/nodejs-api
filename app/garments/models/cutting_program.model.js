@@ -14,7 +14,7 @@ CuttingProgramModel.prototype = {
     find: function (match = null, callback) {
 
         let sql = `SELECT * FROM ${TABLE_NAME} WHERE id = ?`;
-        console.log(sql);
+        // console.log(sql);
 
         DBCON.query(sql, match, function (err, result) {
             if (err){ 
@@ -129,7 +129,7 @@ CuttingProgramModel.prototype = {
                     DBCON.query(`delete from cutting_program_inventory where vou_id = ?`, ORDER_ID, (err, deletedResult) => {
                         if(err)
                         {
-                            console.log(err);
+                            // console.log(err);
                             callback(err);
                         }
                         else{
@@ -168,7 +168,7 @@ CuttingProgramModel.prototype = {
                              DBCON.query(`insert into cutting_program_inventory set ?`, inventory, (err, result1) => {
                                  if(err)
                                  {
-                                     console.log(err);
+                                    //  console.log(err);
                                      callback(err);
                                  }
                                  else{
@@ -217,7 +217,7 @@ CuttingProgramModel.prototype = {
             DBCON.query(`insert into ${TABLE_NAME} set ?`, cutting_program, (err, result) => {
                 if(err)
                 {
-                    console.log(err);
+                    // console.log(err);
                     callback(err);
                 }
                 else{
@@ -257,7 +257,7 @@ CuttingProgramModel.prototype = {
                             DBCON.query(`insert into cutting_program_inventory set ?`, inventory, (err, result1) => {
                                 if(err)
                                 {
-                                    console.log(err);
+                                    // console.log(err);
                                     callback(err);
                                 }
                                 else{
@@ -296,7 +296,7 @@ CuttingProgramModel.prototype = {
         DBCON.query(`select max( ifnull(lotno, 0)) + 1 as next_lot_no from ${TABLE_NAME}`, (err, result) => {
             if(err)
             {
-                console.log(err);
+                // console.log(err);
                 callback(err);
             }
             else{

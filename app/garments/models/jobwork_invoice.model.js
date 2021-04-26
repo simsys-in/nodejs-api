@@ -18,7 +18,7 @@ JobworkInvoiceModel.prototype = {
         }
 
         let sql = `SELECT * FROM jobwork_invoice WHERE id = ?`;
-        console.log(sql);
+        // console.log(sql);
 
         let sql1 = `SELECT *, 1 as selected FROM jobwork_invoice_inventory WHERE jobwork_invoice_inventory.vou_id = ?`;
 
@@ -104,7 +104,7 @@ JobworkInvoiceModel.prototype = {
                 if (err) {
                     callback(err)
                 } else {
-                    console.log(result);
+                    // console.log(result);
                     DBCON.query(`delete from jobwork_invoice_inventory where vou_id = ?`, body.id, (err, deletedData) => {
                         if (err) {
                             callback(err)
@@ -175,7 +175,7 @@ JobworkInvoiceModel.prototype = {
 
                         body.jobwork_invoice_inventory.map((item, index) => {
                             if (item.selected && issetNotEmpty(item.order_id) && item.order_id !== 0 && issetNotEmpty(item.size_id) && item.size_id !== 0 && issetNotEmpty(item.product_id) && item.product_id !== 0) {
-                                console.log(item, index)
+                                // console.log(item, index)
                                 var jobwork_invoice_inventory = {
                                     vou_id: result.insertId,
                                     order_id: item.order_id,
@@ -233,7 +233,7 @@ JobworkInvoiceModel.prototype = {
 
         DBCON.query(query, (err, result) => {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 callback(err)
             } else {
                 callback(false, result[0]);
@@ -246,7 +246,7 @@ JobworkInvoiceModel.prototype = {
 
         DBCON.query(QUERY, (err, result) => {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 callback(err);
             } else {
                 jobwork_invoice_details = result[0];
@@ -278,7 +278,7 @@ JobworkInvoiceModel.prototype = {
 
                 DBCON.query(GET_INVENTORY_QUERY, (err, inventory) => {
                     if (err) {
-                        console.log(err);
+                        // console.log(err);
                         callback(err);
                     } else {
                         jobwork_invoice_details.inventory = inventory;
@@ -288,7 +288,7 @@ JobworkInvoiceModel.prototype = {
 
                         DBCON.query(GET_INVENTORYTOTAL_QUERY, (err, inventorytotal) => {
                             if (err) {
-                                console.log(err);
+                                // console.log(err);
                                 callback(err);
                             } else {
                                 jobwork_invoice_details.inventorytotal = inventorytotal;
@@ -300,14 +300,14 @@ JobworkInvoiceModel.prototype = {
                                 const GET_LEDGER_DETAILS = `select ledger.ledger, ledger.address, ledger.mobile, ledger.phone, ledger.gstno from jobwork_invoice left join ledger on jobwork_invoice.ledger_id = ledger.id where jobwork_invoice.id = ${id}`;
                                 DBCON.query(GET_COMPANY_DETAILS, (err, company_details) => {
                                     if (err) {
-                                        console.log(err);
+                                        // console.log(err);
                                         callback(err);
 
                                     } else {
                                         jobwork_invoice_details.company_details = company_details[0];
                                         DBCON.query(GET_LEDGER_DETAILS, (err, ledger_details) => {
                                             if (err) {
-                                                console.log(err);
+                                                // console.log(err);
                                                 callback(err);
                                             } else {
                                                 jobwork_invoice_details.ledger_details = ledger_details[0];

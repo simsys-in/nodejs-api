@@ -18,7 +18,7 @@ FabricOutwardModel.prototype = {
         }
 
         let sql = `SELECT * FROM fabric_outward WHERE id = ?`;
-        console.log(sql);
+        // console.log(sql);
         
         let sql1 = `SELECT * FROM  fabric_outward_inventory WHERE fabric_outward_inventory.vou_id = ?`;
         
@@ -108,7 +108,7 @@ FabricOutwardModel.prototype = {
                 if (err) {
                     callback(err)
                 } else {
-                    console.log(result);
+                    // console.log(result);
                     DBCON.query(`delete from fabric_outward_inventory where vou_id = ?`, body.id, (err, deletedData) =>  {
                         if(err)
                         {
@@ -165,7 +165,7 @@ FabricOutwardModel.prototype = {
                             if (err) {
                                 callback(err)
                             } else {
-                                console.log(result);
+                                // console.log(result);
                                 if(body.fabric_outward_inventory.length > 0){
 
                                     body.fabric_outward_inventory.map((item, index) => {
@@ -222,7 +222,7 @@ FabricOutwardModel.prototype = {
 
         DBCON.query(query, (err, result) => {
             if(err){
-                console.log(err);
+                // console.log(err);
                 callback(err)
             }
             else{
@@ -237,7 +237,7 @@ FabricOutwardModel.prototype = {
 
         DBCON.query(QUERY, (err, result) => {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 callback(err);
             } else {
                 fabric_outward_details = result[0];
@@ -259,7 +259,7 @@ FabricOutwardModel.prototype = {
 
                         DBCON.query(GET_COLOR_DETAILS_QUERY, (err, color_details) => {
                             if (err) {
-                                console.log(err);
+                                // console.log(err);
                                 callback(err);
                             } else {
                                 fabric_outward_details.color_details = color_details;
@@ -277,14 +277,14 @@ FabricOutwardModel.prototype = {
                                         const GET_LEDGER_DETAILS = `select ledger.ledger, ledger.address, ledger.mobile, ledger.phone, ledger.gstno from fabric_outward left join ledger on fabric_outward.ledger_id = ledger.id where fabric_outward.id = ${id}`;
                                         DBCON.query(GET_COMPANY_DETAILS, (err, company_details) => {
                                             if (err) {
-                                                console.log(err);
+                                                // console.log(err);
                                                 callback(err);
 
                                             } else {
                                                 fabric_outward_details.company_details = company_details[0];
                                                 DBCON.query(GET_LEDGER_DETAILS, (err, ledger_details) => {
                                                     if (err) {
-                                                        console.log(err);
+                                                        // console.log(err);
                                                         callback(err);
                                                     } else {
                                                         fabric_outward_details.ledger_details = ledger_details[0];

@@ -15,7 +15,7 @@ User_GroupModel.prototype = {
         }
 
         let sql = `SELECT * FROM ${TABLE_NAME} WHERE id = ?`;
-        console.log(sql);
+        // console.log(sql);
 
         DBCON.query(sql, match, function (err, result) {
             if (err) {
@@ -57,10 +57,10 @@ User_GroupModel.prototype = {
                     const USER_GROUP_ID = body.id;
                     DBCON.query(`delete from user_group_permission where user_group_id = ${body.id}`, (err, data) => {
                         if (err) {
-                            console.log(err);
+                            // console.log(err);
                             callback(err);
                         } else {
-                            console.log(body.menuList.length)
+                            // console.log(body.menuList.length)
                             body.menuList.map((menu, index) => {
                                 const USER_GROUP_PERMISSION = {
                                     user_group_id: USER_GROUP_ID,
@@ -73,7 +73,7 @@ User_GroupModel.prototype = {
                                 }
                                 DBCON.query(`insert into user_group_permission set ?`, USER_GROUP_PERMISSION, (err, data) => {
                                     if (err) {
-                                        console.log(err);
+                                        // console.log(err);
                                         callback(err);
                                     } else {
                                         if (index === body.menuList.length - 1) {
@@ -109,7 +109,7 @@ User_GroupModel.prototype = {
 
                         DBCON.query(`insert into user_group_permission set ? `, USER_GROUP_PERMISSION, (err, data) => {
                             if (err) {
-                                console.log(err);
+                                // console.log(err);
                                 callback(err);
                             } else {
                                 if (index === body.menuList.length - 1) {

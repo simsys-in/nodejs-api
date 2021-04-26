@@ -26,7 +26,7 @@ GarmentsInvoiceModel.prototype = {
         }
 
         let sql = `SELECT * FROM garments_invoice WHERE id = ?`;
-        console.log(sql);
+        // console.log(sql);
 
         let sql1 = `SELECT *, 1 as selected FROM garments_invoice_inventory WHERE garments_invoice_inventory.vou_id = ?`;
 
@@ -36,7 +36,7 @@ GarmentsInvoiceModel.prototype = {
 
             if (err) {
                 // throw err
-                console.log(err);
+                // console.log(err);
                 callback(err)
             } else {
                 var garments_invoice = {
@@ -71,7 +71,7 @@ GarmentsInvoiceModel.prototype = {
                 DBCON.query(sql1, match, function (err, result1) {
 
                     if (err) {
-                        console.log(err);
+                        // console.log(err);
                         callback(err)
                     } else {
                         result1.map((item, index) => {
@@ -150,7 +150,7 @@ GarmentsInvoiceModel.prototype = {
                 if (err) {
                     callback(err)
                 } else {
-                    console.log(result);
+                    // console.log(result);
                     DBCON.query(`delete from garments_invoice_inventory where vou_id = ?`, body.id, (err, deletedData) => {
                         if (err) {
                             callback(err)
@@ -251,7 +251,7 @@ GarmentsInvoiceModel.prototype = {
                             var item = body.garments_invoice_inventory[index];
                             // body.jobwork_invoice_inventory.map((item, index) => {
                             if (item.selected) {
-                                console.log(item, index)
+                                // console.log(item, index)
                                 var garments_invoice_inventory = {
                                     vou_id: result.insertId,
                                     color_id: item.color_id,
@@ -334,7 +334,7 @@ GarmentsInvoiceModel.prototype = {
 
         DBCON.query(query, (err, result) => {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 callback(err)
             } else {
                 callback(false, result[0]);
@@ -348,26 +348,26 @@ GarmentsInvoiceModel.prototype = {
                     callback(err)
                 } else {
                     if (result.length > 0) {
-                        console.log('Got Invoice Data');
+                        // console.log('Got Invoice Data');
                         var invoice_details = result[0];
                         invoice_details.vou_date = getDBDate(invoice_details.vou_date)
                         DBCON.query(`select * from ledger where id = ${invoice_details.ledger_id}`, (err, ledger) => {
                             if (err) {
-                                console.log(err);
+                                // console.log(err);
                                 callback(err)
                             } else {
-                                console.log('Got Ledger Data');
+                                // console.log('Got Ledger Data');
                                 invoice_details.ledger_details = ledger.length ? ledger[0] : {};
                                 DBCON.query(`select * from company limit 1`, (err, company_data) => {
                                     if (err) {
-                                        console.log(err);
+                                        // console.log(err);
                                         callback(err)
                                     } else {
-                                        console.log('Got Company Data');
+                                        // console.log('Got Company Data');
                                         invoice_details.company_details = company_data[0];
                                         DBCON.query(`select garments_invoice_inventory.*, product.product, product.hsnsac, product.gst, unit.unit from garments_invoice_inventory left join product on product.id = garments_invoice_inventory.product_id left join unit on unit.id = product.unit_id where vou_id = ${id}`, (err, inventories) => {
                                             if (err) {
-                                                console.log(err);
+                                                // console.log(err);
                                                 callback(err);
                                             } else {
                                                 if (inventories.length > 0) {
@@ -375,28 +375,28 @@ GarmentsInvoiceModel.prototype = {
                                                     // for (i = 0; i < inventories.length; i++) {
                                                     for (const [i] in inventories) {
                                                         var item = Object.assign({}, inventories[i]);
-                                                        console.log(item);
+                                                        // console.log(item);
                                                         item.size_data = [];
                                                         DBCON.query(`select concat(ifnull(size.size1, ""), ",", ifnull(size.size2, ""), ",",ifnull(size.size3, ""), ",",ifnull(size.size4, ""), ",",ifnull(size.size5, ""), ",",ifnull(size.size6, ""), ",",ifnull(size.size7, ""), ",",ifnull(size.size8, ""), ",",ifnull(size.size9, "")) as sizes from product_details left join size on size.id = product_details.size_id where product_details.product_id = ${inventories[i].product_id}`, (err, size_details) => {
                                                             if (err) {
-                                                                console.log(err);
+                                                                // console.log(err);
                                                                 callback(err);
                                                             } else {
                                                                 var sizes = size_details.length > 0 ? size_details[0].sizes !== null ? size_details[0].sizes : `'','','','','','','','',''` : `'','','','','','','','',''`;
                                                                 sizes = sizes.split(",");
-                                                                console.log(sizes);
+                                                                // console.log(sizes);
                                                                 inventories[i].size_data = sizes;
-                                                                console.log(Number(i), inventories.length);
+                                                                // console.log(Number(i), inventories.length);
                                                                 if (Number(i) === inventories.length - 1) {
                                                                     invoice_details.inventories = inventories;
-                                                                    console.log("Finished")
+                                                                    // console.log("Finished")
                                                                     callback(false, invoice_details);
                                                                 }
                                                             }
                                                         })
                                                     }
                                                 } else {
-                                                    console.log('Got Inventory Data : ', 0);
+                                                    // console.log('Got Inventory Data : ', 0);
                                                     invoice_details.inventories = [];
                                                     callback(false, invoice_details);
                                                 }

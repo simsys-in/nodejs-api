@@ -19,7 +19,7 @@ DyeingProgramModel.prototype = {
         }
 
         let sql = `SELECT * FROM dyeing_program WHERE id = ?`;
-        console.log(sql);
+        // console.log(sql);
 
         let sql1 = `SELECT *, 1 as selected FROM  dyeing_program_inventory WHERE dyeing_program_inventory.vou_id = ?`;
 
@@ -99,7 +99,7 @@ DyeingProgramModel.prototype = {
                 if (err) {
                     callback(err)
                 } else {
-                    console.log(result);
+                    // console.log(result);
                     DBCON.query(`delete from dyeing_program_inventory where vou_id = ?`, body.id, (err, deletedData) => {
                         if (err) {
                             callback(err)
@@ -155,7 +155,7 @@ DyeingProgramModel.prototype = {
                 if (err) {
                     callback(err)
                 } else {
-                    console.log(result);
+                    // console.log(result);
                     if (body.dyeing_program_inventory.length > 0) {
 
                         body.dyeing_program_inventory.map((item, index) => {
@@ -211,7 +211,7 @@ DyeingProgramModel.prototype = {
 
         DBCON.query(query, (err, result) => {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 callback(err)
             } else {
                 callback(false, result[0]);
@@ -225,7 +225,7 @@ DyeingProgramModel.prototype = {
 
         DBCON.query(QUERY, (err, result) => {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 callback(err);
             } else {
                 dyeing_program_details = result[0];
@@ -235,7 +235,7 @@ DyeingProgramModel.prototype = {
 
                         DBCON.query(GET_COLOR_DETAILS_QUERY, (err, color_details) => {
                             if (err) {
-                                console.log(err);
+                                // console.log(err);
                                 callback(err);
                             } else {
                                 dyeing_program_details.color_details = color_details;
@@ -253,14 +253,14 @@ DyeingProgramModel.prototype = {
                                         const GET_LEDGER_DETAILS = `select ledger.ledger, ledger.delivery_address, ledger.mobile, ledger.phone, ledger.gstno from dyeing_program left join ledger on dyeing_program.ledger_id = ledger.id where dyeing_program.id = ${id}`;
                                         DBCON.query(GET_COMPANY_DETAILS, (err, company_details) => {
                                             if (err) {
-                                                console.log(err);
+                                                // console.log(err);
                                                 callback(err);
 
                                             } else {
                                                 dyeing_program_details.company_details = company_details[0];
                                                 DBCON.query(GET_LEDGER_DETAILS, (err, ledger_details) => {
                                                     if (err) {
-                                                        console.log(err);
+                                                        // console.log(err);
                                                         callback(err);
                                                     } else {
                                                         dyeing_program_details.ledger_details = ledger_details[0];

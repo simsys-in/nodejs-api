@@ -18,7 +18,7 @@ Yarn_ReturnModel.prototype = {
         }
 
         let sql = `SELECT * FROM yarn_return WHERE id = ?`;
-        console.log(sql);
+        // console.log(sql);
 
         let sql1 = `SELECT * FROM  yarn_return_inventory where yarn_return_inventory.vou_id = ?`;
 
@@ -97,7 +97,7 @@ Yarn_ReturnModel.prototype = {
                 if (err) {
                     callback(err)
                 } else {
-                    console.log(result)
+                    // console.log(result)
                     DBCON.query('delete from yarn_return_inventory where vou_id = ? ', body.id, (err, deleteData) => {
                         if (err) {
                             callback(err)
@@ -158,7 +158,7 @@ Yarn_ReturnModel.prototype = {
                 if (err) {
                     callback(err)
                 } else {
-                    console.log(result)
+                    // console.log(result)
                     if(body.yarn_return_inventory.length > 0){
 
                         body.yarn_return_inventory.map((item, index) => {
@@ -208,7 +208,7 @@ Yarn_ReturnModel.prototype = {
 
         DBCON.query(query, (err, result) => {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 callback(err)
             } else {
                 callback(false, result[0]);
@@ -221,7 +221,7 @@ Yarn_ReturnModel.prototype = {
 
         DBCON.query(QUERY, (err, result) => {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 callback(err);
             } else {
                 yarn_return_details = result[0];
@@ -231,7 +231,7 @@ Yarn_ReturnModel.prototype = {
 
                 DBCON.query(GET_INVENTORY_QUERY, (err, inventory) => {
                     if (err) {
-                        console.log(err);
+                        // console.log(err);
                         callback(err);
                     } else {
                         yarn_return_details.inventory = inventory;
@@ -241,7 +241,7 @@ Yarn_ReturnModel.prototype = {
 
                         DBCON.query(GET_INVENTORYTOTAL_QUERY, (err, inventorytotal) => {
                             if (err) {
-                                console.log(err);
+                                // console.log(err);
                                 callback(err);
                             } else {
                                 yarn_return_details.inventorytotal = inventorytotal;
@@ -253,14 +253,14 @@ Yarn_ReturnModel.prototype = {
                                 const GET_LEDGER_DETAILS = `select ledger.ledger, ledger.address, ledger.mobile, ledger.phone, ledger.gstno from yarn_return left join ledger on yarn_return.ledger_id = ledger.id where yarn_return.id = ${id}`;
                                 DBCON.query(GET_COMPANY_DETAILS, (err, company_details) => {
                                     if (err) {
-                                        console.log(err);
+                                        // console.log(err);
                                         callback(err);
 
                                     } else {
                                         yarn_return_details.company_details = company_details[0];
                                         DBCON.query(GET_LEDGER_DETAILS, (err, ledger_details) => {
                                             if (err) {
-                                                console.log(err);
+                                                // console.log(err);
                                                 callback(err);
                                             } else {
                                                 yarn_return_details.ledger_details = ledger_details[0];

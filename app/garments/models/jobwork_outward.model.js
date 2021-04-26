@@ -20,7 +20,7 @@ JobworkOutwardModel.prototype = {
         }
 
         let sql = `SELECT * FROM jobwork_outward WHERE id = ?`;
-        console.log(sql);
+        // console.log(sql);
 
         let sql1 = `SELECT *, 1 as selected FROM jobwork_outward_inventory WHERE jobwork_outward_inventory.vou_id = ?`;
 
@@ -30,7 +30,7 @@ JobworkOutwardModel.prototype = {
 
             if (err) {
                 // throw err
-                console.log(err);
+                // console.log(err);
                 callback(err)
             } else {
                 var jobwork_outward = {
@@ -59,13 +59,13 @@ JobworkOutwardModel.prototype = {
                 }
                 DBCON.query(sql1, match, function (err, result1) {
                     if (err) {
-                        console.log(err);
+                        // console.log(err);
                         callback(err)
                     } else {
                         jobwork_outward.jobwork_outward_inventory = result1;
                         DBCON.query(sql2, match, function (err, result2) {
                             if (err) {
-                                console.log(err);
+                                // console.log(err);
                                 callback(err)
                             } else {
                                 jobwork_outward.jobwork_outward_product = result2;
@@ -132,7 +132,7 @@ JobworkOutwardModel.prototype = {
                 if (err) {
                     callback(err)
                 } else {
-                    console.log(result);
+                    // console.log(result);
                     DBCON.query(`delete from jobwork_outward_inventory where vou_id = ?`, body.id, (err, deletedData) => {
                         if (err) {
                             callback(err)
@@ -147,7 +147,7 @@ JobworkOutwardModel.prototype = {
                                             var item = body.jobwork_outward_inventory[index];
                                            // for (const [index, item] in body.jobwork_outward_inventory) {
                                             // body.jobwork_outward_inventory.map((item, index) => {
-                                            console.log(item)
+                                            // console.log(item)
                                             if (item.selected) {
                                                 var jobwork_outward_inventory = {
                                                     vou_id: body.id,
@@ -188,7 +188,7 @@ JobworkOutwardModel.prototype = {
                                                     }
                                                 }
                                             } else {
-                                                console.log(index, body.jobwork_outward_inventory.length - 1)
+                                                // console.log(index, body.jobwork_outward_inventory.length - 1)
                                                 if (index === body.jobwork_outward_inventory.length - 1) {
                                                     callback(false, result, "Jobwork Outward  Updated Successfully!");
                                                 }
@@ -242,7 +242,7 @@ JobworkOutwardModel.prototype = {
                 if (err) {
                     callback(err)
                 } else {
-                    console.log(result);
+                    // console.log(result);
                     if(body.jobwork_outward_inventory.length > 0){
 
                         body.jobwork_outward_inventory.map((item, index) => {
@@ -325,7 +325,7 @@ JobworkOutwardModel.prototype = {
 
         DBCON.query(QUERY, (err, result) => {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 callback(err);
             } else {
                 jobwork_outward_details = result[0];
@@ -334,11 +334,11 @@ JobworkOutwardModel.prototype = {
 
                 DBCON.query(GET_COLOR_SIZE_DETAILS_QUERY, (err, color_size_details) => {
                     if (err) {
-                        console.log(err);
+                        // console.log(err);
                         callback(err)
                     } else {
                         var sizes = color_size_details.length > 0 ? color_size_details[0].sizes !== null ? color_size_details[0].sizes : "" : "";
-                        console.log(sizes);
+                        // console.log(sizes);
                         sizes = sizes.split(",");
                         // res.sendInfo("", sizes);
                         jobwork_outward_details.color_size_details = sizes;
@@ -347,7 +347,7 @@ JobworkOutwardModel.prototype = {
 
                         DBCON.query(GET_COLOR_DETAILS_QUERY, (err, color_details) => {
                             if (err) {
-                                console.log(err);
+                                // console.log(err);
                                 callback(err);
                             } else {
                                 jobwork_outward_details.color_details = color_details;
@@ -356,7 +356,7 @@ JobworkOutwardModel.prototype = {
 
                                 DBCON.query(GET_ACCESSORIES_QUERY, (err, accessories) => {
                                     if (err) {
-                                        console.log(err);
+                                        // console.log(err);
                                         callback(err);
                                     } else {
                                         jobwork_outward_details.accessories = accessories;
@@ -365,14 +365,14 @@ JobworkOutwardModel.prototype = {
                                         const GET_LEDGER_DETAILS = `select ledger.ledger, ledger.address, ledger.mobile, ledger.phone, ledger.gstno from jobwork_outward left join ledger on jobwork_outward.ledger_id = ledger.id where jobwork_outward.id = ${id}`;
                                         DBCON.query(GET_COMPANY_DETAILS, (err, company_details) => {
                                             if (err) {
-                                                console.log(err);
+                                                // console.log(err);
                                                 callback(err);
 
                                             } else {
                                                 jobwork_outward_details.company_details = company_details[0];
                                                 DBCON.query(GET_LEDGER_DETAILS, (err, ledger_details) => {
                                                     if (err) {
-                                                        console.log(err);
+                                                        // console.log(err);
                                                         callback(err);
                                                     } else {
                                                         jobwork_outward_details.ledger_details = ledger_details[0];
@@ -400,7 +400,7 @@ JobworkOutwardModel.prototype = {
 
         DBCON.query(query, (err, result) => {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 callback(err)
             } else {
                 callback(false, result[0]);

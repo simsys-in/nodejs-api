@@ -18,7 +18,7 @@ YarnPurchaseOrderModel.prototype = {
         }
 
         let sql = `SELECT * FROM yarn_purchase_order WHERE id = ?`;
-        console.log(sql);
+        // console.log(sql);
 
         let sql1 = `SELECT * FROM yarn_purchase_order_inventory WHERE yarn_purchase_order_inventory.vou_id = ?`;
 
@@ -101,7 +101,7 @@ YarnPurchaseOrderModel.prototype = {
                 if (err) {
                     callback(err)
                 } else {
-                    console.log(result);
+                    // console.log(result);
                     DBCON.query(`delete from yarn_purchase_order_inventory where vou_id = ?`, body.id, (err, deletedData) => {
                         if (err) {
                             callback(err)
@@ -169,7 +169,7 @@ YarnPurchaseOrderModel.prototype = {
 
                         body.yarn_purchase_order_inventory.map((item, index) => {
     
-                            console.log(item, index)
+                            // console.log(item, index)
                             var yarn_purchase_order_inventory = {
                                 vou_id: result.insertId,
                                 unit_id: item.unit_id,
@@ -227,7 +227,7 @@ YarnPurchaseOrderModel.prototype = {
 
         DBCON.query(query, (err, result) => {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 callback(err)
             } else {
                 callback(false, result[0]);
@@ -240,7 +240,7 @@ YarnPurchaseOrderModel.prototype = {
 
         DBCON.query(QUERY, (err, result) => {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 callback(err);
             } else {
                 yarn_purchase_order_details = result[0];
@@ -250,7 +250,7 @@ YarnPurchaseOrderModel.prototype = {
 
                 DBCON.query(GET_INVENTORY_QUERY, (err, inventory) => {
                     if (err) {
-                        console.log(err);
+                        // console.log(err);
                         callback(err);
                     } else {
                         yarn_purchase_order_details.inventory = inventory;
@@ -272,14 +272,14 @@ YarnPurchaseOrderModel.prototype = {
                         const GET_LEDGER_DETAILS = `select ledger.ledger, ledger.address, ledger.mobile, ledger.phone, ledger.gstno from yarn_purchase_order left join ledger on yarn_purchase_order.ledger_id = ledger.id where yarn_purchase_order.id = ${id}`;
                         DBCON.query(GET_COMPANY_DETAILS, (err, company_details) => {
                             if (err) {
-                                console.log(err);
+                                // console.log(err);
                                 callback(err);
 
                             } else {
                                 yarn_purchase_order_details.company_details = company_details[0];
                                 DBCON.query(GET_LEDGER_DETAILS, (err, ledger_details) => {
                                     if (err) {
-                                        console.log(err);
+                                        // console.log(err);
                                         callback(err);
                                     } else {
                                         yarn_purchase_order_details.ledger_details = ledger_details[0];

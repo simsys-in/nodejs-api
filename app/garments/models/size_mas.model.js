@@ -15,7 +15,7 @@ SizeModel.prototype = {
         }
 
         let sql = `SELECT * FROM ${TABLE_NAME} WHERE id = ?`;
-        console.log(sql);
+        // console.log(sql);
 
         DBCON.query(sql, match, function (err, result) {
             if (err){ 

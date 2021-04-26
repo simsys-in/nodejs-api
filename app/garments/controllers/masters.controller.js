@@ -117,7 +117,7 @@ exports.getAllAddLessSB = function (req, res) {
     const status = body.status ? body.status : 'active'
     DBCON.query('select id as value, name from add_less_mas where status = ?', status, function (err, data) {
         if (err) {
-            console.log(err)
+            // console.log(err)
             res.sendError(err)
         } else {
             res.sendInfo("", data)
@@ -127,12 +127,12 @@ exports.getAllAddLessSB = function (req, res) {
 
 exports.getAddLess = function (req, res) {
     const id = req.query.id;
-    console.log("ID : " + id);
+    // console.log("ID : " + id);
     const USER = req.user;
 
     AddLess.find(Number(id), function (err, data) {
         if (err) {
-            console.log(err);
+            // console.log(err);
             res.sendError(err)
         } else {
             res.sendInfo("", data);
@@ -142,13 +142,13 @@ exports.getAddLess = function (req, res) {
 
 exports.deleteAddLess = function (req, res) {
     const id = req.query.id;
-    console.log("ID : " + id);
+    // console.log("ID : " + id);
     const USER = req.user;
 
     if (issetNotEmpty(id)) {
         AddLess.delete(Number(id), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("Add Less Deleted Successfully!");
@@ -165,7 +165,7 @@ exports.saveLedger = function (req, res) {
     body.id = req.query.id;
     Ledger.checkAndSaveOrUpdate(body, (err, result, msg) => {
         if (err) {
-            console.log(err);
+            // console.log(err);
             res.sendError(err);
         } else {
             res.sendSuccess(msg, result)
@@ -179,7 +179,7 @@ exports.getLedger = function (req, res) {
     if (issetNotEmpty(ID)) {
         Ledger.find(Number(ID), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("", data);
@@ -188,7 +188,7 @@ exports.getLedger = function (req, res) {
     } else {
         Ledger.getAll((err, data) => {
             if (err) {
-                console.log(err)
+                // console.log(err)
                 res.sendError(err)
             } else {
                 res.sendSuccess("", data)
@@ -205,7 +205,7 @@ exports.getAllLedgerSB = function (req, res) {
     // const status = body.status ? body.status : 'active'
     DBCON.query('select id as value, ledger as name from ledger order by ledger.ledger asc', function (err, data) {
         if (err) {
-            console.log(err)
+            // console.log(err)
             res.sendError(err)
         } else {
             res.sendInfo("", data)
@@ -235,7 +235,7 @@ exports.deleteLedger = function (req, res) {
     if (issetNotEmpty(id)) {
         Ledger.delete(Number(id), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("Ledger Deleted Successfully!");
@@ -261,7 +261,7 @@ exports.getAllProduct_CategorySB = function (req, res) {
     const status = body.status ? body.status : 'active'
     DBCON.query('select id as value, product_category as name from product_category order by product_category.product_category asc',  function (err, data) {
         if (err) {
-            console.log(err)
+            // console.log(err)
             res.sendError(err)
         } else {
             res.sendInfo("", data)
@@ -278,7 +278,7 @@ exports.saveProduct_Category = function (req, res) {
     body.id = req.query.id;
     Product_Category.checkAndSaveOrUpdate(body, (err, result, msg) => {
         if (err) {
-            console.log(err);
+            // console.log(err);
             res.sendError(err);
         } else {
             res.sendSuccess(msg, result)
@@ -292,7 +292,7 @@ exports.saveProductGroup = function (req, res) {
     body.id = req.query.id;
     ProductGroup.checkAndSaveOrUpdate(body, (err, result, msg) => {
         if (err) {
-            console.log(err);
+            // console.log(err);
             res.sendError(err);
         } else {
             res.sendSuccess(msg, result)
@@ -307,7 +307,7 @@ exports.getProduct_Category = function (req, res) {
         Product_Category.find(Number(ID), function (err, data) {
 
             if (err) {
-                console.log(err)
+                // console.log(err)
                 res.sendError(err)
             } else {
                 res.sendSuccess("", data)
@@ -317,7 +317,7 @@ exports.getProduct_Category = function (req, res) {
         Product_Category.getAll((err, data) => {
 
             if (err) {
-                console.log(err)
+                // console.log(err)
                 res.sendError(err)
             } else {
                 res.sendSuccess("", data)
@@ -331,7 +331,7 @@ exports.getProductGroup = function (req, res) {
     if (issetNotEmpty(ID)) {
         ProductGroup.find(Number(ID), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("", data);
@@ -389,7 +389,7 @@ exports.getAllMasterGroupSB = function (req, res) {
 
 //     AddLess.find(Number(id), function (err, data) {
 //         if (err) {
-//             console.log(err);
+            // console.log(err);
 //             res.sendError(err)
 //         } else {
 //             res.sendInfo("", data);
@@ -404,7 +404,7 @@ exports.deleteProduct_Category = function (req, res) {
     if (issetNotEmpty(id)) {
         Product_Category.delete(Number(id), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("Product Category Deleted Successfully!");
@@ -423,7 +423,7 @@ exports.deleteProductGroup = function (req, res) {
     if (issetNotEmpty(id)) {
         ProductGroup.delete(Number(id), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
 
@@ -442,7 +442,7 @@ exports.saveLedger_Group = function (req, res) {
     body.id = req.query.id;
     Ledger_Group.checkAndSaveOrUpdate(body, (err, result, msg) => {
         if (err) {
-            console.log(err);
+            // console.log(err);
             res.sendError(err);
         } else {
             res.sendSuccess(msg, result)
@@ -456,7 +456,7 @@ exports.saveUnit = function (req, res) {
     body.id = req.query.id;
     Unit.checkAndSaveOrUpdate(body, (err, result, msg) => {
         if (err) {
-            console.log(err);
+            // console.log(err);
             res.sendError(err);
         } else {
             res.sendSuccess(msg, result)
@@ -470,7 +470,7 @@ exports.getLedger_Group = function (req, res) {
     if (issetNotEmpty(ID)) {
         Ledger_Group.find(Number(ID), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("", data);
@@ -492,7 +492,7 @@ exports.getUnit = function (req, res) {
     if (issetNotEmpty(ID)) {
         Unit.find(Number(ID), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("", data);
@@ -501,7 +501,7 @@ exports.getUnit = function (req, res) {
     } else {
         Unit.getAll((err, data) => {
             if (err) {
-                console.log(err)
+                // console.log(err)
                 res.sendError(err)
             } else {
                 res.sendSuccess("", data)
@@ -518,7 +518,7 @@ exports.getAllLedger_GroupSB = function (req, res) {
     const status = body.status ? body.status : 'active'
     DBCON.query('select id as value, name from ledger_group order by ledger_group.ledger_group asc ', function (err, data) {
         if (err) {
-            console.log(err)
+            // console.log(err)
             res.sendError(err)
         } else {
             res.sendInfo("", data)
@@ -532,7 +532,7 @@ exports.getAllUnitSB = function (req, res) {
     const status = body.status ? body.status : 'active'
     DBCON.query('select id as value, unit as name from unit order by unit.unit asc ', function (err, data) {
         if (err) {
-            console.log(err)
+            // console.log(err)
             res.sendError(err)
         } else {
             res.sendInfo("", data)
@@ -543,12 +543,12 @@ exports.getAllUnitSB = function (req, res) {
 
 // exports.getAddLess = function (req, res) {
 //     const id = req.query.id;
-//     console.log("ID : " + id);
+    // console.log("ID : " + id);
 //     const USER = req.user;
 
 //     AddLess.find(Number(id), function (err, data) {
 //         if (err) {
-//             console.log(err);
+            // console.log(err);
 //             res.sendError(err)
 //         } else {
 //             res.sendInfo("", data);
@@ -558,12 +558,12 @@ exports.getAllUnitSB = function (req, res) {
 
 exports.deleteLedger_Group = function (req, res) {
     const id = req.query.id;
-    console.log("ID : " + id);
+    // console.log("ID : " + id);
 
     if (issetNotEmpty(id)) {
         Ledger_Group.delete(Number(id), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("Ledger Group Deleted Successfully!");
@@ -578,12 +578,12 @@ exports.deleteLedger_Group = function (req, res) {
 
 exports.deleteUnit = function (req, res) {
     const id = req.query.id;
-    console.log("ID : " + id);
+    // console.log("ID : " + id);
 
     if (issetNotEmpty(id)) {
         Unit.delete(Number(id), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
 
@@ -601,7 +601,7 @@ exports.saveLedger_Category = function (req, res) {
     body.id = req.query.id;
     Ledger_Category.checkAndSaveOrUpdate(body, (err, result, msg) => {
         if (err) {
-            console.log(err);
+            // console.log(err);
             res.sendError(err);
         } else {
             res.sendSuccess(msg, result)
@@ -615,7 +615,7 @@ exports.saveProduct = function (req, res) {
     body.id = req.query.id;
     Product.checkAndSaveOrUpdate(body, (err, result, msg) => {
         if (err) {
-            console.log(err);
+            // console.log(err);
             res.sendError(err);
         } else {
             res.sendSuccess(msg, result)
@@ -629,7 +629,7 @@ exports.getLedger_Category = function (req, res) {
     if (issetNotEmpty(ID)) {
         Ledger_Category.find(Number(ID), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("", data);
@@ -638,7 +638,7 @@ exports.getLedger_Category = function (req, res) {
     } else {
         Ledger_Category.getAll((err, data) => {
             if (err) {
-                console.log(err)
+                // console.log(err)
                 res.sendError(err)
             } else {
                 res.sendSuccess("", data)
@@ -652,7 +652,7 @@ exports.getProduct = function (req, res) {
     if (issetNotEmpty(ID)) {
         Product.find(Number(ID), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("", data);
@@ -661,7 +661,7 @@ exports.getProduct = function (req, res) {
     } else {
         Product.getAll((err, data) => {
             if (err) {
-                console.log(err)
+                // console.log(err)
                 res.sendError(err)
             } else {
                 res.sendSuccess("", data)
@@ -678,7 +678,7 @@ exports.getAllLedger_CategorySB = function (req, res) {
     const status = body.status ? body.status : 'active';
     DBCON.query('select id as value, name from ledger_category order by ledger_category.ledger_category asc ', function (err, data) {
         if (err) {
-            console.log(err)
+            // console.log(err)
             res.sendError(err)
         } else {
             res.sendInfo("", data)
@@ -697,7 +697,7 @@ exports.getAllProductAccessoriesSB = function (req, res) {
     const status = body.status ? body.status : 'active'
     DBCON.query('select product.id as value, product.product as name from product left join product_category on product.product_category_id = product_category.id where product_category="Accessories"',function (err, data) {
         if (err) {
-            console.log(err)
+            // console.log(err)
             res.sendError(err)
         } else {
             res.sendInfo("", data)
@@ -713,7 +713,7 @@ exports.getAllProductSB = function (req, res) {
     const status = body.status ? body.status : 'active'
     DBCON.query('select id as value , product as name from product order by product.product asc',function (err, data) {
         if (err) {
-            console.log(err)
+            // console.log(err)
             res.sendError(err)
         } else {
             res.sendInfo("", data)
@@ -738,12 +738,12 @@ exports.getAllProductSB = function (req, res) {
 
 exports.deleteLedger_Category = function (req, res) {
     const id = req.query.id;
-    console.log("ID : " + id);
+    // console.log("ID : " + id);
 
     if (issetNotEmpty(id)) {
         Ledger_Category.delete(Number(id), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("Ledger Category Deleted Successfully!");
@@ -757,12 +757,12 @@ exports.deleteLedger_Category = function (req, res) {
 
 exports.deleteProduct = function (req, res) {
     const id = req.query.id;
-    console.log("ID : " + id);
+    // console.log("ID : " + id);
 
     if (issetNotEmpty(id)) {
         Product.delete(Number(id), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
 
@@ -925,7 +925,7 @@ exports.saveColor = function (req, res) {
     body.id = req.query.id;
     Color.checkAndSaveOrUpdate(body, (err, result, msg) => {
         if (err) {
-            console.log(err);
+            // console.log(err);
             res.sendError(err);
         } else {
             res.sendSuccess(msg, result)
@@ -937,7 +937,7 @@ exports.saveProcess = function (req, res) {
     body.id = req.query.id;
     Process.checkAndSaveOrUpdate(body, (err, result, msg) => {
         if (err) {
-            console.log(err);
+            // console.log(err);
             res.sendError(err);
         } else {
             res.sendSuccess(msg, result)
@@ -951,7 +951,7 @@ exports.getColor = function (req, res) {
     if (issetNotEmpty(ID)) {
         Color.find(Number(ID), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("", data);
@@ -960,7 +960,7 @@ exports.getColor = function (req, res) {
     } else {
         Color.getAll((err, data) => {
             if (err) {
-                console.log(err)
+                // console.log(err)
                 res.sendError(err)
             } else {
                 res.sendSuccess("", data)
@@ -973,7 +973,7 @@ exports.getProcess = function (req, res) {
     if (issetNotEmpty(ID)) {
         Process.find(Number(ID), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("", data);
@@ -983,7 +983,7 @@ exports.getProcess = function (req, res) {
         
         Process.getAll((err, data) => {
             if (err) {
-                console.log(err)
+                // console.log(err)
                 res.sendError(err)
             } else {
                 res.sendSuccess("", data)
@@ -998,12 +998,12 @@ exports.getProcess = function (req, res) {
 
 exports.deleteColor = function (req, res) {
     const id = req.query.id;
-    console.log("ID : " + id);
+    // console.log("ID : " + id);
 
     if (issetNotEmpty(id)) {
         Color.delete(Number(id), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {  
                   res.sendInfo("Color Deleted Successfully!");
@@ -1056,7 +1056,7 @@ exports.getProcessSBForOrderID = function (req, res) {
     var order_id = req.query.order_id ? req.query.order_id : null;
     DBCON.query('select process.id as value, process.process as name from  order_process left join process on process.id = order_process.process_id  where order_process.order_id = ? ', order_id, function (err, data) {
         if (err) {
-            console.log(err)
+            // console.log(err)
             res.sendError(err)
         } else {
             var result = [];
@@ -1089,7 +1089,7 @@ exports.getAllFabricsSB = function (req, res) {
     const status = body.status ? body.status : 'active';
     DBCON.query('select product.id as value, product.product as name from product left join product_category on product.product_category_id = product_category.id where product_category="FABRIC" order by product.product asc', function (err, data) {
         if (err) {
-            console.log(err)
+            // console.log(err)
             res.sendError(err)
         } else {
             res.sendInfo("", data)
@@ -1099,13 +1099,13 @@ exports.getAllFabricsSB = function (req, res) {
 
 exports.deleteProcess = function (req, res) {
     const id = req.query.id;
-    console.log("ID : " + id);
+    // console.log("ID : " + id);
 
     if (issetNotEmpty(id)) {
         
         Process.delete(Number(id), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
             
@@ -1128,7 +1128,7 @@ exports.saveMasterGroup = function (req, res) {
     body.id = req.query.id;
     MasterGroup.checkAndSaveOrUpdate(body, (err, result, msg) => {
         if (err) {
-            console.log(err);
+            // console.log(err);
             res.sendError(err);
         } else {
             res.sendSuccess(msg, result)
@@ -1140,7 +1140,7 @@ exports.saveSize = function (req, res) {
     body.id = req.query.id;
     Size.checkAndSaveOrUpdate(body, (err, result, msg) => {
         if (err) {
-            console.log(err);
+            // console.log(err);
             res.sendError(err);
         } else {
             res.sendSuccess(msg, result)
@@ -1154,7 +1154,7 @@ exports.getMasterGroup = function (req, res) {
     if (issetNotEmpty(ID)) {
         MasterGroup.find(Number(ID), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("", data);
@@ -1163,7 +1163,7 @@ exports.getMasterGroup = function (req, res) {
     } else {
         MasterGroup.getAll((err, data) => {
             if (err) {
-                console.log(err)
+                // console.log(err)
                 res.sendError(err)
             } else {
                 res.sendSuccess("", data)
@@ -1177,7 +1177,7 @@ exports.getSize = function (req, res) {
     if (issetNotEmpty(ID)) {
         Size.find(Number(ID), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("", data);
@@ -1187,7 +1187,7 @@ exports.getSize = function (req, res) {
         
         Size.getAll((err, data) => {
             if (err) {
-                console.log(err)
+                // console.log(err)
                 res.sendError(err)
             } else {
                 res.sendSuccess("", data)
@@ -1202,12 +1202,12 @@ exports.getSize = function (req, res) {
 
 exports.deleteMasterGroup = function (req, res) {
     const id = req.query.id;
-    console.log("ID : " + id);
+    // console.log("ID : " + id);
 
     if (issetNotEmpty(id)) {
         MasterGroup.delete(Number(id), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                  res.sendInfo("Master Group Deleted Successfully!");
@@ -1229,7 +1229,7 @@ exports.getAllSizeSB = function (req, res) {
     const status = body.status ? body.status : 'active';
     DBCON.query('select id as value, size as name from size order by size.size asc ', function (err, data) {
         if (err) {
-            console.log(err)
+            // console.log(err)
             res.sendError(err)
         } else {
             res.sendInfo("", data)
@@ -1246,7 +1246,7 @@ exports.getAllProcessSB = function (req, res) {
     const status = body.status ? body.status : 'active';
     DBCON.query('select id as value, process as name from process order by process.process asc ', function (err, data) {
         if (err) {
-            console.log(err)
+            // console.log(err)
             res.sendError(err)
         } else {
             res.sendInfo("", data)
@@ -1263,7 +1263,7 @@ exports.getAllColorSB = function (req, res) {
     // const status = body.status ? body.status : 'active';
     DBCON.query('select id as value, color as name from color order by color.color asc ', function (err, data) {
         if (err) {
-            console.log(err)
+            // console.log(err)
             res.sendError(err)
         } else {
             res.sendInfo("", data)
@@ -1273,13 +1273,13 @@ exports.getAllColorSB = function (req, res) {
 
 exports.deleteSize = function (req, res) {
     const id = req.query.id;
-    console.log("ID : " + id);
+    // console.log("ID : " + id);
 
     if (issetNotEmpty(id)) {
        
         Size.delete(Number(id), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                
@@ -1299,7 +1299,7 @@ exports.saveMaster = function (req, res) {
     body.id = req.query.id;
     Master.checkAndSaveOrUpdate(body, (err, result, msg) => {
         if (err) {
-            console.log(err);
+            // console.log(err);
             res.sendError(err);
         } else {
             res.sendSuccess(msg, result)
@@ -1312,7 +1312,7 @@ exports.getMaster = function (req, res) {
     if (issetNotEmpty(ID)) {
         Master.find(Number(ID), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("", data);
@@ -1321,7 +1321,7 @@ exports.getMaster = function (req, res) {
     } else {
         Master.getAll((err, data) => {
             if (err) {
-                console.log(err)
+                // console.log(err)
                 res.sendError(err)
             } else {
                 res.sendSuccess("", data)
@@ -1337,7 +1337,7 @@ exports.getAllMasterSB = function (req, res) {
     const status = body.status ? body.status : 'active';
     DBCON.query('select id as value, name from master order by master.master asc ', function (err, data) {
         if (err) {
-            console.log(err)
+            // console.log(err)
             res.sendError(err)
         } else {
             res.sendInfo("", data)
@@ -1347,12 +1347,12 @@ exports.getAllMasterSB = function (req, res) {
 
 exports.deleteMaster = function (req, res) {
     const id = req.query.id;
-    console.log("ID : " + id);
+    // console.log("ID : " + id);
 
     if (issetNotEmpty(id)) {
         Master.delete(Number(id), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("Master Deleted Successfully!");
@@ -1375,7 +1375,7 @@ exports.getAllLedgerCategorySB = function (req, res) {
     const status = body.status ? body.status : 'active'
     DBCON.query('select id as value, ledger_category as name from ledger_category order by ledger_category.ledger_category asc ', function (err, data) {
         if (err) {
-            console.log(err)
+            // console.log(err)
             res.sendError(err)
         } else {
             res.sendInfo("", data)
@@ -1390,7 +1390,7 @@ exports.getAllLedgerGroupSB = function (req, res) {
     const status = body.status ? body.status : 'active'
     DBCON.query('select id as value, ledger_group as name from ledger_group order by ledger_group.ledger_group asc ', function (err, data) {
         if (err) {
-            console.log(err)
+            // console.log(err)
             res.sendError(err)
         } else {
             res.sendInfo("", data)
@@ -1405,7 +1405,7 @@ exports.saveEmployee_Category = function (req, res) {
     body.id = req.query.id;
     Employee_Category.checkAndSaveOrUpdate(body, (err, result, msg) => {
         if (err) {
-            console.log(err);
+            // console.log(err);
             res.sendError(err);
         } else {
             res.sendSuccess(msg, result)
@@ -1418,7 +1418,7 @@ exports.getEmployee_Category = function (req, res) {
     if (issetNotEmpty(ID)) {
         Employee_Category.find(Number(ID), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("", data);
@@ -1427,7 +1427,7 @@ exports.getEmployee_Category = function (req, res) {
     } else {
         Employee_Category.getAll((err, data) => {
             if (err) {
-                console.log(err)
+                // console.log(err)
                 res.sendError(err)
             } else {
                 res.sendSuccess("", data)
@@ -1443,7 +1443,7 @@ exports.getAllEmployee_CategorySB = function (req, res) {
     const status = body.status ? body.status : 'active';
     DBCON.query('select id as value, name from employee_category order by employee_category.employee_category asc ', function (err, data) {
         if (err) {
-            console.log(err)
+            // console.log(err)
             res.sendError(err)
         } else {
             res.sendInfo("", data)
@@ -1453,12 +1453,12 @@ exports.getAllEmployee_CategorySB = function (req, res) {
 
 exports.deleteEmployee_Category = function (req, res) {
     const id = req.query.id;
-    console.log("ID : " + id);
+    // console.log("ID : " + id);
 
     if (issetNotEmpty(id)) {
         Employee_Category.delete(Number(id), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("Employee category Deleted Successfully!");
@@ -1475,7 +1475,7 @@ exports.saveEmployee = function (req, res) {
     body.id = req.query.id;
     Employee.checkAndSaveOrUpdate(body, (err, result, msg) => {
         if (err) {
-            console.log(err);
+            // console.log(err);
             res.sendError(err);
         } else {
             res.sendSuccess(msg, result)
@@ -1488,7 +1488,7 @@ exports.getEmployee = function (req, res) {
     if (issetNotEmpty(ID)) {
         Employee.find(Number(ID), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("", data);
@@ -1497,7 +1497,7 @@ exports.getEmployee = function (req, res) {
     } else {
         Employee.getAll((err, data) => {
             if (err) {
-                console.log(err)
+                // console.log(err)
                 res.sendError(err)
             } else {
                 res.sendSuccess("", data)
@@ -1513,7 +1513,7 @@ exports.getAllEmployeeSB = function (req, res) {
     const status = body.status ? body.status : 'active';
     DBCON.query('select id as value, name from employee order by employee.employee asc', function (err, data) {
         if (err) {
-            console.log(err)
+            // console.log(err)
             res.sendError(err)
         } else {
             res.sendInfo("", data)
@@ -1523,12 +1523,12 @@ exports.getAllEmployeeSB = function (req, res) {
 
 exports.deleteEmployee = function (req, res) {
     const id = req.query.id;
-    console.log("ID : " + id);
+    // console.log("ID : " + id);
 
     if (issetNotEmpty(id)) {
         Employee.delete(Number(id), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("Employee  Deleted Successfully!");
@@ -1546,7 +1546,7 @@ exports.getAllEmployeeCategorySB = function (req, res) {
     const status = body.status ? body.status : 'active'
     DBCON.query('select id as value, employee_category as name from employee_category order by employee_category.employee_category asc ', function (err, data) {
         if (err) {
-            console.log(err)
+            // console.log(err)
             res.sendError(err)
         } else {
             res.sendInfo("", data)
@@ -1560,7 +1560,7 @@ exports.getAllShiftSB = function (req, res) {
     const status = body.status ? body.status : 'active'
     DBCON.query('select id as value, shift as name from shift order by shift.shift asc ', function (err, data) {
         if (err) {
-            console.log(err)
+            // console.log(err)
             res.sendError(err)
         } else {
             res.sendInfo("", data)
@@ -1574,7 +1574,7 @@ exports.getAllDesignationSB = function (req, res) {
     const status = body.status ? body.status : 'active'
     DBCON.query('select id as value, designation as name from designation order by designation.designation asc ', function (err, data) {
         if (err) {
-            console.log(err)
+            // console.log(err)
             res.sendError(err)
         } else {
             res.sendInfo("", data)
@@ -1588,7 +1588,7 @@ exports.getAllDepartmentSB = function (req, res) {
     const status = body.status ? body.status : 'active'
     DBCON.query('select id as value, department as name from department order by department.department asc ', function (err, data) {
         if (err) {
-            console.log(err)
+            // console.log(err)
             res.sendError(err)
         } else {
             res.sendInfo("", data)
@@ -1602,7 +1602,7 @@ exports.getAllCuttingMasterSB = function (req, res) {
     const status = body.status ? body.status : 'active'
     DBCON.query('select id as value, employee as name from employee order by employee.employee asc ', function (err, data) {
         if (err) {
-            console.log(err)
+            // console.log(err)
             res.sendError(err)
         } else {
             res.sendInfo("", data)
@@ -1616,7 +1616,7 @@ exports.getAllBranchSB = function (req, res) {
     const status = body.status ? body.status : 'active'
     DBCON.query('select id as value, branch as name from branch order by branch.branch asc ', function (err, data) {
         if (err) {
-            console.log(err)
+            // console.log(err)
             res.sendError(err)
         } else {
             res.sendInfo("", data)
@@ -1630,7 +1630,7 @@ exports.getAllBankSB = function (req, res) {
     const status = body.status ? body.status : 'active'
     DBCON.query('select id as value, bank as name from bank order by bank.bank asc ', function (err, data) {
         if (err) {
-            console.log(err)
+            // console.log(err)
             res.sendError(err)
         } else {
             res.sendInfo("", data)
@@ -1655,7 +1655,7 @@ exports.saveBranch = function (req, res) {
     body.id = req.query.id;
     Branch.checkAndSaveOrUpdate(body, (err, result, msg) => {
         if (err) {
-            console.log(err);
+            // console.log(err);
             res.sendError(err);
         } else {
             res.sendSuccess(msg, result)
@@ -1668,7 +1668,7 @@ exports.getBranch = function (req, res) {
     if (issetNotEmpty(ID)) {
         Branch.find(Number(ID), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("", data);
@@ -1677,7 +1677,7 @@ exports.getBranch = function (req, res) {
     } else {
         Branch.getAll((err, data) => {
             if (err) {
-                console.log(err)
+                // console.log(err)
                 res.sendError(err)
             } else {
                 res.sendSuccess("", data)
@@ -1689,12 +1689,12 @@ exports.getBranch = function (req, res) {
 
 exports.deleteBranch = function (req, res) {
     const id = req.query.id;
-    console.log("ID : " + id);
+    // console.log("ID : " + id);
 
     if (issetNotEmpty(id)) {
         Branch.delete(Number(id), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("Branch Deleted Successfully!");
@@ -1711,7 +1711,7 @@ exports.saveDepartment = function (req, res) {
     body.id = req.query.id;
     Department.checkAndSaveOrUpdate(body, (err, result, msg) => {
         if (err) {
-            console.log(err);
+            // console.log(err);
             res.sendError(err);
         } else {
             res.sendSuccess(msg, result)
@@ -1724,7 +1724,7 @@ exports.getDepartment = function (req, res) {
     if (issetNotEmpty(ID)) {
         Department.find(Number(ID), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("", data);
@@ -1733,7 +1733,7 @@ exports.getDepartment = function (req, res) {
     } else {
         Department.getAll((err, data) => {
             if (err) {
-                console.log(err)
+                // console.log(err)
                 res.sendError(err)
             } else {
                 res.sendSuccess("", data)
@@ -1744,12 +1744,12 @@ exports.getDepartment = function (req, res) {
 
 exports.deleteDepartment = function (req, res) {
     const id = req.query.id;
-    console.log("ID : " + id);
+    // console.log("ID : " + id);
 
     if (issetNotEmpty(id)) {
         Department.delete(Number(id), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("Department Deleted Successfully!");
@@ -1768,7 +1768,7 @@ exports.saveBank = function (req, res) {
     body.id = req.query.id;
     Bank.checkAndSaveOrUpdate(body, (err, result, msg) => {
         if (err) {
-            console.log(err);
+            // console.log(err);
             res.sendError(err);
         } else {
             res.sendSuccess(msg, result)
@@ -1784,7 +1784,7 @@ exports.saveDesignation = function (req, res) {
     body.id = req.query.id;
     Designation.checkAndSaveOrUpdate(body, (err, result, msg) => {
         if (err) {
-            console.log(err);
+            // console.log(err);
             res.sendError(err);
         } else {
             res.sendSuccess(msg, result)
@@ -1797,7 +1797,7 @@ exports.getBank = function (req, res) {
     if (issetNotEmpty(ID)) {
         Bank.find(Number(ID), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("", data);
@@ -1806,7 +1806,7 @@ exports.getBank = function (req, res) {
     } else {
         Bank.getAll((err, data) => {   
                     if (err) {
-            console.log(err)
+            // console.log(err)
             res.sendError(err)
         } else {
             res.sendSuccess("", data)
@@ -1820,7 +1820,7 @@ exports.getDesignation = function (req, res) {
     if (issetNotEmpty(ID)) {
         Designation.find(Number(ID), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("", data);
@@ -1829,7 +1829,7 @@ exports.getDesignation = function (req, res) {
     } else {
         Designation.getAll((err, data) => {
             if (err) {
-                console.log(err)
+                // console.log(err)
                 res.sendError(err)
             } else {
                 res.sendSuccess("", data)
@@ -1841,12 +1841,12 @@ exports.getDesignation = function (req, res) {
 
 exports.deleteBank = function (req, res) {
     const id = req.query.id;
-    console.log("ID : " + id);
+    // console.log("ID : " + id);
 
     if (issetNotEmpty(id)) {
         Bank.delete(Number(id), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("Bank Deleted Successfully!");
@@ -1861,12 +1861,12 @@ exports.deleteBank = function (req, res) {
 
 exports.deleteDesignation = function (req, res) {
     const id = req.query.id;
-    console.log("ID : " + id);
+    // console.log("ID : " + id);
 
     if (issetNotEmpty(id)) {
         Designation.delete(Number(id), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("Designation Deleted Successfully!");
@@ -1912,7 +1912,7 @@ exports.getFabricsForOrderID = function (req, res) {
     var order_id = req.query.order_id ? req.query.order_id : null;
     DBCON.query(`select cutting_program_inventory.gsm, cutting_program_inventory. dia, cutting_program_inventory.fabric_id, cutting_program_inventory.color_id, cutting_program_inventory.fabric_qty as weight from cutting_program_inventory left join cutting_program on cutting_program.id = cutting_program_inventory.vou_id where order_id = ${order_id}; `, function (err, data) {
         if (err) {
-            console.log(err)
+            // console.log(err)
             res.sendError(err)
         } else {
           
@@ -1930,7 +1930,7 @@ exports.saveCompany = function (req, res) {
     body.id = req.query.id;
     Company.checkAndSaveOrUpdate(body, (err, result, msg) => {
         if (err) {
-            console.log(err);
+            // console.log(err);
             res.sendError(err);
         } else {
             res.sendSuccess(msg, result)
@@ -1944,7 +1944,7 @@ exports.getCompany = function (req, res) {
         Company.find(Number(ID), function (err, data) {
 
             if (err) {
-                console.log(err)
+                // console.log(err)
                 res.sendError(err)
             } else {
                 res.sendSuccess("", data)
@@ -1954,7 +1954,7 @@ exports.getCompany = function (req, res) {
         Company.getAll((err, data) => {
 
             if (err) {
-                console.log(err)
+                // console.log(err)
                 res.sendError(err)
             } else {
                 res.sendSuccess("", data)
@@ -1965,12 +1965,12 @@ exports.getCompany = function (req, res) {
 
 exports.deleteCompany = function (req, res) {
     const id = req.query.id;
-    console.log("ID : " + id);
+    // console.log("ID : " + id);
 
     if (issetNotEmpty(id)) {
         Company.delete(Number(id), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("Company Details Deleted Successfully!");
@@ -1989,7 +1989,7 @@ exports.getAllCompanySB = function (req, res) {
     const status = body.status ? body.status : 'active'
     DBCON.query('select id as value, company as name from company order by company.company asc',  function (err, data) {
         if (err) {
-            console.log(err)
+            // console.log(err)
             res.sendError(err)
         } else {
             res.sendInfo("", data)
@@ -2006,7 +2006,7 @@ exports.saveShortcut = function (req, res) {
     body.id = req.query.id;
     Shortcut.checkAndSaveOrUpdate(body, (err, result, msg) => {
         if (err) {
-            console.log(err);
+            // console.log(err);
             res.sendError(err);
         } else {
             res.sendSuccess(msg, result)
@@ -2020,7 +2020,7 @@ exports.getShortcut = function (req, res) {
         Shortcut.find(Number(ID), function (err, data) {
 
             if (err) {
-                console.log(err)
+                // console.log(err)
                 res.sendError(err)
             } else {
                 res.sendSuccess("", data)
@@ -2030,7 +2030,7 @@ exports.getShortcut = function (req, res) {
         Shortcut.getAll((err, data) => {
 
             if (err) {
-                console.log(err)
+                // console.log(err)
                 res.sendError(err)
             } else {
                 res.sendSuccess("", data)
@@ -2041,12 +2041,12 @@ exports.getShortcut = function (req, res) {
 
 exports.deleteShortcut = function (req, res) {
     const id = req.query.id;
-    console.log("ID : " + id);
+    // console.log("ID : " + id);
 
     if (issetNotEmpty(id)) {
         Shortcut.delete(Number(id), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("Shortcut Details Deleted Successfully!");
@@ -2065,7 +2065,7 @@ exports.getAllShortcutSB = function (req, res) {
     const status = body.status ? body.status : 'active'
     DBCON.query('select id as value, shortcut as name from shortcut order by shortcut.shortcut asc',  function (err, data) {
         if (err) {
-            console.log(err)
+            // console.log(err)
             res.sendError(err)
         } else {
             res.sendInfo("", data)
@@ -2081,7 +2081,7 @@ exports.saveShift = function (req, res) {
     body.id = req.query.id;
     Shift.checkAndSaveOrUpdate(body, (err, result, msg) => {
         if (err) {
-            console.log(err);
+            // console.log(err);
             res.sendError(err);
         } else {
             res.sendSuccess(msg, result)
@@ -2095,7 +2095,7 @@ exports.getShift = function (req, res) {
         Shift.find(Number(ID), function (err, data) {
 
             if (err) {
-                console.log(err)
+                // console.log(err)
                 res.sendError(err)
             } else {
                 res.sendSuccess("", data)
@@ -2105,7 +2105,7 @@ exports.getShift = function (req, res) {
         Shift.getAll((err, data) => {
 
             if (err) {
-                console.log(err)
+                // console.log(err)
                 res.sendError(err)
             } else {
                 res.sendSuccess("", data)
@@ -2116,12 +2116,12 @@ exports.getShift = function (req, res) {
 
 exports.deleteShift = function (req, res) {
     const id = req.query.id;
-    console.log("ID : " + id);
+    // console.log("ID : " + id);
 
     if (issetNotEmpty(id)) {
         Shift.delete(Number(id), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("Shift Details Deleted Successfully!");
@@ -2140,7 +2140,7 @@ exports.getAllShiftSB = function (req, res) {
     const status = body.status ? body.status : 'active'
     DBCON.query('select id as value, shift as name from shift order by shift.shift asc',  function (err, data) {
         if (err) {
-            console.log(err)
+            // console.log(err)
             res.sendError(err)
         } else {
             res.sendInfo("", data)
@@ -2186,11 +2186,11 @@ exports.getSizeDetails = function (req, res) {
     const status = body.status ? body.status : 'active';
     DBCON.query('select concat(size.size1, ",", size.size2, ",",size.size3, ",",size.size4, ",",size.size5, ",",size.size6, ",",size.size7, ",",size.size8, ",",size.size9) as sizes from size where id = ?',size_id, function (err, data) {
         if (err) {
-            console.log(err)
+            // console.log(err)
             res.sendError(err)
         } else {
             var sizes = data.length > 0 ? data[0].sizes !== null ? data[0].sizes : "" : "";
-            console.log(sizes);
+            // console.log(sizes);
             sizes = sizes.split(",");
             res.sendInfo("", sizes);
         }
@@ -2239,7 +2239,7 @@ exports.saveProductDetails = function (req, res) {
     body.id = req.query.id;
     ProductDetails.checkAndSaveOrUpdate(body, (err, result, msg) => {
         if (err) {
-            console.log(err);
+            // console.log(err);
             res.sendError(err);
         } else {
             res.sendSuccess(msg, result)
@@ -2253,7 +2253,7 @@ exports.getProductDetails = function (req, res) {
     if (issetNotEmpty(id)) {
         ProductDetails.find(Number(id), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("", data);
@@ -2262,7 +2262,7 @@ exports.getProductDetails = function (req, res) {
     } else {
         ProductDetails.getAll((err, data) => {
             if (err) {
-                console.log(err)
+                // console.log(err)
                 res.sendError(err)
             } else {
                 res.sendSuccess("", data)
@@ -2276,12 +2276,12 @@ exports.getProductDetails = function (req, res) {
 
 exports.deleteProductDetails = function (req, res) {
     const id = req.query.id;
-    console.log("ID : " + id);
+    // console.log("ID : " + id);
 
     if (issetNotEmpty(id)) {
         ProductDetails.delete(Number(id), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("Product Details Deleted Successfully!");
@@ -2303,12 +2303,12 @@ exports.getSizeForProductID = function(req,res){
     DBCON.query(`select concat(size.size1, ",", size.size2, ",",size.size3, ",",size.size4, ",",size.size5, ",",size.size6, ",",size.size7, ",",size.size8, ",",size.size9) as sizes from product_details left join size on size.id = product_details.size_id where product_id = ${product_id}`, (err, data) => {
         if(err)
         {
-            console.log(err);
+            // console.log(err);
             res.sendError(err);
         }
         else{
             var sizes = data.length > 0 ? data[0].sizes !== null ? data[0].sizes : "" : "";
-            console.log(sizes);
+            // console.log(sizes);
             sizes = sizes.split(",");
             res.sendInfo("", sizes);
         }
@@ -2320,11 +2320,11 @@ exports.getLedgerForLedgerGroup= (req, res) => {
     const ledger_group_id = req.query.ledger_group_id;
 
     const QUERY = `select ledger.id as value, ledger.ledger as name from ledger where ledger_group_id=${ledger_group_id} order by ledger asc;`;
-    console.log(QUERY);
+    // console.log(QUERY);
     DBCON.query(QUERY, (err, result) => {
         if(err)
         {
-            console.log(err);
+            // console.log(err);
             res.sendError(err);
         }
         else{
@@ -2340,7 +2340,7 @@ exports.saveVoucher = function (req, res) {
     body.id = req.query.id;
     Voucher.checkAndSaveOrUpdate(body, (err, result, msg) => {
         if (err) {
-            console.log(err);
+            // console.log(err);
             res.sendError(err);
         } else {
             res.sendSuccess(msg, result)
@@ -2354,7 +2354,7 @@ exports.getVoucher = function (req, res) {
     if (issetNotEmpty(id)) {
         Voucher.find(Number(id), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("", data);
@@ -2363,7 +2363,7 @@ exports.getVoucher = function (req, res) {
     } else {
         Voucher.getAll((err, data) => {
             if (err) {
-                console.log(err)
+                // console.log(err)
                 res.sendError(err)
             } else {
                 res.sendSuccess("", data)
@@ -2377,12 +2377,12 @@ exports.getVoucher = function (req, res) {
 
 exports.deleteVoucher = function (req, res) {
     const id = req.query.id;
-    console.log("ID : " + id);
+    // console.log("ID : " + id);
 
     if (issetNotEmpty(id)) {
         Voucher.delete(Number(id), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("Voucher Deleted Successfully!");
@@ -2400,7 +2400,7 @@ exports.saveReport = function (req, res) {
     body.id = req.query.id;
     Report.checkAndSaveOrUpdate(body, (err, result, msg) => {
         if (err) {
-            console.log(err);
+            // console.log(err);
             res.sendError(err);
         } else {
             res.sendSuccess(msg, result)
@@ -2414,7 +2414,7 @@ exports.getReport = function (req, res) {
     if (issetNotEmpty(id)) {
         Report.find(Number(id), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("", data);
@@ -2423,7 +2423,7 @@ exports.getReport = function (req, res) {
     } else {
         Report.getAll((err, data) => {
             if (err) {
-                console.log(err)
+                // console.log(err)
                 res.sendError(err)
             } else {
                 res.sendSuccess("", data)
@@ -2437,12 +2437,12 @@ exports.getReport = function (req, res) {
 
 exports.deleteReport = function (req, res) {
     const id = req.query.id;
-    console.log("ID : " + id);
+    // console.log("ID : " + id);
 
     if (issetNotEmpty(id)) {
         Report.delete(Number(id), function (err, data) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 res.sendError(err)
             } else {
                 res.sendInfo("Report Deleted Successfully!");
@@ -2490,7 +2490,7 @@ exports.getAccountsLedger = (req, res) => {
     DBCON.query(QUERY, (err, result) => {
         if(err)
         {
-            console.log(err);
+            // console.log(err);
             res.sendError(err);
         }
         else{
