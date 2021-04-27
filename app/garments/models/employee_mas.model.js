@@ -3,6 +3,7 @@ const DBCON = require('../../../db_config');
 const {
     issetNotEmpty
 } = require('../../../helpers/common');
+const { getDBDate } = require('../../../helpers/timer');
 
 function EmployeeModel() {};
 
@@ -13,8 +14,8 @@ EmployeeModel.prototype = {
         if (match) {
             var field = Number.isInteger(match) ? 'id' : 'name';
         }
-
         let sql = `SELECT * FROM ${TABLE_NAME} WHERE ${field} = ?`;
+     
         // console.log(sql);
 
         DBCON.query(sql, match, function (err, result) {
@@ -47,6 +48,9 @@ EmployeeModel.prototype = {
     checkAndSaveOrUpdate: function (body, callback) {
         // console.log(body.id, "Entered")
         // body.updated_at = new Date();
+        body.dob = getDBDate(body.dob)
+        body.joined = getDBDate(body.joined)
+        body.resign_date = getDBDate(body.resign_date)
         if (issetNotEmpty(body.id)) {
             DBCON.query(`select count(id) as c from ${TABLE_NAME} where id != ? and employee = ?`, [body.id, body.employee], (err, count) => {
                 if (err) {
@@ -67,6 +71,7 @@ EmployeeModel.prototype = {
                 }
             })
         } else {
+            
             // console.log(body.name, "Entered")
             // body.created_at = new Date();
             DBCON.query(`select count(id) as c from ${TABLE_NAME} where employee = ?`, [body.name], (err, count) => {

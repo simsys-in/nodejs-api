@@ -31,7 +31,7 @@ FabricInvoiceModel.prototype = {
             else{
                 var fabric_invoice ={
                     ledger_id : result[0].ledger_id,
-                    vou_date: result[0].vou_date,
+                    vou_date: getDBDate(result[0].vou_date),
                     vouno: result[0].vouno,
                     order_id : result[0].order_id,
                     narration : result[0].narration,

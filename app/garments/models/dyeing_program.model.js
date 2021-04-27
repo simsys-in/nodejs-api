@@ -32,7 +32,7 @@ DyeingProgramModel.prototype = {
             } else {
                 var dyeing_program = {
                     ledger_id: result[0].ledger_id,
-                    vou_date: result[0].vou_date,
+                    vou_date: getDBDate(result[0].vou_date),
                     order_id: result[0].order_id,
                     // narration : result[0].narration,
                     inventory_rolls_total: result[0].inventory_rolls_total,

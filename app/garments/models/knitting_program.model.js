@@ -31,7 +31,7 @@ KnittingProgramModel.prototype = {
             } else {
                 var knitting_program = {
                     ledger_id: result[0].ledger_id,
-                    vou_date: result[0].vou_date,
+                    vou_date: getDBDate(result[0].vou_date),
                     narration: result[0].narration,
                     order_id: result[0].order_id,
                     inventory_bag_total: result[0].inventory_bag_total,
@@ -82,7 +82,7 @@ KnittingProgramModel.prototype = {
 
             var knitting_program = {
                 ledger_id: body.ledger_id,
-                vou_date: body.vou_date,
+                vou_date: getDBDate(body.vou_date),
                 narration: body.narration,
                 order_id: body.order_id,
                 inventory_bag_total: body.inventory_bag_total,
@@ -145,7 +145,7 @@ KnittingProgramModel.prototype = {
 
             var knitting_program = {
                 ledger_id: body.ledger_id,
-                vou_date: body.vou_date,
+                vou_date: getDBDate(body.vou_date),
                 narration: body.narration,
                 order_id: body.order_id,
                 inventory_bag_total: body.inventory_bag_total,

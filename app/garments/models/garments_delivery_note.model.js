@@ -34,7 +34,7 @@ GarmentsDeliveryNoteModel.prototype = {
             } else {
                 var garments_delivery_note= {
                     ledger_id: result[0].ledger_id,
-                    vou_date: result[0].vou_date,
+                    vou_date: getDBDate(result[0].vou_date),
                     narration: result[0].narration,
                     inventory_qty_total: result[0].inventory_qty_total,
                     size1_total: result[0].size1_total,

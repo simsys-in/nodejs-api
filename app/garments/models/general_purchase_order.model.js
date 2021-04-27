@@ -32,7 +32,7 @@ GeneralPurchaseOrderModel.prototype = {
                 var general_purchase_order = {
                     ledger_id: result[0].ledger_id,
                     delivery_address: result[0].delivery_address,
-                    vou_date: result[0].vou_date,
+                    vou_date: getDBDate(result[0].vou_date),
                     narration: result[0].narration,
                     payment_mode : result[0].payment_mode,
                     payment_terms_conditions : result[0].payment_terms_conditions,
