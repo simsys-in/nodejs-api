@@ -2579,6 +2579,26 @@ exports.getNextGeneralPurchaseOrderVouNo = function(req, res){
     })
 }
 
+exports.getGarmentsInvoiceInventoryDetails = function (req, res) {
+    const body = req.body;
+    const USER = req.user;
+    body.company = USER.company
+    const status = body.status ? body.status : 'active';
+    DBCON.query('select garments_invoice_inventory.product_id,garments_invoice_inventory.color_id,ifnull(garments_invoice_inventory.size1_qty, 0) as size1,ifnull(garments_invoice_inventory.size2_qty, 0) as size2,ifnull(garments_invoice_inventory.size3_qty, 0) as size3,ifnull(garments_invoice_inventory.size4_qty, 0) as size4,ifnull(garments_invoice_inventory.size5_qty, 0) as size5,ifnull(garments_invoice_inventory.size6_qty, 0) as size6,ifnull(garments_invoice_inventory.size7_qty, 0) as size7,ifnull(garments_invoice_inventory.size8_qty, 0) as size8,ifnull(garments_invoice_inventory.size9_qty, 0) as size9,garments_invoice_inventory.qty from garments_invoice left join garments_invoice_inventory on garments_invoice_inventory.vou_id = garments_invoice.id where garments_invoice.ledger_id =?', req.query.ledger_id, function (err, data) {
+        if (err) {
+            // console.log(err)
+            res.sendError(err)
+        } else {
+            data.map((item, index) => {
+                item.size_details = [];
+                if(index === data.length - 1)
+                {
+                    res.sendInfo("", data)
+                }
+            })
+        }
+    })
+}
 
 
 ////////////////////// Kowsalya Workspace/////////////////
