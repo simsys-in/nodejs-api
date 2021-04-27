@@ -29,7 +29,7 @@ Yarn_InvoiceModel.prototype = {
                     ledger_id: result[0].ledger_id,
                     narration: result[0].narration,
                     vehicle_no: result[0].vehilce,
-                    vou_date: result[0].vou_date,
+                    vou_date: getDBDate(result[0].vou_date),
 
                     inventory_qty_kg_total: result[0].inventory_qty_kg_total,
                     inventory_qty_bag_total: result[0].inventory_qty_bag_total,

@@ -28,7 +28,7 @@ Yarn_OutwardModel.prototype = {
             } else {
                 var yarn_outward = {
                     ledger_id: result[0].ledger_id,
-                    vou_date: result[0].vou_date,
+                    vou_date: getDBDate(result[0].vou_date),
                     order_id: result[0].order_id,
                     narration: result[0].narration,
                     inventory_qty_kg_total: result[0].inventory_qty_kg_total,

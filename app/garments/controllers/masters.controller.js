@@ -2206,7 +2206,7 @@ exports.getPrefilledProductDetails = (req,res) => {
         }
         else{
             var resData = result.length ? result[0] :  {
-                product_id : product_id,
+                product_id : Number(product_id),
                 size_id : null,
                 size1_total : '',
                 size2_total : '',

@@ -32,7 +32,7 @@ JobworkInvoiceModel.prototype = {
                 var jobwork_invoice = {
                     ledger_id: result[0].ledger_id,
                     process_id: result[0].process_id,
-                    vou_date: result[0].vou_date,
+                    vou_date: getDBDate(result[0].vou_date),
                     narration: result[0].narration,
                     vehicle_no: result[0].vehicle_no,
                     inventory_qty_total: result[0].inventory_qty_total,

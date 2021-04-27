@@ -35,7 +35,7 @@ JobworkOutwardModel.prototype = {
             } else {
                 var jobwork_outward = {
                     ledger_id: result[0].ledger_id,
-                    vou_date: result[0].vou_date,
+                    vou_date: getDBDate(result[0].vou_date),
                     vouno: result[0].vouno,
                     narration: result[0].narration,
                     inventory_qty_total: result[0].inventory_qty_total,
