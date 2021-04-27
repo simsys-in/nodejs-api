@@ -4,7 +4,7 @@ const {
     issetNotEmpty
 } = require('../../../helpers/common');
 
-const moment = require('moment');
+const { getDBDate, getDBDateTime } = require('../../../helpers/timer');
 
 function OrderProgramModel() {};
 
@@ -31,8 +31,8 @@ OrderProgramModel.prototype = {
             } else {
                 var order_program = {
                     order_no: result[0].order_no,
-                    due_date: result[0].due_date,
-                    orderDate: result[0].vou_date,
+                    due_date: getDBDateTime(result[0].due_date),
+                    orderDate: getDBDateTime(result[0].vou_date),
                     size_id: result[0].size_id,
                     style_id: result[0].style_id,
                     status_id: result[0].status_id,
@@ -94,8 +94,8 @@ OrderProgramModel.prototype = {
         if (issetNotEmpty(body.id)) {
             var order_details = {
                 order_no: body.order_no,
-                due_date: body.due_date,
-                vou_date: body.orderDate,
+                due_date: getDBDate(body.due_date),
+                vou_date: getDBDate(body.orderDate),
                 size_id: body.size_id,
                 style_id: body.style_id,
                 status_id: body.status_id,
@@ -178,8 +178,8 @@ OrderProgramModel.prototype = {
             //         } else {
             var order_details = {
                 order_no: body.order_no,
-                due_date: body.due_date,
-                vou_date: body.orderDate,
+                due_date: getDBDate(body.due_date),
+                vou_date: getDBDate(body.orderDate),
                 size_id: body.size_id,
                 style_id: body.style_id,
                 status_id: body.status_id,
