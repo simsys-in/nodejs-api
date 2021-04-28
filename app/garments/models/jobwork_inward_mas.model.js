@@ -248,7 +248,7 @@ Jobwork_InwardModel.prototype = {
     },
     getJobworkInwardReport: (id, callback) => {
         var jobwork_inward_details = {};
-        const QUERY = `select jobwork_inward.id, 'Test' as dcno, jobwork_inward.vou_date, process.process, product.hsnsac, order_program.order_no, order_program.id as order_id, product.product, jobwork_inward.inventory_qty_total,jobwork_inward.size1_total, jobwork_inward.size2_total, jobwork_inward.size3_total, jobwork_inward.size4_total, jobwork_inward.size5_total, jobwork_inward.size6_total, jobwork_inward.size7_total, jobwork_inward.size8_total, jobwork_inward.size9_total  from jobwork_inward left join order_program on order_program.id = jobwork_inward.order_id left join product on product.id = order_program.style_id left join process on process.id = jobwork_inward.process_id where jobwork_inward.id = ${id};`;
+        const QUERY = `select jobwork_inward.id, jobwork_inward.vouno , jobwork_inward.vou_date, process.process, product.hsnsac, order_program.order_no, order_program.id as order_id, product.product, jobwork_inward.inventory_qty_total,jobwork_inward.size1_total, jobwork_inward.size2_total, jobwork_inward.size3_total, jobwork_inward.size4_total, jobwork_inward.size5_total, jobwork_inward.size6_total, jobwork_inward.size7_total, jobwork_inward.size8_total, jobwork_inward.size9_total  from jobwork_inward left join order_program on order_program.id = jobwork_inward.order_id left join product on product.id = order_program.style_id left join process on process.id = jobwork_inward.process_id where jobwork_inward.id = ${id};`;
 
         DBCON.query(QUERY, (err, result) => {
             if (err) {

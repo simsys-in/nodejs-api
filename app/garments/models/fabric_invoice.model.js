@@ -250,7 +250,7 @@ FabricInvoiceModel.prototype = {
     },
     getFabricInvoiceReport: (id, callback) => {
         var fabric_outward_details = {};
-        const QUERY = `select fabric_invoice.id, 'Test' as dcno, fabric_invoice.vou_date, process.process, product.hsnsac, order_program.order_no, order_program.id as order_id,fabric_invoice.vehicle_no , product.product from fabric_invoice left join order_program on order_program.id = fabric_invoice.order_id left join product on product.id = order_program.style_id left join process on process.id = fabric_invoice.process_id where fabric_invoice.id = ${id};`;
+        const QUERY = `select fabric_invoice.id,fabric_invoice.vouno , fabric_invoice.vou_date, process.process, product.hsnsac, order_program.order_no, order_program.id as order_id,fabric_invoice.vehicle_no , product.product from fabric_invoice left join order_program on order_program.id = fabric_invoice.order_id left join product on product.id = order_program.style_id left join process on process.id = fabric_invoice.process_id where fabric_invoice.id = ${id};`;
 
         DBCON.query(QUERY, (err, result) => {
             if (err) {

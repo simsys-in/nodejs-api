@@ -233,7 +233,7 @@ FabricOutwardModel.prototype = {
 
     getFabricOutwardReport: (id, callback) => {
         var fabric_outward_details = {};
-        const QUERY = `select fabric_outward.id, 'Test' as dcno, fabric_outward.vou_date, process.process, product.hsnsac, order_program.order_no, order_program.id as order_id, fabric_outward.vehicle_no, product.product from fabric_outward left join order_program on order_program.id = fabric_outward.order_id left join product on product.id = order_program.style_id left join process on process.id = fabric_outward.to_process_id where fabric_outward.id = ${id};`;
+        const QUERY = `select fabric_outward.id,fabric_outward.vouno,fabric_outward.vehicle_no , fabric_outward.vou_date, process.process, product.hsnsac, order_program.order_no, order_program.id as order_id, fabric_outward.vehicle_no, product.product from fabric_outward left join order_program on order_program.id = fabric_outward.order_id left join product on product.id = order_program.style_id left join process on process.id = fabric_outward.to_process_id where fabric_outward.id = ${id};`;
 
         DBCON.query(QUERY, (err, result) => {
             if (err) {

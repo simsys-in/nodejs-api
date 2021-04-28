@@ -334,7 +334,7 @@ JobworkOutwardModel.prototype = {
     },
     getJobworkOutwardReport: (id, callback) => {
         var jobwork_outward_details = {};
-        const QUERY = `select jobwork_outward.id, 'Test' as dcno, jobwork_outward.vou_date, process.process, product.hsnsac, order_program.order_no, order_program.id as order_id, jobwork_outward.vehicle_no, product.product, jobwork_outward.inventory_qty_total,jobwork_outward.size1_total, jobwork_outward.size2_total, jobwork_outward.size3_total, jobwork_outward.size4_total, jobwork_outward.size5_total, jobwork_outward.size6_total, jobwork_outward.size7_total, jobwork_outward.size8_total, jobwork_outward.size9_total  from jobwork_outward left join order_program on order_program.id = jobwork_outward.order_id left join product on product.id = order_program.style_id left join process on process.id = jobwork_outward.to_process_id where jobwork_outward.id = ${id};`;
+        const QUERY = `select jobwork_outward.id, jobwork_outward.vouno, jobwork_outward.vou_date, process.process, product.hsnsac, order_program.order_no, order_program.id as order_id, jobwork_outward.vehicle_no, product.product, jobwork_outward.inventory_qty_total,jobwork_outward.size1_total, jobwork_outward.size2_total, jobwork_outward.size3_total, jobwork_outward.size4_total, jobwork_outward.size5_total, jobwork_outward.size6_total, jobwork_outward.size7_total, jobwork_outward.size8_total, jobwork_outward.size9_total  from jobwork_outward left join order_program on order_program.id = jobwork_outward.order_id left join product on product.id = order_program.style_id left join process on process.id = jobwork_outward.to_process_id where jobwork_outward.id = ${id};`;
 
         DBCON.query(QUERY, (err, result) => {
             if (err) {
