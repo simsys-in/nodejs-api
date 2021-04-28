@@ -141,11 +141,11 @@ JobworkOutwardModel.prototype = {
                                 if (err) {
                                     callback(err)
                                 } else {
-                                    if(body.jobwork_outward_inventory.length >0){
+                                    if (body.jobwork_outward_inventory.length > 0) {
 
                                         for (index = 0; index < body.jobwork_outward_inventory.length; index++) {
                                             var item = body.jobwork_outward_inventory[index];
-                                           // for (const [index, item] in body.jobwork_outward_inventory) {
+                                            // for (const [index, item] in body.jobwork_outward_inventory) {
                                             // body.jobwork_outward_inventory.map((item, index) => {
                                             // console.log(item)
                                             if (item.selected) {
@@ -164,10 +164,10 @@ JobworkOutwardModel.prototype = {
                                                     qty: item.qty,
                                                     inward_inv_id: item.inward_inv_id
                                                 }
-    
+
                                                 DBCON.query(`insert into jobwork_outward_inventory set ?`, jobwork_outward_inventory);
                                                 if (index === body.jobwork_outward_inventory.length - 1) {
-                                                    if(body.jobwork_outward_product.length > 0){
+                                                    if (body.jobwork_outward_product.length > 0) {
 
                                                         body.jobwork_outward_product.map((jobworkproduct, key) => {
                                                             var jobwork_outward_product = {
@@ -175,14 +175,14 @@ JobworkOutwardModel.prototype = {
                                                                 qty: jobworkproduct.qty,
                                                                 vou_id: body.id
                                                             }
-        
+
                                                             DBCON.query(`insert into jobwork_outward_product set ?`, jobwork_outward_product);
-        
+
                                                             if (key === body.jobwork_outward_product.length - 1) {
                                                                 callback(false, result, "Jobwork Outward  Updated Successfully!");
                                                             }
                                                         })
-                                                    }else{
+                                                    } else {
                                                         callback(false, result, "Jobwork Outward  Updated Successfully!");
 
                                                     }
@@ -194,7 +194,7 @@ JobworkOutwardModel.prototype = {
                                                 }
                                             }
                                         }
-                                    }else{
+                                    } else {
                                         callback(false, result, "Jobwork Outward  Updated Successfully!");
 
                                     }
@@ -243,7 +243,7 @@ JobworkOutwardModel.prototype = {
                     callback(err)
                 } else {
                     // console.log(result);
-                    if(body.jobwork_outward_inventory.length > 0){
+                    if (body.jobwork_outward_inventory.length > 0) {
 
                         body.jobwork_outward_inventory.map((item, index) => {
                             if (item.selected && issetNotEmpty(item.color_id)) {
@@ -262,9 +262,15 @@ JobworkOutwardModel.prototype = {
                                     qty: item.qty,
                                     inward_inv_id: item.inward_inv_id
                                 }
+
                                 DBCON.query(`insert into jobwork_outward_inventory set ?`, jobwork_outward_inventory);
-                                if (index === body.jobwork_outward_inventory.length - 1) {
-                                    if(body.jobwork_outward_product.length > 0){
+                            }
+
+                            // if (index === body.jobwork_outward_inventory.length - 1) {
+                                // callback(false, result, "Jobwork Outward  Saved Successfully!");
+
+                                if (index === body.jobwork_outward_product.length - 1) {
+                                    if (body.jobwork_outward_product.length > 0) {
 
                                         body.jobwork_outward_product.map((jobworkproduct, key) => {
                                             var jobwork_outward_product = {
@@ -272,21 +278,28 @@ JobworkOutwardModel.prototype = {
                                                 product_id: jobworkproduct.product_id,
                                                 qty: jobworkproduct.qty
                                             }
-        
+
                                             DBCON.query(`insert into jobwork_outward_product set ?`, jobwork_outward_product);
-        
+
                                             if (key === body.jobwork_outward_product.length - 1) {
                                                 callback(false, result, "Jobwork Outward  Saved Successfully!");
                                             }
                                         })
-                                    }else{
+                                    }
+                                    else{
                                         callback(false, result, "Jobwork Outward  Saved Successfully!");
-
                                     }
                                 }
-                            }
+                                //  else {
+                                //     callback(false, result, "Jobwork Outward  Saved Successfully!");
+                                // }
+                            // }
+                            // else{
+                            //     callback(false, result, "Jobwork Outward  Saved Successfully!");
+                            // }
+
                         })
-                    }else{
+                    } else {
                         callback(false, result, "Jobwork Outward  Saved Successfully!");
 
                     }
