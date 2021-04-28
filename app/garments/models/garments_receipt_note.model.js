@@ -1,11 +1,12 @@
-
 const DBCON = require('../../../db_config');
 const {
     issetNotEmpty
 } = require('../../../helpers/common');
 
 const moment = require('moment');
-const { getDBDate } = require('../../../helpers/timer')
+const {
+    getDBDate
+} = require('../../../helpers/timer')
 const e = require('express');
 
 function GarmentsReceiptNoteModel() {};
@@ -23,7 +24,7 @@ GarmentsReceiptNoteModel.prototype = {
 
         let sql1 = `SELECT * FROM garments_receipt_note_inventory WHERE garments_receipt_note_inventory.vou_id = ?`;
 
-        
+
 
         DBCON.query(sql, match, function (err, result) {
 
@@ -32,7 +33,7 @@ GarmentsReceiptNoteModel.prototype = {
                 // console.log(err);
                 callback(err)
             } else {
-                var garments_receipt_note= {
+                var garments_receipt_note = {
                     ledger_id: result[0].ledger_id,
                     vou_date: getDBDate(result[0].vou_date),
                     narration: result[0].narration,
@@ -48,26 +49,31 @@ GarmentsReceiptNoteModel.prototype = {
                     size9_total: result[0].size9_total,
                     order_id: result[0].order_id,
                     marketing_user_id: result[0].marketing_user_id,
-                    
+
                     vouno: result[0].vouno,
                     garments_receipt_note_inventory: [],
-                
+
                 }
-                    
+
                 DBCON.query(sql1, match, function (err, result1) {
 
                     if (err) {
                         // console.log(err);
                         callback(err)
                     } else {
-                        garments_receipt_note.garments_receipt_note_inventory = result1;
+                        result1.map((item, index) => {
+                            item.size_details = [];
+                            if (index === result1.length - 1) {
+                                garments_receipt_note.garments_receipt_note_inventory = result1;
                                 callback(false, garments_receipt_note);
                             }
-                        
+                        })
+                    }
+
                 })
 
 
-                    
+
 
 
 
@@ -98,25 +104,25 @@ GarmentsReceiptNoteModel.prototype = {
         body.updated_at = new Date();
         if (issetNotEmpty(body.id)) {
 
-            var garments_receipt_note= {
+            var garments_receipt_note = {
                 ledger_id: body.ledger_id,
                 vou_date: getDBDate(body.vou_date),
                 narration: body.narration,
-                    inventory_qty_total: body.inventory_qty_total,
-                    size1_total: body.size1_total,
-                    size2_total: body.size2_total,
-                    size3_total: body.size3_total,
-                    size4_total: body.size4_total,
-                    size5_total: body.size5_total,
-                    size6_total: body.size6_total,
-                    size7_total: body.size7_total,
-                    size8_total: body.size8_total,
-                    size9_total: body.size9_total,
-                    order_id: body.order_id,
-                    marketing_user_id: body.marketing_user_id,
-                    
-                    vouno: body.vouno, 
-            
+                inventory_qty_total: body.inventory_qty_total,
+                size1_total: body.size1_total,
+                size2_total: body.size2_total,
+                size3_total: body.size3_total,
+                size4_total: body.size4_total,
+                size5_total: body.size5_total,
+                size6_total: body.size6_total,
+                size7_total: body.size7_total,
+                size8_total: body.size8_total,
+                size9_total: body.size9_total,
+                order_id: body.order_id,
+                marketing_user_id: body.marketing_user_id,
+
+                vouno: body.vouno,
+
             }
             DBCON.query(`update ${TABLE_NAME} set ? where id = ?`, [garments_receipt_note, body.id], (err, result) => {
                 if (err) {
@@ -127,10 +133,10 @@ GarmentsReceiptNoteModel.prototype = {
                         if (err) {
                             callback(err)
                         } else {
-                            if(body.garments_receipt_note_inventory.length > 0){
+                            if (body.garments_receipt_note_inventory.length > 0) {
 
                                 body.garments_receipt_note_inventory.map((item, index) => {
-                                    
+                                    if (issetNotEmpty(item.product_id) && issetNotEmpty(item.color_id)) {
                                         var garments_receipt_note_inventory = {
                                             vou_id: body.id,
                                             color_id: item.color_id,
@@ -150,16 +156,17 @@ GarmentsReceiptNoteModel.prototype = {
                                             description: item.description
                                         }
                                         DBCON.query(`insert into garments_receipt_note_inventory set ?`, garments_receipt_note_inventory);
-                                        if (index === body.garments_receipt_note_inventory.length - 1) {
-                                            callback(false, result, "Garments Receipt Note  Updated Successfully!");
-                                        }
+                                    }
+                                    if (index === body.garments_receipt_note_inventory.length - 1) {
+                                        callback(false, result, "Garments Receipt Note  Updated Successfully!");
+                                    }
                                     // } else {
                                     //     if (index === body.garments_delivery_note_inventory.length - 1) {
                                     //         callback(false, result, "Garments Delivery Note Updated Successfully!");
                                     //     }
                                     // }
                                 })
-                            }else{
+                            } else {
                                 callback(false, result, "Garments Receipt Note  Updated Successfully!");
 
                             }
@@ -170,73 +177,74 @@ GarmentsReceiptNoteModel.prototype = {
             })
         } else {
 
-            var garments_receipt_note= {
+            var garments_receipt_note = {
                 ledger_id: body.ledger_id,
                 vou_date: getDBDate(body.vou_date),
                 narration: body.narration,
-                    inventory_qty_total: body.inventory_qty_total,
-                    size1_total: body.size1_total,
-                    size2_total: body.size2_total,
-                    size3_total: body.size3_total,
-                    size4_total: body.size4_total,
-                    size5_total: body.size5_total,
-                    size6_total: body.size6_total,
-                    size7_total: body.size7_total,
-                    size8_total: body.size8_total,
-                    size9_total: body.size9_total,
-                    order_id: body.order_id,
-                    marketing_user_id: body.marketing_user_id,
-                    
-                    vouno: body.vouno,
+                inventory_qty_total: body.inventory_qty_total,
+                size1_total: body.size1_total,
+                size2_total: body.size2_total,
+                size3_total: body.size3_total,
+                size4_total: body.size4_total,
+                size5_total: body.size5_total,
+                size6_total: body.size6_total,
+                size7_total: body.size7_total,
+                size8_total: body.size8_total,
+                size9_total: body.size9_total,
+                order_id: body.order_id,
+                marketing_user_id: body.marketing_user_id,
+
+                vouno: body.vouno,
             }
             DBCON.query(`insert into ${TABLE_NAME} set ?`, garments_receipt_note, (err, result) => {
                 if (err) {
                     callback(err)
                 } else {
                     // console.log(result);
-                    if(body.garments_receipt_note_inventory.length > 0){
+                    if (body.garments_receipt_note_inventory.length > 0) {
 
-                        for(index=0; index < body.garments_receipt_note_inventory.length; index++)
-                        {
+                        for (index = 0; index < body.garments_receipt_note_inventory.length; index++) {
                             var item = body.garments_receipt_note_inventory[index];
-                        //  body.garments_delivery_note_inventory.map((item, index) => {
-                            
-                                // console.log(item, index)
+                            //  body.garments_delivery_note_inventory.map((item, index) => {
+
+                            // console.log(item, index)
+                            if (issetNotEmpty(item.product_id) && issetNotEmpty(item.color_id)) {
                                 var garments_receipt_note_inventory = {
                                     vou_id: result.insertId,
                                     color_id: item.color_id,
-                                            color: item.color,
-                                            size1: item.size1,
-                                            size2: item.size2,
-                                            size3: item.size3,
-                                            size4: item.size4,
-                                            size5: item.size5,
-                                            size6: item.size6,
-                                            size7: item.size7,
-                                            size8: item.size8,
-                                            size9: item.size9,
-                                            product_id: item.product_id,
-                                            qty: item.qty,
-                                            unit:item.unit,
-                                            description: item.description
+                                    color: item.color,
+                                    size1: item.size1,
+                                    size2: item.size2,
+                                    size3: item.size3,
+                                    size4: item.size4,
+                                    size5: item.size5,
+                                    size6: item.size6,
+                                    size7: item.size7,
+                                    size8: item.size8,
+                                    size9: item.size9,
+                                    product_id: item.product_id,
+                                    qty: item.qty,
+                                    unit: item.unit,
+                                    description: item.description
                                 }
                                 DBCON.query(`insert into garments_receipt_note_inventory set ?`, garments_receipt_note_inventory);
-                                if (index === body.garments_receipt_note_inventory.length - 1) {
-                                    callback(false, result, "Garments Receipt Note Updated Successfully!");
-                                }
+                            }
+                            if (index === body.garments_receipt_note_inventory.length - 1) {
+                                callback(false, result, "Garments Receipt Note Updated Successfully!");
+                            }
                             // } else {
                             //     if (index === body.garments_delivery_note_inventory.length - 1) {
                             //         callback(false, result, "Garments Delivery Note Updated Successfully!");
                             //     }
                             // }
-                        // })
-                            }
-                    }else{
+                            // })
+                        }
+                    } else {
                         callback(false, result, "Garments Receipt Note Updated Successfully!");
 
                     }
                 }
-                
+
             })
             //         }
             //     }
@@ -244,9 +252,9 @@ GarmentsReceiptNoteModel.prototype = {
         }
     },
 
-    
 
-   
+
+
     delete: function (id, callback) {
         DBCON.query(`delete from ${TABLE_NAME} where id = ?`, id, (err, result) => {
             if (err) {
@@ -256,26 +264,25 @@ GarmentsReceiptNoteModel.prototype = {
                     if (err) {
                         callback(err)
                     } else {
-                                callback(false, result1)
-                            }
-                    
-                    
+                        callback(false, result1)
+                    }
+
+
                 })
             }
         })
     },
     // }
 
-    getNextGarmentsReceiptNoteVouNo : (callback) => {
+    getNextGarmentsReceiptNoteVouNo: (callback) => {
         var query = 'select max(ifnull(vouno, 0)) + 1 as max_vou_no from garments_receipt_note';
 
         DBCON.query(query, (err, result) => {
-            if(err){
+            if (err) {
                 // console.log(err);
                 callback(err)
-            }
-            else{
-                callback(false,result[0]);
+            } else {
+                callback(false, result[0]);
             }
         })
     },

@@ -1037,13 +1037,19 @@ exports.getUnitForProductID = function(req,res){
     body.company = USER.company
     const status = body.status ? body.status : 'active';
     var product_id = req.query.product_id ? req.query.product_id : null;
-    DBCON.query('select unit_id from product  where id = ? ', product_id, function (err, data) {
-        if(err){
-            res.sendError(err)
-        }else{
-            res.sendInfo("", data[0].unit_id)
-        }
-    })
+    if(issetNotEmpty(product_id))
+    {
+        DBCON.query('select unit_id from product  where id = ? ', product_id, function (err, data) {
+            if(err){
+                res.sendError(err)
+            }else{
+                res.sendInfo("", data[0].unit_id)
+            }
+        })
+    }
+    else{
+        res.sendError("Product not found")
+    }
 
 }
 
