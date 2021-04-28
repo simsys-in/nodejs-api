@@ -52,7 +52,7 @@ EmployeeModel.prototype = {
         body.joined = getDBDate(body.joined)
         body.resign_date = getDBDate(body.resign_date)
         if (issetNotEmpty(body.id)) {
-            DBCON.query(`select count(id) as c from ${TABLE_NAME} where id != ? and employee = ?`, [body.id, body.employee], (err, count) => {
+            DBCON.query(`select count(id) as c from ${TABLE_NAME} where id != ? and employee = ?`, [body.id, body.name], (err, count) => {
                 if (err) {
                     callback(err)
                 } else {

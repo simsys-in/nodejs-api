@@ -1414,11 +1414,11 @@ exports.deleteCuttingProgram = function (req, res) {
                 // console.log(err);
                 res.sendError(err)
             } else {
-                res.sendInfo("Yarn Outward Deleted Successfully!");
+                res.sendInfo("Cutting Program Deleted Successfully!");
             }
         })
     } else {
-        res.sendWarning("Yarn Outward Not Found! ")
+        res.sendWarning("Cutting Program Not Found! ")
     }
 
 }

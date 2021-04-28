@@ -1025,7 +1025,7 @@ exports.getMobileForLedgerID = function(req,res){
         if(err){
             res.sendError(err)
         }else{
-            res.sendInfo("", data[0].mobile)
+            res.sendInfo("", data[0]? data[0].mobile:"")
         }
     })
 
