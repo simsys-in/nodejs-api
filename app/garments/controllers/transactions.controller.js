@@ -1813,6 +1813,24 @@ exports.getGeneralPurchaseOrderReport = (req, res) => {
     })
 }
 
+exports.getCuttingRateForOrderID = (req, res) => {
+    const ORDER_ID = req.query.order_id;
+    const PROCESS_ID = req.query.process_id;
+
+    const QUERY = `SELECT  rate FROM order_process WHERE order_id = ${ORDER_ID} and process_id = ${PROCESS_ID};`;
+
+    DBCON.query(QUERY, (err, result) => {
+        if(err)
+        {
+            console.log(err);
+            res.sendError(err);
+        }
+        else {
+            res.sendInfo("",result[0] ? result[0].rate : 0);
+        }
+    })
+}
+
 
 
 

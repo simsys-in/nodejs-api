@@ -343,6 +343,9 @@ router.get('/getGeneralPurchaseOrderReport', TransactionsController.getGeneralPu
 router.put('/shift', MasterController.saveShift);
 router.get('/shift', MasterController.getShift);
 router.delete('/shift', MasterController.deleteShift);
+//order program rate in cutting program
+router.get('/getCuttingRateForOrderID', TransactionsController.getCuttingRateForOrderID);
+
 
 
 

@@ -320,7 +320,7 @@ GarmentsDeliveryNoteModel.prototype = {
                                     } else {
                                         // console.log('Got Company Data');
                                         delivery_note_details.company_details = company_data[0];
-                                        DBCON.query(`select garments_delivery_note_inventory.*, product.product, product.hsnsac, product.gst, unit.unit ,color.color from garments_delivery_note_inventory left join product on product.id = garments_delivery_note_inventory.product_id left join unit on unit.id = product.unit_id left join color on color.id = garments_delivery_note_inventory.color_id where vou_id = ${id}`, (err, inventories) => {
+                                        DBCON.query(`select garments_delivery_note_inventory.*, product.product, product.hsnsac, product.gst, unit.unit ,color.color, garments_delivery_note_inventory.description from garments_delivery_note_inventory left join product on product.id = garments_delivery_note_inventory.product_id left join unit on unit.id = product.unit_id left join color on color.id = garments_delivery_note_inventory.color_id where vou_id = ${id}`, (err, inventories) => {
                                             if (err) {
                                                 // console.log(err);
                                                 callback(err);
