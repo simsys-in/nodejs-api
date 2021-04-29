@@ -1606,7 +1606,7 @@ exports.getAllCuttingMasterSB = function (req, res) {
     const USER = req.user;
     body.company = USER.company
     const status = body.status ? body.status : 'active'
-    DBCON.query('select id as value, employee as name from employee order by employee.employee asc ', function (err, data) {
+    DBCON.query('select ledger.id as value, ledger as name from ledger left join ledger_category on ledger_category.id= ledger.ledger_category_id where ledger_category.ledger_category= "CUTTING MASTER"  order by ledger.ledger asc ', function (err, data) {
         if (err) {
             // console.log(err)
             res.sendError(err)
