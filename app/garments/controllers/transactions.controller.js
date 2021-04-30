@@ -1391,14 +1391,42 @@ exports.getCuttingProgramColorDetails = function (req, res) {
     const USER = req.user;
     body.company = USER.company
     const status = body.status ? body.status : 'active';
-    DBCON.query('select cutting_program_inventory.color_id, cutting_program_inventory.size1, cutting_program_inventory.size2,cutting_program_inventory.size3,cutting_program_inventory.size4,cutting_program_inventory.size5,cutting_program_inventory.size6,cutting_program_inventory.size7,cutting_program_inventory.size8,cutting_program_inventory.size9 from cutting_program left join cutting_program_inventory on cutting_program_inventory.vou_id = cutting_program.id where order_id =?', req.query.order_id, function (err, data) {
-        if (err) {
-            // console.log(err)
-            res.sendError(err)
-        } else {
-            res.sendInfo("", data)
-        }
-    })
+    if(issetNotEmpty(req.query.order_id) && issetNotEmpty(req.query.from_process_id))
+    {
+        DBCON.query('select cutting_program_inventory.color_id, cutting_program_inventory.size1, cutting_program_inventory.size1 as max_size1, cutting_program_inventory.size2, cutting_program_inventory.size2 as max_size2,cutting_program_inventory.size3, cutting_program_inventory.size3 as max_size3,cutting_program_inventory.size4, cutting_program_inventory.size4 as max_size4,cutting_program_inventory.size5, cutting_program_inventory.size5 as max_size5,cutting_program_inventory.size6, cutting_program_inventory.size6 as max_size6,cutting_program_inventory.size7, cutting_program_inventory.size7 as max_size7,cutting_program_inventory.size8, cutting_program_inventory.size8 as max_size8,cutting_program_inventory.size9, cutting_program_inventory.size9 as max_size9 from cutting_program left join cutting_program_inventory on cutting_program_inventory.vou_id = cutting_program.id where order_id =?', req.query.order_id, function (err, cuttingInventory) {
+            if (err) {
+                // console.log(err)
+                res.sendError(err)
+            } else {
+                DBCON.query(`select jobwork_outward_inventory.color_id, jobwork_outward_inventory.size1,  jobwork_outward_inventory.size2, jobwork_outward_inventory.size3, jobwork_outward_inventory.size4, jobwork_outward_inventory.size5, jobwork_outward_inventory.size6, jobwork_outward_inventory.size7, jobwork_outward_inventory.size8, jobwork_outward_inventory.size9 from jobwork_outward left join jobwork_outward_inventory on jobwork_outward_inventory.vou_id = jobwork_outward.id where jobwork_outward.order_id = ${req.query.order_id} and from_process_id = ${req.query.from_process_id}`, (err, outwardInventory) => {
+                    if(err)
+                    {
+                        res.sendError(err)
+                    }
+                    else{
+                        var returnData = _.remove(cuttingInventory, (item) => {
+                            outwardInventory.map(outward => {
+                                return outward.color_id === item.color_id;
+                            })
+                        });
+
+                        // cuttingInventory.map(cutting => {
+                        //     outwardInventory.map(outward => {
+                        //         if(outward.color_id === cutting.color_id)
+                        //         {
+
+                        //         }
+                        //     })
+                        // })
+                        res.sendInfo("", returnData);
+                    }
+                })
+            }
+        })
+    }
+    else{
+        res.sendInfo("", []);
+    }
 }
 
 
@@ -1539,7 +1567,7 @@ exports.getJobworkOutwardColorDetails = function (req, res) {
     const USER = req.user;
     body.company = USER.company
     const status = body.status ? body.status : 'active';
-    DBCON.query('select jobwork_outward_inventory.color_id, jobwork_outward_inventory.size1, jobwork_outward_inventory.size2,jobwork_outward_inventory.size3,jobwork_outward_inventory.size4,jobwork_outward_inventory.size5,jobwork_outward_inventory.size6,jobwork_outward_inventory.size7,jobwork_outward_inventory.size8,jobwork_outward_inventory.size9 from jobwork_outward left join jobwork_outward_inventory on jobwork_outward_inventory.vou_id = jobwork_outward.id where jobwork_outward.order_id =?', req.query.order_id, function (err, data) {
+    DBCON.query('select jobwork_outward_inventory.color_id, jobwork_outward_inventory.size1,jobwork_outward_inventory.size1 as max_size1, jobwork_outward_inventory.size2,jobwork_outward_inventory.size2 as max_size2,jobwork_outward_inventory.size3,jobwork_outward_inventory.size3 as max_size3,jobwork_outward_inventory.size4,jobwork_outward_inventory.size4 as max_size4,jobwork_outward_inventory.size5,jobwork_outward_inventory.size5 as max_size5,jobwork_outward_inventory.size6,jobwork_outward_inventory.size6 as max_size6,jobwork_outward_inventory.size7,jobwork_outward_inventory.size7 as max_size7,jobwork_outward_inventory.size8,jobwork_outward_inventory.size8 as max_size8,jobwork_outward_inventory.size9,jobwork_outward_inventory.size9 as max_size9 from jobwork_outward left join jobwork_outward_inventory on jobwork_outward_inventory.vou_id = jobwork_outward.id where jobwork_outward.order_id =?', req.query.order_id, function (err, data) {
         if (err) {
             // console.log(err)
             res.sendError(err)
@@ -2319,7 +2347,7 @@ exports.getFabricOutwardInventoryDetails = function (req, res) {
     const USER = req.user;
     body.company = USER.company
     const status = body.status ? body.status : 'active';
-    DBCON.query('select fabric_outward_inventory.fabric_id, fabric_outward_inventory.color_id,fabric_outward_inventory.dia,fabric_outward_inventory.roll,fabric_outward_inventory.weight,fabric_outward_inventory.gsm from fabric_outward left join fabric_outward_inventory on fabric_outward_inventory.vou_id = fabric_outward.id where fabric_outward.ledger_id =?', req.query.ledger_id, function (err, data) {
+    DBCON.query('select fabric_outward_inventory.fabric_id, fabric_outward_inventory.color_id,fabric_outward_inventory.dia,fabric_outward_inventory.roll,fabric_outward_inventory.roll as max_roll,fabric_outward_inventory.weight,fabric_outward_inventory.weight as max_weight,fabric_outward_inventory.gsm from fabric_outward left join fabric_outward_inventory on fabric_outward_inventory.vou_id = fabric_outward.id where fabric_outward.ledger_id =?', req.query.ledger_id, function (err, data) {
         if (err) {
             // console.log(err)
             res.sendError(err)
@@ -2334,7 +2362,7 @@ exports.getFabricInwardInventoryDetails = function (req, res) {
     const USER = req.user;
     body.company = USER.company
     const status = body.status ? body.status : 'active';
-    DBCON.query('select fabric_inward_inventory.fabric_id, fabric_inward_inventory.color_id,fabric_inward_inventory.dia,fabric_inward_inventory.roll,fabric_inward_inventory.weight,fabric_inward_inventory.gsm from fabric_inward left join fabric_inward_inventory on fabric_inward_inventory.vou_id = fabric_inward.id where fabric_inward.ledger_id =?', req.query.ledger_id, function (err, data) {
+    DBCON.query('select fabric_inward_inventory.fabric_id, fabric_inward_inventory.color_id,fabric_inward_inventory.dia,fabric_inward_inventory.roll,fabric_inward_inventory.roll as max_roll,fabric_inward_inventory.weight,fabric_inward_inventory.weight as max_weight,fabric_inward_inventory.gsm from fabric_inward left join fabric_inward_inventory on fabric_inward_inventory.vou_id = fabric_inward.id where fabric_inward.ledger_id =?', req.query.ledger_id, function (err, data) {
         if (err) {
             // console.log(err)
             res.sendError(err)
@@ -2349,7 +2377,7 @@ exports.getYarnOutwardInventoryDetails = function (req, res) {
     const USER = req.user;
     body.company = USER.company
     const status = body.status ? body.status : 'active';
-    DBCON.query('select yarn_outward_inventory.fabric_id,yarn_outward_inventory.gsm,yarn_outward_inventory.counts,yarn_outward_inventory.qtybag_per,yarn_outward_inventory.qty_bag,yarn_outward_inventory.qty_kg from yarn_outward left join yarn_outward_inventory on yarn_outward_inventory.vou_id = yarn_outward.id where yarn_outward.ledger_id =?', req.query.ledger_id, function (err, data) {
+    DBCON.query('select yarn_outward_inventory.fabric_id,yarn_outward_inventory.gsm,yarn_outward_inventory.counts,yarn_outward_inventory.qtybag_per,yarn_outward_inventory.qtybag_per as max_qtybag_per,yarn_outward_inventory.qty_bag,yarn_outward_inventory.qty_bag as max_qty_bag,yarn_outward_inventory.qty_kg from yarn_outward left join yarn_outward_inventory on yarn_outward_inventory.vou_id = yarn_outward.id where yarn_outward.ledger_id =?', req.query.ledger_id, function (err, data) {
         if (err) {
             // console.log(err)
             res.sendError(err)
@@ -2364,7 +2392,7 @@ exports.getYarnInwardInventoryDetails = function (req, res) {
     const USER = req.user;
     body.company = USER.company
     const status = body.status ? body.status : 'active';
-    DBCON.query('select yarn_inward_inventory.fabric_id,yarn_inward_inventory.gsm,yarn_inward_inventory.counts,yarn_inward_inventory.qtybag_per,yarn_inward_inventory.qty_bag,yarn_inward_inventory.qty_kg from yarn_inward left join yarn_inward_inventory on yarn_inward_inventory.vou_id = yarn_inward.id where yarn_inward.ledger_id =?', req.query.ledger_id, function (err, data) {
+    DBCON.query('select yarn_inward_inventory.fabric_id,yarn_inward_inventory.gsm,yarn_inward_inventory.counts,yarn_inward_inventory.qtybag_per,yarn_inward_inventory.qtybag_per as max_qtybag_per,yarn_inward_inventory.qty_bag,yarn_inward_inventory.qty_bag as max_qty_bag,yarn_inward_inventory.qty_kg from yarn_inward left join yarn_inward_inventory on yarn_inward_inventory.vou_id = yarn_inward.id where yarn_inward.ledger_id =?', req.query.ledger_id, function (err, data) {
         if (err) {
             // console.log(err)
             res.sendError(err)
@@ -2420,7 +2448,7 @@ exports.getGarmentsDeliveryNoteInventoryDetails = function (req, res) {
     const USER = req.user;
     body.company = USER.company
     const status = body.status ? body.status : 'active';
-    DBCON.query('select garments_delivery_note_inventory.product_id, 0 as amount, 0 as disc_percentage, garments_delivery_note_inventory.unit,ifnull(garments_delivery_note_inventory.size1_qty, 0) as size1_qty,ifnull(garments_delivery_note_inventory.size2_qty, 0) as size2_qty,ifnull(garments_delivery_note_inventory.size3_qty, 0) as size3_qty,ifnull(garments_delivery_note_inventory.size4_qty, 0) as size4_qty,ifnull(garments_delivery_note_inventory.size5_qty, 0) as size5_qty,ifnull(garments_delivery_note_inventory.size6_qty, 0) as size6_qty,ifnull(garments_delivery_note_inventory.size7_qty, 0) as size7_qty,ifnull(garments_delivery_note_inventory.size8_qty, 0) as size8_qty,ifnull(garments_delivery_note_inventory.size9_qty, 0) as size9_qty from garments_delivery_note left join garments_delivery_note_inventory on garments_delivery_note_inventory.vou_id = garments_delivery_note.id where garments_delivery_note.ledger_id =?', req.query.ledger_id, function (err, data) {
+    DBCON.query('select garments_delivery_note_inventory.product_id, 0 as amount, 0 as disc_percentage, garments_delivery_note_inventory.unit,ifnull(garments_delivery_note_inventory.size1_qty, 0) as size1_qty,ifnull(garments_delivery_note_inventory.size1_qty, 0) as max_size1_qty,ifnull(garments_delivery_note_inventory.size2_qty, 0) as size2_qty,ifnull(garments_delivery_note_inventory.size2_qty, 0) as max_size2_qty,ifnull(garments_delivery_note_inventory.size3_qty, 0) as size3_qty,ifnull(garments_delivery_note_inventory.size3_qty, 0) as max_size3_qty,ifnull(garments_delivery_note_inventory.size4_qty, 0) as size4_qty,ifnull(garments_delivery_note_inventory.size4_qty, 0) as max_size4_qty,ifnull(garments_delivery_note_inventory.size5_qty, 0) as size5_qty,ifnull(garments_delivery_note_inventory.size5_qty, 0) as max_size5_qty,ifnull(garments_delivery_note_inventory.size6_qty, 0) as size6_qty,ifnull(garments_delivery_note_inventory.size6_qty, 0) as max_size6_qty,ifnull(garments_delivery_note_inventory.size7_qty, 0) as size7_qty,ifnull(garments_delivery_note_inventory.size7_qty, 0) as max_size7_qty,ifnull(garments_delivery_note_inventory.size8_qty, 0) as size8_qty,ifnull(garments_delivery_note_inventory.size8_qty, 0) as max_size8_qty,ifnull(garments_delivery_note_inventory.size9_qty, 0) as size9_qty,ifnull(garments_delivery_note_inventory.size9_qty, 0) as max_size9_qty from garments_delivery_note left join garments_delivery_note_inventory on garments_delivery_note_inventory.vou_id = garments_delivery_note.id where garments_delivery_note.ledger_id =?', req.query.ledger_id, function (err, data) {
         if (err) {
             // console.log(err)
             res.sendError(err)
@@ -2602,7 +2630,7 @@ exports.getGarmentsInvoiceInventoryDetails = function (req, res) {
     const USER = req.user;
     body.company = USER.company
     const status = body.status ? body.status : 'active';
-    DBCON.query('select garments_invoice_inventory.product_id,garments_invoice_inventory.color_id,ifnull(garments_invoice_inventory.size1_qty, 0) as size1,ifnull(garments_invoice_inventory.size2_qty, 0) as size2,ifnull(garments_invoice_inventory.size3_qty, 0) as size3,ifnull(garments_invoice_inventory.size4_qty, 0) as size4,ifnull(garments_invoice_inventory.size5_qty, 0) as size5,ifnull(garments_invoice_inventory.size6_qty, 0) as size6,ifnull(garments_invoice_inventory.size7_qty, 0) as size7,ifnull(garments_invoice_inventory.size8_qty, 0) as size8,ifnull(garments_invoice_inventory.size9_qty, 0) as size9,garments_invoice_inventory.qty from garments_invoice left join garments_invoice_inventory on garments_invoice_inventory.vou_id = garments_invoice.id where garments_invoice.ledger_id =?', req.query.ledger_id, function (err, data) {
+    DBCON.query('select garments_invoice_inventory.product_id,garments_invoice_inventory.color_id,ifnull(garments_invoice_inventory.size1_qty, 0) as size1,ifnull(garments_invoice_inventory.size1_qty, 0) as max_size1,ifnull(garments_invoice_inventory.size2_qty, 0) as size2,ifnull(garments_invoice_inventory.size2_qty, 0) as max_size2,ifnull(garments_invoice_inventory.size3_qty, 0) as size3,ifnull(garments_invoice_inventory.size3_qty, 0) as max_size3,ifnull(garments_invoice_inventory.size4_qty, 0) as size4,ifnull(garments_invoice_inventory.size4_qty, 0) as max_size4,ifnull(garments_invoice_inventory.size5_qty, 0) as size5,ifnull(garments_invoice_inventory.size5_qty, 0) as max_size5,ifnull(garments_invoice_inventory.size6_qty, 0) as size6,ifnull(garments_invoice_inventory.size6_qty, 0) as max_size6,ifnull(garments_invoice_inventory.size7_qty, 0) as size7,ifnull(garments_invoice_inventory.size7_qty, 0) as max_size7,ifnull(garments_invoice_inventory.size8_qty, 0) as size8,ifnull(garments_invoice_inventory.size8_qty, 0) as max_size8,ifnull(garments_invoice_inventory.size9_qty, 0) as size9,ifnull(garments_invoice_inventory.size9_qty, 0) as max_size9,garments_invoice_inventory.qty from garments_invoice left join garments_invoice_inventory on garments_invoice_inventory.vou_id = garments_invoice.id where garments_invoice.ledger_id =?', req.query.ledger_id, function (err, data) {
         if (err) {
             // console.log(err)
             res.sendError(err)
