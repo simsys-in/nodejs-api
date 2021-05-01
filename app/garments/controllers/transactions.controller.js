@@ -2646,6 +2646,19 @@ exports.getGarmentsInvoiceInventoryDetails = function (req, res) {
     })
 }
 
+exports.getOrderProgramReport = (req, res) => {
+    const ID = req.query.id;
+    OrderProgram.getOrderProgramReport(ID, (err, result) => {
+        if(err)
+        {
+            res.sendError(err);
+        }
+        else{
+            res.sendInfo("", result);
+        }
+    })
+}
+
 
 ////////////////////// Kowsalya Workspace/////////////////
 ////////////////////// Kowsalya Workspace/////////////////

@@ -436,6 +436,8 @@ router.delete('/generalPurchaseOrder', TransactionsController.deleteGeneralPurch
 router.get('/getNextGeneralPurchaseOrderVouNo',TransactionsController.getNextGeneralPurchaseOrderVouNo )
 
 router.get('/getGarmentsInvoiceInventoryDetails', TransactionsController.getGarmentsInvoiceInventoryDetails);
+router.get('/getOrderProgramReport', TransactionsController.getOrderProgramReport);
+
 
 ////////////////////// Kowsalya Workspace/////////////////
 ////////////////////// Kowsalya Workspace/////////////////
