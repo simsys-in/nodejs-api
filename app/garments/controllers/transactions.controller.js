@@ -2737,12 +2737,15 @@ exports.getOrderProgramReport = (req, res) => {
                     
                     orderstatus_details.cuttingprogram = cuttingprogram;
 
-                const GET_PROCESSDETAILS_QUERY = `select jobwork_inward.ledger_id,jobwork_inward.process_id,jobwork_inward.inventory_qty_total,jobwork_inward.inventory_qty_total as received_qty, jobwork_inward_inventory.color_id, jobwork_inward_inventory.size1, jobwork_inward_inventory.size2,jobwork_inward_inventory.size3,jobwork_inward_inventory.size4,jobwork_inward_inventory.size5,jobwork_inward_inventory.size6,jobwork_inward_inventory.size7,jobwork_inward_inventory.size8,jobwork_inward_inventory.size9,jobwork_outward.from_process_id,jobwork_outward.to_process_id,jobwork_outward.ledger_id,jobwork_outward.inventory_qty_total,jobwork_outward.inventory_qty_total as delivery_qty, jobwork_outward_inventory.color_id, jobwork_outward_inventory.size1, jobwork_outward_inventory.size2,jobwork_outward_inventory.size3,jobwork_outward_inventory.size4,jobwork_outward_inventory.size5,jobwork_outward_inventory.size6,jobwork_outward_inventory.size7,jobwork_outward_inventory.size8,jobwork_outward_inventory.size9 from jobwork_outward left join jobwork_outward_inventory on jobwork_outward_inventory.vou_id = jobwork_outward.id left join jobwork_inward on jobwork_inward.process_id = jobwork_outward.to_process_id and jobwork_inward.ledger_id = jobwork_outward.ledger_id left join jobwork_inward_inventory on jobwork_inward_inventory.vou_id = jobwork_inward.id where jobwork_outward.order_id = ${ORDER_ID};;`;
-                DBCON.query(GET_PROCESSDETAILS_QUERY,(err,orderstatus_details) =>{
+                const GET_PROCESSDETAILS_QUERY = `select ledger.ledger,toprocess.process as toprocess ,fromprocess.process as fromprocess,jobwork_inward.inventory_qty_total,jobwork_inward.inventory_qty_total as received_qty, jobwork_inward_inventory.color_id,jobwork_outward.inventory_qty_total,jobwork_outward.inventory_qty_total as delivery_qty, jobwork_outward_inventory.color_id from jobwork_outward left join jobwork_outward_inventory on jobwork_outward_inventory.vou_id = jobwork_outward.id  left join process as toprocess on toprocess.id = to_process_id left join process as fromprocess on fromprocess.id = from_process_id left join jobwork_inward on jobwork_inward.process_id = jobwork_outward.to_process_id and jobwork_inward.ledger_id = jobwork_outward.ledger_id left join jobwork_inward_inventory on jobwork_inward_inventory.vou_id = jobwork_inward.id left join ledger on ledger.id = jobwork_outward.ledger_id where jobwork_outward.order_id = ${ORDER_ID};`
+                
+                DBCON.query(GET_PROCESSDETAILS_QUERY,(err,processDetails) =>{
+                    console.log(orderstatus_details)
+                    orderstatus_details.processDetails = processDetails;
                     if(err){
                         res.sendError(err);
                     }else{
-                       
+                          
                          res.sendInfo("", orderstatus_details)
                                       
                        
