@@ -1890,21 +1890,27 @@ exports.getShortageReport = (req, res) => {
                     if(err){
                         res.sendError(err);
                     }else{
-                        processdetails.map((process, key) => {
-                            const FROMPROCESS_QUERY = `select process from process where id = ${process.from_process_id}`
-                            DBCON.query(FROMPROCESS_QUERY,(err,fromprocess)=>{
-                                if(err){
-                                    res.sendError(err);
-                                }else{
-                                    processdetails.fromprocess = fromprocess[0] ? fromprocess[0].process : "";
-                                    if(key === processdetails.index - 1)
-                                    {
-                                        shortage_details.processdetails=processdetails;
-                                        res.sendInfo("", shortage_details)
+                        shortage_details.processdetails = [];
+                        if(processdetails.length){
+                            processdetails.map((process, key) => {
+                                const FROMPROCESS_QUERY = `select process from process where id = ${process.from_process_id}`
+                                DBCON.query(FROMPROCESS_QUERY,(err,fromprocess)=>{
+                                    if(err){
+                                        res.sendError(err);
+                                    }else{
+                                        processdetails.fromprocess = fromprocess[0] ? fromprocess[0].process : "";
+                                        if(key === processdetails.index - 1)
+                                        {
+                                            shortage_details.processdetails=processdetails;
+                                            res.sendInfo("", shortage_details)
+                                        }
                                     }
-                                }
-                            })        
-                        })
+                                })        
+                            })
+                        }
+                        else{
+                            res.sendInfo("", shortage_details)
+                        }
                     }
                 }
                 )
