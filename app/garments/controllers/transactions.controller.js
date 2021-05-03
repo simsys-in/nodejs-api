@@ -223,7 +223,7 @@ exports.getProductSB = function (req, res) {
 //     const status = body.status ? body.status : 'active'
 //     DBCON.query('select product.id as value, product.product as name from product left join product_category on product.product_category_id = product_category.id where product_category="FABRIC" ', function (err, data) {
 //         if (err) {
-            // console.log(err)
+// console.log(err)
 //             res.sendError(err)
 //         } else 
 //             res.sendInfo("", data)
@@ -231,13 +231,11 @@ exports.getProductSB = function (req, res) {
 //     })
 // }
 
-exports.getNextOrderNo = function(req, res){
+exports.getNextOrderNo = function (req, res) {
     OrderProgram.getNextOrderNo((err, result) => {
-        if(err)
-        {
+        if (err) {
             res.sendError(err);
-        }
-        else{
+        } else {
             res.sendInfo("", result)
         }
     })
@@ -295,46 +293,38 @@ exports.saveFabricInward = function (req, res) {
     })
 }
 
-exports.getNextFabricInwardVouNo = function(req, res){
+exports.getNextFabricInwardVouNo = function (req, res) {
     FabricInward.getNextFabricInwardVouNo((err, result) => {
-        if(err)
-        {
+        if (err) {
             res.sendError(err);
-        }
-        else{
+        } else {
             res.sendInfo("", result)
         }
     })
 }
-exports.getNextYarnInwardVouNo = function(req, res){
+exports.getNextYarnInwardVouNo = function (req, res) {
     Yarn_Inward.getNextYarnInwardVouNo((err, result) => {
-        if(err)
-        {
+        if (err) {
             res.sendError(err);
-        }
-        else{
+        } else {
             res.sendInfo("", result)
         }
     })
 }
-exports.getNextYarnOutwardVouNo = function(req, res){
+exports.getNextYarnOutwardVouNo = function (req, res) {
     Yarn_Outward.getNextYarnOutwardVouNo((err, result) => {
-        if(err)
-        {
+        if (err) {
             res.sendError(err);
-        }
-        else{
+        } else {
             res.sendInfo("", result)
         }
     })
 }
-exports.getNextYarnReturnVouNo = function(req, res){
+exports.getNextYarnReturnVouNo = function (req, res) {
     Yarn_Return.getNextYarnReturnVouNo((err, result) => {
-        if(err)
-        {
+        if (err) {
             res.sendError(err);
-        }
-        else{
+        } else {
             res.sendInfo("", result)
         }
     })
@@ -372,7 +362,7 @@ exports.getFabricInward = function (req, res) {
 //     const status = body.status ? body.status : 'active'
 //     DBCON.query('select id as value, size as name from size ', function (err, data) {
 //         if (err) {
-            // console.log(err)
+// console.log(err)
 //             res.sendError(err)
 //         } else {
 //             res.sendInfo("", data)
@@ -388,7 +378,7 @@ exports.getFabricInward = function (req, res) {
 //     const status = body.status ? body.status : 'active'
 //     DBCON.query('select product.id as value, product.product as name from product left join product_category on product.product_category_id = product_category.id where product_category="Style" ', function (err, data) {
 //         if (err) {
-            // console.log(err)
+// console.log(err)
 //             res.sendError(err)
 //         } else {
 //             res.sendInfo("", data)
@@ -495,7 +485,7 @@ exports.getFabricOutward = function (req, res) {
 //     const status = body.status ? body.status : 'active'
 //     DBCON.query('select id as value, size as name from size ', function (err, data) {
 //         if (err) {
-            // console.log(err)
+// console.log(err)
 //             res.sendError(err)
 //         } else {
 //             res.sendInfo("", data)
@@ -511,7 +501,7 @@ exports.getFabricOutward = function (req, res) {
 //     const status = body.status ? body.status : 'active'
 //     DBCON.query('select product.id as value, product.product as name from product left join product_category on product.product_category_id = product_category.id where product_category="Style" ', function (err, data) {
 //         if (err) {
-            // console.log(err)
+// console.log(err)
 //             res.sendError(err)
 //         } else {
 //             res.sendInfo("", data)
@@ -617,7 +607,7 @@ exports.getFabricInvoice = function (req, res) {
 //     const status = body.status ? body.status : 'active'
 //     DBCON.query('select id as value, size as name from size ', function (err, data) {
 //         if (err) {
-            // console.log(err)
+// console.log(err)
 //             res.sendError(err)
 //         } else {
 //             res.sendInfo("", data)
@@ -739,7 +729,7 @@ exports.getFabricReturn = function (req, res) {
 //     const status = body.status ? body.status : 'active'
 //     DBCON.query('select id as value, size as name from size ', function (err, data) {
 //         if (err) {
-            // console.log(err)
+// console.log(err)
 //             res.sendError(err)
 //         } else {
 //             res.sendInfo("", data)
@@ -922,7 +912,7 @@ exports.getJobworkOutward = function (req, res) {
             }
         })
     } else {
-        
+
         JobworkOutward.getAll((err, data) => {
             if (err) {
                 // console.log(err)
@@ -1175,14 +1165,14 @@ exports.deleteJobworkOutward = function (req, res) {
     // console.log("ID : " + id);
 
     if (issetNotEmpty(id)) {
-        
+
         JobworkOutward.delete(Number(id), function (err, data) {
             res.sendInfo("Jobwork Outward Deleted Successfully!");
         })
-    
-} else {
-    res.sendWarning("Jobwork Outward Not Found! ")
-}
+
+    } else {
+        res.sendWarning("Jobwork Outward Not Found! ")
+    }
 
 }
 exports.getAllYarn_OutwardSB = function (req, res) {
@@ -1227,7 +1217,7 @@ exports.deleteYarn_Outward = function (req, res) {
 //     const status = body.status ? body.status : 'active';
 //     DBCON.query('select id as value, ledger as name from ledger ', function (err, data) {
 //         if (err) {
-            // console.log(err)
+// console.log(err)
 //             res.sendError(err)
 //         } else {
 //             res.sendInfo("", data)
@@ -1286,7 +1276,7 @@ exports.getAllOrderSB = function (req, res) {
 //     const status = body.status ? body.status : 'active'
 //     DBCON.query('select id as value, color as name from color ', function (err, data) {
 //         if (err) {
-            // console.log(err)
+// console.log(err)
 //             res.sendError(err)
 //         } else {
 //             res.sendInfo("", data)
@@ -1391,19 +1381,16 @@ exports.getCuttingProgramColorDetails = function (req, res) {
     const USER = req.user;
     body.company = USER.company
     const status = body.status ? body.status : 'active';
-    if(issetNotEmpty(req.query.order_id) && issetNotEmpty(req.query.from_process_id))
-    {
+    if (issetNotEmpty(req.query.order_id) && issetNotEmpty(req.query.from_process_id)) {
         DBCON.query('select cutting_program_inventory.color_id, cutting_program_inventory.size1, cutting_program_inventory.size1 as max_size1, cutting_program_inventory.size2, cutting_program_inventory.size2 as max_size2,cutting_program_inventory.size3, cutting_program_inventory.size3 as max_size3,cutting_program_inventory.size4, cutting_program_inventory.size4 as max_size4,cutting_program_inventory.size5, cutting_program_inventory.size5 as max_size5,cutting_program_inventory.size6, cutting_program_inventory.size6 as max_size6,cutting_program_inventory.size7, cutting_program_inventory.size7 as max_size7,cutting_program_inventory.size8, cutting_program_inventory.size8 as max_size8,cutting_program_inventory.size9, cutting_program_inventory.size9 as max_size9 from cutting_program left join cutting_program_inventory on cutting_program_inventory.vou_id = cutting_program.id where order_id =?', req.query.order_id, function (err, cuttingInventory) {
             if (err) {
                 // console.log(err)
                 res.sendError(err)
             } else {
                 DBCON.query(`select jobwork_outward_inventory.color_id, jobwork_outward_inventory.size1,  jobwork_outward_inventory.size2, jobwork_outward_inventory.size3, jobwork_outward_inventory.size4, jobwork_outward_inventory.size5, jobwork_outward_inventory.size6, jobwork_outward_inventory.size7, jobwork_outward_inventory.size8, jobwork_outward_inventory.size9 from jobwork_outward left join jobwork_outward_inventory on jobwork_outward_inventory.vou_id = jobwork_outward.id where jobwork_outward.order_id = ${req.query.order_id} and from_process_id = ${req.query.from_process_id}`, (err, outwardInventory) => {
-                    if(err)
-                    {
+                    if (err) {
                         res.sendError(err)
-                    }
-                    else{
+                    } else {
                         var returnData = _.remove(cuttingInventory, (item) => {
                             outwardInventory.map(outward => {
                                 return outward.color_id === item.color_id;
@@ -1423,8 +1410,7 @@ exports.getCuttingProgramColorDetails = function (req, res) {
                 })
             }
         })
-    }
-    else{
+    } else {
         res.sendInfo("", []);
     }
 }
@@ -1453,31 +1439,25 @@ exports.deleteCuttingProgram = function (req, res) {
 
 exports.getNextCuttingProgLotNo = (req, res) => {
     CuttingProgram.getNextLotNo((err, nextLotNo) => {
-        if(err)
-        {
+        if (err) {
             res.sendError(err);
-        }
-        else{
-            res.sendInfo("",nextLotNo);
+        } else {
+            res.sendInfo("", nextLotNo);
         }
     })
 }
 
 exports.getStyleForOrderId = (req, res) => {
     const ORDER_ID = req.query.order_id ? req.query.order_id : null;
-    if(issetNotEmpty(ORDER_ID))
-    {
-        OrderProgram.getStyleForOrderId(ORDER_ID,(err, style_id) => {
-            if(err)
-            {
+    if (issetNotEmpty(ORDER_ID)) {
+        OrderProgram.getStyleForOrderId(ORDER_ID, (err, style_id) => {
+            if (err) {
                 res.sendError(err);
-            }
-            else{
-                res.sendInfo("",style_id);
+            } else {
+                res.sendInfo("", style_id);
             }
         })
-    }
-    else{
+    } else {
         res.sendError("Order Not Found!")
     }
 }
@@ -1486,12 +1466,10 @@ exports.getSizesForOrderID = (req, res) => {
     const ORDER_ID = req.query.order_id;
 
     DBCON.query(`select concat(size.size1, ",", size.size2, ",",size.size3, ",",size.size4, ",",size.size5, ",",size.size6, ",",size.size7, ",",size.size8, ",",size.size9) as sizes from order_program left join size on size.id = order_program.size_id where order_program.id = ${ORDER_ID}`, (err, data) => {
-        if(err)
-        {
+        if (err) {
             // console.log(err);
             res.sendError(err);
-        }
-        else{
+        } else {
             var sizes = data.length > 0 ? data[0].sizes !== null ? data[0].sizes : "" : "";
             // console.log(sizes);
             sizes = sizes.split(",");
@@ -1505,12 +1483,10 @@ exports.getFabricsForOrderIDForCuttingProgram = (req, res) => {
     const ORDER_ID = req.query.order_id;
 
     DBCON.query(`select product.product as name, product.id as value from order_fabric left join product on product.id = order_fabric.fabric_id where order_id  = ${ORDER_ID}`, (err, data) => {
-        if(err)
-        {
+        if (err) {
             // console.log(err);
             res.sendError(err);
-        }
-        else{
+        } else {
             res.sendInfo("", data);
         }
     })
@@ -1522,12 +1498,10 @@ exports.getFabricDetailForOrder = (req, res) => {
     const FABRIC_ID = req.query.fabric_id;
 
     DBCON.query(`select order_fabric.dia, order_fabric.gsm from order_fabric left join product on product.id = order_fabric.fabric_id where order_id  = ${ORDER_ID} and fabric_id = ${FABRIC_ID}`, (err, data) => {
-        if(err)
-        {
+        if (err) {
             // console.log(err);
             res.sendError(err);
-        }
-        else{
+        } else {
             res.sendInfo("", data);
         }
     })
@@ -1538,11 +1512,9 @@ exports.getFabricDetailForOrder = (req, res) => {
 exports.getJobworkOutwardReport = (req, res) => {
     const ID = req.query.id;
     JobworkOutward.getJobworkOutwardReport(ID, (err, result) => {
-        if(err)
-        {
+        if (err) {
             res.sendError(err);
-        }
-        else{
+        } else {
             res.sendInfo("", result);
         }
     })
@@ -1567,7 +1539,7 @@ exports.getJobworkOutwardColorDetails = function (req, res) {
     const USER = req.user;
     body.company = USER.company
     const status = body.status ? body.status : 'active';
-    DBCON.query('select jobwork_outward_inventory.color_id, jobwork_outward_inventory.size1,jobwork_outward_inventory.size1 as max_size1, jobwork_outward_inventory.size2,jobwork_outward_inventory.size2 as max_size2,jobwork_outward_inventory.size3,jobwork_outward_inventory.size3 as max_size3,jobwork_outward_inventory.size4,jobwork_outward_inventory.size4 as max_size4,jobwork_outward_inventory.size5,jobwork_outward_inventory.size5 as max_size5,jobwork_outward_inventory.size6,jobwork_outward_inventory.size6 as max_size6,jobwork_outward_inventory.size7,jobwork_outward_inventory.size7 as max_size7,jobwork_outward_inventory.size8,jobwork_outward_inventory.size8 as max_size8,jobwork_outward_inventory.size9,jobwork_outward_inventory.size9 as max_size9 from jobwork_outward left join jobwork_outward_inventory on jobwork_outward_inventory.vou_id = jobwork_outward.id where jobwork_outward.order_id =?  and to_process_id =? and ledger_id =?', [ req.query.order_id, req.query.to_process_id, req.query.ledger_id], function (err, data) {
+    DBCON.query('select jobwork_outward_inventory.color_id, jobwork_outward_inventory.size1,jobwork_outward_inventory.size1 as max_size1, jobwork_outward_inventory.size2,jobwork_outward_inventory.size2 as max_size2,jobwork_outward_inventory.size3,jobwork_outward_inventory.size3 as max_size3,jobwork_outward_inventory.size4,jobwork_outward_inventory.size4 as max_size4,jobwork_outward_inventory.size5,jobwork_outward_inventory.size5 as max_size5,jobwork_outward_inventory.size6,jobwork_outward_inventory.size6 as max_size6,jobwork_outward_inventory.size7,jobwork_outward_inventory.size7 as max_size7,jobwork_outward_inventory.size8,jobwork_outward_inventory.size8 as max_size8,jobwork_outward_inventory.size9,jobwork_outward_inventory.size9 as max_size9 from jobwork_outward left join jobwork_outward_inventory on jobwork_outward_inventory.vou_id = jobwork_outward.id where jobwork_outward.order_id =?  and to_process_id =? and ledger_id =?', [req.query.order_id, req.query.to_process_id, req.query.ledger_id], function (err, data) {
         if (err) {
             // console.log(err)
             res.sendError(err)
@@ -1618,25 +1590,21 @@ exports.getJobworkInwardColorDetails = function (req, res) {
 ////////////////////// Boopathi Workspace/////////////////
 ////////////////////// Boopathi Workspace/////////////////
 
-exports.getNextYarnInvoiceVouNo = function(req, res){
+exports.getNextYarnInvoiceVouNo = function (req, res) {
     Yarn_Invoice.getNextYarnInvoiceVouNo((err, result) => {
-        if(err)
-        {
+        if (err) {
             res.sendError(err);
-        }
-        else{
+        } else {
             res.sendInfo("", result)
         }
     })
 }
 
-exports.getNextJobworkInwardVouNo = function(req, res){
+exports.getNextJobworkInwardVouNo = function (req, res) {
     Jobwork_Inward.getNextJobworkInwardVouNo((err, result) => {
-        if(err)
-        {
+        if (err) {
             res.sendError(err);
-        }
-        else{
+        } else {
             res.sendInfo("", result)
         }
     })
@@ -1645,11 +1613,9 @@ exports.getNextJobworkInwardVouNo = function(req, res){
 exports.getJobworkInvoiceReport = (req, res) => {
     const ID = req.query.id;
     JobworkInvoice.getJobworkInvoiceReport(ID, (err, result) => {
-        if(err)
-        {
+        if (err) {
             res.sendError(err);
-        }
-        else{
+        } else {
             res.sendInfo("", result);
         }
     })
@@ -1657,11 +1623,9 @@ exports.getJobworkInvoiceReport = (req, res) => {
 exports.getYarnInvoiceReport = (req, res) => {
     const ID = req.query.id;
     Yarn_Invoice.getYarnInvoiceReport(ID, (err, result) => {
-        if(err)
-        {
+        if (err) {
             res.sendError(err);
-        }
-        else{
+        } else {
             res.sendInfo("", result);
         }
     })
@@ -1669,11 +1633,9 @@ exports.getYarnInvoiceReport = (req, res) => {
 exports.getYarnOutwardReport = (req, res) => {
     const ID = req.query.id;
     Yarn_Outward.getYarnOutwardReport(ID, (err, result) => {
-        if(err)
-        {
+        if (err) {
             res.sendError(err);
-        }
-        else{
+        } else {
             res.sendInfo("", result);
         }
     })
@@ -1695,13 +1657,11 @@ exports.saveDyeingProgram = function (req, res) {
     })
 }
 
-exports.getNextDyeingProgramVouNo = function(req, res){
+exports.getNextDyeingProgramVouNo = function (req, res) {
     DyeingProgram.getNextDyeingProgramVouNo((err, result) => {
-        if(err)
-        {
+        if (err) {
             res.sendError(err);
-        }
-        else{
+        } else {
             res.sendInfo("", result)
         }
     })
@@ -1753,11 +1713,9 @@ exports.deleteDyeingProgram = function (req, res) {
 exports.getDyeingProgramReport = (req, res) => {
     const ID = req.query.id;
     DyeingProgram.getDyeingProgramReport(ID, (err, result) => {
-        if(err)
-        {
+        if (err) {
             res.sendError(err);
-        }
-        else{
+        } else {
             res.sendInfo("", result);
         }
     })
@@ -1766,11 +1724,9 @@ exports.getDyeingProgramReport = (req, res) => {
 exports.getFabricReturnReport = (req, res) => {
     const ID = req.query.id;
     FabricReturn.getFabricReturnReport(ID, (err, result) => {
-        if(err)
-        {
+        if (err) {
             res.sendError(err);
-        }
-        else{
+        } else {
             res.sendInfo("", result);
         }
     })
@@ -1779,11 +1735,9 @@ exports.getFabricReturnReport = (req, res) => {
 exports.getYarnInwardReport = (req, res) => {
     const ID = req.query.id;
     Yarn_Inward.getYarnInwardReport(ID, (err, result) => {
-        if(err)
-        {
+        if (err) {
             res.sendError(err);
-        }
-        else{
+        } else {
             res.sendInfo("", result);
         }
     })
@@ -1792,11 +1746,9 @@ exports.getYarnInwardReport = (req, res) => {
 exports.getYarnReturnReport = (req, res) => {
     const ID = req.query.id;
     Yarn_Return.getYarnReturnReport(ID, (err, result) => {
-        if(err)
-        {
+        if (err) {
             res.sendError(err);
-        }
-        else{
+        } else {
             res.sendInfo("", result);
         }
     })
@@ -1804,11 +1756,9 @@ exports.getYarnReturnReport = (req, res) => {
 exports.getDyeingProgramReport = (req, res) => {
     const ID = req.query.id;
     DyeingProgram.getDyeingProgramReport(ID, (err, result) => {
-        if(err)
-        {
+        if (err) {
             res.sendError(err);
-        }
-        else{
+        } else {
             res.sendInfo("", result);
         }
     })
@@ -1818,11 +1768,9 @@ exports.getDyeingProgramReport = (req, res) => {
 exports.getYarnPurchaseOrderReport = (req, res) => {
     const ID = req.query.id;
     YarnPurchaseOrder.getYarnPurchaseOrderReport(ID, (err, result) => {
-        if(err)
-        {
+        if (err) {
             res.sendError(err);
-        }
-        else{
+        } else {
             res.sendInfo("", result);
         }
     })
@@ -1831,11 +1779,9 @@ exports.getYarnPurchaseOrderReport = (req, res) => {
 exports.getGeneralPurchaseOrderReport = (req, res) => {
     const ID = req.query.id;
     GeneralPurchaseOrder.getGeneralPurchaseOrderReport(ID, (err, result) => {
-        if(err)
-        {
+        if (err) {
             res.sendError(err);
-        }
-        else{
+        } else {
             res.sendInfo("", result);
         }
     })
@@ -1848,13 +1794,11 @@ exports.getCuttingRateForOrderID = (req, res) => {
     const QUERY = `SELECT  rate FROM order_process WHERE order_id = ${ORDER_ID} and process_id = ${PROCESS_ID};`;
 
     DBCON.query(QUERY, (err, result) => {
-        if(err)
-        {
+        if (err) {
             console.log(err);
             res.sendError(err);
-        }
-        else {
-            res.sendInfo("",result[0] ? result[0].rate : 0);
+        } else {
+            res.sendInfo("", result[0] ? result[0].rate : 0);
         }
     })
 }
@@ -1868,49 +1812,33 @@ exports.getShortageReport = (req, res) => {
     const QUERY = `select order_program.order_no, order_program.vou_date, order_program.due_date , product.product,size.size from order_program left join size on size.id = order_program.size_id left join product on product.id = order_program.style_id where order_program.id = ${ORDER_ID};`;
 
     DBCON.query(QUERY, (err, result) => {
-        if(err)
-        {
+        if (err) {
             console.log(err);
             res.sendError(err);
-        }
-        else {
+        } else {
             shortage_details = result[0];
 
             const GET_CUTTINGPROGRAM_QUERY = `select ledger.ledger,process.process, cutting_program.inventory_qty_total, cutting_program.process_id, cutting_program_inventory.color_id, cutting_program_inventory.fabric_id from cutting_program left join cutting_program_inventory on cutting_program_inventory.vou_id = cutting_program.id left join ledger on ledger.id = cutting_program_inventory.ledger_id left join process on process.id = cutting_program.process_id WHERE cutting_program.order_id = ${ORDER_ID} ;`;
 
-            DBCON.query(GET_CUTTINGPROGRAM_QUERY, (err,cuttingprogram)=>{
-                if (err){
+            DBCON.query(GET_CUTTINGPROGRAM_QUERY, (err, cuttingprogram) => {
+                if (err) {
                     res.sendError(err);
-                }else{
-                    
+                } else {
+
                     shortage_details.cuttingprogram = cuttingprogram;
 
-                const GET_PROCESSDETAILS_QUERY = `select ledger.ledger, process.process, jobwork_outward.inventory_qty_total as outward_qty_total ,jobwork_inward.inventory_qty_total as inward_qty_total, jobwork_outward.ledger_id, jobwork_outward.vouno, jobwork_inward.vouno from jobwork_outward left join jobwork_inward on jobwork_inward.process_id = jobwork_outward.to_process_id left join ledger on ledger.id = jobwork_outward.ledger_id left join process on process.id = jobwork_outward.to_process_id and jobwork_outward.from_process_id WHERE jobwork_outward.order_id = ${ORDER_ID} and jobwork_outward.to_process_id = ${PROCESS_ID};`;
-                DBCON.query(GET_PROCESSDETAILS_QUERY,(err,processdetails) =>{
-                    if(err){
-                        res.sendError(err);
-                    }else{
-                        processdetails.map((process, key) => {
-                            const FROMPROCESS_QUERY = `select process from process where id = ${process.from_process_id}`
-                            DBCON.query(FROMPROCESS_QUERY,(err,fromprocess)=>{
-                                if(err){
-                                    res.sendError(err);
-                                }else{
-                                    processdetails.fromprocess = fromprocess[0] ? fromprocess[0].process : "";
-                                    if(key === processdetails.index - 1)
-                                    {
-                                        shortage_details.processdetails=processdetails;
-                                        res.sendInfo("", shortage_details)
-                                    }
-                                }
-                            })        
-                        })
-                    }
+                    const GET_PROCESSDETAILS_QUERY = `select ledger.ledger, toprocess.process as toprocess , fromprocess.process as fromprocess, jobwork_outward.inventory_qty_total as outward_qty_total ,jobwork_inward.inventory_qty_total as inward_qty_total, jobwork_outward.ledger_id, jobwork_outward.vouno, jobwork_inward.vouno from jobwork_outward left join jobwork_inward on jobwork_inward.process_id = jobwork_outward.to_process_id left join ledger on ledger.id = jobwork_outward.ledger_id left join process as toprocess on toprocess.id = jobwork_outward.to_process_id left join process as fromprocess on fromprocess.id = jobwork_outward.from_process_id WHERE jobwork_outward.order_id = ${ORDER_ID} and jobwork_outward.to_process_id = ${PROCESS_ID};`;
+                    DBCON.query(GET_PROCESSDETAILS_QUERY, (err, processdetails) => {
+                        if (err) {
+                            res.sendError(err);
+                        } else {
+                            shortage_details.processdetails = processdetails;
+                            res.sendInfo("", shortage_details)
+
+                        }
+                    })
                 }
-                )
-                }
-            }
-            )
+            })
         }
     })
 }
@@ -1955,49 +1883,41 @@ exports.getShortageReport = (req, res) => {
 ////////////////////// Kowsalya Workspace/////////////////
 
 
-exports.getNextJobworkInvoiceVouNo = function(req, res){
+exports.getNextJobworkInvoiceVouNo = function (req, res) {
     JobworkInvoice.getNextJobworkInvoiceVouNo((err, result) => {
-        if(err)
-        {
+        if (err) {
             res.sendError(err);
-        }
-        else{
+        } else {
             res.sendInfo("", result)
         }
     })
 }
 
-exports.getNextFabricOutwardVouNo = function(req, res){
+exports.getNextFabricOutwardVouNo = function (req, res) {
     FabricOutward.getNextFabricOutwardVouNo((err, result) => {
-        if(err)
-        {
+        if (err) {
             res.sendError(err);
-        }
-        else{
+        } else {
             res.sendInfo("", result)
         }
     })
 }
 
-exports.getNextFabricReturnVouNo = function(req, res){
+exports.getNextFabricReturnVouNo = function (req, res) {
     FabricReturn.getNextFabricReturnVouNo((err, result) => {
-        if(err)
-        {
+        if (err) {
             res.sendError(err);
-        }
-        else{
+        } else {
             res.sendInfo("", result)
         }
     })
 }
 
-exports.getNextFabricInvoiceVouNo = function(req, res){
+exports.getNextFabricInvoiceVouNo = function (req, res) {
     FabricInvoice.getNextFabricInvoiceVouNo((err, result) => {
-        if(err)
-        {
+        if (err) {
             res.sendError(err);
-        }
-        else{
+        } else {
             res.sendInfo("", result)
         }
     })
@@ -2062,13 +1982,11 @@ exports.deleteGarmentsInvoice = function (req, res) {
 
 }
 
-exports.getNextGarmentsInvoiceVouNo = function(req, res){
+exports.getNextGarmentsInvoiceVouNo = function (req, res) {
     GarmentsInvoice.getNextGarmentsInvoiceVouNo((err, result) => {
-        if(err)
-        {
+        if (err) {
             res.sendError(err);
-        }
-        else{
+        } else {
             res.sendInfo("", result)
         }
     })
@@ -2095,7 +2013,7 @@ exports.getLedgerForOrderAndProcessID = function (req, res) {
     const USER = req.user;
     body.company = USER.company
     const status = body.status ? body.status : 'active';
-    DBCON.query('select ledger_id  from order_process where order_process.order_id =? and order_process.process_id=?', [req.query.order_id,req.query.process_id],function (err, data) {
+    DBCON.query('select ledger_id  from order_process where order_process.order_id =? and order_process.process_id=?', [req.query.order_id, req.query.process_id], function (err, data) {
         if (err) {
             // console.log(err)
             res.sendError(err)
@@ -2166,13 +2084,11 @@ exports.deleteGarmentsDeliveryNote = function (req, res) {
 
 }
 
-exports.getNextGarmentsDeliveryNoteVouNo = function(req, res){
+exports.getNextGarmentsDeliveryNoteVouNo = function (req, res) {
     GarmentsDeliveryNote.getNextGarmentsDeliveryNoteVouNo((err, result) => {
-        if(err)
-        {
+        if (err) {
             res.sendError(err);
-        }
-        else{
+        } else {
             res.sendInfo("", result)
         }
     })
@@ -2239,13 +2155,11 @@ exports.deleteGarmentsReceiptNote = function (req, res) {
 
 }
 
-exports.getNextGarmentsReceiptNoteVouNo = function(req, res){
+exports.getNextGarmentsReceiptNoteVouNo = function (req, res) {
     GarmentsReceiptNote.getNextGarmentsReceiptNoteVouNo((err, result) => {
-        if(err)
-        {
+        if (err) {
             res.sendError(err);
-        }
-        else{
+        } else {
             res.sendInfo("", result)
         }
     })
@@ -2257,23 +2171,19 @@ exports.getNextGarmentsReceiptNoteVouNo = function(req, res){
 exports.getFabricOutwardReport = (req, res) => {
     const ID = req.query.id;
     FabricOutward.getFabricOutwardReport(ID, (err, result) => {
-        if(err)
-        {
+        if (err) {
             res.sendError(err);
-        }
-        else{
+        } else {
             res.sendInfo("", result);
         }
     })
 }
 
-exports.getNextJobworkOutwardVouNo = function(req, res){
+exports.getNextJobworkOutwardVouNo = function (req, res) {
     JobworkOutward.getNextJobworkOutwardVouNo((err, result) => {
-        if(err)
-        {
+        if (err) {
             res.sendError(err);
-        }
-        else{
+        } else {
             res.sendInfo("", result)
         }
     })
@@ -2284,11 +2194,9 @@ exports.getNextJobworkOutwardVouNo = function(req, res){
 exports.getFabricInwardReport = (req, res) => {
     const ID = req.query.id;
     FabricInward.getFabricInwardReport(ID, (err, result) => {
-        if(err)
-        {
+        if (err) {
             res.sendError(err);
-        }
-        else{
+        } else {
             res.sendInfo("", result);
         }
     })
@@ -2299,11 +2207,9 @@ exports.getFabricInwardReport = (req, res) => {
 exports.getFabricInvoiceReport = (req, res) => {
     const ID = req.query.id;
     FabricInvoice.getFabricInvoiceReport(ID, (err, result) => {
-        if(err)
-        {
+        if (err) {
             res.sendError(err);
-        }
-        else{
+        } else {
             res.sendInfo("", result);
         }
     })
@@ -2370,13 +2276,11 @@ exports.deleteKnittingProgram = function (req, res) {
 
 }
 
-exports.getNextKnittingProgramVouNo = function(req, res){
+exports.getNextKnittingProgramVouNo = function (req, res) {
     KnittingProgram.getNextKnittingProgramVouNo((err, result) => {
-        if(err)
-        {
+        if (err) {
             res.sendError(err);
-        }
-        else{
+        } else {
             res.sendInfo("", result)
         }
     })
@@ -2459,12 +2363,10 @@ exports.getYarnInwardInventoryDetails = function (req, res) {
 
 exports.getGarmentsDeliveryNotePrint = (req, res) => {
     GarmentsDeliveryNote.getGarmentsDeliveryNotePrint(req.query.id, (err, result) => {
-        if(err)
-        {
+        if (err) {
             // console.log(err);
             res.sendError(err);
-        }
-        else{
+        } else {
             res.sendInfo("", result);
         }
     })
@@ -2472,12 +2374,10 @@ exports.getGarmentsDeliveryNotePrint = (req, res) => {
 
 exports.getGarmentsReceiptNotePrint = (req, res) => {
     GarmentsReceiptNote.getGarmentsReceiptNotePrint(req.query.id, (err, result) => {
-        if(err)
-        {
+        if (err) {
             // console.log(err);
             res.sendError(err);
-        }
-        else{
+        } else {
             res.sendInfo("", result);
         }
     })
@@ -2487,11 +2387,9 @@ exports.getGarmentsReceiptNotePrint = (req, res) => {
 exports.getJobworkInwardReport = (req, res) => {
     const ID = req.query.id;
     Jobwork_Inward.getJobworkInwardReport(ID, (err, result) => {
-        if(err)
-        {
+        if (err) {
             res.sendError(err);
-        }
-        else{
+        } else {
             res.sendInfo("", result);
         }
     })
@@ -2510,8 +2408,7 @@ exports.getGarmentsDeliveryNoteInventoryDetails = function (req, res) {
         } else {
             data.map((item, index) => {
                 item.size_details = [];
-                if(index === data.length - 1)
-                {
+                if (index === data.length - 1) {
                     res.sendInfo("", data)
                 }
             })
@@ -2580,13 +2477,11 @@ exports.deleteYarnPurchaseOrder = function (req, res) {
 
 }
 
-exports.getNextYarnPurchaseOrderVouNo = function(req, res){
+exports.getNextYarnPurchaseOrderVouNo = function (req, res) {
     YarnPurchaseOrder.getNextYarnPurchaseOrderVouNo((err, result) => {
-        if(err)
-        {
+        if (err) {
             res.sendError(err);
-        }
-        else{
+        } else {
             res.sendInfo("", result)
         }
     })
@@ -2668,13 +2563,11 @@ exports.deleteGeneralPurchaseOrder = function (req, res) {
 
 }
 
-exports.getNextGeneralPurchaseOrderVouNo = function(req, res){
+exports.getNextGeneralPurchaseOrderVouNo = function (req, res) {
     GeneralPurchaseOrder.getNextGeneralPurchaseOrderVouNo((err, result) => {
-        if(err)
-        {
+        if (err) {
             res.sendError(err);
-        }
-        else{
+        } else {
             res.sendInfo("", result)
         }
     })
@@ -2692,8 +2585,7 @@ exports.getGarmentsInvoiceInventoryDetails = function (req, res) {
         } else {
             data.map((item, index) => {
                 item.size_details = [];
-                if(index === data.length - 1)
-                {
+                if (index === data.length - 1) {
                     res.sendInfo("", data)
                 }
             })
@@ -2704,11 +2596,9 @@ exports.getGarmentsInvoiceInventoryDetails = function (req, res) {
 exports.getOrderProgramReport = (req, res) => {
     const ID = req.query.id;
     OrderProgram.getOrderProgramReport(ID, (err, result) => {
-        if(err)
-        {
+        if (err) {
             res.sendError(err);
-        }
-        else{
+        } else {
             res.sendInfo("", result);
         }
     })
@@ -2747,13 +2637,11 @@ exports.getOrdersForLedgerAndProcess = (req, res) => {
     const LEDGER = req.query.ledger;
 
     DBCON.query(`select order_program.id as order_id, order_process.rate, order_program.product_id, order_program.size_id, jobwork_inward.inventory_qty_total as qty, (jobwork_inward.inventory_qty_total * order_process.rate) as amount from order_process left join order_program on order_program.id = order_process.order_id left join jobwork_inward on jobwork_inward.order_id = order_process.order_id  where order_process.process_id = ${PROCESS} and order_process.ledger_id = ${LEDGER} and jobwork_inward.inventory_qty_total > 0;`, (err, result) => {
-        if(err)
-        {
+        if (err) {
             // console.log(err);
             res.sendError(err);
-        }
-        else{
-            res.sendInfo("",result);
+        } else {
+            res.sendInfo("", result);
         }
     });
 
@@ -2763,22 +2651,18 @@ exports.getOrdersForLedgerAndProcess = (req, res) => {
 
 exports.getSizeForProduct = (req, res) => {
     const PRODUCT_ID = req.query.product_id;
-    if(issetNotEmpty(PRODUCT_ID))
-    {
-        DBCON.query(`select concat(size.size1, ",", size.size2, ",",size.size3, ",",size.size4, ",",size.size5, ",",size.size6, ",",size.size7, ",",size.size8, ",",size.size9) as sizes from product_details left join size on size.id = product_details.size_id where product_details.product_id = ${PRODUCT_ID}`, (err, result ) => {
-            if(err)
-            {
+    if (issetNotEmpty(PRODUCT_ID)) {
+        DBCON.query(`select concat(size.size1, ",", size.size2, ",",size.size3, ",",size.size4, ",",size.size5, ",",size.size6, ",",size.size7, ",",size.size8, ",",size.size9) as sizes from product_details left join size on size.id = product_details.size_id where product_details.product_id = ${PRODUCT_ID}`, (err, result) => {
+            if (err) {
                 res.sendError(err);
-            }
-            else{
+            } else {
                 var sizes = result.length > 0 ? result[0].sizes !== null ? result[0].sizes : "" : "";
                 // console.log(sizes);
                 sizes = sizes.split(",");
                 res.sendInfo("", sizes);
             }
         })
-    }
-    else{
+    } else {
         res.sendError("Product not found!")
     }
 }
@@ -2786,12 +2670,10 @@ exports.getSizeForProduct = (req, res) => {
 
 exports.getGarmentsInvoicePrint = (req, res) => {
     GarmentsInvoice.getGarmentsInvoicePrint(req.query.id, (err, result) => {
-        if(err)
-        {
+        if (err) {
             // console.log(err);
             res.sendError(err);
-        }
-        else{
+        } else {
             res.sendInfo("", result);
         }
     })
@@ -2838,23 +2720,19 @@ exports.getJobworkInvoice = function (req, res) {
 
 exports.getProductAndSizeSBForOrderID = (req, res) => {
     const ORDER_ID = req.query.order_id ? req.query.order_id : null;
-    if(issetNotEmpty(ORDER_ID))
-    {
-        DBCON.query(`select style_id, size_id from order_program where id = ${ORDER_ID}`,(err, data) => {
-            if(err)
-            {
+    if (issetNotEmpty(ORDER_ID)) {
+        DBCON.query(`select style_id, size_id from order_program where id = ${ORDER_ID}`, (err, data) => {
+            if (err) {
                 res.sendError(err);
-            }
-            else{
+            } else {
                 data.map(item => {
                     item.style_id = Number(item.style_id);
                     item.size_id = Number(item.size_id);
                 })
-                res.sendInfo("",data);
+                res.sendInfo("", data);
             }
         })
-    }
-    else{
+    } else {
         res.sendError("Jobwork Invoice Not Found!")
     }
 }
