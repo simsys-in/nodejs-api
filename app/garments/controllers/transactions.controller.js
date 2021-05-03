@@ -2604,6 +2604,53 @@ exports.getOrderProgramReport = (req, res) => {
     })
 }
 
+exports.getOrderProgramReport = (req, res) => {
+    const ORDER_ID = req.query.order_id;
+    var orderstatus_details = {}
+    const QUERY = `select order_program.order_no, order_program.vou_date, order_program.due_date , product.product,size.size from order_program left join size on size.id = order_program.size_id left join product on product.id = order_program.style_id where order_program.id = ${ORDER_ID};`;
+
+    DBCON.query(QUERY, (err, result) => {
+        if(err)
+        {
+            console.log(err);
+            res.sendError(err);
+        }
+        else {
+            orderstatus_details = result[0];
+
+            const GET_CUTTINGPROGRAM_QUERY = `select ledger.ledger,process.process, cutting_program.inventory_qty_total, cutting_program.process_id, cutting_program_inventory.color_id, cutting_program_inventory.fabric_id from cutting_program left join cutting_program_inventory on cutting_program_inventory.vou_id = cutting_program.id left join ledger on ledger.id = cutting_program_inventory.ledger_id left join process on process.id = cutting_program.process_id WHERE cutting_program.order_id = ${ORDER_ID} ;`;
+
+            DBCON.query(GET_CUTTINGPROGRAM_QUERY, (err,cuttingprogram)=>{
+                if (err){
+                    res.sendError(err);
+                }else{
+                    
+                    orderstatus_details.cuttingprogram = cuttingprogram;
+
+                const GET_PROCESSDETAILS_QUERY = `select ledger.ledger,toprocess.process as toprocess ,fromprocess.process as fromprocess,jobwork_inward.inventory_qty_total,jobwork_inward.inventory_qty_total as received_qty, jobwork_inward_inventory.color_id,jobwork_outward.inventory_qty_total,jobwork_outward.inventory_qty_total as delivery_qty, jobwork_outward_inventory.color_id from jobwork_outward left join jobwork_outward_inventory on jobwork_outward_inventory.vou_id = jobwork_outward.id  left join process as toprocess on toprocess.id = to_process_id left join process as fromprocess on fromprocess.id = from_process_id left join jobwork_inward on jobwork_inward.process_id = jobwork_outward.to_process_id and jobwork_inward.ledger_id = jobwork_outward.ledger_id left join jobwork_inward_inventory on jobwork_inward_inventory.vou_id = jobwork_inward.id left join ledger on ledger.id = jobwork_outward.ledger_id where jobwork_outward.order_id = ${ORDER_ID};`
+                
+                DBCON.query(GET_PROCESSDETAILS_QUERY,(err,processDetails) =>{
+                    console.log(orderstatus_details)
+                    orderstatus_details.processDetails = processDetails;
+                    if(err){
+                        res.sendError(err);
+                    }else{
+                          
+                         res.sendInfo("", orderstatus_details)
+                                      
+                       
+                    }
+                }
+                )
+                }
+            }
+            )
+        }
+    })
+}
+
+
+
 
 ////////////////////// Kowsalya Workspace/////////////////
 ////////////////////// Kowsalya Workspace/////////////////
