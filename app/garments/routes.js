@@ -346,6 +346,8 @@ router.delete('/shift', MasterController.deleteShift);
 //order program rate in cutting program
 router.get('/getCuttingRateForOrderID', TransactionsController.getCuttingRateForOrderID);
 
+router.get('/getShortageReport', TransactionsController.getShortageReport);
+
 
 
 

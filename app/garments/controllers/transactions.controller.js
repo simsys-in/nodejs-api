@@ -1859,6 +1859,61 @@ exports.getCuttingRateForOrderID = (req, res) => {
     })
 }
 
+exports.getShortageReport = (req, res) => {
+    const ORDER_ID = req.query.order_id;
+    const PROCESS_ID = req.query.process_id;
+    var shortage_details = {}
+
+
+    const QUERY = `select order_program.order_no, order_program.vou_date, order_program.due_date , product.product,size.size from order_program left join size on size.id = order_program.size_id left join product on product.id = order_program.style_id where order_program.id = ${ORDER_ID};`;
+
+    DBCON.query(QUERY, (err, result) => {
+        if(err)
+        {
+            console.log(err);
+            res.sendError(err);
+        }
+        else {
+            shortage_details = result[0];
+
+            const GET_CUTTINGPROGRAM_QUERY = `select ledger.ledger,process.process, cutting_program.inventory_qty_total, cutting_program.process_id, cutting_program_inventory.color_id, cutting_program_inventory.fabric_id from cutting_program left join cutting_program_inventory on cutting_program_inventory.vou_id = cutting_program.id left join ledger on ledger.id = cutting_program_inventory.ledger_id left join process on process.id = cutting_program.process_id WHERE cutting_program.order_id = ${ORDER_ID} ;`;
+
+            DBCON.query(GET_CUTTINGPROGRAM_QUERY, (err,cuttingprogram)=>{
+                if (err){
+                    res.sendError(err);
+                }else{
+                    
+                    shortage_details.cuttingprogram = cuttingprogram;
+
+                const GET_PROCESSDETAILS_QUERY = `select ledger.ledger, process.process, jobwork_outward.inventory_qty_total as outward_qty_total ,jobwork_inward.inventory_qty_total as inward_qty_total, jobwork_outward.ledger_id, jobwork_outward.vouno, jobwork_inward.vouno from jobwork_outward left join jobwork_inward on jobwork_inward.process_id = jobwork_outward.to_process_id left join ledger on ledger.id = jobwork_outward.ledger_id left join process on process.id = jobwork_outward.to_process_id and jobwork_outward.from_process_id WHERE jobwork_outward.order_id = ${ORDER_ID} and jobwork_outward.to_process_id = ${PROCESS_ID};`;
+                DBCON.query(GET_PROCESSDETAILS_QUERY,(err,processdetails) =>{
+                    if(err){
+                        res.sendError(err);
+                    }else{
+                        processdetails.map((process, key) => {
+                            const FROMPROCESS_QUERY = `select process from process where id = ${process.from_process_id}`
+                            DBCON.query(FROMPROCESS_QUERY,(err,fromprocess)=>{
+                                if(err){
+                                    res.sendError(err);
+                                }else{
+                                    processdetails.fromprocess = fromprocess[0] ? fromprocess[0].process : "";
+                                    if(key === processdetails.index - 1)
+                                    {
+                                        shortage_details.processdetails=processdetails;
+                                        res.sendInfo("", shortage_details)
+                                    }
+                                }
+                            })        
+                        })
+                    }
+                }
+                )
+                }
+            }
+            )
+        }
+    })
+}
 
 
 
