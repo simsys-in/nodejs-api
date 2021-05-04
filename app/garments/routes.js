@@ -218,6 +218,7 @@ router.put('/jobwork_inward', TransactionsController.saveJobwork_Inward);
 router.get('/jobwork_inward', TransactionsController.getJobwork_Inward);
 router.delete('/jobwork_inward', TransactionsController.deleteJobwork_Inward);
 router.get('/getLedgerForOrderAndProcessID', TransactionsController.getLedgerForOrderAndProcessID);
+router.get('/getOutwardLedgerForOrderAndProcessID', TransactionsController.getOutwardLedgerForOrderAndProcessID);
 
 //Cutting Program
 router.put('/cuttingProgram', TransactionsController.saveCuttingProgram);

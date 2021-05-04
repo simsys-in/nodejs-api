@@ -67,7 +67,7 @@ const YarnPurchaseOrder = new YarnPurchaseOrderModel();
 const GeneralPurchaseOrderModel = require('../models/general_purchase_order.model');
 const GeneralPurchaseOrder = new GeneralPurchaseOrderModel();
 
-
+const _ = require('lodash')
 //orderProgram
 exports.saveOrderProgram = function (req, res) {
     const body = req.body;
@@ -2014,6 +2014,23 @@ exports.getLedgerForOrderAndProcessID = function (req, res) {
     body.company = USER.company
     const status = body.status ? body.status : 'active';
     DBCON.query('select ledger_id  from order_process where order_process.order_id =? and order_process.process_id=?', [req.query.order_id, req.query.process_id], function (err, data) {
+        if (err) {
+            // console.log(err)
+            res.sendError(err)
+        } else {
+            res.sendInfo("", data)
+        }
+    })
+}
+
+
+
+exports.getOutwardLedgerForOrderAndProcessID = function (req, res) {
+    const body = req.body;
+    const USER = req.user;
+    body.company = USER.company
+    const status = body.status ? body.status : 'active';
+    DBCON.query('select ledger_id from jobwork_outward where order_id = ? and to_process_id = ? order by id desc limit 1', [req.query.order_id, req.query.process_id], function (err, data) {
         if (err) {
             // console.log(err)
             res.sendError(err)
