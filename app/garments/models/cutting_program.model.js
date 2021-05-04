@@ -98,7 +98,7 @@ CuttingProgramModel.prototype = {
             var cutting_program = {
                 vou_date : getDBDate(body.voudate),
                 narration : body.narration ? body.narration : "",
-                inventory_qty_total : body.total_fabric_qty ? body.total_fabric_qty : 0,
+                inventory_qty_total : body.total_qty ? body.total_qty : 0,
                 inventory_amount_total : body.total_amount ? body.total_amount : 0,
                 order_id : body.order_id ? body.order_id : 0,
                 lotno : body.lotno ? body.lotno : 0,
@@ -194,7 +194,7 @@ CuttingProgramModel.prototype = {
             var cutting_program = {
                 vou_date : getDBDate(body.voudate),
                 narration : body.narration ? body.narration : "",
-                inventory_qty_total : body.total_fabric_qty ? body.total_fabric_qty : 0,
+                inventory_qty_total : body.total_qty ? body.total_qty : 0,
                 inventory_amount_total : body.total_amount ? body.total_amount : 0,
                 order_id : body.order_id ? body.order_id : 0,
                 lotno : body.lotno ? body.lotno : 0,
