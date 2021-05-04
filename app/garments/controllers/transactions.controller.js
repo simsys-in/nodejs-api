@@ -2635,7 +2635,7 @@ exports.getOrderProgramReport = (req, res) => {
         else {
             orderstatus_details = result[0];
 
-            const GET_CUTTINGPROGRAM_QUERY = `select ledger.ledger,process.process, cutting_program.inventory_qty_total, cutting_program.process_id, cutting_program_inventory.color_id, cutting_program_inventory.fabric_id from cutting_program left join cutting_program_inventory on cutting_program_inventory.vou_id = cutting_program.id left join ledger on ledger.id = cutting_program_inventory.ledger_id left join process on process.id = cutting_program.process_id WHERE cutting_program.order_id = ${ORDER_ID} ;`;
+            const GET_CUTTINGPROGRAM_QUERY = `select ledger.ledger,employee.employee,process.process, cutting_program.inventory_qty_total, cutting_program.process_id, cutting_program_inventory.color_id, cutting_program_inventory.fabric_id from cutting_program left join cutting_program_inventory on cutting_program_inventory.vou_id = cutting_program.id left join ledger on ledger.id = cutting_program_inventory.ledger_id left join process on process.id = cutting_program.process_id  left join employee on employee.id = cutting_program_inventory.employee_id  WHERE cutting_program.order_id = ${ORDER_ID} ;`;
 
             DBCON.query(GET_CUTTINGPROGRAM_QUERY, (err,cuttingprogram)=>{
                 if (err){
