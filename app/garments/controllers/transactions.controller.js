@@ -1382,38 +1382,45 @@ exports.getCuttingProgramColorDetails = function (req, res) {
     body.company = USER.company
     const status = body.status ? body.status : 'active';
     if (issetNotEmpty(req.query.order_id) && issetNotEmpty(req.query.from_process_id)) {
-        DBCON.query('select cutting_program_inventory.color_id, cutting_program_inventory.size1, cutting_program_inventory.size1 as max_size1, cutting_program_inventory.size2, cutting_program_inventory.size2 as max_size2,cutting_program_inventory.size3, cutting_program_inventory.size3 as max_size3,cutting_program_inventory.size4, cutting_program_inventory.size4 as max_size4,cutting_program_inventory.size5, cutting_program_inventory.size5 as max_size5,cutting_program_inventory.size6, cutting_program_inventory.size6 as max_size6,cutting_program_inventory.size7, cutting_program_inventory.size7 as max_size7,cutting_program_inventory.size8, cutting_program_inventory.size8 as max_size8,cutting_program_inventory.size9, cutting_program_inventory.size9 as max_size9 from cutting_program left join cutting_program_inventory on cutting_program_inventory.vou_id = cutting_program.id where order_id =?', req.query.order_id, function (err, cuttingInventory) {
-            if (err) {
-                // console.log(err)
-                res.sendError(err)
-            } else {
-                DBCON.query(`select jobwork_outward_inventory.color_id, jobwork_outward_inventory.size1,  jobwork_outward_inventory.size2, jobwork_outward_inventory.size3, jobwork_outward_inventory.size4, jobwork_outward_inventory.size5, jobwork_outward_inventory.size6, jobwork_outward_inventory.size7, jobwork_outward_inventory.size8, jobwork_outward_inventory.size9 from jobwork_outward left join jobwork_outward_inventory on jobwork_outward_inventory.vou_id = jobwork_outward.id where jobwork_outward.order_id = ${req.query.order_id} and from_process_id = ${req.query.from_process_id}`, (err, outwardInventory) => {
-                    if (err) {
-                        res.sendError(err)
-                    } else {
-                        var returnData = _.remove(cuttingInventory, (item) => {
-                            outwardInventory.map(outward => {
-                                return outward.color_id === item.color_id;
-                            })
-                        });
+        DBCON.query('select cutting_program_inventory.color_id, cutting_program_inventory.size1, cutting_program_inventory.size1 as max_size1, cutting_program_inventory.size2, cutting_program_inventory.size2 as max_size2,cutting_program_inventory.size3, cutting_program_inventory.size3 as max_size3,cutting_program_inventory.size4, cutting_program_inventory.size4 as max_size4,cutting_program_inventory.size5, cutting_program_inventory.size5 as max_size5,cutting_program_inventory.size6, cutting_program_inventory.size6 as max_size6,cutting_program_inventory.size7, cutting_program_inventory.size7 as max_size7,cutting_program_inventory.size8, cutting_program_inventory.size8 as max_size8,cutting_program_inventory.size9, cutting_program_inventory.size9 as max_size9 from cutting_program left join cutting_program_inventory on cutting_program_inventory.vou_id = cutting_program.id where order_id =?', req.query.order_id, function (err, cuttingInventory)
 
-                        // cuttingInventory.map(cutting => {
-                        //     outwardInventory.map(outward => {
-                        //         if(outward.color_id === cutting.color_id)
-                        //         {
-
-                        //         }
-                        //     })
-                        // })
-                        res.sendInfo("", returnData);
-                    }
-                })
-            }
-        })
-    } else {
-        res.sendInfo("", []);
+            {
+                if (err) {
+                    // console.log(err)
+                    res.sendError(err)
+                } else {
+                    DBCON.query(`select jobwork_outward_inventory.color_id, jobwork_outward_inventory.size1,  jobwork_outward_inventory.size2, jobwork_outward_inventory.size3, jobwork_outward_inventory.size4, jobwork_outward_inventory.size5, jobwork_outward_inventory.size6, jobwork_outward_inventory.size7, jobwork_outward_inventory.size8, jobwork_outward_inventory.size9 from jobwork_outward left join jobwork_outward_inventory on jobwork_outward_inventory.vou_id = jobwork_outward.id where jobwork_outward.order_id = ${req.query.order_id} and from_process_id = ${req.query.from_process_id}`, (err, outwardInventory) => {
+                        if (err) {
+                            res.sendError(err)
+                        } else {
+                            if (outwardInventory.length > 0) {
+                                cuttingInventory.map((item, cuttingIndex) => {
+                                    outwardInventory.map((outward, outwardIndex) => {
+                                        // console.log(inward.color_id ,item.color_id)
+                                        if(outward.color_id === item.color_id)
+                                        {
+                                            cuttingInventory.splice(cuttingIndex, 1);
+                                        }
+                                        if(cuttingIndex === cuttingInventory.length - 1 && outwardIndex === outwardInventory.length - 1)
+                                        {
+                                            // console.log(cuttingInventory);
+                                            res.sendInfo("", cuttingInventory);
+                                        }
+                                    })
+                                });
+    
+                            } else {
+                                res.sendInfo("", cuttingInventory)
+                            }
+                        }
+                    })
+                }
+            })
+        } else {
+            res.sendInfo("", []);
+        }
     }
-}
+    
 
 
 
@@ -1539,15 +1546,48 @@ exports.getJobworkOutwardColorDetails = function (req, res) {
     const USER = req.user;
     body.company = USER.company
     const status = body.status ? body.status : 'active';
-    DBCON.query('select jobwork_outward_inventory.color_id, jobwork_outward_inventory.size1,jobwork_outward_inventory.size1 as max_size1, jobwork_outward_inventory.size2,jobwork_outward_inventory.size2 as max_size2,jobwork_outward_inventory.size3,jobwork_outward_inventory.size3 as max_size3,jobwork_outward_inventory.size4,jobwork_outward_inventory.size4 as max_size4,jobwork_outward_inventory.size5,jobwork_outward_inventory.size5 as max_size5,jobwork_outward_inventory.size6,jobwork_outward_inventory.size6 as max_size6,jobwork_outward_inventory.size7,jobwork_outward_inventory.size7 as max_size7,jobwork_outward_inventory.size8,jobwork_outward_inventory.size8 as max_size8,jobwork_outward_inventory.size9,jobwork_outward_inventory.size9 as max_size9 from jobwork_outward left join jobwork_outward_inventory on jobwork_outward_inventory.vou_id = jobwork_outward.id where jobwork_outward.order_id =?  and to_process_id =? and ledger_id =?', [req.query.order_id, req.query.to_process_id, req.query.ledger_id], function (err, data) {
-        if (err) {
-            // console.log(err)
-            res.sendError(err)
-        } else {
-            res.sendInfo("", data)
-        }
-    })
+    if (issetNotEmpty(req.query.order_id) && issetNotEmpty(req.query.process_id) && issetNotEmpty(req.query.ledger_id)) {
+
+        DBCON.query('select jobwork_outward_inventory.color_id, jobwork_outward_inventory.size1,jobwork_outward_inventory.size1 as max_size1, jobwork_outward_inventory.size2,jobwork_outward_inventory.size2 as max_size2,jobwork_outward_inventory.size3,jobwork_outward_inventory.size3 as max_size3,jobwork_outward_inventory.size4,jobwork_outward_inventory.size4 as max_size4,jobwork_outward_inventory.size5,jobwork_outward_inventory.size5 as max_size5,jobwork_outward_inventory.size6,jobwork_outward_inventory.size6 as max_size6,jobwork_outward_inventory.size7,jobwork_outward_inventory.size7 as max_size7,jobwork_outward_inventory.size8,jobwork_outward_inventory.size8 as max_size8,jobwork_outward_inventory.size9,jobwork_outward_inventory.size9 as max_size9 from jobwork_outward left join jobwork_outward_inventory on jobwork_outward_inventory.vou_id = jobwork_outward.id where jobwork_outward.order_id =?  and to_process_id =? and ledger_id =?', [req.query.order_id, req.query.process_id, req.query.ledger_id], function (err, outwardInventory) {
+
+            if (err) {
+                // console.log(err)
+                res.sendError(err)
+            } else {
+                DBCON.query(`select jobwork_inward_inventory.color_id, jobwork_inward_inventory.size1,  jobwork_inward_inventory.size2, jobwork_inward_inventory.size3, jobwork_inward_inventory.size4, jobwork_inward_inventory.size5, jobwork_inward_inventory.size6, jobwork_inward_inventory.size7, jobwork_inward_inventory.size8, jobwork_inward_inventory.size9 from jobwork_inward left join jobwork_inward_inventory on jobwork_inward_inventory.vou_id = jobwork_inward.id where jobwork_inward.order_id = ${req.query.order_id} and process_id = ${req.query.process_id}`, (err, inwardInventory) => {
+                    if (err) {
+                        res.sendError(err)
+                    } else {
+                        if (inwardInventory.length > 0) {
+                            // console.log(inwardInventory.length, outwardInventory.length)
+                            outwardInventory.map((item, outwardIndex) => {
+                                inwardInventory.map((inward, inwardIndex) => {
+                                    // console.log(inward.color_id ,item.color_id)
+                                    if(inward.color_id === item.color_id)
+                                    {
+                                        outwardInventory.splice(outwardIndex, 1);
+                                    }
+                                    if(outwardIndex === outwardInventory.length - 1 && inwardIndex === inwardInventory.length - 1)
+                                    {
+                                        console.log(outwardInventory);
+                                        res.sendInfo("", outwardInventory);
+                                    }
+                                })
+                            });
+
+                        } else {
+                            res.sendInfo("", outwardInventory)
+                        }
+                    }
+                })
+            }
+        })
+    } else {
+        res.sendInfo("", []);
+    }
 }
+
+
 
 // jobwork invoice
 exports.saveJobworkInvoice = function (req, res) {
@@ -2627,41 +2667,37 @@ exports.getOrderProgramReport = (req, res) => {
     const QUERY = `select order_program.order_no, order_program.vou_date, order_program.due_date , product.product,size.size from order_program left join size on size.id = order_program.size_id left join product on product.id = order_program.style_id where order_program.id = ${ORDER_ID};`;
 
     DBCON.query(QUERY, (err, result) => {
-        if(err)
-        {
+        if (err) {
             console.log(err);
             res.sendError(err);
-        }
-        else {
+        } else {
             orderstatus_details = result[0];
 
             const GET_CUTTINGPROGRAM_QUERY = `select ledger.ledger,employee.employee,process.process, cutting_program.inventory_qty_total, cutting_program.process_id, cutting_program_inventory.color_id, cutting_program_inventory.fabric_id from cutting_program left join cutting_program_inventory on cutting_program_inventory.vou_id = cutting_program.id left join ledger on ledger.id = cutting_program_inventory.ledger_id left join process on process.id = cutting_program.process_id  left join employee on employee.id = cutting_program_inventory.employee_id  WHERE cutting_program.order_id = ${ORDER_ID} ;`;
 
-            DBCON.query(GET_CUTTINGPROGRAM_QUERY, (err,cuttingprogram)=>{
-                if (err){
+            DBCON.query(GET_CUTTINGPROGRAM_QUERY, (err, cuttingprogram) => {
+                if (err) {
                     res.sendError(err);
-                }else{
-                    
+                } else {
+
                     orderstatus_details.cuttingprogram = cuttingprogram;
 
-                const GET_PROCESSDETAILS_QUERY = `select ledger.ledger,toprocess.process as toprocess ,fromprocess.process as fromprocess,jobwork_inward.inventory_qty_total,jobwork_inward.inventory_qty_total as received_qty, jobwork_inward_inventory.color_id,jobwork_outward.inventory_qty_total,jobwork_outward.inventory_qty_total as delivery_qty, jobwork_outward_inventory.color_id from jobwork_outward left join jobwork_outward_inventory on jobwork_outward_inventory.vou_id = jobwork_outward.id  left join process as toprocess on toprocess.id = to_process_id left join process as fromprocess on fromprocess.id = from_process_id left join jobwork_inward on jobwork_inward.process_id = jobwork_outward.to_process_id and jobwork_inward.ledger_id = jobwork_outward.ledger_id left join jobwork_inward_inventory on jobwork_inward_inventory.vou_id = jobwork_inward.id left join ledger on ledger.id = jobwork_outward.ledger_id where jobwork_outward.order_id = ${ORDER_ID};`
-                
-                DBCON.query(GET_PROCESSDETAILS_QUERY,(err,processDetails) =>{
-                    console.log(orderstatus_details)
-                    orderstatus_details.processDetails = processDetails;
-                    if(err){
-                        res.sendError(err);
-                    }else{
-                          
-                         res.sendInfo("", orderstatus_details)
-                                      
-                       
-                    }
+                    const GET_PROCESSDETAILS_QUERY = `select ledger.ledger,toprocess.process as toprocess ,fromprocess.process as fromprocess,jobwork_inward.inventory_qty_total,jobwork_inward.inventory_qty_total as received_qty, jobwork_inward_inventory.color_id,jobwork_outward.inventory_qty_total,jobwork_outward.inventory_qty_total as delivery_qty, jobwork_outward_inventory.color_id from jobwork_outward left join jobwork_outward_inventory on jobwork_outward_inventory.vou_id = jobwork_outward.id  left join process as toprocess on toprocess.id = to_process_id left join process as fromprocess on fromprocess.id = from_process_id left join jobwork_inward on jobwork_inward.process_id = jobwork_outward.to_process_id and jobwork_inward.ledger_id = jobwork_outward.ledger_id left join jobwork_inward_inventory on jobwork_inward_inventory.vou_id = jobwork_inward.id left join ledger on ledger.id = jobwork_outward.ledger_id where jobwork_outward.order_id = ${ORDER_ID};`
+
+                    DBCON.query(GET_PROCESSDETAILS_QUERY, (err, processDetails) => {
+                        console.log(orderstatus_details)
+                        orderstatus_details.processDetails = processDetails;
+                        if (err) {
+                            res.sendError(err);
+                        } else {
+
+                            res.sendInfo("", orderstatus_details)
+
+
+                        }
+                    })
                 }
-                )
-                }
-            }
-            )
+            })
         }
     })
 }
