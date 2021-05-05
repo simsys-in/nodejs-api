@@ -1043,7 +1043,7 @@ exports.getUnitForProductID = function(req,res){
             if(err){
                 res.sendError(err)
             }else{
-                res.sendInfo("", data[0].unit_id)
+                res.sendInfo("", data[0]? data[0].unit_id:"")
             }
         })
     }
