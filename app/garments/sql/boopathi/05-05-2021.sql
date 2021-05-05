@@ -1,0 +1,1 @@
+ALTER TABLE `jobwork_outward` ADD `ledger_category_id` INT(255) NOT NULL AFTER `vehicle_no`

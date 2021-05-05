@@ -348,6 +348,9 @@ router.delete('/shift', MasterController.deleteShift);
 router.get('/getCuttingRateForOrderID', TransactionsController.getCuttingRateForOrderID);
 
 router.get('/getShortageReport', TransactionsController.getShortageReport);
+//get ledger SB for ledger category
+router.get('/getLedgerSBForLedgerCategoryID', MasterController.getLedgerSBForLedgerCategoryID);
+
 
 
 

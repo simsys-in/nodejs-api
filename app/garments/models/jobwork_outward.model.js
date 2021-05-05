@@ -50,6 +50,7 @@ JobworkOutwardModel.prototype = {
                     size9_total: result[0].size9_total,
                     vehicle_no: result[0].vehicle_no,
                     order_id: result[0].order_id,
+                    ledger_category_id : result[0].ledger_category_id,
                     from_process_id: result[0].from_process_id,
                     to_process_id: result[0].to_process_id,
                     product_id: 0,
@@ -124,6 +125,7 @@ JobworkOutwardModel.prototype = {
                 order_id: body.order_id,
                 from_process_id: body.from_process_id,
                 to_process_id: body.to_process_id,
+                ledger_category_id : body.ledger_category_id,
                 product_id: body.product_id,
 
             }
@@ -230,7 +232,7 @@ JobworkOutwardModel.prototype = {
                 size8_total: body.size8_total,
                 size9_total: body.size9_total,
                 vehicle_no: body.vehicle_no,
-
+                ledger_category_id : body.ledger_category_id,
                 order_id: body.order_id,
                 from_process_id: body.from_process_id,
                 to_process_id: body.to_process_id,
