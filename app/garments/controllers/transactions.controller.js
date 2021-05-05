@@ -1874,7 +1874,7 @@ exports.getShortageReport = (req, res) => {
     var shortage_details = {}
 
 
-    const QUERY = `select order_program.order_no, order_program.vou_date, order_program.due_date , product.product,size.size from order_program left join size on size.id = order_program.size_id left join product on product.id = order_program.style_id where order_program.id = ${ORDER_ID};`;
+    const QUERY = `select order_program.order_no, order_program.vou_date, order_program.due_date , product.product,size.size, unit.unit from order_program left join size on size.id = order_program.size_id left join product on product.id = order_program.style_id left join unit on unit.id = product.unit_id where order_program.id = ${ORDER_ID};`;
 
     DBCON.query(QUERY, (err, result) => {
         if (err) {
@@ -1892,7 +1892,7 @@ exports.getShortageReport = (req, res) => {
 
                     shortage_details.cuttingprogram = cuttingprogram;
 
-                    const GET_PROCESSDETAILS_QUERY = `select ledger.ledger, toprocess.process as toprocess , fromprocess.process as fromprocess, jobwork_outward.inventory_qty_total as outward_qty_total ,jobwork_inward.inventory_qty_total as inward_qty_total, jobwork_outward.ledger_id, jobwork_outward.vouno, jobwork_inward.vouno from jobwork_outward left join jobwork_inward on jobwork_inward.process_id = jobwork_outward.to_process_id left join ledger on ledger.id = jobwork_outward.ledger_id left join process as toprocess on toprocess.id = jobwork_outward.to_process_id left join process as fromprocess on fromprocess.id = jobwork_outward.from_process_id WHERE jobwork_outward.order_id = ${ORDER_ID} and jobwork_outward.to_process_id = ${PROCESS_ID};`;
+                    const GET_PROCESSDETAILS_QUERY = `select ledger.ledger, toprocess.process as toprocess , fromprocess.process as fromprocess, jobwork_outward.inventory_qty_total as outward_qty_total ,jobwork_inward.inventory_qty_total as inward_qty_total, jobwork_outward.ledger_id, jobwork_outward.vouno, jobwork_inward.vouno from jobwork_outward left join jobwork_inward on jobwork_inward.process_id = jobwork_outward.to_process_id and jobwork_outward.order_id = jobwork_inward.order_id left join ledger on ledger.id = jobwork_outward.ledger_id left join process as toprocess on toprocess.id = jobwork_outward.to_process_id left join process as fromprocess on fromprocess.id = jobwork_outward.from_process_id WHERE jobwork_outward.order_id = ${ORDER_ID} and jobwork_outward.to_process_id = ${PROCESS_ID};`;
                     DBCON.query(GET_PROCESSDETAILS_QUERY, (err, processdetails) => {
                         if (err) {
                             res.sendError(err);
