@@ -484,5 +484,8 @@ router.get('/getGarmentsInvoicePrint', TransactionsController.getGarmentsInvoice
 ////////////////////// Hariprakash Workspace/////////////////
 ////////////////////// Hariprakash Workspace/////////////////
 
+router.get('/error-demo',(req,res,next) =>{
+    throw new Error('This is to test Error Handling in express');
+});
 
 module.exports = router;

@@ -28,7 +28,7 @@ GarmentsInvoiceModel.prototype = {
         let sql = `SELECT * FROM garments_invoice WHERE id = ?`;
         // console.log(sql);
 
-        let sql1 = `SELECT *, 1 as selected FROM garments_invoice_inventory WHERE garments_invoice_inventory.vou_id = ?`;
+        let sql1 = `SELECT *, 1 as selected, size1_qty as max_size1_qty,size2_qty as max_size2_qty,size3_qty as max_size3_qty,size4_qty as max_size4_qty,size5_qty as max_size5_qty,size6_qty as max_size6_qty,size7_qty as max_size7_qty,size8_qty as max_size8_qty, size9_qty as max_size9_qty FROM garments_invoice_inventory WHERE garments_invoice_inventory.vou_id = ?`;
 
 
 
@@ -75,7 +75,7 @@ GarmentsInvoiceModel.prototype = {
                         callback(err)
                     } else {
                         result1.map((item, index) => {
-                            item.size_details = [];
+                            item.size_details = ["","","","","","","","",""];
                             if(index === result1.length - 1)
                             {
                                 garments_invoice.garments_invoice_inventory = result1;
