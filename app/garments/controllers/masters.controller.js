@@ -2170,6 +2170,41 @@ exports.getAllCuttingMasterSB = function (req, res) {
     })
 }
 
+exports.getLedgerSBForLedgerCategoryID = function (req, res) {
+    const body = req.body;
+    const USER = req.user;
+    body.company = USER.company
+    const status = body.status ? body.status : 'active';
+    var ledger_category_id = req.query.ledger_category_id ? req.query.ledger_category_id : null;
+    DBCON.query('select ledger.id as value, ledger.ledger as name from ledger left join ledger_category on ledger_category.id = ledger.ledger_category_id where ledger_category_id = ? ;', ledger_category_id, function (err, data) {
+        if (err) {
+            // console.log(err)
+            res.sendError(err)
+        } else {
+            var result = [];
+            if(data.length > 0)
+            {
+                data.forEach((item, index) => {
+                    if(item.value !== null)
+                    {
+                        result.push(item);
+
+                        if(index === data.length - 1)
+                        {
+                            res.sendInfo("", result)
+                        }
+                    }
+                })
+            }
+            else{
+                res.sendInfo("", result)
+            }
+        }
+    })
+}
+
+
+
 
 
 
