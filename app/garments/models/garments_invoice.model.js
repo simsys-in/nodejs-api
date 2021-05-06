@@ -365,7 +365,7 @@ GarmentsInvoiceModel.prototype = {
                                     } else {
                                         // console.log('Got Company Data');
                                         invoice_details.company_details = company_data[0];
-                                        DBCON.query(`select garments_invoice_inventory.*, product.product, product.hsnsac, product.gst, unit.unit from garments_invoice_inventory left join product on product.id = garments_invoice_inventory.product_id left join unit on unit.id = product.unit_id where vou_id = ${id}`, (err, inventories) => {
+                                        DBCON.query(`select garments_invoice_inventory.*, product.product, product.hsnsac, product.gst, unit.unit,garments_invoice.inventory_amount_total,garments_invoice.inventory_amount_total as amount from garments_invoice_inventory left join product on product.id = garments_invoice_inventory.product_id left join garments_invoice on garments_invoice.id = garments_invoice_inventory.vou_id left join unit on unit.id = product.unit_id where vou_id = ${id}`, (err, inventories) => {
                                             if (err) {
                                                 // console.log(err);
                                                 callback(err);
