@@ -142,6 +142,11 @@ app.use('/core', require('./app/core/routes'));
 
 // app.use('/reports_viewer', reports_viewer);
 
+app.use((err, req, res, next) =>{
+    res.status(500).send('Something Went Wrong')
+})
+
+
 
 var server = app.listen(process.env.PORT || "4000", function () {
     //    var host = process.env.host
