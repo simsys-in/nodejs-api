@@ -159,7 +159,7 @@ GarmentsDeliveryNoteModel.prototype = {
                                             product_id: item.product_id,
                                             qty: item.qty,
                                             unit: item.unit,
-                                            description: item.description
+                                            description: item.description ? item.description : ''
                                         }
                                         DBCON.query(`insert into garments_delivery_note_inventory set ?`, garments_delivery_note_inventory);
                                         if (index === body.garments_delivery_note_inventory.length - 1) {
@@ -234,7 +234,7 @@ GarmentsDeliveryNoteModel.prototype = {
                                             product_id: item.product_id,
                                             qty: item.qty,
                                             unit:item.unit,
-                                            description: item.description
+                                            description: item.description ? item.description : ''
                                 }
                                 DBCON.query(`insert into garments_delivery_note_inventory set ?`, garments_delivery_note_inventory);
                                 if (index === body.garments_delivery_note_inventory.length - 1) {

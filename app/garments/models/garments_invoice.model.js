@@ -189,7 +189,7 @@ GarmentsInvoiceModel.prototype = {
                                             refno: item.refno,
                                             disc_percentage: item.disc_percentage,
                                             disc_value: item.disc_value,
-                                            description: item.description
+                                            description: item.description ? item.description : ''
                                         }
                                         DBCON.query(`insert into garments_invoice_inventory set ?`, garments_invoice_inventory);
                                         if (index === body.garments_invoice_inventory.length - 1) {
@@ -282,7 +282,7 @@ GarmentsInvoiceModel.prototype = {
                                     refno: item.refno,
                                     disc_percentage: item.disc_percentage,
                                     disc_value: item.disc_value,
-                                    description: item.description
+                                    description: item.description ? item.description : ''
                                 }
                                 DBCON.query(`insert into garments_invoice_inventory set ?`, garments_invoice_inventory);
                                 if (index === body.garments_invoice_inventory.length - 1) {

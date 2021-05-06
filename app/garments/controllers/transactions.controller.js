@@ -2750,8 +2750,7 @@ exports.getOrderStatusReport = (req, res) => {
 exports.getOrdersForLedgerAndProcess = (req, res) => {
     const PROCESS = req.query.process;
     const LEDGER = req.query.ledger;
-
-    DBCON.query(`select order_program.id as order_id, order_process.rate, order_program.product_id, order_program.size_id, jobwork_inward.inventory_qty_total as qty, (jobwork_inward.inventory_qty_total * order_process.rate) as amount from order_process left join order_program on order_program.id = order_process.order_id left join jobwork_inward on jobwork_inward.order_id = order_process.order_id  where order_process.process_id = ${PROCESS} and order_process.ledger_id = ${LEDGER} and jobwork_inward.inventory_qty_total > 0;`, (err, result) => {
+    DBCON.query(`select order_program.id as order_id, order_process.rate, order_program.style_id as product_id, order_program.size_id, jobwork_inward.inventory_qty_total as qty, (jobwork_inward.inventory_qty_total * order_process.rate) as amount from jobwork_inward left join order_program on order_program.id = jobwork_inward.order_id left join order_process on order_process.order_id = order_program.id and order_process.process_id = jobwork_inward.process_id where jobwork_inward.ledger_id = ${LEDGER} and jobwork_inward.process_id = ${PROCESS} and jobwork_inward.inventory_qty_total > 0;`, (err, result) => {
         if (err) {
             // console.log(err);
             res.sendError(err);
