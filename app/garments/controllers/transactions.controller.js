@@ -1909,6 +1909,75 @@ exports.getShortageReport = (req, res) => {
 }
 
 
+const ReceiptModel = require('../models/receipt_mas.model');
+const Receipt = new ReceiptModel();
+
+exports.saveReceipt = function (req, res) {
+    const body = req.body;
+    body.id = req.query.id;
+    Receipt.checkAndSaveOrUpdate(body, (err, result, msg) => {
+        if (err) {
+            // console.log(err);
+            res.sendError(err);
+        } else {
+            res.sendSuccess(msg, result)
+        }
+    })
+}
+
+exports.getReceipt = function (req, res) {
+    var ID = req.query.id;
+    if (issetNotEmpty(ID)) {
+        Receipt.find(Number(ID), function (err, data) {
+            if (err) {
+                // console.log(err);
+                res.sendError(err)
+            } else {
+                res.sendInfo("", data);
+            }
+        })
+    } else {
+        Receipt.getAll((err, data) => {
+            if (err) {
+                // console.log(err)
+                res.sendError(err)
+            } else {
+                res.sendSuccess("", data)
+            }
+        })
+    }
+}
+
+
+
+exports.deleteReceipt = function (req, res) {
+    const id = req.query.id;
+    // console.log("ID : " + id);
+
+    if (issetNotEmpty(id)) {
+
+        Receipt.delete(Number(id), function (err, data) {
+            res.sendInfo("Receipt Deleted Successfully!");
+        })
+
+    } else {
+        res.sendWarning("Receipt Not Found! ")
+    }
+
+}
+
+exports.getNextReceiptVouNo = function (req, res) {
+    Receipt.getNextReceiptVouNo((err, result) => {
+        if (err) {
+            res.sendError(err);
+        } else {
+            res.sendInfo("", result)
+        }
+    })
+}
+
+
+
 
 
 

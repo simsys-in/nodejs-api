@@ -1,0 +1,1 @@
+ALTER TABLE `receipt` CHANGE `inventory_amount_total` `inventory_amount_total` DECIMAL(15,2) NOT NULL;

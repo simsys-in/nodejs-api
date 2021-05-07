@@ -351,6 +351,13 @@ router.get('/getShortageReport', TransactionsController.getShortageReport);
 //get ledger SB for ledger category
 router.get('/getLedgerSBForLedgerCategoryID', MasterController.getLedgerSBForLedgerCategoryID);
 
+//Receipt
+router.put('/receipt', TransactionsController.saveReceipt);
+router.get('/receipt', TransactionsController.getReceipt);
+router.delete('/receipt', TransactionsController.deleteReceipt);
+router.get('/getNextReceiptVouNo', TransactionsController.getNextReceiptVouNo);
+
+
 
 
 
