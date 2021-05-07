@@ -416,7 +416,7 @@ router.get('/getNextKnittingProgramVouNo',TransactionsController.getNextKnitting
 router.get('/getYarnSB', TransactionsController.getYarnSB);
 
 //Voucher
-router.get('/getLedgerForLedgerGroup', MasterController.getLedgerForLedgerGroup)
+router.get('/getAccountLedgerSB', MasterController.getAccountLedgerSB)
 router.put('/voucher', MasterController.saveVoucher);
 router.get('/voucher', MasterController.getVoucher);
 router.delete('/voucher', MasterController.deleteVoucher);
@@ -450,6 +450,13 @@ router.get('/getNextGeneralPurchaseOrderVouNo',TransactionsController.getNextGen
 
 router.get('/getGarmentsInvoiceInventoryDetails', TransactionsController.getGarmentsInvoiceInventoryDetails);
 router.get('/getOrderStatusReport', TransactionsController.getOrderStatusReport);
+
+//payment
+router.put('/payment', TransactionsController.savePayment);
+router.get('/payment', TransactionsController.getPayment);
+router.delete('/payment', TransactionsController.deletePayment);
+router.get('/getNextPaymentVouNo',TransactionsController.getNextPaymentVouNo )
+
 
 
 ////////////////////// Kowsalya Workspace/////////////////
@@ -494,8 +501,5 @@ router.get('/getGarmentsInvoicePrint', TransactionsController.getGarmentsInvoice
 ////////////////////// Hariprakash Workspace/////////////////
 ////////////////////// Hariprakash Workspace/////////////////
 
-router.get('/error-demo',(req,res,next) =>{
-    throw new Error('This is to test Error Handling in express');
-});
 
 module.exports = router;
