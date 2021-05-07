@@ -32,6 +32,9 @@ JobworkInvoiceModel.prototype = {
                 var jobwork_invoice = {
                     ledger_id: result[0].ledger_id,
                     process_id: result[0].process_id,
+                    order_id : result[0].order_id,
+                    product_id: result[0].product_id,
+                    size_id : result[0].size_id,
                     vou_date: getDBDate(result[0].vou_date),
                     narration: result[0].narration,
                     vehicle_no: result[0].vehicle_no,
@@ -88,6 +91,9 @@ JobworkInvoiceModel.prototype = {
             var jobwork_invoice = {
                 ledger_id: body.ledger_id,
                 process_id: body.process_id,
+                order_id : body.order_id,
+                product_id: body.product_id,
+                size_id: body.size_id,
                 vou_date: getDBDate(body.vou_date),
                 narration: body.narration,
                 vehicle_no: body.vehicle_no,
@@ -117,9 +123,9 @@ JobworkInvoiceModel.prototype = {
                                     if (item.selected && issetNotEmpty(item.order_id) && item.order_id !== 0 && issetNotEmpty(item.size_id) && item.size_id !== 0 && issetNotEmpty(item.product_id) && item.product_id !== 0) {
                                         var jobwork_invoice_inventory = {
                                             vou_id: body.id,
-                                            order_id: item.order_id,
-                                            product_id: item.product_id,
-                                            size_id: item.size_id,
+                                            // order_id: item.order_id,
+                                            // product_id: item.product_id,
+                                            // size_id: item.size_id,
                                             qty: item.qty,
                                             inward_id: item.inward_id,
                                             rate: item.rate,
@@ -151,6 +157,9 @@ JobworkInvoiceModel.prototype = {
             var jobwork_invoice = {
                 ledger_id: body.ledger_id,
                 process_id: body.process_id,
+                order_id: body.order_id,
+                product_id:body.product_id,
+                size_id: body.size_id,
                 vou_date: getDBDate(body.vou_date),
                 narration: body.narration,
                 vehicle_no: body.vehicle_no,
@@ -178,9 +187,9 @@ JobworkInvoiceModel.prototype = {
                                 // console.log(item, index)
                                 var jobwork_invoice_inventory = {
                                     vou_id: result.insertId,
-                                    order_id: item.order_id,
-                                    product_id: item.product_id,
-                                    size_id: item.size_id,
+                                    // order_id: item.order_id,
+                                    // product_id: item.product_id,
+                                    // size_id: item.size_id,
                                     qty: item.qty,
                                     inward_id: item.inward_id,
                                     rate: item.rate,

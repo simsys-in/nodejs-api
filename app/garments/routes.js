@@ -450,6 +450,8 @@ router.get('/payment', TransactionsController.getPayment);
 router.delete('/payment', TransactionsController.deletePayment);
 router.get('/getNextPaymentVouNo',TransactionsController.getNextPaymentVouNo )
 
+router.get('/getLedgerSBForProcessId',MasterController.getLedgerSBForProcessId )
+router.get('/getProcessSBForOrderIDAndProcessType',MasterController.getProcessSBForOrderIDAndProcessType )
 
 
 ////////////////////// Kowsalya Workspace/////////////////

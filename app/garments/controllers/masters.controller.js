@@ -1060,7 +1060,7 @@ exports.getProcessSBForOrderID = function (req, res) {
     body.company = USER.company
     const status = body.status ? body.status : 'active';
     var order_id = req.query.order_id ? req.query.order_id : null;
-    DBCON.query('select process.id as value, process.process as name from  order_process left join process on process.id = order_process.process_id  where order_process.order_id = ? ', order_id, function (err, data) {
+    DBCON.query('select process.id as value, process.process as name from  order_process left join process on process.id = order_process.process_id  where order_process.order_id = ?', order_id, function (err, data) {
         if (err) {
             // console.log(err)
             res.sendError(err)
@@ -2526,6 +2526,61 @@ exports.getAccountLedgerSB= (req, res) => {
     })
 
 }
+
+
+//LedgerId for processId 
+exports.getLedgerSBForProcessId= (req, res) => {
+    const process_id = req.query.process_id;
+
+    const QUERY = `select ledger.id as value, ledger.ledger as name from ledger left join ledger_category on ledger_category.id = ledger.ledger_category_id where ledger_category.ledger_category = (select process.process from process where id = ${process_id}) order by ledger asc;`;
+    // console.log(QUERY);
+    DBCON.query(QUERY, (err, result) => {
+        if(err)
+        {
+            // console.log(err);
+            res.sendError(err);
+        }
+        else{
+            res.sendInfo("", result);
+        }
+    })
+
+}
+
+exports.getProcessSBForOrderIDAndProcessType = function (req, res) {
+    const body = req.body;
+    const USER = req.user;
+    body.company = USER.company
+    const status = body.status ? body.status : 'active';
+    var order_id = req.query.order_id ? req.query.order_id : null;
+    DBCON.query('select process.id as value, process.process as name from  order_process left join process on process.id = order_process.process_id  where order_process.order_id = ? and process.type = "outsource_process" ', order_id, function (err, data) {
+        if (err) {
+            // console.log(err)
+            res.sendError(err)
+        } else {
+            var result = [];
+            if(data.length > 0)
+            {
+                data.forEach((item, index) => {
+                    if(item.value !== null)
+                    {
+                        result.push(item);
+
+                        if(index === data.length - 1)
+                        {
+                            res.sendInfo("", result)
+                        }
+                    }
+                })
+            }
+            else{
+                res.sendInfo("", result)
+            }
+        }
+    })
+}
+
+
 
 
 ////////////////////// Kowsalya Workspace/////////////////
