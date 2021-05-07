@@ -356,6 +356,11 @@ router.put('/receipt', TransactionsController.saveReceipt);
 router.get('/receipt', TransactionsController.getReceipt);
 router.delete('/receipt', TransactionsController.deleteReceipt);
 router.get('/getNextReceiptVouNo', TransactionsController.getNextReceiptVouNo);
+router.get('/getReceiptReport', TransactionsController.getReceiptReport);
+//Payment Report
+router.get('/getPaymentReport', TransactionsController.getPaymentReport);
+
+
 
 
 

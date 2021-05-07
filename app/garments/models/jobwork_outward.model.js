@@ -175,6 +175,7 @@ JobworkOutwardModel.prototype = {
                                                             var jobwork_outward_product = {
                                                                 product_id: jobworkproduct.product_id,
                                                                 qty: jobworkproduct.qty,
+                                                                weight : jobworkproduct.weight,
                                                                 vou_id: body.id
                                                             }
 
@@ -278,7 +279,8 @@ JobworkOutwardModel.prototype = {
                                             var jobwork_outward_product = {
                                                 vou_id: result.insertId,
                                                 product_id: jobworkproduct.product_id,
-                                                qty: jobworkproduct.qty
+                                                qty: jobworkproduct.qty,
+                                                weight: jobworkproduct.weight
                                             }
 
                                             DBCON.query(`insert into jobwork_outward_product set ?`, jobwork_outward_product);

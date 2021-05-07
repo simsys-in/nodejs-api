@@ -1981,6 +1981,28 @@ exports.getNextReceiptVouNo = function (req, res) {
     })
 }
 
+exports.getReceiptReport = (req, res) => {
+    const ID = req.query.id;
+    Receipt.getReceiptReport(ID, (err, result) => {
+        if (err) {
+            res.sendError(err);
+        } else {
+            res.sendInfo("", result);
+        }
+    })
+}
+
+exports.getPaymentReport = (req, res) => {
+    const ID = req.query.id;
+    Payment.getPaymentReport(ID, (err, result) => {
+        if (err) {
+            res.sendError(err);
+        } else {
+            res.sendInfo("", result);
+        }
+    })
+}
+
 
 
 

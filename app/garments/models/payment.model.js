@@ -82,7 +82,7 @@ PaymentModel.prototype = {
         });
     },
     getAll: function (callback) {
-        DBCON.query(`select payment.id,payment.vouno,payment.inventory_amount_total, DATE_FORMAT(payment.vou_date, '%d-%m-%Y') as vou_date, ledger.ledger from ${TABLE_NAME} left join ledger on ledger.id=payment.ledger_id  order by payment.id desc`, function (err, result) {
+        DBCON.query(`select payment.id,payment.vouno,payment.inventory_amount_total, DATE_FORMAT(payment.vou_date, '%d-%m-%Y') as vou_date, ledger1.ledger as ledger, ledger2.ledger as account_ledger, payment.refno, payment.narration from payment left join ledger as ledger1 on ledger1.id = payment.ledger_id left join ledger as ledger2 on ledger2.id = payment.ledger2_id order by payment.id desc `, function (err, result) {
 
             if (err) {
                 callback(err)
@@ -250,6 +250,65 @@ PaymentModel.prototype = {
             }
         })
     },
+
+    getPaymentReport: (id, callback) => {
+        var payment_details = {};
+        const QUERY = `select payment.id,  payment.vou_date,payment.narration, payment.inventory_amount_total, payment.amount, payment.refno, ledger1.ledger as ledger, ledger2.ledger as account_ledger from payment left join ledger as ledger1 on ledger1.id = payment.ledger_id left join ledger as ledger2 on ledger2.id = payment.ledger2_id  where payment.id = ${id};`;
+
+        DBCON.query(QUERY, (err, result) => {
+            if (err) {
+                // console.log(err);
+                callback(err);
+            } else {
+                payment_details = result[0];
+
+
+                const GET_INVENTORY_QUERY = `select accounts.id, accounts.narration, accounts.amount, ledger.ledger as account_ledger from accounts  left join ledger on ledger.id = accounts.ledger_id   where vou_id = ${id};`;
+
+                DBCON.query(GET_INVENTORY_QUERY, (err, inventory) => {
+                    if (err) {
+                        // console.log(err);
+                        callback(err);
+                    } else {
+                        payment_details.inventory = inventory;
+
+                        //total
+                        
+                                //total
+
+
+                                const GET_COMPANY_DETAILS = `select * from company limit 1`;
+                                const GET_LEDGER_DETAILS = `select ledger.ledger, ledger.address, ledger.mobile, ledger.phone, ledger.gstno from payment left join ledger on payment.ledger_id = ledger.id where payment.id = ${id}`;
+                                DBCON.query(GET_COMPANY_DETAILS, (err, company_details) => {
+                                    if (err) {
+                                        // console.log(err);
+                                        callback(err);
+
+                                    } else {
+                                        payment_details.company_details = company_details[0];
+                                        DBCON.query(GET_LEDGER_DETAILS, (err, ledger_details) => {
+                                            if (err) {
+                                                // console.log(err);
+                                                callback(err);
+                                            } else {
+                                                payment_details.ledger_details = ledger_details[0];
+                                                callback(false, payment_details);
+                                            }
+                                        });
+                                    }
+                                });
+                            }
+                    //     });
+
+                    // }
+                    //     })
+                    // }
+                })
+
+            }
+        })
+    },
+
     
 }
 
