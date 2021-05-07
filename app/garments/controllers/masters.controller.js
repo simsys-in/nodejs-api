@@ -2509,6 +2509,24 @@ exports.deleteReport = function (req, res) {
 }
 
 
+//account_ledger
+exports.getAccountLedgerSB= (req, res) => {
+
+    const QUERY = `select ledger.id as value, ledger.ledger as name from ledger left join ledger_group on ledger_group.id = ledger.ledger_group_id where ledger_group.ledger_group = 'Bank account' or ledger_group.ledger_group = 'Cash in hand' order by ledger asc;`;
+    // console.log(QUERY);
+    DBCON.query(QUERY, (err, result) => {
+        if(err)
+        {
+            // console.log(err);
+            res.sendError(err);
+        }
+        else{
+            res.sendInfo("", result);
+        }
+    })
+
+}
+
 
 ////////////////////// Kowsalya Workspace/////////////////
 ////////////////////// Kowsalya Workspace/////////////////

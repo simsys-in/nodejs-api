@@ -67,6 +67,11 @@ const YarnPurchaseOrder = new YarnPurchaseOrderModel();
 const GeneralPurchaseOrderModel = require('../models/general_purchase_order.model');
 const GeneralPurchaseOrder = new GeneralPurchaseOrderModel();
 
+//Payment
+const PaymentModel = require('../models/payment.model');
+const Payment = new PaymentModel();
+
+
 const _ = require('lodash')
 //orderProgram
 exports.saveOrderProgram = function (req, res) {
@@ -2717,6 +2722,74 @@ exports.getOrderStatusReport = (req, res) => {
     })
 }
 
+//Payment
+exports.savePayment = function (req, res) {
+    const body = req.body;
+    body.id = req.query.id;
+    Payment.checkAndSaveOrUpdate(body, (err, result, msg) => {
+        if (err) {
+            // console.log(err);
+            res.sendError(err);
+        } else {
+            res.sendSuccess(msg, result)
+        }
+    })
+}
+
+
+exports.getPayment = function (req, res) {
+    var ID = req.query.id;
+    if (issetNotEmpty(ID)) {
+        Payment.find(Number(ID), function (err, data) {
+            if (err) {
+                // console.log(err);
+                res.sendError(err)
+            } else {
+                res.sendInfo("", data);
+            }
+        })
+    } else {
+        Payment.getAll((err, data) => {
+            if (err) {
+                // console.log(err)
+                res.sendError(err)
+            } else {
+                res.sendSuccess("", data)
+            }
+        })
+    }
+}
+
+
+
+exports.deletePayment = function (req, res) {
+    const id = req.query.id;
+    // console.log("ID : " + id);
+
+    if (issetNotEmpty(id)) {
+        Payment.delete(Number(id), function (err, data) {
+            if (err) {
+                // console.log(err);
+                res.sendError(err)
+            } else {
+                res.sendInfo("Payment Deleted Successfully!");
+            }
+        })
+    } else {
+        res.sendWarning("Payment Not Found! ")
+    }
+
+}
+
+exports.getNextPaymentVouNo = function (req, res) {
+    Payment.getNextPaymentVouNo((err, result) => {
+        if (err) {
+            res.sendError(err);
+        } else {
+            res.sendInfo("", result)
+        }
+    })
+}
 
 
 
