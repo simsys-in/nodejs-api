@@ -142,9 +142,6 @@ app.use('/core', require('./app/core/routes'));
 
 // app.use('/reports_viewer', reports_viewer);
 
-app.use((err, req, res, next) =>{
-    res.status(500).send('Something Went Wrong')
-})
 
 
 
