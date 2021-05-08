@@ -126,6 +126,7 @@ OrderProgramModel.prototype = {
                                             var order_process = {
                                                 order_id: body.id,
                                                 process_id: item.process_id,
+                                                sno: item.sno,
                                                 ledger_id: item.ledger_id,
                                                 rate: item.rate,
                                                 waste: item.waste,
@@ -201,6 +202,7 @@ OrderProgramModel.prototype = {
                         body.order_process.map((item, index) => {
                             var order_process = {
                                 order_id: result.insertId,
+                                sno: item.sno,
                                 process_id: item.process_id,
                                 ledger_id: item.ledger_id,
                                 rate: item.rate,
